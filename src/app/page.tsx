@@ -1625,6 +1625,19 @@ export default function Home() {
   const [selectedRecommendationId, setSelectedRecommendationId] = useState<string>(
     contentRecommendations[0]?.id ?? "",
   );
+  const [selectedPerformancePostId, setSelectedPerformancePostId] = useState<string>(
+    contentPerformancePosts[0]?.id ?? "",
+  );
+  const [selectedAutomationId, setSelectedAutomationId] = useState<string>(
+    workflowAutomations[0]?.id ?? "",
+  );
+  const [selectedNotificationId, setSelectedNotificationId] = useState<string>("");
+  const [selectedContentTemplateId, setSelectedContentTemplateId] = useState<string>(
+    contentTemplates[0]?.id ?? "",
+  );
+  const [selectedAbTestId, setSelectedAbTestId] = useState<string>(
+    abTests[0]?.id ?? "",
+  );
 
   const activeNetwork = useMemo(
     () => networks.find((network) => network.id === chainId),
