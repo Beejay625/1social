@@ -241,6 +241,14 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Scheduling Queue** - Advanced queue management with priority ordering and automatic retry
 - **Engagement Tools** - Automated engagement with auto-replies, mention tracking, and moderation
 - **Hashtag Research** - Hashtag analytics, trending tag discovery, and performance insights
+- **Content Comparison** - Compare performance metrics between different content versions to identify winners
+- **ROI Calculator** - Calculate return on investment for campaigns with detailed financial tracking
+- **Calendar Views** - Multiple calendar view options: week, month, agenda, and timeline
+- **Team Performance** - Track individual team member performance, goals, and productivity metrics
+- **Content Moderation** - Review and moderate flagged content with automated rules
+- **Brand Safety** - Monitor brand reputation, detect threats, and track brand safety scores
+- **Crisis Response** - Automated crisis detection, severity alerts, and response tracking
+- **Multi-Account Management** - Manage multiple social media accounts with unified dashboard
 
 ## Project Structure
 
