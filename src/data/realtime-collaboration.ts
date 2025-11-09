@@ -1,105 +1,61 @@
-export interface LiveEditor {
-  id: string;
-  name: string;
-  avatar: string;
-  cursorPosition: number;
-  isTyping: boolean;
-  color: string;
-  lastSeen: string;
-}
-
 export interface CollaborationSession {
   id: string;
-  contentId: string;
-  editors: LiveEditor[];
-  changes: CollaborationChange[];
-  startedAt: string;
-  isActive: boolean;
+  document: string;
+  participants: string[];
+  lastActivity: string;
+  status: "active" | "idle";
 }
 
-export interface CollaborationChange {
-  id: string;
-  editorId: string;
-  editorName: string;
-  type: "insert" | "delete" | "format";
-  position: number;
-  content: string;
-  timestamp: string;
+export interface PresenceIndicator {
+  userId: string;
+  name: string;
+  status: "online" | "away" | "offline";
+  currentDocument?: string;
+  lastSeen: string;
 }
 
 export const activeCollaborationSessions: CollaborationSession[] = [
   {
-    id: "collab-1",
-    contentId: "post-1",
-    editors: [
-      {
-        id: "user-1",
-        name: "Sarah Chen",
-        avatar: "SC",
-        cursorPosition: 45,
-        isTyping: true,
-        color: "bg-blue-500",
-        lastSeen: new Date().toISOString(),
-      },
-      {
-        id: "user-2",
-        name: "Mike Johnson",
-        avatar: "MJ",
-        cursorPosition: 120,
-        isTyping: false,
-        color: "bg-green-500",
-        lastSeen: new Date(Date.now() - 30000).toISOString(),
-      },
-    ],
-    changes: [
-      {
-        id: "change-1",
-        editorId: "user-1",
-        editorName: "Sarah Chen",
-        type: "insert",
-        position: 45,
-        content: "exciting new features",
-        timestamp: new Date(Date.now() - 120000).toISOString(),
-      },
-      {
-        id: "change-2",
-        editorId: "user-2",
-        editorName: "Mike Johnson",
-        type: "format",
-        position: 0,
-        content: "bold",
-        timestamp: new Date(Date.now() - 60000).toISOString(),
-      },
-    ],
-    startedAt: new Date(Date.now() - 600000).toISOString(),
-    isActive: true,
+    id: "session-1",
+    document: "Q1 Campaign Strategy",
+    participants: ["Alex Chen", "Sarah Johnson", "Mike Rodriguez"],
+    lastActivity: "2 min ago",
+    status: "active",
+  },
+  {
+    id: "session-2",
+    document: "Product Launch Post",
+    participants: ["Sarah Johnson", "Emma Wilson"],
+    lastActivity: "15 min ago",
+    status: "idle",
   },
 ];
 
-export const presenceIndicators = [
+export const presenceIndicators: PresenceIndicator[] = [
   {
     userId: "user-1",
-    name: "Sarah Chen",
-    status: "active",
-    currentSection: "Compose",
-    avatar: "SC",
-    color: "bg-blue-500",
+    name: "Alex Chen",
+    status: "online",
+    currentDocument: "Q1 Campaign Strategy",
+    lastSeen: "now",
   },
   {
     userId: "user-2",
-    name: "Mike Johnson",
-    status: "active",
-    currentSection: "Scheduling",
-    avatar: "MJ",
-    color: "bg-green-500",
+    name: "Sarah Johnson",
+    status: "online",
+    currentDocument: "Product Launch Post",
+    lastSeen: "now",
   },
   {
     userId: "user-3",
-    name: "Emma Wilson",
+    name: "Mike Rodriguez",
     status: "away",
-    currentSection: "Analytics",
-    avatar: "EW",
-    color: "bg-purple-500",
+    lastSeen: "5 min ago",
+  },
+  {
+    userId: "user-4",
+    name: "Emma Wilson",
+    status: "offline",
+    lastSeen: "1 hour ago",
   },
 ];
-
