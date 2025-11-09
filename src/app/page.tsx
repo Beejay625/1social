@@ -2000,6 +2000,28 @@ export default function Home() {
     setSelectedEngagementStatus(filterId);
   };
 
+  const handleReportingViewChange = (
+    view: "overview" | "exports" | "deep-dive",
+  ) => {
+    setReportingView(view);
+  };
+
+  const handleExecMetricSelect = (metricId: string) => {
+    setSelectedExecMetricId(metricId);
+  };
+
+  const handleVarianceSelect = (varianceId: string) => {
+    setSelectedVarianceId(varianceId);
+  };
+
+  const handleBenchmarkSelect = (channelId: ChannelId) => {
+    setSelectedBenchmarkChannel(channelId);
+  };
+
+  const handleAlertFilterChange = (filterId: string) => {
+    setSelectedAlertFilter(filterId);
+  };
+
   const handleSequenceSelect = (sequenceId: string) => {
     setSelectedSequenceId(sequenceId);
   };
