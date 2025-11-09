@@ -2123,6 +2123,14 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "revenue-tracking", label: "Revenue Tracking" },
   { id: "multi-language", label: "Multi-language" },
   { id: "post-analytics", label: "Post Analytics" },
+  { id: "calendar-views", label: "Calendar Views" },
+  { id: "team-collaboration", label: "Team Collaboration" },
+  { id: "performance-predictions", label: "Performance Predictions" },
+  { id: "automated-suggestions", label: "Automated Suggestions" },
+  { id: "monitoring-dashboard", label: "Monitoring Dashboard" },
+  { id: "scheduling-optimization", label: "Scheduling Optimization" },
+  { id: "audience-growth", label: "Audience Growth" },
+  { id: "engagement-analysis", label: "Engagement Analysis" },
 ];
 const chartColorTokens = {
   reach: "text-sky-300",
