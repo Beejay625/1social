@@ -100,14 +100,17 @@ Visit http://localhost:3000
 - **Content Calendar Templates** - Pre-built templates for content planning
 - **Content Calendar Sync** - Sync with external calendar platforms
 - **Content Calendar Integration** - Integrate with Google Calendar, Outlook, Apple Calendar
+- **Calendar Sync** - Sync content calendar with Google Calendar, Outlook, Apple Calendar, and iCal with event tracking and sync statistics
 - **Content Calendar Views** - Switch between different calendar views
 - **Content Tagging & Organization** - Organize content with tags for discoverability
 - **Content Moderation** - Review and manage flagged content
+- **Moderation Tools** - Advanced content moderation with automated rules, severity levels, spam detection, and resolution tracking
 - **Content Templates Library** - Reusable templates by category with usage tracking
 - **Content Recycling** - Automatically repost top-performing content with customizable rules, engagement tracking, and scheduling optimization
 - **Content Suggestions** - AI-powered suggestions to improve content strategy with confidence scores and category-based recommendations
 - **Content Version History** - Track all changes made to content with complete version history, author tracking, and restore capabilities
 - **Bulk Operations** - Perform bulk actions on multiple posts, schedules, or content items with progress tracking and operation templates
+- **Scheduling Queue** - Manage and monitor all scheduled posts across platforms with status tracking, failure alerts, and queue statistics
 
 ### Automation & Workflows
 - **Automation Rules** - Create trigger-based automation rules
