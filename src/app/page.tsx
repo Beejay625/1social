@@ -912,18 +912,18 @@ const approvalTemplates: ApprovalTemplate[] = [
   },
 ];
 
-const getApprovalTemplate = (templateId: string | undefined | null) =>
-  approvalTemplates.find((template) => template.id === templateId) ?? null;
+function getApprovalTemplate(templateId: string | undefined | null) {
+  return approvalTemplates.find((template) => template.id === templateId) ?? null;
+}
 
-const instantiateApprovalSteps = (
+function instantiateApprovalSteps(
   template: ApprovalTemplate,
   scheduledFor: string,
   seed: string,
-): ApprovalStep[] => {
+): ApprovalStep[] {
   const launchTime = new Date(scheduledFor).getTime();
   return template.steps.map((step, index) => {
-    const dueTime =
-      launchTime + step.dueOffsetHours * 60 * 60 * 1000;
+    const dueTime = launchTime + step.dueOffsetHours * 60 * 60 * 1000;
     const baseEscalation = step.escalation
       ? {
           ...step.escalation,
@@ -938,7 +938,7 @@ const instantiateApprovalSteps = (
       escalation: baseEscalation,
     };
   });
-};
+}
 
 const aiToneOptions = [
   {
