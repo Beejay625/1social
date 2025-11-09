@@ -253,15 +253,15 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Content Version History** - Complete version tracking with restore capabilities
 - **Smart Notifications** - Intelligent notification prioritization system
 - **Performance Alerts** - Automated performance metric alerts with thresholds
-- **Account Health Monitoring** - Health status tracking for all connected accounts
-- **Real-time Collaboration** - Live editing sessions with presence indicators and co-editing capabilities
-- **Conflict Detection** - Automatic detection of scheduling conflicts with resolution suggestions
-- **Bulk Operations** - Efficient bulk editing, scheduling, and tagging with operation templates
-- **Account Health Monitoring** - Comprehensive account health tracking with issue detection and trends
-- **AI Content Suggestions** - Intelligent content recommendations based on trends and audience insights
-- **Content Version History** - Complete version control with change tracking and comparison tools
-- **Smart Notifications** - Priority-based notification system with intelligent filtering
-- **Performance Alerts** - Real-time alerts for content performance anomalies with actionable insights
+- **Account Health Monitoring** - Comprehensive health status tracking with issue detection and trends
+- **Content Analytics Dashboard** - Comprehensive analytics for all content with views, engagement, clicks, and shares
+- **Audience Insights** - Deep audience analytics with demographics, behavior patterns, and growth tracking
+- **Scheduling Queue** - Manage and monitor scheduled posts with status tracking and failure alerts
+- **Moderation Tools** - Advanced content moderation with automated rules and severity levels
+- **Calendar Sync** - Sync with Google Calendar, Outlook, Apple Calendar, and iCal
+- **Engagement Calculator** - Calculate engagement rates with detailed breakdowns by type
+- **Hashtag Research** - Research hashtags with volume, difficulty, growth metrics, and related suggestions
+- **Performance Heatmaps** - Visualize performance patterns by day and time with color-coded intensity maps
 - **Calendar Sync** - Seamless integration with Google Calendar, Outlook, Apple Calendar, and iCal
 - **Advanced Social Listening** - Comprehensive keyword monitoring, sentiment analysis, and mention tracking
 - **Approval Workflows** - Multi-step content approval with auto-approval and timeout conditions
