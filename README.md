@@ -122,7 +122,7 @@ Visit http://localhost:3000
 - **Trend Statistics** - Track topics monitored, average growth, and top categories
 - **Intelligence Forecasts** - Predictive analytics for content performance
 - **Intelligence Anomalies** - Detect unusual patterns and anomalies
-- **Audience Insights** - Deep audience analytics and segmentation
+- **Audience Insights** - Deep audience analytics and segmentation with demographics, behavior patterns, growth tracking, and actionable recommendations
 - **Audience Segmentation Cards** - Cohort segmentation dashboards
 - **Audience Growth Tracking** - Monitor follower growth and trends
 - **Competitor Tracking** - Analyze competitor metrics and compare performance
@@ -130,6 +130,7 @@ Visit http://localhost:3000
 - **Social Media Competitor Analysis** - Track competitor performance and identify competitive advantages
 - **Trend Analysis** - Track trending topics, hashtags, and conversations
 - **Social Media Trend Analysis** - Monitor trends relevant to your brand
+- **Hashtag Research** - Research hashtags, track trends, find best hashtags with volume, difficulty, growth metrics, and related hashtag suggestions
 
 ### Testing & Optimization
 - **A/B Testing Dashboard** - Manage active and completed tests
@@ -266,14 +267,6 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Scheduling Queue** - Advanced queue management with priority ordering and automatic retry
 - **Engagement Tools** - Automated engagement with auto-replies, mention tracking, and moderation
 - **Hashtag Research** - Hashtag analytics, trending tag discovery, and performance insights
-- **Analytics Export** - Export analytics data in multiple formats (PDF, CSV, Excel, JSON) with templates
-- **Content Predictor** - AI-powered content performance predictions with confidence scores
-- **Audience Growth** - Track follower growth across platforms with trend analysis
-- **Competitor Analysis** - Monitor competitor performance and identify competitive advantages
-- **Content Library** - Organize and manage media assets, templates, and reusable content
-- **Social Commerce** - Sell products directly through social media with sales tracking
-- **Video Analytics** - Track video performance with watch time, completion rate, and insights
-- **Influencer Management** - Manage influencer relationships and track collaboration performance
 
 ## Project Structure
 
