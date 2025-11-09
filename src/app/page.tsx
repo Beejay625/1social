@@ -5606,8 +5606,8 @@ export default function Home() {
                       <div className="flex items-center gap-3">
                         <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[post.channel].dot}`} />
                         <h3 className="text-sm font-semibold text-white">{post.title}</h3>
-                        <span className={`text-xs font-semibold ${post.trend === "up" ? "text-emerald-300" : "text-amber-300"}`}>
-                          {post.trend === "up" ? "↑" : "↓"}
+                        <span className={`text-xs font-semibold ${post.performance === "excellent" ? "text-emerald-300" : "text-amber-300"}`}>
+                          {post.performance === "excellent" ? "↑" : "↓"}
                         </span>
                       </div>
                       <p className="mt-2 text-xs text-slate-200/70">
