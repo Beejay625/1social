@@ -330,6 +330,44 @@ import {
   socialAccounts,
 } from "@/data/multi-account";
 import {
+  exportJobs,
+  exportStats,
+  exportTemplates,
+} from "@/data/analytics-export";
+import {
+  contentPredictions,
+  predictionStats,
+} from "@/data/content-predictor";
+import {
+  audienceGrowth,
+  growthEvents,
+  growthStats,
+} from "@/data/audience-growth";
+import {
+  competitorInsights,
+  competitorStats,
+  competitors,
+} from "@/data/competitor-analysis";
+import {
+  contentCategories,
+  contentLibrary,
+  libraryStats,
+} from "@/data/content-library";
+import {
+  commerceStats,
+  products,
+  shoppingPosts,
+} from "@/data/social-commerce";
+import {
+  videoInsights,
+  videoPerformance,
+  videoStats,
+} from "@/data/video-analytics";
+import {
+  influencerStats,
+  influencers,
+} from "@/data/influencer-management";
+import {
   performanceMetrics,
   topPerformingContent,
 } from "@/data/content-performance-tracking";
