@@ -545,7 +545,7 @@ export default function Home() {
                   {truncateAddress(address)}
                 </p>
                 <p className="mt-1 text-xs uppercase tracking-[0.28em] text-slate-300/60">
-                  {chain?.name ?? "No network selected"}
+                  {activeNetwork?.name ?? "No network selected"}
                 </p>
               </div>
               <div className="mt-5 flex flex-col gap-3 sm:flex-row">
