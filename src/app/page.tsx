@@ -1271,6 +1271,220 @@ const integrationsAvailable = [
   },
 ];
 
+// Collaboration features data
+const collaborationMentions = [
+  {
+    id: "mention-1",
+    planId: "plan-1",
+    mentionedBy: "Leo",
+    mentionedTo: "You",
+    message: "@You Need your sign-off on the wallet signature flow",
+    at: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
+    resolved: false,
+  },
+  {
+    id: "mention-2",
+    planId: "plan-2",
+    mentionedBy: "Ameena",
+    mentionedTo: "Kai",
+    message: "@Kai Can you review the design drops recap copy?",
+    at: new Date(Date.now() - 1000 * 60 * 90).toISOString(),
+    resolved: true,
+  },
+  {
+    id: "mention-3",
+    planId: "plan-3",
+    mentionedBy: "Kai",
+    mentionedTo: "Leo",
+    message: "@Leo Pull new community shots for reel slots 2 and 3",
+    at: new Date(Date.now() - 1000 * 60 * 145).toISOString(),
+    resolved: false,
+  },
+];
+
+const collaborationChecklists = [
+  {
+    id: "checklist-1",
+    planId: "plan-1",
+    title: "Pre-launch checklist",
+    items: [
+      { id: "item-1", label: "Final copy review", checked: true, assignedTo: "Kai" },
+      { id: "item-2", label: "Asset upload", checked: true, assignedTo: "Leo" },
+      { id: "item-3", label: "Wallet signature prep", checked: false, assignedTo: "You" },
+    ],
+  },
+  {
+    id: "checklist-2",
+    planId: "plan-2",
+    title: "Design QA checklist",
+    items: [
+      { id: "item-4", label: "Typography check", checked: false, assignedTo: "Leo" },
+      { id: "item-5", label: "Color contrast", checked: false, assignedTo: "Leo" },
+      { id: "item-6", label: "Mobile preview", checked: false, assignedTo: "Ameena" },
+    ],
+  },
+];
+
+const collaborationHandoffs = [
+  {
+    id: "handoff-1",
+    planId: "plan-1",
+    from: "Kai",
+    to: "You",
+    action: "Request wallet signature",
+    status: "pending",
+    at: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+  },
+  {
+    id: "handoff-2",
+    planId: "plan-3",
+    from: "Leo",
+    to: "Ameena",
+    action: "Request asset upload",
+    status: "completed",
+    at: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
+  },
+];
+
+// Audience segmentation data
+const audienceSegments = [
+  {
+    id: "segment-1",
+    label: "Power users",
+    channel: "farcaster" as ChannelId,
+    size: 12400,
+    growth: 18.2,
+    engagement: 8.4,
+    coverage: 85,
+    benchmark: 72,
+    trend: [85, 87, 84, 86, 88, 85, 87],
+  },
+  {
+    id: "segment-2",
+    label: "New followers",
+    channel: "instagram" as ChannelId,
+    size: 8900,
+    growth: 24.5,
+    engagement: 6.2,
+    coverage: 62,
+    benchmark: 68,
+    trend: [58, 60, 62, 61, 63, 62, 62],
+  },
+  {
+    id: "segment-3",
+    label: "Creator cohort",
+    channel: "farcaster" as ChannelId,
+    size: 3200,
+    growth: 12.8,
+    engagement: 9.1,
+    coverage: 78,
+    benchmark: 75,
+    trend: [75, 76, 77, 78, 77, 78, 78],
+  },
+  {
+    id: "segment-4",
+    label: "Lurkers",
+    channel: "instagram" as ChannelId,
+    size: 15600,
+    growth: 5.3,
+    engagement: 2.1,
+    coverage: 45,
+    benchmark: 55,
+    trend: [42, 43, 44, 45, 44, 45, 45],
+  },
+];
+
+// Enhanced sentiment tracking data
+const sentimentHistory = [
+  { date: "Mon", positive: 68, neutral: 22, negative: 10 },
+  { date: "Tue", positive: 72, neutral: 20, negative: 8 },
+  { date: "Wed", positive: 65, neutral: 25, negative: 10 },
+  { date: "Thu", positive: 70, neutral: 23, negative: 7 },
+  { date: "Fri", positive: 74, neutral: 19, negative: 7 },
+  { date: "Sat", positive: 71, neutral: 21, negative: 8 },
+  { date: "Sun", positive: 69, neutral: 24, negative: 7 },
+];
+
+const sentimentAlerts = [
+  {
+    id: "alert-1",
+    type: "negative_swing",
+    severity: "medium",
+    message: "Negative sentiment increased 15% on Wednesday",
+    channel: "farcaster" as ChannelId,
+    at: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(),
+    resolved: false,
+  },
+  {
+    id: "alert-2",
+    type: "anomaly",
+    severity: "low",
+    message: "Unusual sentiment pattern detected in Creator cohort",
+    channel: "instagram" as ChannelId,
+    at: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+    resolved: false,
+  },
+];
+
+// Recommendation playbooks data
+const recommendationPlaybooks = [
+  {
+    id: "playbook-1",
+    title: "Boost reach on Farcaster",
+    priority: "high",
+    metric: "reach" as MetricKpiId,
+    steps: [
+      { id: "step-1", action: "Schedule 3 posts during peak hours (11-14 UTC)", status: "pending" },
+      { id: "step-2", action: "Engage with top 10 power users from last week", status: "pending" },
+      { id: "step-3", action: "Cross-post top performing Instagram reel to Farcaster", status: "completed" },
+    ],
+    creativeAngles: [
+      "Behind-the-scenes content performs 2.3x better",
+      "Threads with visual assets get 40% more engagement",
+    ],
+    channelGuidance: {
+      farcaster: "Use native Farcaster features like casts and reactions",
+      instagram: "Sync highlights to maintain consistency",
+    },
+  },
+  {
+    id: "playbook-2",
+    title: "Improve conversion rate",
+    priority: "medium",
+    metric: "conversion" as MetricKpiId,
+    steps: [
+      { id: "step-4", action: "Add clear CTAs to next 5 posts", status: "pending" },
+      { id: "step-5", action: "Test wallet connection flow messaging", status: "pending" },
+    ],
+    creativeAngles: [
+      "Posts with 'Connect wallet' CTA convert 3x higher",
+      "Video tutorials drive 2.5x more conversions than static posts",
+    ],
+    channelGuidance: {
+      farcaster: "Leverage Farcaster's native wallet integration",
+      instagram: "Use swipe-up links in Stories for conversions",
+    },
+  },
+  {
+    id: "playbook-3",
+    title: "Re-engage lurkers segment",
+    priority: "high",
+    metric: "growth" as MetricKpiId,
+    steps: [
+      { id: "step-6", action: "Create personalized DM campaign for inactive users", status: "pending" },
+      { id: "step-7", action: "Schedule reminder posts during their active hours", status: "pending" },
+    ],
+    creativeAngles: [
+      "Personalized content increases engagement by 45%",
+      "Reminder posts work best on weekends for this segment",
+    ],
+    channelGuidance: {
+      instagram: "Use Instagram DMs for personalized outreach",
+      farcaster: "Create exclusive content to drive engagement",
+    },
+  },
+];
+
 const dashboardSections: { id: string; label: string }[] = [
   { id: "broadcast", label: "Compose" },
   { id: "plan", label: "Scheduling" },
