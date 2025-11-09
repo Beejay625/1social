@@ -258,6 +258,46 @@ import {
   syncStats,
 } from "@/data/calendar-sync";
 import {
+  contentTemplates,
+  templateCategories,
+  templateStats,
+} from "@/data/content-templates-library";
+import {
+  roiCalculations,
+  roiMetrics,
+  roiStats,
+} from "@/data/roi-calculator";
+import {
+  influencers,
+  outreachCampaigns,
+  outreachStats,
+} from "@/data/influencer-outreach";
+import {
+  approvalRequests,
+  approvalWorkflows,
+  approvalStats,
+} from "@/data/content-approval-workflow";
+import {
+  complianceChecks,
+  complianceRules,
+  complianceStats,
+} from "@/data/compliance-tracker";
+import {
+  languageContents,
+  supportedLanguages,
+  languageStats,
+} from "@/data/multi-language-manager";
+import {
+  budgetAllocations,
+  budgetCategories,
+  budgetStats,
+} from "@/data/budget-tracker";
+import {
+  performancePredictions,
+  predictionAccuracy,
+  predictorStats,
+} from "@/data/content-performance-predictor";
+import {
   listeningDashboard,
   listeningQueries,
   recentMentions,
