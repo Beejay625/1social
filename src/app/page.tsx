@@ -23397,14 +23397,18 @@ export default function Home() {
                   </div>
                   {job.filters && (
                     <div className="space-y-2 mb-4 text-xs text-slate-200/60">
-                      <p>Date Range: {job.filters.dateRange}</p>
-                      <p>Platforms: {job.filters.platforms.join(", ")}</p>
-                      <p>Metrics: {job.filters.metrics.join(", ")}</p>
+                      <p>Date Range: {new Date(job.filters.dateRange.start).toLocaleDateString()} - {new Date(job.filters.dateRange.end).toLocaleDateString()}</p>
+                      {job.filters.platforms && job.filters.platforms.length > 0 && (
+                        <p>Platforms: {job.filters.platforms.join(", ")}</p>
+                      )}
+                      {job.filters.metrics && job.filters.metrics.length > 0 && (
+                        <p>Metrics: {job.filters.metrics.join(", ")}</p>
+                      )}
                     </div>
                   )}
                   {job.status === "completed" && job.downloadUrl && (
                     <div className="flex items-center justify-between">
-                      <p className="text-xs text-slate-200/60">File Size: {job.fileSize}</p>
+                      <p className="text-xs text-slate-200/60">File Size: {job.sizeFormatted}</p>
                       <button className="text-xs px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20">
                         Download
                       </button>
