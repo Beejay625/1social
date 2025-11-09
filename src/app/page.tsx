@@ -1890,6 +1890,69 @@ export default function Home() {
     [distributionMatrix],
   );
 
+  const selectedTone = useMemo(
+    () => aiToneOptions.find((tone) => tone.id === selectedToneId) ?? aiToneOptions[0],
+    [selectedToneId],
+  );
+
+  const selectedPersona = useMemo(
+    () => aiPersonas.find((persona) => persona.id === selectedPersonaId) ?? aiPersonas[0],
+    [selectedPersonaId],
+  );
+
+  const selectedIdea = useMemo(
+    () => aiDraftIdeas.find((idea) => idea.id === selectedIdeaId) ?? aiDraftIdeas[0],
+    [selectedIdeaId],
+  );
+
+  const aiCharacterCount = aiDraft.length;
+
+  const selectedDeck = useMemo(
+    () => reportingDecks.find((deck) => deck.id === selectedDeckId) ?? reportingDecks[0],
+    [selectedDeckId],
+  );
+
+  const selectedExport = useMemo(
+    () =>
+      reportingExports.find((exportJob) => exportJob.id === selectedExportId) ??
+      reportingExports[0],
+    [selectedExportId],
+  );
+
+  const filteredEngagementItems = useMemo(
+    () =>
+      engagementInboxItems.filter((item) => {
+        const sentimentMatches =
+          selectedSentimentFilter === "all" || item.sentiment === selectedSentimentFilter;
+        const statusMatches = item.status === selectedEngagementStatus;
+        return sentimentMatches && statusMatches;
+      }),
+    [selectedEngagementStatus, selectedSentimentFilter],
+  );
+
+  const engagementCounts = useMemo(() => {
+    const sentiments = engagementFilters.sentiments.reduce<Record<string, number>>(
+      (accumulator, filter) => {
+        accumulator[filter.id] =
+          filter.id === "all"
+            ? engagementInboxItems.length
+            : engagementInboxItems.filter((item) => item.sentiment === filter.id).length;
+        return accumulator;
+      },
+      {},
+    );
+    const statuses = engagementFilters.status.reduce<Record<string, number>>(
+      (accumulator, filter) => {
+        accumulator[filter.id] = engagementInboxItems.filter(
+          (item) => item.status === filter.id,
+        ).length;
+        return accumulator;
+      },
+      {},
+    );
+    return { sentiments, statuses };
+  }, []);
+
   const analyticsSnapshot = useMemo(() => {
     const farcasterLive = posts.filter((post) =>
       post.channels.includes("farcaster"),
