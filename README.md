@@ -98,6 +98,7 @@ Visit http://localhost:3000
 - **Content Tagging & Organization** - Organize content with tags for discoverability
 - **Content Moderation** - Review and manage flagged content
 - **Content Templates Library** - Reusable templates by category with usage tracking
+- **Content Recycling** - Automatically repost top-performing content with customizable rules, engagement tracking, and scheduling optimization
 
 ### Automation & Workflows
 - **Automation Rules** - Create trigger-based automation rules
