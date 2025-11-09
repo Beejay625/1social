@@ -5750,6 +5750,50 @@ export default function Home() {
                 </div>
               )}
             </div>
+
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(14,116,144,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Automation rules
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {workflowAutomations.filter((a) => a.status === "active").length} active
+                </span>
+              </div>
+              <div className="mt-4 space-y-3">
+                {workflowAutomations.map((automation) => (
+                  <div
+                    key={automation.id}
+                    className={`rounded-2xl border p-4 ${automation.status === "active" ? "border-emerald-400/50 bg-emerald-400/10" : "border-white/10 bg-slate-950/40"}`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-sm font-semibold text-white">{automation.name}</h4>
+                      <span className={`text-[10px] uppercase tracking-wider ${automation.status === "active" ? "text-emerald-300" : "text-slate-300"}`}>
+                        {automation.status}
+                      </span>
+                    </div>
+                    <div className="mt-3 space-y-2 text-xs text-slate-200/70">
+                      <div className="flex items-center justify-between">
+                        <span>Trigger:</span>
+                        <span className="text-white">{automation.trigger}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Condition:</span>
+                        <span className="text-white">{automation.condition}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Action:</span>
+                        <span className="text-white">{automation.action}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Executions:</span>
+                        <span className="text-white">{automation.executions}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </aside>
         </section>
 
