@@ -34,18 +34,22 @@ Visit http://localhost:3000
 ### Analytics & Reporting
 - **Analytics Dashboards** - Comprehensive performance dashboards with real-time metrics
 - **Content Performance Dashboard** - Comprehensive overview of social media performance metrics
+- **Content Analytics Dashboard** - Comprehensive analytics for all content across platforms with views, engagement, clicks, and shares tracking
 - **Content Performance Analytics** - Track post performance, identify top performers
 - **Performance Comparison** - Compare current metrics against previous periods
 - **Content Performance Comparison** - Compare performance metrics across different time periods
 - **Performance Tracking** - Detailed tracking for individual posts and content pieces
 - **Content Performance Tracking** - Track detailed performance metrics for individual content pieces
-- **Performance Heatmaps** - Visualize performance patterns by day and time
+- **Performance Heatmaps** - Visualize performance patterns by day and time with color-coded intensity maps showing optimal posting times
 - **Performance Benchmarking** - Compare performance against industry averages
+- **Industry Benchmarking** - Compare your performance against industry standards with percentile rankings, insights, and actionable recommendations
 - **Performance Insights** - AI-powered insights and recommendations
 - **Analytics Reports** - Generate comprehensive reports with customizable metrics
+- **Custom Report Builder** - Create custom reports with your own metrics, formulas, automated scheduling, and multiple recipients
 - **Analytics Export** - Export analytics data in multiple formats (PDF, CSV, Excel)
 - **Social Media Analytics Export** - Export analytics data in multiple formats for reporting
 - **Post Analytics Deep Dive** - Detailed analytics for individual posts
+- **Engagement Calculator** - Calculate and analyze engagement rates across all platforms with detailed breakdowns by type (likes, comments, shares, saves)
 
 ### Engagement & Social
 - **Engagement Tools** - Automated engagement tools including auto-reply, mention tracking, and comment moderation
