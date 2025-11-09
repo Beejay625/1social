@@ -791,6 +791,63 @@ const approvalStatusTokens: Record<
   },
 };
 
+const warmupHealthTokens: Record<
+  WarmupProgram["health"],
+  { label: string; badge: string; dot: string }
+> = {
+  excellent: {
+    label: "Excellent",
+    badge: "bg-emerald-400/25 text-emerald-100 border border-emerald-300/40",
+    dot: "bg-emerald-300",
+  },
+  steady: {
+    label: "Steady",
+    badge: "bg-sky-400/25 text-sky-100 border border-sky-300/40",
+    dot: "bg-sky-300",
+  },
+  watch: {
+    label: "Watch",
+    badge: "bg-amber-400/25 text-amber-100 border border-amber-300/40",
+    dot: "bg-amber-300",
+  },
+};
+
+const sequenceStatusTokens: Record<
+  SequencePlay["status"],
+  { label: string; badge: string }
+> = {
+  active: { label: "Active", badge: "bg-emerald-400/20 text-emerald-100" },
+  paused: { label: "Paused", badge: "bg-amber-400/20 text-amber-100" },
+  draft: { label: "Draft", badge: "bg-white/15 text-white" },
+};
+
+const impactTokens: Record<
+  CalendarSlot["impact"],
+  { label: string; badge: string }
+> = {
+  spotlight: {
+    label: "Spotlight",
+    badge: "bg-fuchsia-400/25 text-fuchsia-100 border border-fuchsia-300/40",
+  },
+  boost: {
+    label: "Boost",
+    badge: "bg-sky-400/25 text-sky-100 border border-sky-300/40",
+  },
+  check-in: {
+    label: "Check-in",
+    badge: "bg-emerald-400/20 text-emerald-100 border border-emerald-300/40",
+  },
+};
+
+const scoreWidthClass = (score: number) => {
+  if (score >= 95) return "w-[95%]";
+  if (score >= 85) return "w-[85%]";
+  if (score >= 75) return "w-[75%]";
+  if (score >= 65) return "w-[65%]";
+  if (score >= 55) return "w-[55%]";
+  return "w-[40%]";
+};
+
 const metricKpiSeed: MetricKpi[] = [
   {
     id: "reach",
