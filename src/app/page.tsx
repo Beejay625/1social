@@ -85,6 +85,36 @@ const initialPosts: SocialPost[] = [
   },
 ];
 
+const initialPlannedPosts: PlannedPost[] = [
+  {
+    id: "plan-1",
+    title: "Founder AMA teaser",
+    summary: "Carousel introducing tomorrow’s community AMA.",
+    scheduledFor: new Date(Date.now() + 1000 * 60 * 60 * 5).toISOString(),
+    channels: ["farcaster", "instagram"],
+    status: "approved",
+    owner: "Ameena",
+  },
+  {
+    id: "plan-2",
+    title: "Design drops recap",
+    summary: "Thread covering the remix design sprint learnings.",
+    scheduledFor: new Date(Date.now() + 1000 * 60 * 60 * 28).toISOString(),
+    channels: ["farcaster"],
+    status: "queued",
+    owner: "Kai",
+  },
+  {
+    id: "plan-3",
+    title: "Creator highlight reel",
+    summary: "Vertical reel featuring three community wins.",
+    scheduledFor: new Date(Date.now() + 1000 * 60 * 60 * 48).toISOString(),
+    channels: ["instagram"],
+    status: "draft",
+    owner: "Leo",
+  },
+];
+
 const formatRelativeTime = (isoString: string) => {
   const elapsed = Date.now() - new Date(isoString).getTime();
   const minute = 60 * 1000;
