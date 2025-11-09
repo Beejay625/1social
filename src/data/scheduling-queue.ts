@@ -2,88 +2,50 @@ export interface ScheduledPost {
   id: string;
   content: string;
   platforms: string[];
-  scheduledFor: string;
-  status: "queued" | "scheduled" | "published" | "failed" | "cancelled";
-  priority: "low" | "medium" | "high" | "urgent";
-  createdAt: string;
-  createdBy: string;
-  retryCount?: number;
-  errorMessage?: string;
+  scheduledTime: string;
+  status: "scheduled" | "published" | "failed";
+  author: string;
+  engagement?: number;
 }
 
 export interface QueueStats {
-  totalQueued: number;
-  scheduledToday: number;
+  totalScheduled: number;
   publishedToday: number;
   failedToday: number;
-  averageQueueTime: number;
-}
-
-export interface QueueSettings {
-  autoPublish: boolean;
-  maxRetries: number;
-  retryDelay: number;
-  priorityOrdering: boolean;
-  conflictResolution: "skip" | "reschedule" | "merge";
+  avgPostsPerDay: number;
 }
 
 export const schedulingQueue: ScheduledPost[] = [
   {
-    id: "queue-1",
-    content: "Exciting product launch coming soon! Stay tuned 🚀",
-    platforms: ["farcaster", "instagram", "x"],
-    scheduledFor: new Date(Date.now() + 3600000).toISOString(),
+    id: "post-1",
+    content: "Excited to announce our new feature! 🚀",
+    platforms: ["farcaster", "x", "instagram"],
+    scheduledTime: new Date(Date.now() + 1000 * 60 * 60 * 2).toISOString(),
     status: "scheduled",
-    priority: "high",
-    createdAt: new Date(Date.now() - 7200000).toISOString(),
-    createdBy: "user-1",
+    author: "Alex Chen",
   },
   {
-    id: "queue-2",
-    content: "Weekly community update - check out what's new!",
-    platforms: ["farcaster"],
-    scheduledFor: new Date(Date.now() + 7200000).toISOString(),
-    status: "queued",
-    priority: "medium",
-    createdAt: new Date(Date.now() - 3600000).toISOString(),
-    createdBy: "user-2",
+    id: "post-2",
+    content: "Weekly update: Here's what we've been working on...",
+    platforms: ["farcaster", "lens"],
+    scheduledTime: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(),
+    status: "scheduled",
+    author: "Sarah Johnson",
   },
   {
-    id: "queue-3",
+    id: "post-3",
     content: "Thank you to our amazing community! 🙏",
-    platforms: ["instagram", "x"],
-    scheduledFor: new Date(Date.now() - 1800000).toISOString(),
+    platforms: ["x", "instagram"],
+    scheduledTime: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
     status: "published",
-    priority: "low",
-    createdAt: new Date(Date.now() - 10800000).toISOString(),
-    createdBy: "user-1",
-  },
-  {
-    id: "queue-4",
-    content: "New feature announcement",
-    platforms: ["farcaster"],
-    scheduledFor: new Date(Date.now() - 3600000).toISOString(),
-    status: "failed",
-    priority: "high",
-    createdAt: new Date(Date.now() - 14400000).toISOString(),
-    createdBy: "user-3",
-    retryCount: 2,
-    errorMessage: "API rate limit exceeded",
+    author: "Mike Rodriguez",
+    engagement: 1240,
   },
 ];
 
 export const queueStats: QueueStats = {
-  totalQueued: 4,
-  scheduledToday: 12,
+  totalScheduled: 45,
   publishedToday: 8,
-  failedToday: 1,
-  averageQueueTime: 45,
-};
-
-export const queueSettings: QueueSettings = {
-  autoPublish: true,
-  maxRetries: 3,
-  retryDelay: 300000,
-  priorityOrdering: true,
-  conflictResolution: "reschedule",
+  failedToday: 0,
+  avgPostsPerDay: 5.2,
 };
