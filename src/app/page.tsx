@@ -330,6 +330,18 @@ import {
   socialAccounts,
 } from "@/data/multi-account";
 import {
+  performanceMetrics,
+  topPerformingContent,
+} from "@/data/content-performance-tracking";
+import {
+  audienceInsights,
+  audienceSegments,
+} from "@/data/audience-insights";
+import {
+  competitorComparisons,
+  competitors,
+} from "@/data/competitor-analysis";
+import {
   collaborationCampaigns,
   influencerMetrics,
   influencerProfiles,
