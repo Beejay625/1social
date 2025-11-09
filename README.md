@@ -191,15 +191,12 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Compliance** - Ensure brand safety and legal compliance
 - **Advanced Reporting** - Export data in multiple formats for analysis
 - **Content Performance Prediction** - AI-powered predictions with 85%+ accuracy
-- **Industry Benchmarking** - Compare performance against industry standards
+- **Industry Benchmarking** - Compare performance against industry standards with percentile rankings
 - **Social Media Auditing** - Comprehensive audits with actionable recommendations
-- **Content Recycling** - Automatically repost top-performing content
+- **Content Recycling** - Automatically repost top-performing content with customizable rules
 - **Mobile App Management** - Full mobile app analytics and feature management
-- **Predictive Analytics** - Forecast content performance before publishing
-- **Attribution Modeling** - Track content attribution across customer journey
-- **Industry Benchmarking** - Compare performance against industry standards
-- **Multi-language Workflows** - AI-powered translation with human review
-- **Performance Attribution** - Deep analytics on content conversion paths
+- **Calendar AI Assistant** - AI-powered scheduling optimization and recommendations
+- **Custom Report Builder** - Create custom reports with your own metrics and formulas
 
 ## Project Structure
 
