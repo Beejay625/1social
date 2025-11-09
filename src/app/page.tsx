@@ -441,52 +441,43 @@ export default function Home() {
     [plannedPosts],
   );
 
-  const workflowTimeline = useMemo(() => {
-    const selectedPost =
-      plannedPosts.find((post) => post.id === selectedWorkflowPostId) ??
-      sortedPlannedPosts[0];
-    const postComments = comments
-      .filter((comment) => comment.postId === selectedPost?.id)
-      .sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-      );
-    const steps = [
-      {
-        id: "owner",
-        title: "Owner",
-        detail: selectedPost?.owner ?? "Unassigned",
-        badge: "bg-white/10 text-white",
-      },
-      {
-        id: "approver",
-        title: "Approver",
-        detail: selectedPost?.approver ?? "Assign approver",
-        badge:
-          selectedPost?.approver != null
-            ? "bg-emerald-400/20 text-emerald-100"
-            : "bg-rose-400/20 text-rose-100",
-      },
-      {
-        id: "status",
-        title: "Status",
-        detail:
-          selectedPost != null
-            ? scheduleStatusStyles[selectedPost.status].label
-            : "Pending",
-        badge:
-          selectedPost != null
-            ? scheduleStatusStyles[selectedPost.status].badge
-            : "bg-white/10 text-white",
-      },
-    ];
+  useEffect(() => {
+    if (!sortedPlannedPosts.length) {
+      setSelectedWorkflowPostId("");
+      return;
+    }
+    const exists = sortedPlannedPosts.some(
+      (plan) => plan.id === selectedWorkflowPostId,
+    );
+    if (!exists) {
+      setSelectedWorkflowPostId(sortedPlannedPosts[0]?.id ?? "");
+    }
+  }, [selectedWorkflowPostId, sortedPlannedPosts]);
+
+  const workflowContext = useMemo(() => {
+    const selectedPlan =
+      sortedPlannedPosts.find((plan) => plan.id === selectedWorkflowPostId) ??
+      sortedPlannedPosts[0] ??
+      null;
+
+    if (!selectedPlan) {
+      return {
+        selectedPlan: null,
+        steps: [] as ApprovalStep[],
+        comments: [] as Comment[],
+      };
+    }
+
+    const orderedComments = [...selectedPlan.commentThread].sort(
+      (a, b) => new Date(b.at).getTime() - new Date(a.at).getTime(),
+    );
 
     return {
-      selectedPost,
-      postComments,
-      steps,
+      selectedPlan,
+      steps: selectedPlan.approvalSteps,
+      comments: orderedComments,
     };
-  }, [comments, plannedPosts, selectedWorkflowPostId, sortedPlannedPosts]);
+  }, [selectedWorkflowPostId, sortedPlannedPosts]);
 
   const analyticsSnapshot = useMemo(() => {
     const farcasterLive = posts.filter((post) =>
