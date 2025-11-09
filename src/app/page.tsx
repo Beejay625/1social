@@ -981,8 +981,83 @@ const syndicationHistory: SyndicationEntry[] = [
   },
 ];
 
-// Audience segmentation data (moved to data/analytics.ts)
-const audienceSegmentsOld = [
+// Collaboration features data
+const collaborationMentions = [
+  {
+    id: "mention-1",
+    planId: "plan-1",
+    mentionedBy: "Leo",
+    mentionedTo: "You",
+    message: "@You Need your sign-off on the wallet signature flow",
+    at: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
+    resolved: false,
+  },
+  {
+    id: "mention-2",
+    planId: "plan-2",
+    mentionedBy: "Ameena",
+    mentionedTo: "Kai",
+    message: "@Kai Can you review the design drops recap copy?",
+    at: new Date(Date.now() - 1000 * 60 * 90).toISOString(),
+    resolved: true,
+  },
+  {
+    id: "mention-3",
+    planId: "plan-3",
+    mentionedBy: "Kai",
+    mentionedTo: "Leo",
+    message: "@Leo Pull new community shots for reel slots 2 and 3",
+    at: new Date(Date.now() - 1000 * 60 * 145).toISOString(),
+    resolved: false,
+  },
+];
+
+const collaborationChecklists = [
+  {
+    id: "checklist-1",
+    planId: "plan-1",
+    title: "Pre-launch checklist",
+    items: [
+      { id: "item-1", label: "Final copy review", checked: true, assignedTo: "Kai" },
+      { id: "item-2", label: "Asset upload", checked: true, assignedTo: "Leo" },
+      { id: "item-3", label: "Wallet signature prep", checked: false, assignedTo: "You" },
+    ],
+  },
+  {
+    id: "checklist-2",
+    planId: "plan-2",
+    title: "Design QA checklist",
+    items: [
+      { id: "item-4", label: "Typography check", checked: false, assignedTo: "Leo" },
+      { id: "item-5", label: "Color contrast", checked: false, assignedTo: "Leo" },
+      { id: "item-6", label: "Mobile preview", checked: false, assignedTo: "Ameena" },
+    ],
+  },
+];
+
+const collaborationHandoffs = [
+  {
+    id: "handoff-1",
+    planId: "plan-1",
+    from: "Kai",
+    to: "You",
+    action: "Request wallet signature",
+    status: "pending",
+    at: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+  },
+  {
+    id: "handoff-2",
+    planId: "plan-3",
+    from: "Leo",
+    to: "Ameena",
+    action: "Request asset upload",
+    status: "completed",
+    at: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
+  },
+];
+
+// Audience segmentation data
+const audienceSegments = [
   {
     id: "segment-1",
     label: "Power users",
@@ -1652,6 +1727,23 @@ export default function Home() {
     workflowAutomations?.[0]?.id ?? "",
   );
   const [selectedNotificationId, setSelectedNotificationId] = useState<string>("");
+  const [selectedMentionId, setSelectedMentionId] = useState<string>(
+    socialListeningMentions[0]?.id ?? "",
+  );
+  const [selectedInfluencerId, setSelectedInfluencerId] = useState<string>(
+    influencerProfiles[0]?.id ?? "",
+  );
+  const [selectedCrisisId, setSelectedCrisisId] = useState<string>(
+    crisisAlerts[0]?.id ?? "",
+  );
+  const [selectedProductId, setSelectedProductId] = useState<string>(
+    socialCommerceProducts[0]?.id ?? "",
+  );
+  const [selectedEventId, setSelectedEventId] = useState<string>(
+    calendarEvents[0]?.id ?? "",
+  );
+  const [listeningKeywordFilter, setListeningKeywordFilter] = useState<string>("all");
+  const [listeningSentimentFilter, setListeningSentimentFilter] = useState<string>("all");
 
   const activeNetwork = useMemo(
     () => networks.find((network) => network.id === chainId),
