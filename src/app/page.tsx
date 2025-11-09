@@ -1265,46 +1265,6 @@ const socialListeningTopics = [
   },
 ];
 
-// Notification center
-const notifications = [
-  {
-    id: "notif-1",
-    type: "approval",
-    title: "Approval needed",
-    message: "Founder AMA teaser requires your sign-off",
-    timestamp: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
-    read: false,
-    priority: "high",
-  },
-  {
-    id: "notif-2",
-    type: "performance",
-    title: "Post performing well",
-    message: "Creator highlight reel reached 15.6k views",
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
-    read: false,
-    priority: "medium",
-  },
-  {
-    id: "notif-3",
-    type: "mention",
-    title: "You were mentioned",
-    message: "@You Need your sign-off on the wallet signature flow",
-    timestamp: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
-    read: true,
-    priority: "high",
-  },
-  {
-    id: "notif-4",
-    type: "alert",
-    title: "Sentiment alert",
-    message: "Negative sentiment increased 15% on Wednesday",
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
-    read: false,
-    priority: "medium",
-  },
-];
-
 // Advanced analytics breakdown
 const analyticsBreakdown = [
   {
