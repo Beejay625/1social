@@ -4362,6 +4362,486 @@ export default function Home() {
         </section>
 
         <section
+          id="ai"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(147,51,234,0.35)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">AI Studio</h2>
+              <p className="text-sm text-slate-100/75">
+                Auto-draft posts, tune tone, and pull smart replies before publishing everywhere.
+              </p>
+            </header>
+
+            <div className="rounded-3xl border border-white/15 bg-slate-950/40 p-6">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Auto-draft composer
+                  </h3>
+                  <p className="mt-2 text-xs text-slate-200/70">
+                    Feed AI the scenario. Adjust tone and persona to converge on the right voice.
+                  </p>
+                </div>
+                <span className="text-xs text-slate-200/60">
+                  {aiCharacterCount} characters
+                </span>
+              </div>
+              <textarea
+                value={aiDraft}
+                onChange={(event) => setAiDraft(event.target.value)}
+                placeholder="Summarize the AMA highlights with a confident tone..."
+                className="mt-4 min-h-[160px] w-full resize-y rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-400 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/60"
+              />
+              <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,1fr)]">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Tone
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {aiToneOptions.map((tone) => {
+                      const active = tone.id === selectedToneId;
+                      return (
+                        <button
+                          key={tone.id}
+                          type="button"
+                          onClick={() => handleToneSelect(tone.id)}
+                          className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                            active
+                              ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                              : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                          }`}
+                        >
+                          {tone.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <p className="mt-3 text-xs text-slate-200/70">{selectedTone.description}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Persona
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {aiPersonas.map((persona) => {
+                      const active = persona.id === selectedPersonaId;
+                      return (
+                        <button
+                          key={persona.id}
+                          type="button"
+                          onClick={() => handlePersonaSelect(persona.id)}
+                          className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                            active
+                              ? "border-emerald-400/50 bg-emerald-400/20 text-emerald-100 shadow-lg shadow-emerald-500/30"
+                              : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                          }`}
+                        >
+                          {persona.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <p className="mt-3 text-xs text-slate-200/70">{selectedPersona.summary}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Jump-start ideas
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {aiDraftIdeas.length} suggestions
+                </span>
+              </div>
+              <div className="mt-4 grid gap-3 lg:grid-cols-3">
+                {aiDraftIdeas.map((idea) => {
+                  const active = idea.id === selectedIdeaId;
+                  return (
+                    <div
+                      key={idea.id}
+                      className={`flex h-full flex-col justify-between rounded-2xl border border-white/10 bg-slate-950/40 p-4 ${
+                        active ? "ring-1 ring-white/40" : ""
+                      }`}
+                    >
+                      <div>
+                        <p className="text-sm font-semibold text-white">{idea.headline}</p>
+                        <p className="mt-2 text-xs text-slate-200/70">{idea.snippet}</p>
+                      </div>
+                      <div className="mt-4 flex items-center justify-between text-xs text-slate-200/70">
+                        <button
+                          type="button"
+                          onClick={() => handleApplyIdea(idea.id, idea.snippet)}
+                          className="inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-1 uppercase tracking-[0.3em] text-white hover:border-white/40 hover:bg-white/10"
+                        >
+                          Use idea
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleIdeaSelect(idea.id)}
+                          className={`rounded-full border px-2 py-1 text-[10px] uppercase tracking-[0.3em] ${
+                            active
+                              ? "border-white/70 bg-white text-slate-900"
+                              : "border-white/20 text-slate-200/70"
+                          }`}
+                        >
+                          Mark
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.25)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Smart replies
+                </h3>
+                <span className="text-xs text-slate-200/70">{aiSmartReplies.length} queued</span>
+              </div>
+              <ul className="mt-4 space-y-3">
+                {aiSmartReplies.map((item) => (
+                  <li
+                    key={item.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      <span>{channelCatalog[item.channel].label}</span>
+                      <span>{item.author}</span>
+                    </div>
+                    <p className="mt-2 text-sm text-slate-100/85">{item.message}</p>
+                    <button
+                      type="button"
+                      onClick={() => handleInsertSmartReply(item.suggestion)}
+                      className="mt-3 inline-flex items-center gap-2 rounded-full border border-emerald-400/50 bg-emerald-400/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-emerald-100 hover:border-emerald-300/70 hover:bg-emerald-400/30"
+                    >
+                      Insert suggestion
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(56,189,248,0.25)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  AI activity log
+                </h3>
+                <span className="text-xs text-slate-200/70">{aiActivityLog.length} entries</span>
+              </div>
+              <ul className="mt-4 space-y-3">
+                {aiActivityLog.map((entry) => (
+                  <li
+                    key={entry.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/80"
+                  >
+                    <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      <span>{entry.action}</span>
+                      <span>{entry.timestamp}</span>
+                    </div>
+                    <p className="mt-2">{entry.detail}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="reporting"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(14,165,233,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Reporting hub</h2>
+              <p className="text-sm text-slate-100/75">
+                Preview decks, schedule exports, and review KPI snapshots before sharing with
+                stakeholders.
+              </p>
+            </header>
+
+            <div className="grid gap-4 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)]">
+              <div className="space-y-3">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Deck library
+                </h3>
+                <ul className="space-y-2">
+                  {reportingDecks.map((deck) => {
+                    const active = deck.id === selectedDeckId;
+                    return (
+                      <li key={deck.id}>
+                        <button
+                          type="button"
+                          onClick={() => handleDeckSelect(deck.id)}
+                          className={`flex w-full items-center justify-between gap-3 rounded-2xl border px-3 py-3 text-left text-sm transition ${
+                            active
+                              ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                              : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                          }`}
+                        >
+                          <div>
+                            <p className="font-semibold">{deck.title}</p>
+                            <p className="text-xs text-slate-200/70">{deck.timeframe}</p>
+                          </div>
+                          <span className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                            {deck.status}
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+              <div className="rounded-3xl border border-white/15 bg-slate-950/40 p-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Deck preview
+                </p>
+                <div
+                  className={`mt-4 flex h-48 flex-col justify-between rounded-3xl border border-white/10 bg-gradient-to-br ${selectedDeck.accent} p-6 text-white`}
+                >
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.3em] text-white/70">
+                      {selectedDeck.timeframe}
+                    </p>
+                    <h4 className="mt-3 text-xl font-semibold">{selectedDeck.title}</h4>
+                  </div>
+                  <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em]">
+                    <span>{selectedDeck.size}</span>
+                    <span>{selectedDeck.status}</span>
+                  </div>
+                </div>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                  >
+                    Download PDF
+                  </button>
+                  <button
+                    type="button"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                  >
+                    Share link
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Export automations
+                </h3>
+                <span className="text-xs text-slate-200/70">{reportingExports.length} jobs</span>
+              </div>
+              <div className="mt-4 grid gap-3 lg:grid-cols-3">
+                {reportingExports.map((exportJob) => {
+                  const active = exportJob.id === selectedExportId;
+                  return (
+                    <button
+                      key={exportJob.id}
+                      type="button"
+                      onClick={() => handleExportSelect(exportJob.id)}
+                      className={`flex h-full flex-col justify-between rounded-2xl border px-4 py-4 text-left text-sm transition ${
+                        active
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                    >
+                      <div>
+                        <p className="font-semibold">{exportJob.label}</p>
+                        <p className="mt-2 text-xs text-slate-200/70">
+                          {exportJob.description}
+                        </p>
+                      </div>
+                      <div className="mt-4 space-y-1 text-[11px] uppercase tracking-[0.3em] text-slate-200/60">
+                        <p>{exportJob.lastRun}</p>
+                        <p>{exportJob.destination}</p>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  KPI snapshots
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {reportingSnapshots.length} metrics
+                </span>
+              </div>
+              <div className="mt-4 space-y-3">
+                {reportingSnapshots.map((snapshot) => (
+                  <div
+                    key={snapshot.id}
+                    className={`rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white ${snapshot.tone}`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <p className="font-semibold">{snapshot.title}</p>
+                      <span className="text-lg font-semibold">{snapshot.value}</span>
+                    </div>
+                    <p className="mt-2 text-xs text-white/80">{snapshot.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="engagement"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Engagement center</h2>
+              <p className="text-sm text-slate-100/75">
+                Triage replies, apply smart responses, and route feedback without leaving the
+                dashboard.
+              </p>
+            </header>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex flex-wrap gap-2">
+                  {engagementFilters.sentiments.map((filter) => {
+                    const active = selectedSentimentFilter === filter.id;
+                    const count = engagementCounts.sentiments[filter.id] ?? 0;
+                    return (
+                      <button
+                        key={filter.id}
+                        type="button"
+                        onClick={() => handleSentimentFilterChange(filter.id)}
+                        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                          active
+                            ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                            : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                        }`}
+                      >
+                        {filter.label}
+                        <span className="text-[10px] text-slate-200/70">{count}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {engagementFilters.status.map((filter) => {
+                    const active = selectedEngagementStatus === filter.id;
+                    const count = engagementCounts.statuses[filter.id] ?? 0;
+                    return (
+                      <button
+                        key={filter.id}
+                        type="button"
+                        onClick={() => handleStatusFilterChange(filter.id)}
+                        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                          active
+                            ? "border-emerald-400/50 bg-emerald-400/20 text-emerald-100"
+                            : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                        }`}
+                      >
+                        {filter.label}
+                        <span className="text-[10px]">
+                          {count}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <ul className="mt-4 space-y-3">
+                {filteredEngagementItems.map((item) => (
+                  <li
+                    key={item.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85"
+                  >
+                    <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      <span>{channelCatalog[item.channel].label}</span>
+                      <span>{item.timeAgo}</span>
+                    </div>
+                    <div className="mt-2 flex items-center justify-between">
+                      <p className="font-semibold text-white">{item.author}</p>
+                      <span className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                        {item.status}
+                      </span>
+                    </div>
+                    <p className="mt-2">{item.message}</p>
+                    <div className="mt-3 flex flex-wrap gap-2 text-[11px] uppercase tracking-[0.3em] text-slate-200/60">
+                      {item.tags.map((tag) => (
+                        <span
+                          key={`${item.id}-${tag}`}
+                          className="rounded-full border border-white/15 bg-white/10 px-3 py-1"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                      >
+                        Reply
+                      </button>
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                      >
+                        Assign
+                      </button>
+                    </div>
+                  </li>
+                ))}
+                {filteredEngagementItems.length === 0 && (
+                  <li className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-6 text-center text-sm text-slate-200/70">
+                    All caught up for this filter.
+                  </li>
+                )}
+              </ul>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Triage queues
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {engagementTriageQueues.reduce((acc, queue) => acc + queue.count, 0)} total
+                </span>
+              </div>
+              <div className="mt-4 space-y-3">
+                {engagementTriageQueues.map((queue) => (
+                  <div
+                    key={queue.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/80"
+                  >
+                    <div className="flex items-center justify-between">
+                      <p className="font-semibold text-white">{queue.title}</p>
+                      <span className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                        {queue.count}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-xs text-slate-200/70">{queue.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
           id="automation"
           className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
         >
