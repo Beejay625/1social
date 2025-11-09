@@ -292,6 +292,44 @@ import {
   trendingHashtags,
 } from "@/data/hashtag-research";
 import {
+  comparisonStats,
+  contentComparisons,
+} from "@/data/content-comparison";
+import {
+  roiCalculations,
+  roiMetrics,
+} from "@/data/roi-calculator";
+import {
+  calendarEvents,
+  calendarStats,
+  calendarViews,
+} from "@/data/calendar-views";
+import {
+  teamGoals,
+  teamMemberPerformance,
+  teamPerformanceStats,
+} from "@/data/team-performance";
+import {
+  moderationQueue,
+  moderationRules,
+  moderationStats,
+} from "@/data/content-moderation";
+import {
+  brandSafetyAlerts,
+  brandSafetyScore,
+  brandSafetyTrends,
+} from "@/data/brand-safety";
+import {
+  crisisAlerts,
+  crisisResponses,
+  crisisStats,
+} from "@/data/crisis-response";
+import {
+  accountGroups,
+  accountStats,
+  socialAccounts,
+} from "@/data/multi-account";
+import {
   collaborationCampaigns,
   influencerMetrics,
   influencerProfiles,
