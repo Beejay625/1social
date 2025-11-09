@@ -1444,7 +1444,6 @@ export default function Home() {
                             type="button"
                             onClick={() => handleWorkflowSelect(plan.id)}
                             className="inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-white transition hover:border-white/40 hover:bg-white/10"
-                            aria-pressed={isSelected}
                           >
                             Review workflow
                           </button>
@@ -1580,7 +1579,7 @@ export default function Home() {
                         ? "border-white/60 bg-white text-slate-900 shadow-lg shadow-white/30"
                         : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
                     }`}
-                    aria-pressed={isActive}
+                    aria-current={isActive ? "true" : undefined}
                   >
                     <span className="text-xs font-medium text-slate-400">
                       {plan.owner}
