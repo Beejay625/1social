@@ -1751,6 +1751,9 @@ export default function Home() {
       setScheduleChannels({
         farcaster: true,
         instagram: false,
+        x: false,
+        lens: false,
+        mirror: false,
       });
       setIsScheduling(false);
       setScheduleFeedback({
