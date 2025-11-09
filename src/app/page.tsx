@@ -1854,6 +1854,18 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "crisis", label: "Crisis Management" },
   { id: "commerce", label: "Social Commerce" },
   { id: "calendar-advanced", label: "Advanced Calendar" },
+  { id: "moderation", label: "Content Moderation" },
+  { id: "brand-safety", label: "Brand Safety" },
+  { id: "api-management", label: "API Management" },
+  { id: "hashtag-analytics", label: "Hashtag Analytics" },
+  { id: "performance-comparison", label: "Performance Comparison" },
+  { id: "content-library", label: "Content Library" },
+  { id: "advanced-search", label: "Advanced Search" },
+  { id: "user-management", label: "User Management" },
+  { id: "export-backup", label: "Export & Backup" },
+  { id: "revenue-tracking", label: "Revenue Tracking" },
+  { id: "multi-language", label: "Multi-language" },
+  { id: "post-analytics", label: "Post Analytics" },
 ];
 const chartColorTokens = {
   reach: "text-sky-300",
