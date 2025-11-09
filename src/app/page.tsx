@@ -1620,7 +1620,7 @@ const performanceComparison = [
 ];
 
 // Content library management
-const contentLibrary = [
+const contentLibraryItems = [
   {
     id: "lib-1",
     title: "Product Launch Assets",
