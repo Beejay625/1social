@@ -12,6 +12,7 @@ import {
   sequenceStatusTokens,
   warmupHealthTokens,
 } from "@/constants/statusTokens";
+import { percentWidthClass, scoreWidthClass } from "@/utils/progress";
 import { formatRelativeTime, formatScheduleLabel, formatTimeUntil } from "@/utils/time";
 import { useEffect, useMemo, useState } from "react";
 import { useAccount, useChainId, useDisconnect } from "wagmi";
@@ -1090,44 +1091,6 @@ const velocityBadge = (value: number) => {
   if (value > 70) return { label: "Pacing", tone: "bg-cyan-400/25 text-cyan-100" };
   if (value > 50) return { label: "Steady", tone: "bg-amber-400/25 text-amber-100" };
   return { label: "Warming up", tone: "bg-rose-400/25 text-rose-100" };
-};
-
-const percentWidthClass = (percent: number) => {
-  if (percent >= 95) return "w-[95%]";
-  if (percent >= 80) return "w-[80%]";
-  if (percent >= 65) return "w-[65%]";
-  if (percent >= 50) return "w-[50%]";
-  if (percent >= 35) return "w-[35%]";
-  if (percent >= 20) return "w-[20%]";
-  return "w-[12%]";
-};
-
-const buildSparklinePath = (
-  values: number[],
-  width = 140,
-  height = 42,
-): string => {
-  if (values.length === 0) return "";
-  const max = Math.max(...values);
-  const min = Math.min(...values);
-  const verticalRange = max === min ? 1 : max - min;
-  const horizontalStep = width / (values.length - 1 || 1);
-
-  return values
-    .map((value, index) => {
-      const x = index * horizontalStep;
-      const y = height - ((value - min) / verticalRange) * height;
-      return `${index === 0 ? "M" : "L"}${x.toFixed(1)},${y.toFixed(1)}`;
-    })
-    .join(" ");
-};
-
-const heatLevelClass = (score: number) => {
-  if (score >= 5) return "bg-emerald-400/60 text-slate-900";
-  if (score === 4) return "bg-emerald-300/50 text-slate-900";
-  if (score === 3) return "bg-emerald-200/50 text-slate-900";
-  if (score === 2) return "bg-emerald-200/30 text-slate-900";
-  return "bg-white/10 text-slate-200";
 };
 
 const formatMetricValue = (value: number, unit: MetricUnit) => {
