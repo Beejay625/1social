@@ -898,7 +898,7 @@ const instantiateApprovalSteps = (
       id: `${step.id}-${seed}-${index}`,
       label: step.label,
       approver: step.approver,
-      status: "pending",
+      status: "pending" as ApprovalStatus,
       due: new Date(dueTime).toISOString(),
       escalation: baseEscalation,
     };
