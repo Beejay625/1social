@@ -9435,7 +9435,7 @@ export default function Home() {
             </header>
 
             <div className="space-y-4">
-              {contentLibrary.map((item) => (
+              {contentLibraryItems.map((item) => (
                 <div
                   key={item.id}
                   className="rounded-3xl border border-white/15 bg-white/5 p-6"
