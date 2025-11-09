@@ -740,6 +740,143 @@ const approvalRoutes: ApprovalRoute[] = [
   },
 ];
 
+const approvalRoutesById = approvalRoutes.reduce<Record<string, ApprovalRoute>>(
+  (accumulator, route) => {
+    accumulator[route.id] = route;
+    return accumulator;
+  },
+  {},
+);
+
+const approvalTemplates: ApprovalTemplate[] = [
+  {
+    id: "multi-channel-launch",
+    name: "Multi-channel launch",
+    summary: "Strategy, creative, then wallet sign-off ahead of a big drop.",
+    description:
+      "Ideal for coordinated launches where channel strategy, creative polish, and signing need staggered checkpoints with fast escalations.",
+    steps: [
+      {
+        id: "awareness-strategy",
+        label: approvalRoutesById["route-1"]?.stage ?? "Awareness",
+        approver: approvalRoutesById["route-1"]?.owners[0] ?? "Ameena",
+        dueOffsetHours: -8,
+        escalation: {
+          notifyAfterHours: 2,
+          routeTo: approvalRoutesById["route-1"]?.owners[1] ?? "Kai",
+          fallback: approvalRoutesById["route-1"]?.fallback ?? "Route to You if unresponsive",
+        },
+      },
+      {
+        id: "creative-pass",
+        label: approvalRoutesById["route-2"]?.stage ?? "Creative QA",
+        approver: approvalRoutesById["route-2"]?.owners[0] ?? "Leo",
+        dueOffsetHours: -4,
+        escalation: {
+          notifyAfterHours: 1,
+          routeTo: "Ameena",
+          fallback: approvalRoutesById["route-2"]?.fallback ?? "Escalate to @design-lead",
+        },
+      },
+      {
+        id: "wallet-sign",
+        label: approvalRoutesById["route-3"]?.stage ?? "Wallet signing",
+        approver: approvalRoutesById["route-3"]?.owners[0] ?? "You",
+        dueOffsetHours: -1,
+        escalation: {
+          notifyAfterHours: 0.5,
+          routeTo: "Kai",
+          fallback: approvalRoutesById["route-3"]?.fallback ?? "Ping #wallet-ops",
+        },
+      },
+    ],
+  },
+  {
+    id: "creative-spotlight",
+    name: "Creative spotlight",
+    summary: "Deep creative loop with follow-up polish right before launch.",
+    description:
+      "Use when creative assets need multiple passes. Adds a final polish window and escalates quickly to keep the launch slot protected.",
+    steps: [
+      {
+        id: "concept-pass",
+        label: "Concept approval",
+        approver: "Leo",
+        dueOffsetHours: -10,
+        escalation: {
+          notifyAfterHours: 3,
+          routeTo: "Ameena",
+          fallback: "Escalate to @design-lead",
+        },
+      },
+      {
+        id: "motion-pass",
+        label: "Motion / asset polish",
+        approver: "Kai",
+        dueOffsetHours: -6,
+        escalation: {
+          notifyAfterHours: 2,
+          routeTo: "Leo",
+          fallback: "Route to You if unresponsive",
+        },
+      },
+      {
+        id: "final-copy",
+        label: "Final copy & CTA check",
+        approver: "Ameena",
+        dueOffsetHours: -2,
+        escalation: {
+          notifyAfterHours: 1,
+          routeTo: "You",
+          fallback: "Ping #wallet-ops",
+        },
+      },
+    ],
+  },
+  {
+    id: "post-launch-measure",
+    name: "Post-launch measure",
+    summary: "Quick pre-launch check and post-launch health review.",
+    description:
+      "Blend a lightweight launch check with a follow-up measurement window to confirm the drop is performing and reroute if not.",
+    steps: [
+      {
+        id: "preflight",
+        label: "Preflight check",
+        approver: "Ameena",
+        dueOffsetHours: -3,
+        escalation: {
+          notifyAfterHours: 1,
+          routeTo: "Kai",
+          fallback: "Route to You if unresponsive",
+        },
+      },
+      {
+        id: "go-live-confirm",
+        label: "Go-live confirmation",
+        approver: "You",
+        dueOffsetHours: -0.5,
+        escalation: {
+          notifyAfterHours: 0.5,
+          routeTo: "Leo",
+          fallback: "Ping #wallet-ops",
+        },
+      },
+      {
+        id: "post-launch-review",
+        label: "Post-launch performance review",
+        approver: "Kai",
+        dueOffsetHours: 4,
+        escalation: {
+          notifyAfterHours: 2,
+          routeTo: "Ameena",
+          fallback: "Escalate to @design-lead",
+        },
+      },
+    ],
+  },
+];
+
 const repostLedger: RepostEvent[] = [
   {
     id: "repost-1",
