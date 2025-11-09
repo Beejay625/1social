@@ -22214,19 +22214,19 @@ export default function Home() {
               <div className="space-y-4">
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
                   <p className="text-xs text-slate-200/60">Total Videos</p>
-                  <p className="mt-1 text-2xl font-semibold text-white">{videoAnalyticsStats.totalVideos}</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{videoStats.totalVideos}</p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
                   <p className="text-xs text-slate-200/60">Total Views</p>
-                  <p className="mt-1 text-xl font-semibold text-white">{videoAnalyticsStats.totalViews.toLocaleString()}</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{videoStats.totalViews.toLocaleString()}</p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-                  <p className="text-xs text-slate-200/60">Total Watch Time</p>
-                  <p className="mt-1 text-xl font-semibold text-emerald-300">{videoAnalyticsStats.totalWatchTimeFormatted}</p>
+                  <p className="text-xs text-slate-200/60">Avg Completion</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{videoStats.avgCompletionRate}%</p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-                  <p className="text-xs text-slate-200/60">Avg Engagement</p>
-                  <p className="mt-1 text-xl font-semibold text-emerald-300">{videoAnalyticsStats.avgEngagementRate}%</p>
+                  <p className="text-xs text-slate-200/60">Top Platform</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300 capitalize">{videoStats.topPerformingPlatform}</p>
                 </div>
               </div>
             </div>
@@ -23430,23 +23430,10 @@ export default function Home() {
                   >
                     <p className="text-sm font-semibold text-white mb-1">{template.name}</p>
                     <p className="text-xs text-slate-200/60 mb-2">{template.description}</p>
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                      {template.includes.map((item, idx) => (
-                        <span key={idx} className="text-xs px-2 py-1 rounded-full bg-white/10 text-slate-200">
-                          {item}
-                        </span>
-                      ))}
-                    </div>
                     <div className="flex items-center gap-4 text-xs text-slate-200/60">
                       <span>{template.format.toUpperCase()}</span>
                       <span>·</span>
                       <span>Used {template.usageCount} times</span>
-                      {template.lastUsed && (
-                        <>
-                          <span>·</span>
-                          <span>Last: {new Date(template.lastUsed).toLocaleDateString()}</span>
-                        </>
-                      )}
                     </div>
                   </div>
                 ))}
