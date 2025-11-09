@@ -18249,6 +18249,507 @@ export default function Home() {
           </aside>
         </section>
 
+        <section
+          id="content-forecasting"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content Forecasting</h2>
+              <p className="text-sm text-slate-100/75">
+                AI-powered predictions for content performance before publishing.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {contentForecasts.map((forecast) => (
+                <div
+                  key={forecast.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[forecast.platform].dot}`} />
+                        <h3 className="text-lg font-semibold text-white">{forecast.title}</h3>
+                        <span className="text-xs text-slate-200/70">
+                          {formatRelativeTime(forecast.forecastDate)}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Predicted Reach</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(forecast.predictedReach / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Predicted Engagement</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{forecast.predictedEngagement}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Engagement Rate</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {forecast.predictedEngagementRate.toFixed(1)}%
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Confidence</p>
+                          <p className="mt-1 text-sm font-semibold text-emerald-300">
+                            {forecast.confidence}%
+                          </p>
+                        </div>
+                      </div>
+                      <div className="mt-4 space-y-2">
+                        <p className="text-xs font-semibold text-slate-200/70">Key Factors</p>
+                        <div className="flex flex-wrap gap-2">
+                          {forecast.factors.map((factor, idx) => (
+                            <span
+                              key={idx}
+                              className={`rounded-full px-3 py-1 text-xs ${
+                                factor.impact === "high"
+                                  ? "bg-purple-500/20 text-purple-300"
+                                  : factor.impact === "medium"
+                                  ? "bg-blue-500/20 text-blue-300"
+                                  : "bg-slate-500/20 text-slate-300"
+                              }`}
+                            >
+                              {factor.name}: {factor.value}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Forecast Accuracy
+              </h3>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Overall Accuracy</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {forecastAccuracy.overall}%
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active Forecasts</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {contentForecasts.length}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Recommendations
+              </h3>
+              <div className="mt-4 space-y-3">
+                {forecastRecommendations.slice(0, 3).map((rec) => (
+                  <div key={rec.id} className="rounded-2xl border border-white/10 bg-slate-950/40 p-3">
+                    <p className="text-xs font-semibold text-white">{rec.recommendation}</p>
+                    <p className="mt-1 text-[10px] text-slate-200/60">
+                      {rec.impact} impact · {rec.confidence}% confidence
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="content-attribution"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content Attribution</h2>
+              <p className="text-sm text-slate-100/75">
+                Track which content drives conversions and revenue across the customer journey.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {topAttributedContent.map((content) => (
+                <div
+                  key={content.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[content.platform].dot}`} />
+                        <h3 className="text-lg font-semibold text-white">{content.title}</h3>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Conversions</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{content.conversions}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Revenue</p>
+                          <p className="mt-1 text-sm font-semibold text-emerald-300">
+                            ${(content.revenue / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Conversion Rate</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {content.conversionRate}%
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Attribution Weight</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {content.attributionWeight}%
+                          </p>
+                        </div>
+                      </div>
+                      <div className="mt-4 flex gap-4 text-xs text-slate-200/70">
+                        <span>First Touch: {content.firstTouch}</span>
+                        <span>Last Touch: {content.lastTouch}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Attribution Summary
+              </h3>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Conversions</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {attributionMetrics.totalConversions.toLocaleString()}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Attributed Revenue</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">
+                    ${(attributionMetrics.attributedRevenue / 1000).toFixed(1)}k
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Attribution Rate</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {attributionMetrics.attributionRate}%
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="content-benchmarking"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(251,191,36,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content Benchmarking</h2>
+              <p className="text-sm text-slate-100/75">
+                Compare your performance against industry benchmarks and top performers.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {benchmarkComparison.map((benchmark, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-white">{benchmark.metric}</h3>
+                    <span className={`text-xs px-3 py-1 rounded-full ${
+                      benchmark.status === "above_average"
+                        ? "bg-emerald-500/20 text-emerald-300"
+                        : "bg-amber-500/20 text-amber-300"
+                    }`}>
+                      {benchmark.percentile}th percentile
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <p className="text-xs text-slate-200/60">Your Value</p>
+                      <p className="mt-1 text-sm font-semibold text-white">
+                        {typeof benchmark.yourValue === "number" && benchmark.yourValue > 1000
+                          ? (benchmark.yourValue / 1000).toFixed(1) + "k"
+                          : benchmark.yourValue}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60">Industry Avg</p>
+                      <p className="mt-1 text-sm font-semibold text-slate-300">
+                        {typeof benchmark.industryAverage === "number" && benchmark.industryAverage > 1000
+                          ? (benchmark.industryAverage / 1000).toFixed(1) + "k"
+                          : benchmark.industryAverage}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60">Top Performers</p>
+                      <p className="mt-1 text-sm font-semibold text-purple-300">
+                        {typeof benchmark.topPerformers === "number" && benchmark.topPerformers > 1000
+                          ? (benchmark.topPerformers / 1000).toFixed(1) + "k"
+                          : benchmark.topPerformers}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(251,191,36,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Benchmark Goals
+              </h3>
+              <div className="mt-4 space-y-4">
+                {benchmarkGoals.slice(0, 3).map((goal, idx) => (
+                  <div key={idx} className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                    <p className="text-xs font-semibold text-white">{goal.metric}</p>
+                    <div className="mt-2 flex items-center justify-between">
+                      <span className="text-sm text-slate-200/70">
+                        {typeof goal.current === "number" && goal.current > 1000
+                          ? (goal.current / 1000).toFixed(1) + "k"
+                          : goal.current}
+                      </span>
+                      <span className="text-sm text-emerald-300">
+                        → {typeof goal.goal === "number" && goal.goal > 1000
+                          ? (goal.goal / 1000).toFixed(1) + "k"
+                          : goal.goal}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-[10px] text-slate-200/60">{goal.timeframe}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="multi-language-management"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Multi-language Management</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage and track content across multiple languages with translation workflows.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {multilingualContent.map((content) => (
+                <div
+                  key={content.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-white">{content.title}</h3>
+                      <p className="mt-1 text-xs text-slate-200/70">
+                        Original: {supportedLanguages.find(l => l.code === content.originalLanguage)?.name}
+                      </p>
+                      <div className="mt-4 space-y-2">
+                        {content.translations.map((translation, idx) => (
+                          <div
+                            key={idx}
+                            className={`rounded-2xl border p-3 ${
+                              translation.status === "published"
+                                ? "border-emerald-400/50 bg-emerald-400/10"
+                                : translation.status === "scheduled"
+                                ? "border-blue-400/50 bg-blue-400/10"
+                                : "border-white/10 bg-slate-950/40"
+                            }`}
+                          >
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="text-sm font-semibold text-white">{translation.title}</p>
+                                <div className="mt-1 flex items-center gap-2 text-xs text-slate-200/70">
+                                  <span>{supportedLanguages.find(l => l.code === translation.language)?.nativeName}</span>
+                                  <span>·</span>
+                                  <span className="uppercase">{translation.platform}</span>
+                                  {translation.engagement && (
+                                    <>
+                                      <span>·</span>
+                                      <span>{translation.engagement} engagements</span>
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+                              <span className={`text-[10px] uppercase tracking-wider ${
+                                translation.status === "published"
+                                  ? "text-emerald-300"
+                                  : translation.status === "scheduled"
+                                  ? "text-blue-300"
+                                  : "text-slate-300"
+                              }`}>
+                                {translation.status}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Translation Status
+              </h3>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Translation Rate</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {translationStatus.translationRate}%
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Translated Content</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {translationStatus.translated} / {translationStatus.totalContent}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Pending</p>
+                  <p className="mt-1 text-xl font-semibold text-amber-300">
+                    {translationStatus.pending}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Top Languages
+              </h3>
+              <div className="mt-4 space-y-3">
+                {languagePerformance.slice(0, 3).map((lang, idx) => (
+                  <div key={idx} className="rounded-2xl border border-white/10 bg-slate-950/40 p-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-semibold text-white">
+                        {supportedLanguages.find(l => l.code === lang.language)?.nativeName}
+                      </span>
+                      <span className="text-xs text-emerald-300">{lang.avgEngagement}% engagement</span>
+                    </div>
+                    <p className="mt-1 text-[10px] text-slate-200/60">{lang.posts} posts</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="performance-attribution"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Performance Attribution</h2>
+              <p className="text-sm text-slate-100/75">
+                Deep dive into content performance and attribution across the customer journey.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {topPerformingContent.map((content) => (
+                <div
+                  key={content.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[content.platform].dot}`} />
+                        <h3 className="text-lg font-semibold text-white">{content.title}</h3>
+                        <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300">
+                          Score: {content.performanceScore}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Conversions</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{content.metrics.conversions}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Revenue</p>
+                          <p className="mt-1 text-sm font-semibold text-emerald-300">
+                            ${(content.metrics.revenue / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">ROI</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {content.metrics.roi}%
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Engagement Rate</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {content.metrics.engagementRate}%
+                          </p>
+                        </div>
+                      </div>
+                      <div className="mt-4 flex gap-4 text-xs text-slate-200/70">
+                        <span>First Touch: {content.attribution.firstTouch}</span>
+                        <span>Last Touch: {content.attribution.lastTouch}</span>
+                        <span>Assisted: {content.attribution.assisted}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Attribution Summary
+              </h3>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Attributed Conversions</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {performanceAttribution.attributedConversions.toLocaleString()}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Attributed Revenue</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">
+                    ${(performanceAttribution.attributedRevenue / 1000).toFixed(1)}k
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Attribution Rate</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {performanceAttribution.attributionRate}%
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
       </main>
     </div>
   );
