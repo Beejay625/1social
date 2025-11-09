@@ -47,6 +47,41 @@ type PlannedPost = {
   commentThread: Comment[];
 };
 
+type MetricUnit = "k" | "%" | "score";
+
+type MetricKpiId = "reach" | "conversion" | "growth";
+
+type MetricKpi = {
+  id: MetricKpiId;
+  label: string;
+  value: number;
+  unit: MetricUnit;
+  delta: number;
+  deltaLabel: string;
+  trend: number[];
+};
+
+type ReachConversionPoint = {
+  label: string;
+  reach: number;
+  conversionRate: number;
+  conversions: number;
+};
+
+type GrowthPoint = {
+  label: string;
+  farcaster: number;
+  instagram: number;
+  total: number;
+};
+
+type ConversionStage = {
+  id: string;
+  label: string;
+  value: number;
+  delta: number;
+};
+
 const channelCatalog: Record<
   ChannelId,
   {
@@ -110,7 +145,7 @@ const initialPlannedPosts: PlannedPost[] = [
   {
     id: "plan-1",
     title: "Founder AMA teaser",
-    summary: "Carousel introducing tomorrow’s community AMA.",
+    summary: "Carousel introducing tomorrow's community AMA.",
     scheduledFor: new Date(Date.now() + 1000 * 60 * 60 * 5).toISOString(),
     channels: ["farcaster", "instagram"],
     status: "approved",
