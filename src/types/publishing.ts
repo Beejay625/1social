@@ -223,24 +223,6 @@ export type CalendarSlot = {
   impact: CalendarImpact;
 };
 
-export type InsightRecommendation = {
-  id: string;
-  title: string;
-  detail: string;
-};
-
-export type BestTimeSlot = {
-  slot: string;
-  values: number[];
-};
-
-export type MetricInsight = {
-  id: string;
-  headline: string;
-  detail: string;
-  metric: MetricKpiId;
-};
-
 export type AudienceTrendPoint = {
   day: string;
   farcaster: number;
@@ -273,10 +255,203 @@ export type AiSmartReply = {
   suggestion: string;
 };
 
-export type AiActivityEntry = {
+export type AiActivityLogEntry = {
   id: string;
   action: string;
   detail: string;
   timestamp: string;
 };
 
+export type ReportingExecMetric = {
+  id: string;
+  label: string;
+  primary: string;
+  delta: string;
+  summary: string;
+  gradient: string;
+};
+
+export type VarianceItem = {
+  label: string;
+  variance: string;
+  contribution: number;
+};
+
+export type ReportingVarianceBreakdown = {
+  id: string;
+  dimension: string;
+  range: string;
+  items: VarianceItem[];
+};
+
+export type ReportingBenchmarkRow = {
+  channel: ChannelId;
+  yourScore: number;
+  cohort: number;
+  percentile: string;
+};
+
+export type ReportingGoal = {
+  id: string;
+  title: string;
+  target: number;
+  current: number;
+  due: string;
+  owner: string;
+};
+
+export type ReportingAlertCategory = "positive" | "risk" | "ops";
+
+export type ReportingAlert = {
+  id: string;
+  category: ReportingAlertCategory;
+  title: string;
+  detail: string;
+  timestamp: string;
+  action: string;
+};
+
+export type IntelligenceForecast = {
+  id: string;
+  metric: string;
+  current: string;
+  predicted: string;
+  timeframe: string;
+  confidence: number;
+  factors: string[];
+};
+
+export type AnomalyType = "Spike" | "Dip";
+
+export type IntelligenceAnomaly = {
+  id: string;
+  type: AnomalyType;
+  channel: ChannelId;
+  metric: string;
+  deviation: string;
+  detectedAt: string;
+  explanation: string;
+};
+
+export type ContentHashtag = {
+  tag: string;
+  trend: "up" | "down" | "stable";
+  usage: number;
+  growth: string;
+};
+
+export type ContentRecommendation = {
+  id: string;
+  type: string;
+  suggestion: string;
+  impact: "High" | "Medium" | "Low";
+};
+
+export type TeamMember = {
+  id: string;
+  name: string;
+  role: string;
+  avatar: string;
+  gradient: string;
+  permissions: string[];
+  lastActive: string;
+};
+
+export type TeamActivityEntry = {
+  id: string;
+  member: string;
+  action: string;
+  target: string;
+  timestamp: string;
+};
+
+export type IntegrationStatus = "connected" | "available" | "pending";
+
+export type Integration = {
+  id: string;
+  name: string;
+  description: string;
+  status: IntegrationStatus;
+  icon: string;
+};
+
+export type AbTestVariant = {
+  id: string;
+  label: string;
+  description: string;
+  performance: number;
+  participants: number;
+  winner?: boolean;
+};
+
+export type AbTest = {
+  id: string;
+  title: string;
+  status: "running" | "completed" | "draft";
+  variants: AbTestVariant[];
+  startDate: string;
+  endDate?: string;
+  metric: string;
+};
+
+export type Campaign = {
+  id: string;
+  name: string;
+  status: "active" | "paused" | "completed";
+  channels: ChannelId[];
+  startDate: string;
+  endDate?: string;
+  reach: number;
+  engagement: number;
+  conversions: number;
+  budget?: number;
+  spent?: number;
+};
+
+export type ContentTemplate = {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  channels: ChannelId[];
+  preview: string;
+  usage: number;
+};
+
+export type Webhook = {
+  id: string;
+  name: string;
+  url: string;
+  events: string[];
+  status: "active" | "inactive";
+  lastTriggered?: string;
+};
+
+export type Notification = {
+  id: string;
+  type: "info" | "success" | "warning" | "error";
+  title: string;
+  message: string;
+  timestamp: string;
+  read: boolean;
+  actionUrl?: string;
+};
+
+export type Competitor = {
+  id: string;
+  name: string;
+  handle: string;
+  channels: ChannelId[];
+  followers: number;
+  growth: number;
+  engagement: number;
+};
+
+export type TrendTopic = {
+  id: string;
+  topic: string;
+  volume: number;
+  growth: number;
+  sentiment: "positive" | "neutral" | "negative";
+  relatedChannels: ChannelId[];
+};
