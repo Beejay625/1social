@@ -409,6 +409,36 @@ import {
   whiteLabelStats,
 } from "@/data/white-label";
 import {
+  automationRules,
+  automationStats,
+  scheduledAutomations,
+} from "@/data/scheduling-automation";
+import {
+  collaborationCampaigns as influencerCampaigns,
+  influencerStats,
+  influencers,
+} from "@/data/influencer-collaboration";
+import {
+  complianceChecks,
+  complianceRules,
+  complianceStats,
+} from "@/data/social-compliance";
+import {
+  repurposingStats,
+  repurposingTasks,
+  repurposingTemplates,
+} from "@/data/content-repurposing";
+import {
+  notificationSettings,
+  notificationStats,
+  notifications,
+} from "@/data/notification-center";
+import {
+  apiKeys,
+  apiStats,
+  recentAPIUsage,
+} from "@/data/api-management";
+import {
   collaborationCampaigns,
   influencerMetrics,
   influencerProfiles,
