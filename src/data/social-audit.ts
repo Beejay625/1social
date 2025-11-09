@@ -1,147 +1,174 @@
-export interface AuditCategory {
-  id: string;
-  name: string;
-  score: number;
-  maxScore: number;
-  issues: AuditIssue[];
-  recommendations: string[];
-}
-
-export interface AuditIssue {
-  id: string;
-  severity: "critical" | "warning" | "info";
-  title: string;
-  description: string;
-  impact: string;
-  fixable: boolean;
-}
-
-export const auditCategories: AuditCategory[] = [
+export const auditReports = [
   {
-    id: "content-quality",
-    name: "Content Quality",
-    score: 85,
-    maxScore: 100,
-    issues: [
-      {
-        id: "issue-1",
-        severity: "warning",
-        title: "Low engagement on recent posts",
-        description: "Last 10 posts have engagement rate below 5%",
-        impact: "Reduced reach and visibility",
-        fixable: true,
-      },
-      {
-        id: "issue-2",
-        severity: "info",
-        title: "Inconsistent posting schedule",
-        description: "Posting frequency varies significantly",
-        impact: "Lower audience retention",
-        fixable: true,
-      },
-    ],
-    recommendations: [
-      "Increase posting frequency to 3-5 times per week",
-      "Use more visual content (images/videos)",
-      "Engage with comments within 2 hours",
-    ],
+    id: "audit-1",
+    name: "Q4 2024 Social Media Audit",
+    status: "completed",
+    generatedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(),
+    score: 87,
+    issues: 12,
+    recommendations: 18,
+    scope: {
+      platforms: ["farcaster", "x", "instagram", "lens", "mirror"],
+      period: "last_90_days",
+      metrics: ["content", "engagement", "growth", "compliance"],
+    },
   },
   {
-    id: "profile-optimization",
-    name: "Profile Optimization",
+    id: "audit-2",
+    name: "Content Quality Audit",
+    status: "completed",
+    generatedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 3).toISOString(),
     score: 92,
-    maxScore: 100,
-    issues: [
-      {
-        id: "issue-3",
-        severity: "info",
-        title: "Bio could be more descriptive",
-        description: "Current bio is 45 characters, consider expanding",
-        impact: "Lower discoverability",
-        fixable: true,
-      },
-    ],
-    recommendations: [
-      "Add keywords relevant to your niche",
-      "Include a call-to-action in bio",
-      "Update profile picture to be more recognizable",
-    ],
+    issues: 5,
+    recommendations: 8,
+    scope: {
+      platforms: ["farcaster", "x", "instagram"],
+      period: "last_30_days",
+      metrics: ["content", "quality"],
+    },
   },
   {
-    id: "hashtag-strategy",
-    name: "Hashtag Strategy",
-    score: 78,
-    maxScore: 100,
-    issues: [
-      {
-        id: "issue-4",
-        severity: "warning",
-        title: "Overusing same hashtags",
-        description: "Using same 5 hashtags in 80% of posts",
-        impact: "Reduced reach potential",
-        fixable: true,
-      },
-      {
-        id: "issue-5",
-        severity: "info",
-        title: "Missing niche-specific hashtags",
-        description: "Not using hashtags specific to your industry",
-        impact: "Missing targeted audience",
-        fixable: true,
-      },
-    ],
-    recommendations: [
-      "Research trending hashtags in your niche",
-      "Use mix of popular and niche hashtags",
-      "Create branded hashtag for campaigns",
-    ],
-  },
-  {
-    id: "engagement-rate",
-    name: "Engagement Rate",
-    score: 88,
-    maxScore: 100,
-    issues: [
-      {
-        id: "issue-6",
-        severity: "info",
-        title: "Response time could be faster",
-        description: "Average response time is 4 hours",
-        impact: "Lower engagement quality",
-        fixable: true,
-      },
-    ],
-    recommendations: [
-      "Aim for response time under 2 hours",
-      "Use automated responses for common questions",
-      "Engage proactively with followers' content",
-    ],
+    id: "audit-3",
+    name: "Compliance & Safety Audit",
+    status: "in_progress",
+    generatedAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+    score: null,
+    issues: null,
+    recommendations: null,
+    scope: {
+      platforms: ["farcaster", "x", "instagram", "lens", "mirror"],
+      period: "last_90_days",
+      metrics: ["compliance", "safety"],
+    },
   },
 ];
 
-export const auditScore = {
-  overall: 86,
-  previous: 82,
-  trend: "up",
-  lastRun: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
-  nextScheduled: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5).toISOString(),
+export const auditIssues = [
+  {
+    id: "issue-1",
+    category: "content",
+    severity: "high",
+    title: "Inconsistent Posting Schedule",
+    description: "Posting frequency varies significantly across platforms",
+    impact: "Reduces audience engagement and growth",
+    affectedPlatforms: ["x", "instagram"],
+    recommendation: "Implement consistent posting schedule across all platforms",
+    status: "open",
+  },
+  {
+    id: "issue-2",
+    category: "engagement",
+    severity: "medium",
+    title: "Low Response Rate to Mentions",
+    description: "Only 45% of mentions receive responses within 24 hours",
+    impact: "Missed engagement opportunities",
+    affectedPlatforms: ["farcaster", "x"],
+    recommendation: "Set up automated response workflows and alerts",
+    status: "open",
+  },
+  {
+    id: "issue-3",
+    category: "compliance",
+    severity: "high",
+    title: "Missing Disclosure Tags",
+    description: "12 posts lack required disclosure tags for sponsored content",
+    impact: "Potential compliance violations",
+    affectedPlatforms: ["instagram", "x"],
+    recommendation: "Review and add disclosure tags to all sponsored content",
+    status: "resolved",
+  },
+  {
+    id: "issue-4",
+    category: "growth",
+    severity: "low",
+    title: "Underutilized Hashtags",
+    description: "Posts use fewer hashtags than industry average",
+    impact: "Reduced discoverability",
+    affectedPlatforms: ["instagram", "x"],
+    recommendation: "Increase hashtag usage to 5-10 per post",
+    status: "open",
+  },
+];
+
+export const auditRecommendations = [
+  {
+    id: "rec-1",
+    category: "content",
+    priority: "high",
+    title: "Optimize Posting Times",
+    description: "Schedule posts during peak engagement hours (2-4 PM EST)",
+    expectedImpact: "15-20% increase in engagement",
+    effort: "low",
+    status: "pending",
+  },
+  {
+    id: "rec-2",
+    category: "engagement",
+    priority: "medium",
+    title: "Implement Auto-Reply System",
+    description: "Set up automated responses for common questions",
+    expectedImpact: "50% faster response times",
+    effort: "medium",
+    status: "pending",
+  },
+  {
+    id: "rec-3",
+    category: "growth",
+    priority: "high",
+    title: "Increase Video Content",
+    description: "Video content performs 2.5x better than static images",
+    expectedImpact: "30% increase in engagement",
+    effort: "high",
+    status: "in_progress",
+  },
+  {
+    id: "rec-4",
+    category: "compliance",
+    priority: "high",
+    title: "Regular Compliance Reviews",
+    description: "Schedule monthly compliance audits",
+    expectedImpact: "100% compliance rate",
+    effort: "low",
+    status: "pending",
+  },
+];
+
+export const auditMetrics = {
+  contentQuality: 87,
+  engagementRate: 6.2,
+  growthRate: 12.5,
+  complianceScore: 94,
+  responseRate: 78,
+  consistencyScore: 82,
 };
 
-export const auditHistory = [
+export const auditTrends = [
   {
-    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
-    score: 86,
-    changes: "+4 points",
+    metric: "Content Quality",
+    current: 87,
+    previous: 84,
+    change: 3.6,
+    trend: "up",
   },
   {
-    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 9).toISOString(),
-    score: 82,
-    changes: "+3 points",
+    metric: "Engagement Rate",
+    current: 6.2,
+    previous: 5.8,
+    change: 6.9,
+    trend: "up",
   },
   {
-    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 16).toISOString(),
-    score: 79,
-    changes: "+2 points",
+    metric: "Compliance Score",
+    current: 94,
+    previous: 91,
+    change: 3.3,
+    trend: "up",
+  },
+  {
+    metric: "Response Rate",
+    current: 78,
+    previous: 82,
+    change: -4.9,
+    trend: "down",
   },
 ];
-
