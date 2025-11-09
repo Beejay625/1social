@@ -405,7 +405,6 @@ export default function Home() {
     farcaster: true,
     instagram: false,
   });
-  const [comments, setComments] = useState<Comment[]>(initialComments);
   const [selectedWorkflowPostId, setSelectedWorkflowPostId] = useState<string>(
     initialPlannedPosts[0]?.id ?? "",
   );
