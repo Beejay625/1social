@@ -4435,7 +4435,7 @@ export default function Home() {
                       <th className="px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400">
                         {row.slot}
                       </th>
-                      {row.values.map((value, index) => (
+                      {row.values.map((value: number, index: number) => (
                         <td key={`slot-${row.slot}-${index}`} className="px-3 py-2">
                           <span
                             className={`flex h-8 w-12 items-center justify-center rounded-xl text-[11px] font-semibold ${heatLevelClass(
