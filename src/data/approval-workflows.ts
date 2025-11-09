@@ -1,149 +1,92 @@
-export interface ApprovalWorkflow {
-  id: string;
-  name: string;
-  description: string;
-  steps: ApprovalStep[];
-  isActive: boolean;
-  createdAt: string;
-  usedCount: number;
-}
+export const workflowStats = {
+  activeWorkflows: 8,
+  pendingApprovals: 12,
+  avgApprovalTime: "4.5 hours",
+  approvalRate: 92,
+};
 
-export interface ApprovalStep {
-  id: string;
-  order: number;
-  name: string;
-  approver: {
-    id: string;
-    name: string;
-    role: string;
-  };
-  required: boolean;
-  autoApprove?: {
-    condition: string;
-    timeout: number;
-  };
-}
-
-export interface WorkflowInstance {
-  id: string;
-  workflowId: string;
-  contentId: string;
-  contentTitle: string;
-  status: "pending" | "in-progress" | "approved" | "rejected" | "cancelled";
-  currentStep: number;
-  steps: StepStatus[];
-  createdAt: string;
-  completedAt?: string;
-}
-
-export interface StepStatus {
-  stepId: string;
-  status: "pending" | "approved" | "rejected" | "skipped";
-  approver?: string;
-  comment?: string;
-  timestamp?: string;
-}
-
-export const approvalWorkflows: ApprovalWorkflow[] = [
+export const activeWorkflows = [
   {
     id: "workflow-1",
-    name: "Standard Content Approval",
-    description: "Standard 2-step approval for all content",
+    name: "Product Launch Content",
+    status: "pending",
+    currentStep: "Content Review",
+    assignedTo: "Sarah Chen",
+    progress: 60,
+    startedAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+    estimatedCompletion: new Date(Date.now() + 1000 * 60 * 60 * 2).toISOString(),
     steps: [
-      {
-        id: "step-1",
-        order: 1,
-        name: "Content Review",
-        approver: {
-          id: "user-1",
-          name: "Sarah Chen",
-          role: "Content Manager",
-        },
-        required: true,
-      },
-      {
-        id: "step-2",
-        order: 2,
-        name: "Final Approval",
-        approver: {
-          id: "user-2",
-          name: "Mike Johnson",
-          role: "Marketing Director",
-        },
-        required: true,
-        autoApprove: {
-          condition: "after 24 hours",
-          timeout: 86400000,
-        },
-      },
+      { name: "Draft Creation", status: "completed", completedAt: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString() },
+      { name: "Content Review", status: "in_progress", assignedTo: "Sarah Chen" },
+      { name: "Legal Review", status: "pending" },
+      { name: "Final Approval", status: "pending" },
     ],
-    isActive: true,
-    createdAt: new Date(Date.now() - 2592000000).toISOString(),
-    usedCount: 156,
   },
   {
     id: "workflow-2",
+    name: "Social Media Campaign",
+    status: "in_progress",
+    currentStep: "Legal Review",
+    assignedTo: "Mike Johnson",
+    progress: 75,
+    startedAt: new Date(Date.now() - 1000 * 60 * 60 * 6).toISOString(),
+    estimatedCompletion: new Date(Date.now() + 1000 * 60 * 60 * 1).toISOString(),
+    steps: [
+      { name: "Campaign Planning", status: "completed", completedAt: new Date(Date.now() - 1000 * 60 * 60 * 8).toISOString() },
+      { name: "Content Creation", status: "completed", completedAt: new Date(Date.now() - 1000 * 60 * 60 * 7).toISOString() },
+      { name: "Legal Review", status: "in_progress", assignedTo: "Mike Johnson" },
+      { name: "Final Approval", status: "pending" },
+    ],
+  },
+];
+
+export const approvalTemplates = [
+  {
+    id: "template-1",
+    name: "Standard Content Approval",
+    steps: 3,
+    avgTime: "3 hours",
+    usage: 45,
+  },
+  {
+    id: "template-2",
+    name: "Campaign Approval",
+    steps: 5,
+    avgTime: "6 hours",
+    usage: 28,
+  },
+  {
+    id: "template-3",
     name: "Quick Approval",
-    description: "Single-step approval for routine content",
-    steps: [
-      {
-        id: "step-3",
-        order: 1,
-        name: "Quick Review",
-        approver: {
-          id: "user-3",
-          name: "Emma Wilson",
-          role: "Social Media Manager",
-        },
-        required: true,
-      },
-    ],
-    isActive: true,
-    createdAt: new Date(Date.now() - 1728000000).toISOString(),
-    usedCount: 89,
+    steps: 2,
+    avgTime: "1 hour",
+    usage: 67,
   },
 ];
 
-export const workflowInstances: WorkflowInstance[] = [
+export const pendingApprovals = [
   {
-    id: "instance-1",
-    workflowId: "workflow-1",
-    contentId: "post-1",
-    contentTitle: "Product Launch Announcement",
-    status: "in-progress",
-    currentStep: 1,
-    steps: [
-      {
-        stepId: "step-1",
-        status: "approved",
-        approver: "Sarah Chen",
-        comment: "Looks good, approved!",
-        timestamp: new Date(Date.now() - 3600000).toISOString(),
-      },
-      {
-        stepId: "step-2",
-        status: "pending",
-      },
-    ],
-    createdAt: new Date(Date.now() - 7200000).toISOString(),
+    id: "approval-1",
+    content: "Product launch announcement",
+    requester: "Sarah Chen",
+    type: "content",
+    priority: "high",
+    submittedAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+    waitingTime: "2 hours",
   },
   {
-    id: "instance-2",
-    workflowId: "workflow-2",
-    contentId: "post-2",
-    contentTitle: "Weekly Update Post",
-    status: "approved",
-    currentStep: 1,
-    steps: [
-      {
-        stepId: "step-3",
-        status: "approved",
-        approver: "Emma Wilson",
-        timestamp: new Date(Date.now() - 1800000).toISOString(),
-      },
-    ],
-    createdAt: new Date(Date.now() - 3600000).toISOString(),
-    completedAt: new Date(Date.now() - 1800000).toISOString(),
+    id: "approval-2",
+    content: "Social media campaign",
+    requester: "Mike Johnson",
+    type: "campaign",
+    priority: "medium",
+    submittedAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+    waitingTime: "30 minutes",
   },
 ];
 
+export const workflowMetrics = {
+  avgWorkflowTime: "4.5 hours",
+  completionRate: 92,
+  bottlenecks: ["Legal Review", "Final Approval"],
+};
