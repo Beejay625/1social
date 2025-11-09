@@ -23258,8 +23258,9 @@ export default function Home() {
                       <div key={dayIdx} className="space-y-1">
                         <p className="text-xs text-slate-200/70 text-center">{day}</p>
                         {[9, 12, 15, 18].map((hour) => {
+                          const dayName = day === "Mon" ? "Monday" : day === "Tue" ? "Tuesday" : day === "Wed" ? "Wednesday" : day === "Thu" ? "Thursday" : day === "Fri" ? "Friday" : day === "Sat" ? "Saturday" : "Sunday";
                           const data = heatmap.data.find(
-                            (d) => d.day === `${day}day` && d.hour === hour
+                            (d) => d.day === dayName && d.hour === hour
                           ) || { engagement: 0, posts: 0 };
                           const intensity = Math.min((data.engagement / 15) * 100, 100);
                           return (
