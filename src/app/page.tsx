@@ -754,6 +754,9 @@ const approvalTemplates: ApprovalTemplate[] = [
 
 function getApprovalTemplate(templateId: string | undefined | null) {
   return approvalTemplates.find((template) => template.id === templateId) ?? null;
+      </main>
+    </div>
+  );
 }
 
 function instantiateApprovalSteps(
@@ -778,6 +781,9 @@ function instantiateApprovalSteps(
       escalation: baseEscalation,
     };
   });
+      </main>
+    </div>
+  );
 }
 
 const reportingDecks = [
@@ -7621,6 +7627,9 @@ export default function Home() {
       </main>
     </div>
   );
+      </main>
+    </div>
+  );
 }
 
                         }`}
@@ -8776,6 +8785,9 @@ export default function Home() {
             </div>
           </aside>
         </section>
+      </main>
+    </div>
+  );
       </main>
     </div>
   );
