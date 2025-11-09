@@ -28,6 +28,7 @@ import type {
   ConversionStage,
   GrowthPoint,
   MetricKpi,
+  MetricKpiId,
   MetricUnit,
   PlannedPost,
   PresenceMember,
