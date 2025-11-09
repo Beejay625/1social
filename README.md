@@ -235,17 +235,12 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Workflow Builder** - Custom workflow creation with multi-step processes and automation
 - **Real-time Collaboration** - Live collaboration with presence indicators and active session tracking
 - **Conflict Detection** - Automatic conflict detection and resolution for concurrent edits
-- **Bulk Operations** - Perform bulk actions on multiple items with progress tracking
-- **Content Suggestions** - AI-powered content suggestions with confidence scores
-- **Content Version History** - Complete version tracking with restore capabilities
-- **Smart Notifications** - Intelligent notification prioritization system
-- **Performance Alerts** - Automated performance metric alerts with thresholds
-- **Account Health Monitoring** - Health status tracking for all connected accounts
-- **Real-time Collaboration** - Live editing sessions with presence indicators and co-editing capabilities
-- **Conflict Detection** - Automatic detection of scheduling conflicts with resolution suggestions
-- **Bulk Operations** - Efficient bulk editing, scheduling, and tagging with operation templates
-- **Account Health Monitoring** - Comprehensive account health tracking with issue detection and trends
-- **AI Content Suggestions** - Intelligent content recommendations based on trends and audience insights
+- **Bulk Operations** - Perform bulk actions on multiple items with progress tracking and templates
+- **Content Suggestions** - AI-powered content suggestions with confidence scores and categories
+- **Content Version History** - Complete version tracking with restore capabilities and author tracking
+- **Smart Notifications** - Intelligent notification prioritization system with priority levels
+- **Performance Alerts** - Automated performance metric alerts with thresholds and severity levels
+- **Account Health Monitoring** - Comprehensive health status tracking with issue detection and trends
 - **Content Version History** - Complete version control with change tracking and comparison tools
 - **Smart Notifications** - Priority-based notification system with intelligent filtering
 - **Performance Alerts** - Real-time alerts for content performance anomalies with actionable insights
@@ -404,77 +399,6 @@ MIT
 - Webhook configurations
 - API management
 - Export capabilities (PDF, CSV, Excel)
-
-### Content Analysis & Comparison
-- Side-by-side content performance comparison
-- Version A/B testing results
-- Performance metric differences (reach, engagement, clicks, conversions)
-- Winner identification and insights
-- Comparison statistics and trends
-- Top performing factor analysis
-
-### Financial Analytics & ROI
-- ROI calculation for campaigns
-- Investment breakdown (ad spend, content creation, tools)
-- Returns tracking (revenue, leads, conversions, engagement)
-- ROAS (Return on Ad Spend) calculation
-- Payback period analysis
-- Total ROI and revenue metrics
-- Financial performance trends
-
-### Calendar Management & Views
-- Multiple calendar view types (week, month, agenda, timeline)
-- Customizable filters by platform and status
-- Default view settings
-- Upcoming events overview
-- Calendar statistics tracking
-- Scheduled vs published tracking
-
-### Team Management & Performance
-- Individual team member performance tracking
-- Productivity metrics (posts created, engagement generated)
-- Goal setting and progress tracking
-- Team goals with deadlines and assignments
-- Average engagement rate tracking
-- Response time monitoring
-- Goals completion rate
-
-### Content Moderation & Safety
-- Automated moderation rules (keyword, spam, toxicity)
-- Manual review queue
-- Severity-based flagging (low, medium, high, critical)
-- Approval/rejection workflow
-- Moderation statistics
-- Average review time tracking
-- Rule match counting
-
-### Brand Safety & Reputation
-- Brand safety score tracking (overall, sentiment, reputation)
-- Threat detection alerts
-- Platform-specific monitoring
-- Safety trend analysis
-- Alert severity classification
-- Investigation and resolution tracking
-- Brand reputation metrics
-
-### Crisis Management & Response
-- Automated crisis detection
-- Severity-based alerts (low, medium, high, critical)
-- Crisis type classification (negative-trend, viral-negative, media-coverage)
-- Response plan management
-- Response action tracking
-- Crisis statistics and metrics
-- Average response time
-- Resolution rate tracking
-
-### Multi-Account Management
-- Unified dashboard for multiple accounts
-- Account health monitoring per account
-- Connection status tracking
-- Account grouping and organization
-- Follower and engagement tracking
-- Last sync monitoring
-- Account statistics aggregation
 
 ## Contributing
 
