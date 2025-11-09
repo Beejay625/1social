@@ -619,10 +619,111 @@ const calendarSlots: CalendarSlot[] = [
   },
 ];
 
+const teamPresenceRoster: PresenceMember[] = [
+  {
+    id: "presence-1",
+    name: "Ameena",
+    role: "Product lead",
+    status: "drafting",
+    focus: "Polishing launch recap",
+  },
+  {
+    id: "presence-2",
+    name: "Leo",
+    role: "Creative",
+    status: "reviewing",
+    focus: "Checking hero animation loop",
+  },
+  {
+    id: "presence-3",
+    name: "Kai",
+    role: "Community",
+    status: "approving",
+    focus: "Routing feedback to founders",
+  },
+  {
+    id: "presence-4",
+    name: "You",
+    role: "Ops",
+    status: "observing",
+    focus: "Monitoring warm-up health",
+  },
+];
+
+const approvalRoutes: ApprovalRoute[] = [
+  {
+    id: "route-1",
+    stage: "Awareness",
+    owners: ["Ameena", "Kai"],
+    fallback: "Route to You if unresponsive",
+  },
+  {
+    id: "route-2",
+    stage: "Creative QA",
+    owners: ["Leo"],
+    fallback: "Escalate to @design-lead",
+  },
+  {
+    id: "route-3",
+    stage: "Wallet signing",
+    owners: ["You"],
+    fallback: "Ping #wallet-ops",
+  },
+];
+
+const repostLedger: RepostEvent[] = [
+  {
+    id: "repost-1",
+    source: "farcaster",
+    targets: ["x", "lens"],
+    scheduledFor: "Today · 15:00",
+    status: "mirroring",
+  },
+  {
+    id: "repost-2",
+    source: "instagram",
+    targets: ["mirror"],
+    scheduledFor: "Today · 18:00",
+    status: "queued",
+  },
+  {
+    id: "repost-3",
+    source: "lens",
+    targets: ["farcaster", "instagram"],
+    scheduledFor: "Yesterday · 21:00",
+    status: "complete",
+  },
+];
+
+const syndicationHistory: SyndicationEntry[] = [
+  {
+    id: "sync-1",
+    title: "AMA launch wave",
+    timestamp: "Today • 11:40 UTC",
+    networks: ["farcaster", "instagram", "x"],
+    effect: "+18% reach vs last wave",
+  },
+  {
+    id: "sync-2",
+    title: "Creator spotlight remix",
+    timestamp: "Yesterday • 19:05 UTC",
+    networks: ["lens", "mirror"],
+    effect: "Collects up 24%",
+  },
+  {
+    id: "sync-3",
+    title: "Community pulse recap",
+    timestamp: "Mon • 16:22 UTC",
+    networks: ["farcaster", "lens"],
+    effect: "Farcaster saves +11%",
+  },
+];
+
 const dashboardSections: { id: string; label: string }[] = [
   { id: "broadcast", label: "Compose" },
   { id: "plan", label: "Scheduling" },
   { id: "workflow", label: "Workflow" },
+  { id: "distribution", label: "Distribution" },
   { id: "insights", label: "Insights" },
   { id: "automation", label: "Automation" },
   { id: "ops", label: "Ops" },
