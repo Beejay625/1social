@@ -1724,6 +1724,26 @@ export default function Home() {
       lens: false,
       mirror: false,
     });
+  const [aiDraft, setAiDraft] = useState("");
+  const [selectedToneId, setSelectedToneId] = useState<string>(
+    aiToneOptions[0]?.id ?? "",
+  );
+  const [selectedPersonaId, setSelectedPersonaId] = useState<string>(
+    aiPersonas[0]?.id ?? "",
+  );
+  const [selectedIdeaId, setSelectedIdeaId] = useState<string>(
+    aiDraftIdeas[0]?.id ?? "",
+  );
+  const [selectedDeckId, setSelectedDeckId] = useState<string>(
+    reportingDecks[0]?.id ?? "",
+  );
+  const [selectedExportId, setSelectedExportId] = useState<string>(
+    reportingExports[0]?.id ?? "",
+  );
+  const [selectedSentimentFilter, setSelectedSentimentFilter] =
+    useState<string>("all");
+  const [selectedEngagementStatus, setSelectedEngagementStatus] =
+    useState<string>("open");
   const [calendarView, setCalendarView] = useState<"week" | "month">("week");
   const [calendarFocus, setCalendarFocus] = useState<string>("Thu");
 
