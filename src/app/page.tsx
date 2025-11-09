@@ -959,6 +959,14 @@ export default function Home() {
     initialPlannedPosts[0]?.id ?? "",
   );
   const [workflowNote, setWorkflowNote] = useState("");
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>(
+    automationTemplates[0]?.id ?? "",
+  );
+  const [selectedSequenceId, setSelectedSequenceId] = useState<string>(
+    sequencePlays[0]?.id ?? "",
+  );
+  const [calendarView, setCalendarView] = useState<"week" | "month">("week");
+  const [calendarFocus, setCalendarFocus] = useState<string>("Thu");
 
   const activeNetwork = useMemo(
     () => networks.find((network) => network.id === chainId),
