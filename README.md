@@ -181,9 +181,6 @@ Visit http://localhost:3000
 - **Crisis Management Dashboard** - Monitor and respond to crises with automated detection, severity alerts, response tracking, and resolution metrics
 - **Approval Workflows** - Manage multi-step approval workflows with templates, progress tracking, step assignments, and bottleneck identification
 - **Social Listening Dashboard** - Monitor keywords, track trending topics, get real-time alerts, and analyze platform-specific mentions
-- **Content Performance Tracking** - Track detailed performance metrics and identify top-performing content with performance scores and trend analysis
-- **Audience Insights** - Deep dive into audience segments, demographics, behavior patterns, and actionable insights with confidence scores
-- **Competitor Analysis** - Track competitor performance, benchmark metrics, analyze strengths/weaknesses, and monitor market position
 
 ## Tech Stack
 
@@ -206,7 +203,7 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 
 ## Key Capabilities
 
-- **115+ Feature Modules** - Comprehensive social media management suite
+- **110+ Feature Modules** - Comprehensive social media management suite
 - **Multi-channel Publishing** - Publish to 5+ platforms simultaneously
 - **AI-Powered Insights** - Machine learning for content optimization
 - **Real-time Analytics** - Live performance tracking and reporting
@@ -407,6 +404,77 @@ MIT
 - Webhook configurations
 - API management
 - Export capabilities (PDF, CSV, Excel)
+
+### Content Analysis & Comparison
+- Side-by-side content performance comparison
+- Version A/B testing results
+- Performance metric differences (reach, engagement, clicks, conversions)
+- Winner identification and insights
+- Comparison statistics and trends
+- Top performing factor analysis
+
+### Financial Analytics & ROI
+- ROI calculation for campaigns
+- Investment breakdown (ad spend, content creation, tools)
+- Returns tracking (revenue, leads, conversions, engagement)
+- ROAS (Return on Ad Spend) calculation
+- Payback period analysis
+- Total ROI and revenue metrics
+- Financial performance trends
+
+### Calendar Management & Views
+- Multiple calendar view types (week, month, agenda, timeline)
+- Customizable filters by platform and status
+- Default view settings
+- Upcoming events overview
+- Calendar statistics tracking
+- Scheduled vs published tracking
+
+### Team Management & Performance
+- Individual team member performance tracking
+- Productivity metrics (posts created, engagement generated)
+- Goal setting and progress tracking
+- Team goals with deadlines and assignments
+- Average engagement rate tracking
+- Response time monitoring
+- Goals completion rate
+
+### Content Moderation & Safety
+- Automated moderation rules (keyword, spam, toxicity)
+- Manual review queue
+- Severity-based flagging (low, medium, high, critical)
+- Approval/rejection workflow
+- Moderation statistics
+- Average review time tracking
+- Rule match counting
+
+### Brand Safety & Reputation
+- Brand safety score tracking (overall, sentiment, reputation)
+- Threat detection alerts
+- Platform-specific monitoring
+- Safety trend analysis
+- Alert severity classification
+- Investigation and resolution tracking
+- Brand reputation metrics
+
+### Crisis Management & Response
+- Automated crisis detection
+- Severity-based alerts (low, medium, high, critical)
+- Crisis type classification (negative-trend, viral-negative, media-coverage)
+- Response plan management
+- Response action tracking
+- Crisis statistics and metrics
+- Average response time
+- Resolution rate tracking
+
+### Multi-Account Management
+- Unified dashboard for multiple accounts
+- Account health monitoring per account
+- Connection status tracking
+- Account grouping and organization
+- Follower and engagement tracking
+- Last sync monitoring
+- Account statistics aggregation
 
 ## Contributing
 
