@@ -21970,11 +21970,13 @@ export default function Home() {
                       <div className="flex items-center justify-between mb-2">
                         <h3 className="text-lg font-semibold text-white">{asset.name}</h3>
                         <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300 uppercase">
-                          {asset.format}
+                          {asset.type}
                         </span>
                       </div>
                       <div className="flex items-center gap-4 text-xs text-slate-200/60 mb-3">
-                        <span>{(asset.size / 1000000).toFixed(2)} MB</span>
+                        <span>{asset.size}</span>
+                        <span>·</span>
+                        <span>{asset.category}</span>
                         <span>·</span>
                         <span>Used {asset.usageCount} times</span>
                         {asset.lastUsed && (
