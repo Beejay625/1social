@@ -796,9 +796,6 @@ function instantiateApprovalSteps(
       escalation: baseEscalation,
     };
   });
-      </main>
-    </div>
-  );
 }
 
 const reportingDecks = [
