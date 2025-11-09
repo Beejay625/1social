@@ -9495,12 +9495,12 @@ export default function Home() {
               <div className="mt-4 space-y-4">
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
                   <p className="text-xs text-slate-200/60">Total assets</p>
-                  <p className="mt-1 text-2xl font-semibold text-white">{contentLibrary.length}</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{contentLibraryItems.length}</p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
                   <p className="text-xs text-slate-200/60">Total usage</p>
                   <p className="mt-1 text-xl font-semibold text-white">
-                    {contentLibrary.reduce((acc, item) => acc + item.usage, 0)}
+                    {contentLibraryItems.reduce((acc, item) => acc + item.usage, 0)}
                   </p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
