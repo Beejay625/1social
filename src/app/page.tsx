@@ -854,7 +854,7 @@ export default function Home() {
               <div className="space-y-4">
                 <h1 className="text-4xl font-semibold leading-tight text-white md:text-5xl lg:text-[52px]">
                   Align your voice across every channel.
-                </h1>
+          </h1>
                 <p className="text-lg leading-relaxed text-slate-100/80 md:text-xl">
                   Share once, syndicate instantly, and keep Reown wallet
                   signatures ready for Farcaster. This preview shows how your
@@ -976,8 +976,8 @@ export default function Home() {
               </div>
               <p className="text-[11px] uppercase tracking-[0.3em] text-slate-200/60 text-center sm:text-left">
                 Need help? Ping the team in #wallet-ops.
-              </p>
-            </div>
+          </p>
+        </div>
           </div>
         </header>
 
@@ -1048,7 +1048,7 @@ export default function Home() {
                         {channelCatalog[channelId].label}
                       </p>
                       <p>{channelCatalog[channelId].description}</p>
-                    </div>
+        </div>
                   </div>
                 ))}
                 {activeChannels.length === 0 && (
@@ -1504,6 +1504,328 @@ export default function Home() {
               </div>
             </div>
           </aside>
+        </section>
+
+        <section className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.95fr)]">
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">
+                Workflow control center
+              </h2>
+              <p className="text-sm text-slate-100/75">
+                Assign ownership, track approvals, and keep the team in sync.
+                Select a planned post to review the latest activity.
+              </p>
+            </header>
+
+            <div className="flex flex-wrap gap-2">
+              {sortedPlannedPosts.map((plan) => {
+                const isActive = workflowContext.selectedPlan?.id === plan.id;
+                return (
+                  <button
+                    key={`workflow-tab-${plan.id}`}
+                    type="button"
+                    onClick={() => handleWorkflowSelect(plan.id)}
+                    className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold uppercase tracking-wide transition ${
+                      isActive
+                        ? "border-white/60 bg-white text-slate-900 shadow-lg shadow-white/30"
+                        : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                    }`}
+                    aria-pressed={isActive}
+                  >
+                    <span className="text-xs font-medium text-slate-400">
+                      {plan.owner}
+                    </span>
+                    {plan.title}
+                  </button>
+                );
+              })}
+            </div>
+
+            {workflowContext.selectedPlan ? (
+              <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+                <div className="space-y-6">
+                  <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                    <div className="flex items-center justify-between gap-3">
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                          Owner
+                        </p>
+                        <p className="mt-1 text-sm font-semibold text-white">
+                          {workflowContext.selectedPlan.owner}
+                        </p>
+                      </div>
+                      <span
+                        className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${scheduleStatusStyles[workflowContext.selectedPlan.status].badge}`}
+                      >
+                        <span
+                          className={`h-1.5 w-1.5 rounded-full ${scheduleStatusStyles[workflowContext.selectedPlan.status].dot}`}
+                        />
+                        {scheduleStatusStyles[workflowContext.selectedPlan.status].label}
+                      </span>
+                    </div>
+                    <p className="mt-4 text-xs uppercase tracking-[0.35em] text-slate-200/60">
+                      Launch window
+                    </p>
+                    <p className="mt-1 text-sm text-slate-100/80">
+                      {formatScheduleLabel(workflowContext.selectedPlan.scheduledFor)} ·{" "}
+                      {formatTimeUntil(workflowContext.selectedPlan.scheduledFor)}
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {workflowContext.selectedPlan.channels.map((channelId) => (
+                        <span
+                          key={`workflow-channel-${workflowContext.selectedPlan?.id}-${channelId}`}
+                          className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${channelCatalog[channelId].badge}`}
+                        >
+                          <span
+                            className={`h-1.5 w-1.5 rounded-full ${channelCatalog[channelId].dot}`}
+                          />
+                          {channelCatalog[channelId].label}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Approval steps
+                    </h3>
+                    <ol className="space-y-3">
+                      {workflowContext.steps.map((step) => {
+                        const token = approvalStatusTokens[step.status];
+                        return (
+                          <li
+                            key={`workflow-step-${step.id}`}
+                            className="flex items-center justify-between gap-4 rounded-3xl border border-white/15 bg-white/5 p-4"
+                          >
+                            <div className="flex items-center gap-3">
+                              <span
+                                className={`h-2.5 w-2.5 rounded-full ${token.dot}`}
+                              />
+                              <div>
+                                <p className="text-sm font-semibold text-white">
+                                  {step.label}
+                                </p>
+                                <p className="text-xs text-slate-200/70">
+                                  {step.approver} · {formatTimeUntil(step.due)}
+                                </p>
+                              </div>
+                            </div>
+                            <span
+                              className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wide ${token.badge}`}
+                            >
+                              {token.label}
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </ol>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Team comments
+                    </h3>
+                    <span className="text-xs text-slate-200/70">
+                      {workflowContext.comments.length} notes
+                    </span>
+                  </div>
+                  <div className="space-y-3 overflow-hidden rounded-3xl border border-white/15 bg-white/5 p-4">
+                    <div className="max-h-64 space-y-3 overflow-y-auto pr-2">
+                      {workflowContext.comments.map((comment) => (
+                        <article
+                          key={comment.id}
+                          className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                        >
+                          <div className="flex items-center justify-between gap-3">
+                            <p className="text-sm font-semibold text-white">
+                              {comment.author}
+                            </p>
+                            <span className="text-xs text-slate-300/70">
+                              {formatRelativeTime(comment.at)}
+                            </span>
+                          </div>
+                          <p className="mt-2 text-sm leading-relaxed text-slate-100/80">
+                            {comment.message}
+                          </p>
+                        </article>
+                      ))}
+                      {workflowContext.comments.length === 0 && (
+                        <p className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-4 text-center text-sm text-slate-200/70">
+                          No comments yet. Leave guidance for the team below.
+                        </p>
+                      )}
+                    </div>
+                    <form
+                      onSubmit={handleWorkflowCommentSubmit}
+                      className="mt-2 flex flex-col gap-3"
+                    >
+                      <label className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                        Add a note
+                      </label>
+                      <textarea
+                        value={workflowNote}
+                        onChange={(event) => setWorkflowNote(event.target.value)}
+                        placeholder="Share updates or requests for this post..."
+                        className="min-h-[96px] rounded-2xl border border-white/20 bg-slate-950/60 px-4 py-3 text-sm text-white placeholder:text-slate-400 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/60"
+                      />
+                      <button
+                        type="submit"
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-purple-400 via-fuchsia-500 to-indigo-500 px-5 py-2 text-xs font-semibold uppercase tracking-wide text-white shadow-lg shadow-purple-600/40 transition hover:shadow-xl hover:shadow-purple-600/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                      >
+                        Post comment
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <p className="rounded-3xl border border-dashed border-white/20 bg-white/5 p-6 text-center text-sm text-slate-200/70">
+                Add a schedule first to unlock workflow tracking.
+              </p>
+            )}
+          </article>
+
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Audience insights</h2>
+              <p className="text-sm text-slate-100/75">
+                Track growth momentum, prime publishing windows, and actionable
+                follow-ups across Farcaster and Instagram.
+              </p>
+            </header>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-4">
+                <div className="flex items-center justify-between">
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Farcaster followers
+                  </p>
+                  <span className="text-xs font-semibold text-emerald-200">
+                    +{audienceInsights.farcasterDelta}
+                  </span>
+                </div>
+                <p className="mt-2 text-3xl font-semibold text-white">
+                  {audienceInsights.farcasterLatest}k
+                </p>
+                <svg
+                  viewBox="0 0 140 42"
+                  role="img"
+                  aria-label="Farcaster follower sparkline"
+                  className="mt-3 h-12 w-full text-emerald-300"
+                >
+                  <path
+                    d={audienceInsights.farcasterPath}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeWidth="3"
+                  />
+                </svg>
+              </div>
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-4">
+                <div className="flex items-center justify-between">
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Instagram followers
+                  </p>
+                  <span className="text-xs font-semibold text-fuchsia-200">
+                    +{audienceInsights.instagramDelta}
+                  </span>
+                </div>
+                <p className="mt-2 text-3xl font-semibold text-white">
+                  {audienceInsights.instagramLatest}k
+                </p>
+                <svg
+                  viewBox="0 0 140 42"
+                  role="img"
+                  aria-label="Instagram follower sparkline"
+                  className="mt-3 h-12 w-full text-fuchsia-300"
+                >
+                  <path
+                    d={audienceInsights.instagramPath}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeWidth="3"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Best time heatmap
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  Peak: {audienceInsights.topSlot.day} ·{" "}
+                  {audienceInsights.topSlot.slot}
+                </span>
+              </div>
+              <div className="mt-4 overflow-hidden rounded-3xl border border-white/15 bg-slate-950/40">
+                <table className="w-full border-collapse text-xs text-slate-100">
+                  <thead>
+                    <tr>
+                      <th className="px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400">
+                        Slot
+                      </th>
+                      {audienceDays.map((day) => (
+                        <th
+                          key={`day-${day}`}
+                          className="px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400"
+                        >
+                          {day}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bestTimeGrid.map((row) => (
+                      <tr key={`slot-${row.slot}`}>
+                        <th className="px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400">
+                          {row.slot}
+                        </th>
+                        {row.values.map((value, index) => (
+                          <td key={`slot-${row.slot}-${index}`} className="px-3 py-2">
+                            <span
+                              className={`flex h-8 w-12 items-center justify-center rounded-xl text-[11px] font-semibold ${heatLevelClass(
+                                value,
+                              )}`}
+                            >
+                              {value}
+                            </span>
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Recommendations
+              </h3>
+              <div className="grid gap-3">
+                {insightRecommendations.map((item) => (
+                  <article
+                    key={item.id}
+                    className="rounded-3xl border border-white/15 bg-white/5 p-4 shadow-inner shadow-purple-900/20"
+                  >
+                    <p className="text-sm font-semibold text-white">
+                      {item.title}
+                    </p>
+                    <p className="mt-2 text-sm text-slate-100/80">
+                      {item.detail}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </article>
         </section>
       </main>
     </div>
