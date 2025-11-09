@@ -3564,6 +3564,14 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "scheduling-queue", label: "Scheduling Queue" },
   { id: "engagement-tools", label: "Engagement Tools" },
   { id: "hashtag-research", label: "Hashtag Research" },
+  { id: "content-comparison", label: "Content Comparison" },
+  { id: "roi-calculator", label: "ROI Calculator" },
+  { id: "calendar-views", label: "Calendar Views" },
+  { id: "team-performance", label: "Team Performance" },
+  { id: "content-moderation", label: "Content Moderation" },
+  { id: "brand-safety", label: "Brand Safety" },
+  { id: "crisis-response", label: "Crisis Response" },
+  { id: "multi-account", label: "Multi-Account Management" },
 ];
 const chartColorTokens = {
   reach: "text-sky-300",
