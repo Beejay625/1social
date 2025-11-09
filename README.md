@@ -181,6 +181,9 @@ Visit http://localhost:3000
 - **Crisis Management Dashboard** - Monitor and respond to crises with automated detection, severity alerts, response tracking, and resolution metrics
 - **Approval Workflows** - Manage multi-step approval workflows with templates, progress tracking, step assignments, and bottleneck identification
 - **Social Listening Dashboard** - Monitor keywords, track trending topics, get real-time alerts, and analyze platform-specific mentions
+- **Content Performance Tracking** - Track detailed performance metrics and identify top-performing content with performance scores and trend analysis
+- **Audience Insights** - Deep dive into audience segments, demographics, behavior patterns, and actionable insights with confidence scores
+- **Competitor Analysis** - Track competitor performance, benchmark metrics, analyze strengths/weaknesses, and monitor market position
 
 ## Tech Stack
 
