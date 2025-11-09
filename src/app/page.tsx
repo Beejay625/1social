@@ -24,10 +24,35 @@ import {
   reachConversionTrend,
 } from "@/data/dashboard";
 import { aiActivityLog, aiDraftIdeas, aiPersonas, aiSmartReplies, aiToneOptions } from "@/data/ai";
+import {
+  abTests,
+  campaigns,
+  competitors,
+  contentTemplates,
+  notifications,
+  trendTopics,
+  webhooks,
+} from "@/data/features";
+import {
+  contentHashtags,
+  contentRecommendations,
+  intelligenceAnomalies,
+  intelligenceForecasts,
+} from "@/data/intelligence";
+import { integrationsAvailable } from "@/data/integrations";
+import {
+  reportingAlertFeed,
+  reportingAlertFilters,
+  reportingBenchmarkMatrix,
+  reportingExecMetrics,
+  reportingGoalProgress,
+  reportingVarianceBreakdowns,
+} from "@/data/reporting";
+import { teamActivityLog, teamMembers } from "@/data/team";
 import { truncateAddress, velocityBadge } from "@/utils/account";
 import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
 import { formatMetricDelta, formatMetricValue, metricDeltaTone } from "@/utils/metrics";
-import { percentWidthClass, scoreWidthClass } from "@/utils/progress";
+import { percentWidthClass, pickProgressWidthClass, scoreWidthClass } from "@/utils/progress";
 import { formatRelativeTime, formatScheduleLabel, formatTimeUntil } from "@/utils/time";
 import { useEffect, useMemo, useState } from "react";
 import { useAccount, useChainId, useDisconnect } from "wagmi";
