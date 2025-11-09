@@ -1179,6 +1179,14 @@ export default function Home() {
   const [selectedSequenceId, setSelectedSequenceId] = useState<string>(
     sequencePlays[0]?.id ?? "",
   );
+  const [distributionMatrix, setDistributionMatrix] =
+    useState<Record<ChannelId, boolean>>({
+      farcaster: true,
+      instagram: true,
+      x: true,
+      lens: false,
+      mirror: false,
+    });
   const [calendarView, setCalendarView] = useState<"week" | "month">("week");
   const [calendarFocus, setCalendarFocus] = useState<string>("Thu");
 
