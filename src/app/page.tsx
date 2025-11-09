@@ -1409,6 +1409,49 @@ export default function Home() {
     return { sentiments, statuses };
   }, []);
 
+  const selectedExecMetric = useMemo(
+    () =>
+      reportingExecMetrics.find((metric) => metric.id === selectedExecMetricId) ??
+      reportingExecMetrics[0],
+    [selectedExecMetricId],
+  );
+
+  const selectedVariance = useMemo(
+    () =>
+      reportingVarianceBreakdowns.find((set) => set.id === selectedVarianceId) ??
+      reportingVarianceBreakdowns[0],
+    [selectedVarianceId],
+  );
+
+  const benchmarkDetails = useMemo(
+    () =>
+      reportingBenchmarkMatrix.find((row) => row.channel === selectedBenchmarkChannel) ??
+      reportingBenchmarkMatrix[0],
+    [selectedBenchmarkChannel],
+  );
+
+  const goalProgressWithPercent = useMemo(
+    () =>
+      reportingGoalProgress.map((goal) => {
+        const percentage = Math.min(
+          1,
+          goal.current / (goal.target === 0 ? 1 : goal.target),
+        );
+        return { ...goal, percentage };
+      }),
+    [],
+  );
+
+  const filteredAlerts = useMemo(
+    () =>
+      reportingAlertFeed.filter((alert) =>
+        selectedAlertFilter === "all"
+          ? true
+          : alert.category === selectedAlertFilter,
+      ),
+    [selectedAlertFilter],
+  );
+
   const analyticsSnapshot = useMemo(() => {
     const farcasterLive = posts.filter((post) =>
       post.channels.includes("farcaster"),
