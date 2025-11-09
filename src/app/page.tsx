@@ -3621,6 +3621,167 @@ export default function Home() {
         </section>
 
         <section
+          id="distribution"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(56,189,248,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Distribution control</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage channel availability, track mirrors, and review syndication performance at
+                a glance.
+              </p>
+            </header>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Channel availability
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {Object.values(distributionMatrix).filter(Boolean).length} active
+                </span>
+              </div>
+              <p className="mt-3 text-xs text-slate-200/70">
+                Toggle which networks automatically receive mirrored drops.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-3">
+                {(Object.keys(channelCatalog) as ChannelId[]).map((channelId) => {
+                  const channel = channelCatalog[channelId];
+                  const active = distributionMatrix[channelId];
+                  return (
+                    <button
+                      key={`distribution-toggle-${channelId}`}
+                      type="button"
+                      onClick={() => handleDistributionToggle(channelId)}
+                      className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold uppercase tracking-wide transition ${
+                        active
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                    >
+                      <span
+                        className={`h-2.5 w-2.5 rounded-full ${active ? channel.dot : "bg-white/40"}`}
+                      />
+                      {channel.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Repost tracker
+                  </h3>
+                  <span className="text-xs text-slate-200/70">{repostLedger.length} routes</span>
+                </div>
+                <ul className="mt-4 space-y-3">
+                  {repostLedger.map((event) => (
+                    <li
+                      key={event.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between text-sm text-white">
+                        <span>{channelCatalog[event.source].label} →</span>
+                        <span>{event.scheduledFor}</span>
+                      </div>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {event.targets.map((target) => (
+                          <span
+                            key={`${event.id}-${target}`}
+                            className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${channelCatalog[target].badge}`}
+                          >
+                            {channelCatalog[target].label}
+                          </span>
+                        ))}
+                      </div>
+                      <span
+                        className={`mt-3 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${repostStatusTokens[event.status].badge}`}
+                      >
+                        {repostStatusTokens[event.status].label}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Syndication history
+                  </h3>
+                  <span className="text-xs text-slate-200/70">
+                    {syndicationHistory.length} syncs
+                  </span>
+                </div>
+                <ol className="mt-4 space-y-3">
+                  {syndicationHistory.map((entry) => (
+                    <li
+                      key={entry.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between text-sm text-white">
+                        <span>{entry.title}</span>
+                        <span className="text-xs text-slate-200/70">{entry.timestamp}</span>
+                      </div>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {entry.networks.map((networkId) => (
+                          <span
+                            key={`${entry.id}-${networkId}`}
+                            className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${channelCatalog[networkId].badge}`}
+                          >
+                            {channelCatalog[networkId].label}
+                          </span>
+                        ))}
+                      </div>
+                      <p className="mt-2 text-xs text-slate-200/70">{entry.effect}</p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(14,116,144,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Distribution summary
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {Object.values(distributionMatrix).filter(Boolean).length}/
+                  {Object.keys(channelCatalog).length} networks
+                </span>
+              </div>
+              <p className="mt-3 text-sm text-slate-100/75">
+                Keep the multi-network footprint balanced—toggle channels above to simulate rollout
+                reach.
+              </p>
+              <div className="mt-4 space-y-3 text-xs text-slate-200/70">
+                <p>
+                  Active networks:{' '}
+                  {(
+                    Object.keys(distributionMatrix) as ChannelId[]
+                  )
+                    .filter((key) => distributionMatrix[key])
+                    .map((key) => channelCatalog[key].label)
+                    .join(", ") || "None"}
+                </p>
+                <p>
+                  Upcoming mirrors: {repostLedger.filter((event) => event.status !== "complete").length}
+                </p>
+                <p>
+                  Completed syncs: {repostLedger.filter((event) => event.status === "complete").length}
+                </p>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
           id="automation"
           className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
         >
