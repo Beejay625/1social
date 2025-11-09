@@ -136,6 +136,26 @@ import {
   codeSnippets,
   sdkVersions,
 } from "@/data/developer";
+import {
+  customizationOptions,
+  domainSettings,
+  whiteLabelSettings,
+} from "@/data/white-label";
+import {
+  analyticsReports,
+  customMetrics,
+  dataExports,
+} from "@/data/advanced-analytics";
+import {
+  notificationChannels,
+  notificationPreferences,
+  recentNotifications,
+} from "@/data/notifications-center";
+import {
+  automationLogs,
+  automationRules,
+  automationTemplates,
+} from "@/data/automation";
 import { truncateAddress, velocityBadge } from "@/utils/account";
 import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
 import { formatMetricDelta, formatMetricValue, metricDeltaTone } from "@/utils/metrics";
