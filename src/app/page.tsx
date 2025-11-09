@@ -12,6 +12,7 @@ import {
   sequenceStatusTokens,
   warmupHealthTokens,
 } from "@/constants/statusTokens";
+import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
 import { percentWidthClass, scoreWidthClass } from "@/utils/progress";
 import { formatRelativeTime, formatScheduleLabel, formatTimeUntil } from "@/utils/time";
 import { useEffect, useMemo, useState } from "react";
