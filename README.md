@@ -25,9 +25,11 @@ Visit http://localhost:3000
 - **Social Media Post Templates** - Use pre-built templates to quickly create engaging content
 - **Automated Content Suggestions** - AI-powered suggestions to improve content strategy
 - **Content Performance Predictions** - Predict post performance before publishing
+- **Content Performance Predictor** - AI-powered predictions for content performance before publishing with confidence scores, engagement/reach forecasts, and optimization recommendations
 - **Content Repurposing Tools** - Transform existing content across formats and channels
 - **Repurposing Suggestions** - AI-powered suggestions to repurpose content for maximum reach
 - **Content Creation Workflows** - Predefined workflows for different content types
+- **Calendar AI Assistant** - AI-powered suggestions for optimal posting times, content scheduling, and calendar optimization with reasoning and performance impact analysis
 
 ### Analytics & Reporting
 - **Analytics Dashboards** - Comprehensive performance dashboards with real-time metrics
