@@ -2215,6 +2215,12 @@ export default function Home() {
   const [selectedExportId, setSelectedExportId] = useState<string>(
     reportingExports[0]?.id ?? "",
   );
+  const [selectedHelpCategory, setSelectedHelpCategory] = useState<string>(
+    helpCategories?.[0]?.id ?? "",
+  );
+  const [selectedReleaseId, setSelectedReleaseId] = useState<string>(
+    releases?.[0]?.id ?? "",
+  );
   const [selectedSentimentFilter, setSelectedSentimentFilter] =
     useState<string>("all");
   const [selectedEngagementStatus, setSelectedEngagementStatus] =
