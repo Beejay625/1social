@@ -236,6 +236,12 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Content Performance Tracking** - Detailed performance metrics tracking with top-performing content identification and trend analysis
 - **Audience Insights** - Audience segmentation, demographics analysis, behavior patterns, and actionable insights with confidence scoring
 - **Competitor Analysis** - Competitor performance tracking, market benchmarking, strengths/weaknesses analysis, and market position monitoring
+- **A/B Testing** - Content variation testing with performance comparison, confidence levels, and winner identification
+- **Content Library** - Centralized asset management with folders, tags, usage tracking, and metadata
+- **Social Commerce** - Product performance tracking, sales analytics, revenue metrics, and conversion optimization
+- **Video Analytics** - Video performance tracking with watch time, retention rates, engagement metrics, and optimization insights
+- **Analytics Export** - Multi-format export (PDF, CSV, Excel, JSON, PNG) with templates and scheduled exports
+- **White-Label Branding** - Custom branding with logos, colors, typography, custom domains, and white-label features
 - **Real-time Collaboration** - Live collaboration with presence indicators and active session tracking
 - **Conflict Detection** - Automatic conflict detection and resolution for concurrent edits
 - **Bulk Operations** - Perform bulk actions on multiple items with progress tracking
