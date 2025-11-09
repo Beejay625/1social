@@ -451,6 +451,14 @@ const metricDeltaTone = (delta: number) => {
   };
 };
 
+const chartColorTokens = {
+  reach: "text-sky-300",
+  conversionRate: "text-amber-300",
+  total: "text-purple-300",
+  farcaster: "text-emerald-300",
+  instagram: "text-fuchsia-300",
+} as const;
+
 const approvalStatusTokens: Record<
   ApprovalStatus,
   { label: string; badge: string; dot: string }
