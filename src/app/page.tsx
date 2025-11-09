@@ -4252,30 +4252,32 @@ export default function Home() {
                     </span>
                   </div>
                   <ul className="mt-4 space-y-3">
-                    {goalProgressWithPercent.map((goal) => (
-                      <li
-                        key={goal.id}
-                        className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85"
-                      >
-                        <div className="flex items-center justify-between">
-                          <p className="font-semibold text-white">{goal.title}</p>
-                          <span className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
-                            {goal.due}
-                          </span>
-                        </div>
-                        <p className="mt-1 text-xs text-slate-200/70">Owner: {goal.owner}</p>
-                        <div className="mt-3 h-2 rounded-full bg-white/10">
-                          <div
-                            className="h-full rounded-full bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400"
-                            style={{ width: `${goal.percentage * 100}%` }}
-                          />
-                        </div>
-                        <p className="mt-2 text-xs text-slate-200/70">
-                          {goal.current.toLocaleString()} / {goal.target.toLocaleString()}{" "}
-                          ({Math.round(goal.percentage * 100)}%)
-                        </p>
-                      </li>
-                    ))}
+                    {goalProgressWithPercent.map((goal) => {
+                      const widthClass = pickProgressWidthClass(goal.percentage);
+                      return (
+                        <li
+                          key={goal.id}
+                          className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85"
+                        >
+                          <div className="flex items-center justify-between">
+                            <p className="font-semibold text-white">{goal.title}</p>
+                            <span className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                              {goal.due}
+                            </span>
+                          </div>
+                          <p className="mt-1 text-xs text-slate-200/70">Owner: {goal.owner}</p>
+                          <div className="mt-3 h-2 rounded-full bg-white/10">
+                            <div
+                              className={`h-full rounded-full bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 ${widthClass}`}
+                            />
+                          </div>
+                          <p className="mt-2 text-xs text-slate-200/70">
+                            {goal.current.toLocaleString()} / {goal.target.toLocaleString()}{" "}
+                            ({Math.round(goal.percentage * 100)}%)
+                          </p>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               </div>
