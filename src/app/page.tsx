@@ -2693,6 +2693,268 @@ const performanceTracking = [
   },
 ];
 
+// Content performance dashboard
+const performanceDashboard = [
+  {
+    id: "dash-1",
+    metric: "Total Reach",
+    value: 1250000,
+    change: 12.5,
+    trend: "up",
+    period: "Last 30 days",
+  },
+  {
+    id: "dash-2",
+    metric: "Total Engagement",
+    value: 124000,
+    change: 8.3,
+    trend: "up",
+    period: "Last 30 days",
+  },
+  {
+    id: "dash-3",
+    metric: "Avg Engagement Rate",
+    value: 9.9,
+    change: 2.1,
+    trend: "up",
+    period: "Last 30 days",
+  },
+];
+
+// Content collaboration tools
+const collaborationTools = [
+  {
+    id: "collab-1",
+    tool: "Content Review Board",
+    activeUsers: 5,
+    pendingReviews: 8,
+    completedToday: 12,
+  },
+  {
+    id: "collab-2",
+    tool: "Creative Brief Builder",
+    activeBriefs: 3,
+    completedBriefs: 24,
+    avgCompletionTime: "2 hours",
+  },
+  {
+    id: "collab-3",
+    tool: "Asset Request System",
+    pendingRequests: 5,
+    fulfilledToday: 8,
+    avgFulfillmentTime: "4 hours",
+  },
+];
+
+// Social media analytics export
+const analyticsExports = [
+  {
+    id: "export-1",
+    name: "Monthly Performance Report",
+    format: "PDF",
+    size: "2.5 MB",
+    exportedAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+    status: "ready",
+  },
+  {
+    id: "export-2",
+    name: "Engagement Analytics",
+    format: "CSV",
+    size: "1.2 MB",
+    exportedAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+    status: "ready",
+  },
+  {
+    id: "export-3",
+    name: "Campaign Summary",
+    format: "Excel",
+    size: "3.8 MB",
+    exportedAt: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(),
+    status: "ready",
+  },
+];
+
+// Content approval queue
+const approvalQueue = [
+  {
+    id: "approval-1",
+    content: "Product Launch Post",
+    author: "Ameena O.",
+    submittedAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+    priority: "high",
+    status: "pending",
+  },
+  {
+    id: "approval-2",
+    content: "Community Update",
+    author: "Leo F.",
+    submittedAt: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
+    priority: "medium",
+    status: "pending",
+  },
+  {
+    id: "approval-3",
+    content: "Educational Content",
+    author: "Kai L.",
+    submittedAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+    priority: "low",
+    status: "approved",
+  },
+];
+
+// Social media post templates
+const postTemplates = [
+  {
+    id: "template-1",
+    name: "Product Announcement",
+    category: "Marketing",
+    usage: 45,
+    avgEngagement: 9.2,
+    channels: ["farcaster", "instagram", "x"] as ChannelId[],
+  },
+  {
+    id: "template-2",
+    name: "Community Spotlight",
+    category: "Community",
+    usage: 32,
+    avgEngagement: 8.5,
+    channels: ["farcaster", "lens"] as ChannelId[],
+  },
+  {
+    id: "template-3",
+    name: "Educational Post",
+    category: "Education",
+    usage: 28,
+    avgEngagement: 7.8,
+    channels: ["instagram", "x", "mirror"] as ChannelId[],
+  },
+];
+
+// Content performance insights
+const performanceInsights = [
+  {
+    id: "insight-1",
+    insight: "Video content performs 40% better than images",
+    impact: "high",
+    recommendation: "Increase video content by 25%",
+  },
+  {
+    id: "insight-2",
+    insight: "Posts published at 10 AM get 30% more engagement",
+    impact: "medium",
+    recommendation: "Schedule more posts for 10 AM",
+  },
+  {
+    id: "insight-3",
+    insight: "Farcaster channel shows highest engagement rates",
+    impact: "high",
+    recommendation: "Focus more content on Farcaster",
+  },
+];
+
+// Social media engagement tracking
+const engagementTracking = [
+  {
+    id: "eng-track-1",
+    type: "Mentions",
+    count: 1240,
+    change: 15.2,
+    topChannel: "farcaster" as ChannelId,
+  },
+  {
+    id: "eng-track-2",
+    type: "Direct Messages",
+    count: 890,
+    change: 8.5,
+    topChannel: "instagram" as ChannelId,
+  },
+  {
+    id: "eng-track-3",
+    type: "Comments",
+    count: 1560,
+    change: 12.3,
+    topChannel: "x" as ChannelId,
+  },
+];
+
+// Content calendar views
+const calendarViews = [
+  {
+    id: "view-1",
+    view: "Week View",
+    posts: 24,
+    scheduled: 18,
+    published: 6,
+  },
+  {
+    id: "view-2",
+    view: "Month View",
+    posts: 98,
+    scheduled: 72,
+    published: 26,
+  },
+  {
+    id: "view-3",
+    view: "List View",
+    posts: 156,
+    scheduled: 124,
+    published: 32,
+  },
+];
+
+// Social media hashtag performance
+const hashtagPerformance = [
+  {
+    id: "hashtag-1",
+    hashtag: "#Web3Social",
+    posts: 45,
+    reach: 125000,
+    engagement: 12400,
+    growth: 24.5,
+  },
+  {
+    id: "hashtag-2",
+    hashtag: "#Decentralized",
+    posts: 32,
+    reach: 89000,
+    engagement: 8900,
+    growth: 18.2,
+  },
+  {
+    id: "hashtag-3",
+    hashtag: "#CryptoCommunity",
+    posts: 28,
+    reach: 156000,
+    engagement: 18900,
+    growth: 15.7,
+  },
+];
+
+// Content repurposing suggestions
+const repurposingSuggestions = [
+  {
+    id: "repurpose-1",
+    original: "Blog Post: Web3 Guide",
+    suggestion: "Create Instagram carousel",
+    potentialReach: 125000,
+    effort: "low",
+  },
+  {
+    id: "repurpose-2",
+    original: "Video Tutorial",
+    suggestion: "Extract key moments as GIFs",
+    potentialReach: 89000,
+    effort: "medium",
+  },
+  {
+    id: "repurpose-3",
+    original: "Twitter Thread",
+    suggestion: "Convert to LinkedIn article",
+    potentialReach: 156000,
+    effort: "low",
+  },
+];
+
 const dashboardSections: { id: string; label: string }[] = [
   { id: "broadcast", label: "Compose" },
   { id: "plan", label: "Scheduling" },
