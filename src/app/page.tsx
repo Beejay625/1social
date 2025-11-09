@@ -2181,7 +2181,6 @@ export default function Home() {
                           ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
                           : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
                       }`}
-                      aria-pressed={comparisonVisibility.reach ? "true" : "false"}
                     >
                       Reach
                     </button>
@@ -2193,7 +2192,6 @@ export default function Home() {
                           ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
                           : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
                       }`}
-                      aria-pressed={comparisonVisibility.conversionRate ? "true" : "false"}
                     >
                       Conversion
                     </button>
@@ -2280,7 +2278,6 @@ export default function Home() {
                               ? "border-white/80 bg-white text-slate-900 shadow-lg shadow-white/30"
                               : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
                           }`}
-                          aria-pressed={isActive ? "true" : "false"}
                         >
                           {point.label}
                         </button>
@@ -2309,7 +2306,6 @@ export default function Home() {
                           ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
                           : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
                       }`}
-                      aria-pressed={growthVisibility.total ? "true" : "false"}
                     >
                       Total
                     </button>
@@ -2321,7 +2317,6 @@ export default function Home() {
                           ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
                           : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
                       }`}
-                      aria-pressed={growthVisibility.farcaster ? "true" : "false"}
                     >
                       Farcaster
                     </button>
@@ -2333,7 +2328,6 @@ export default function Home() {
                           ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
                           : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
                       }`}
-                      aria-pressed={growthVisibility.instagram ? "true" : "false"}
                     >
                       Instagram
                     </button>
@@ -2438,7 +2432,6 @@ export default function Home() {
                               ? "border-white/80 bg-white text-slate-900 shadow-lg shadow-white/30"
                               : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
                           }`}
-                          aria-pressed={isActive ? "true" : "false"}
                         >
                           {point.label}
                         </button>
