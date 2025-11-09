@@ -59,6 +59,8 @@ Visit http://localhost:3000
 - **Social Listening** - Monitor keywords, track mentions, understand audience sentiment
 - **Social Media Listening Insights** - Track conversations, sentiment, and trends
 - **Social Media Monitoring Dashboard** - Real-time alerts for mentions and activity
+- **Social Listening Dashboard** - Comprehensive listening dashboard with keyword alerts, trending topics, sentiment analysis, and real-time monitoring
+- **Brand Mentions** - Track all brand mentions across platforms with sentiment analysis, engagement tracking, and growth metrics
 - **Hashtag Analytics** - Track hashtag performance, growth trends, and engagement
 - **Hashtag Performance** - Detailed hashtag performance metrics
 - **Social Media Hashtag Performance** - Track hashtag performance, growth trends, and engagement metrics
