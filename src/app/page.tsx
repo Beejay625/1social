@@ -2456,6 +2456,243 @@ const listeningInsights = [
   },
 ];
 
+// Social media content library
+const contentLibrary = [
+  {
+    id: "lib-1",
+    title: "Product Showcase Video",
+    type: "video",
+    size: "12.5 MB",
+    uploadDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
+    usage: 8,
+    channels: ["instagram", "farcaster"] as ChannelId[],
+  },
+  {
+    id: "lib-2",
+    title: "Brand Logo Pack",
+    type: "image",
+    size: "2.3 MB",
+    uploadDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(),
+    usage: 24,
+    channels: ["x", "lens", "mirror"] as ChannelId[],
+  },
+  {
+    id: "lib-3",
+    title: "Product Demo GIF",
+    type: "gif",
+    size: "5.7 MB",
+    uploadDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(),
+    usage: 15,
+    channels: ["instagram", "x"] as ChannelId[],
+  },
+];
+
+// Content performance comparison
+const contentComparisons = [
+  {
+    id: "comp-1",
+    metric: "Engagement Rate",
+    current: 9.2,
+    previous: 7.8,
+    change: 17.9,
+    period: "vs last month",
+  },
+  {
+    id: "comp-2",
+    metric: "Reach",
+    current: 125000,
+    previous: 98000,
+    change: 27.6,
+    period: "vs last month",
+  },
+  {
+    id: "comp-3",
+    metric: "Click-through Rate",
+    current: 4.5,
+    previous: 3.2,
+    change: 40.6,
+    period: "vs last month",
+  },
+];
+
+// Social media competitor analysis
+const competitorAnalysis = [
+  {
+    id: "comp-1",
+    competitor: "@competitor1",
+    followers: 125000,
+    avgEngagement: 8.5,
+    postsPerWeek: 12,
+    growthRate: 5.2,
+    yourFollowers: 98000,
+    yourAvgEngagement: 9.2,
+  },
+  {
+    id: "comp-2",
+    competitor: "@competitor2",
+    followers: 89000,
+    avgEngagement: 7.8,
+    postsPerWeek: 8,
+    growthRate: 3.5,
+    yourFollowers: 98000,
+    yourAvgEngagement: 9.2,
+  },
+  {
+    id: "comp-3",
+    competitor: "@competitor3",
+    followers: 156000,
+    avgEngagement: 6.9,
+    postsPerWeek: 15,
+    growthRate: 4.8,
+    yourFollowers: 98000,
+    yourAvgEngagement: 9.2,
+  },
+];
+
+// Content scheduling optimization
+const schedulingOptimizations = [
+  {
+    id: "opt-1",
+    channel: "farcaster" as ChannelId,
+    recommendedTime: "10:00 AM",
+    expectedEngagement: 12400,
+    currentAvg: 8900,
+    improvement: 39.3,
+  },
+  {
+    id: "opt-2",
+    channel: "instagram" as ChannelId,
+    recommendedTime: "3:00 PM",
+    expectedEngagement: 15600,
+    currentAvg: 11200,
+    improvement: 39.3,
+  },
+  {
+    id: "opt-3",
+    channel: "x" as ChannelId,
+    recommendedTime: "12:00 PM",
+    expectedEngagement: 18900,
+    currentAvg: 14500,
+    improvement: 30.3,
+  },
+];
+
+// Social media engagement analytics
+const engagementAnalytics = [
+  {
+    id: "eng-1",
+    type: "Likes",
+    count: 12400,
+    change: 12.5,
+    trend: "up",
+  },
+  {
+    id: "eng-2",
+    type: "Comments",
+    count: 890,
+    change: 8.3,
+    trend: "up",
+  },
+  {
+    id: "eng-3",
+    type: "Shares",
+    count: 1560,
+    change: -2.1,
+    trend: "down",
+  },
+  {
+    id: "eng-4",
+    type: "Saves",
+    count: 2340,
+    change: 15.7,
+    trend: "up",
+  },
+];
+
+// Content calendar integration
+const calendarIntegrations = [
+  {
+    id: "cal-1",
+    platform: "Google Calendar",
+    status: "connected",
+    events: 24,
+    lastSync: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+  },
+  {
+    id: "cal-2",
+    platform: "Outlook",
+    status: "connected",
+    events: 18,
+    lastSync: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+  },
+  {
+    id: "cal-3",
+    platform: "Apple Calendar",
+    status: "disconnected",
+    events: 0,
+    lastSync: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+  },
+];
+
+// Social media automation rules
+const automationRules = [
+  {
+    id: "rule-1",
+    name: "Auto-reply to mentions",
+    trigger: "Brand mention",
+    action: "Send thank you message",
+    status: "active",
+    executions: 124,
+  },
+  {
+    id: "rule-2",
+    name: "Schedule best time posts",
+    trigger: "New post created",
+    action: "Optimize posting time",
+    status: "active",
+    executions: 89,
+  },
+  {
+    id: "rule-3",
+    name: "Auto-archive old posts",
+    trigger: "Post older than 30 days",
+    action: "Archive post",
+    status: "paused",
+    executions: 12,
+  },
+];
+
+// Content performance tracking
+const performanceTracking = [
+  {
+    id: "track-1",
+    content: "Product Launch Announcement",
+    impressions: 125000,
+    engagement: 12400,
+    engagementRate: 9.9,
+    clicks: 890,
+    date: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+  },
+  {
+    id: "track-2",
+    content: "Community Spotlight",
+    impressions: 98000,
+    engagement: 8900,
+    engagementRate: 9.1,
+    clicks: 650,
+    date: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(),
+  },
+  {
+    id: "track-3",
+    content: "Educational Tutorial",
+    impressions: 156000,
+    engagement: 18900,
+    engagementRate: 12.1,
+    clicks: 1240,
+    date: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
+  },
+];
+
 const dashboardSections: { id: string; label: string }[] = [
   { id: "broadcast", label: "Compose" },
   { id: "plan", label: "Scheduling" },
