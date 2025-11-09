@@ -769,9 +769,6 @@ const approvalTemplates: ApprovalTemplate[] = [
 
 function getApprovalTemplate(templateId: string | undefined | null) {
   return approvalTemplates.find((template) => template.id === templateId) ?? null;
-      </main>
-    </div>
-  );
 }
 
 function instantiateApprovalSteps(
