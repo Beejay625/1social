@@ -1077,6 +1077,30 @@ export default function Home() {
     };
   }, []);
 
+  const selectedTemplate = useMemo(
+    () =>
+      automationTemplates.find((template) => template.id === selectedTemplateId) ??
+      automationTemplates[0] ??
+      null,
+    [selectedTemplateId],
+  );
+
+  const selectedSequence = useMemo(
+    () =>
+      sequencePlays.find((sequence) => sequence.id === selectedSequenceId) ??
+      sequencePlays[0] ??
+      null,
+    [selectedSequenceId],
+  );
+
+  const calendarByDay = useMemo(() => {
+    const grouped = audienceDays.map((day) => ({
+      day,
+      slots: calendarSlots.filter((slot) => slot.day === day),
+    }));
+    return grouped;
+  }, []);
+
   const analyticsSnapshot = useMemo(() => {
     const farcasterLive = posts.filter((post) =>
       post.channels.includes("farcaster"),
