@@ -1883,7 +1883,10 @@ export default function Home() {
           ))}
         </section>
 
-        <section className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+        <section
+          id="broadcast"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]"
+        >
           <article className="flex flex-col gap-6 rounded-4xl border border-white/20 bg-white/10 p-8 shadow-[0_18px_60px_rgba(91,33,182,0.35)] backdrop-blur-2xl">
             <header className="flex flex-col gap-3">
               <h2 className="text-2xl font-semibold">Create a broadcast</h2>
@@ -2050,7 +2053,10 @@ export default function Home() {
           </aside>
         </section>
 
-        <section className="grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.85fr)]">
+        <section
+          id="plan"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.85fr)]"
+        >
           <article className="flex flex-col gap-6 rounded-4xl border border-white/20 bg-white/10 p-8 shadow-[0_18px_60px_rgba(56,189,248,0.3)] backdrop-blur-2xl">
             <header className="flex flex-col gap-3">
               <h2 className="text-2xl font-semibold text-white">Plan the week</h2>
@@ -2407,7 +2413,10 @@ export default function Home() {
           </aside>
         </section>
 
-        <section className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.95fr)]">
+        <section
+          id="workflow"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.95fr)]"
+        >
           <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
             <header className="flex flex-col gap-3">
               <h2 className="text-2xl font-semibold text-white">
