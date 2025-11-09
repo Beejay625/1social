@@ -8977,3 +8977,7 @@ export default function Home() {
             </div>
           </aside>
         </section>
+      </main>
+    </div>
+  );
+}
