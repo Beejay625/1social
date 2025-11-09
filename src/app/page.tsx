@@ -1416,10 +1416,10 @@ export default function Home() {
     contentRecommendations[0]?.id ?? "",
   );
   const [selectedPerformancePostId, setSelectedPerformancePostId] = useState<string>(
-    contentPerformancePosts[0]?.id ?? "",
+    contentPerformancePosts?.[0]?.id ?? "",
   );
   const [selectedAutomationId, setSelectedAutomationId] = useState<string>(
-    workflowAutomations[0]?.id ?? "",
+    workflowAutomations?.[0]?.id ?? "",
   );
   const [selectedNotificationId, setSelectedNotificationId] = useState<string>("");
 
