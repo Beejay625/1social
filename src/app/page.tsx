@@ -1619,6 +1619,214 @@ const performanceComparison = [
   },
 ];
 
+// Content library management
+const contentLibrary = [
+  {
+    id: "lib-1",
+    title: "Product Launch Assets",
+    type: "image",
+    size: "2.4 MB",
+    uploadedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(),
+    usage: 12,
+    tags: ["product", "launch", "marketing"],
+    channels: ["farcaster", "instagram"] as ChannelId[],
+  },
+  {
+    id: "lib-2",
+    title: "Brand Guidelines Video",
+    type: "video",
+    size: "45.2 MB",
+    uploadedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString(),
+    usage: 8,
+    tags: ["brand", "guidelines", "video"],
+    channels: ["instagram", "x"] as ChannelId[],
+  },
+  {
+    id: "lib-3",
+    title: "Community Template",
+    type: "template",
+    size: "128 KB",
+    uploadedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
+    usage: 24,
+    tags: ["template", "community"],
+    channels: ["farcaster", "lens"] as ChannelId[],
+  },
+];
+
+// Advanced search
+const searchHistory = [
+  {
+    id: "search-1",
+    query: "product launch",
+    results: 45,
+    searchedAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+  },
+  {
+    id: "search-2",
+    query: "engagement rate > 5%",
+    results: 12,
+    searchedAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+  },
+  {
+    id: "search-3",
+    query: "farcaster posts last week",
+    results: 89,
+    searchedAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+  },
+];
+
+// User management & permissions
+const userRoles = [
+  {
+    id: "role-1",
+    name: "Admin",
+    permissions: ["create", "edit", "delete", "approve", "publish", "manage_users"],
+    users: 3,
+    description: "Full access to all features",
+  },
+  {
+    id: "role-2",
+    name: "Content Creator",
+    permissions: ["create", "edit"],
+    users: 8,
+    description: "Can create and edit content",
+  },
+  {
+    id: "role-3",
+    name: "Approver",
+    permissions: ["create", "edit", "approve"],
+    users: 5,
+    description: "Can create, edit, and approve content",
+  },
+];
+
+// Export & backup
+const exportHistory = [
+  {
+    id: "export-1",
+    name: "Q1 Campaign Data",
+    type: "csv",
+    size: "2.3 MB",
+    exportedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 3).toISOString(),
+    status: "completed",
+  },
+  {
+    id: "export-2",
+    name: "All Posts Backup",
+    type: "json",
+    size: "15.7 MB",
+    exportedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(),
+    status: "completed",
+  },
+  {
+    id: "export-3",
+    name: "Analytics Report",
+    type: "pdf",
+    size: "8.1 MB",
+    exportedAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+    status: "processing",
+  },
+];
+
+// Revenue tracking
+const revenueData = [
+  {
+    id: "rev-1",
+    source: "Sponsored Posts",
+    amount: 12500,
+    period: "This Month",
+    growth: 18.5,
+    trend: "up" as const,
+  },
+  {
+    id: "rev-2",
+    source: "Affiliate Links",
+    amount: 8900,
+    period: "This Month",
+    growth: 12.3,
+    trend: "up" as const,
+  },
+  {
+    id: "rev-3",
+    source: "Product Sales",
+    amount: 45600,
+    period: "This Month",
+    growth: -5.2,
+    trend: "down" as const,
+  },
+];
+
+// Multi-language support
+const languageSettings = [
+  {
+    id: "lang-1",
+    language: "English",
+    code: "en",
+    posts: 1240,
+    engagement: 8.5,
+    status: "active",
+  },
+  {
+    id: "lang-2",
+    language: "Spanish",
+    code: "es",
+    posts: 890,
+    engagement: 9.2,
+    status: "active",
+  },
+  {
+    id: "lang-3",
+    language: "French",
+    code: "fr",
+    posts: 560,
+    engagement: 7.8,
+    status: "active",
+  },
+];
+
+// Post analytics deep dive
+const postAnalytics = [
+  {
+    id: "analytics-1",
+    postId: "post-123",
+    title: "Product Launch Announcement",
+    publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
+    impressions: 125000,
+    reach: 98000,
+    engagement: 12400,
+    clicks: 890,
+    saves: 450,
+    shares: 320,
+    engagementRate: 9.9,
+  },
+  {
+    id: "analytics-2",
+    postId: "post-124",
+    title: "Community Spotlight",
+    publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(),
+    impressions: 89000,
+    reach: 72000,
+    engagement: 8900,
+    clicks: 560,
+    saves: 320,
+    shares: 180,
+    engagementRate: 10.0,
+  },
+  {
+    id: "analytics-3",
+    postId: "post-125",
+    title: "Tutorial: Wallet Setup",
+    publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(),
+    impressions: 156000,
+    reach: 134000,
+    engagement: 18900,
+    clicks: 1200,
+    saves: 890,
+    shares: 450,
+    engagementRate: 12.1,
+  },
+];
+
 const dashboardSections: { id: string; label: string }[] = [
   { id: "broadcast", label: "Compose" },
   { id: "plan", label: "Scheduling" },
