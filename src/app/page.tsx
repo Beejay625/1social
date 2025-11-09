@@ -6778,7 +6778,7 @@ export default function Home() {
                           </div>
                           <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
                             <div
-                              className={`h-full bg-gradient-to-r ${channelCatalog[segment.channel].gradient}`}
+                              className={`h-full bg-gradient-to-r ${channelCatalog[segment.channel].accent}`}
                               style={{ width: `${segment.coverage}%` }}
                             />
                           </div>
