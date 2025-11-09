@@ -584,6 +584,29 @@ export default function Home() {
     disconnect();
   };
 
+  const handleWorkflowSelect = (postId: string) => {
+    setSelectedWorkflowPostId(postId);
+    setWorkflowNote("");
+  };
+
+  const handleWorkflowCommentSubmit = (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
+    event.preventDefault();
+    const trimmed = workflowNote.trim();
+    if (!trimmed || !workflowTimeline.selectedPost) return;
+    const newComment: Comment = {
+      id: `comment-${Date.now()}`,
+      postId: workflowTimeline.selectedPost.id,
+      author: "You",
+      message: trimmed,
+      createdAt: new Date().toISOString(),
+      tone: "info",
+    };
+    setComments((prev) => [newComment, ...prev]);
+    setWorkflowNote("");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-900 to-sky-600 text-white">
       <main className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 py-16 lg:px-12">
