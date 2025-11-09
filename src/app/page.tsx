@@ -702,20 +702,48 @@ export default function Home() {
     ).toISOString();
 
     window.setTimeout(() => {
-      setPlannedPosts((prev) => [
-        ...prev,
-        {
-          id: `plan-${Date.now()}`,
-          title: trimmedTitle,
-          summary:
-            scheduleSummary.trim() ||
-            "We will enrich this summary closer to launch.",
-          scheduledFor: isoTimestamp,
-          channels: scheduleActiveChannels,
-          status: "queued",
-          owner: "You",
-        },
-      ]);
+      const stamp = Date.now();
+      const commentTimestamp = new Date().toISOString();
+      const launchDate = new Date(isoTimestamp).getTime();
+
+      const newPlan: PlannedPost = {
+        id: `plan-${stamp}`,
+        title: trimmedTitle,
+        summary:
+          scheduleSummary.trim() ||
+          "We will enrich this summary closer to launch.",
+        scheduledFor: isoTimestamp,
+        channels: scheduleActiveChannels,
+        status: "queued",
+        owner: "You",
+        approvalSteps: [
+          {
+            id: `strategy-${stamp}`,
+            label: "Strategy check",
+            approver: "Ameena",
+            status: "pending",
+            due: new Date(launchDate - 1000 * 60 * 60 * 2).toISOString(),
+          },
+          {
+            id: `creative-${stamp}`,
+            label: "Creative polish",
+            approver: "Kai",
+            status: "pending",
+            due: new Date(launchDate - 1000 * 60 * 45).toISOString(),
+          },
+        ],
+        commentThread: [
+          {
+            id: `comment-${stamp}`,
+            author: "You",
+            message: "Queued this drop for auto-publish.",
+            at: commentTimestamp,
+            tone: "note",
+          },
+        ],
+      };
+
+      setPlannedPosts((prev) => [...prev, newPlan]);
       setScheduleTitle("");
       setScheduleSummary("");
       setScheduleDate("");
