@@ -272,6 +272,12 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Social Commerce** - Sell products directly through social media with sales tracking
 - **Video Analytics** - Track video performance with watch time, completion rate, and insights
 - **Influencer Management** - Manage influencer relationships and track collaboration performance
+- **Scheduling Automation** - Intelligent automation rules for content scheduling, posting, and workflows with time-based, event-based, and content-based triggers
+- **Influencer Collaboration** - Comprehensive influencer partnership management with campaign tracking, ROI analysis, and performance metrics
+- **Social Compliance** - Automated compliance checking for copyright, trademark, privacy, accessibility, and advertising requirements with issue detection and recommendations
+- **Content Repurposing** - Automated content transformation across platforms and formats with performance tracking and template library
+- **Notification Center** - Centralized notification system with priority levels, category filtering, quiet hours, and multi-channel delivery (email, push, SMS)
+- **API Management** - Complete API key management with usage monitoring, rate limiting, permissions, and performance tracking
 
 ## Project Structure
 
