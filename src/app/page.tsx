@@ -209,7 +209,7 @@ const percentWidthClass = (percent: number) => {
 
 export default function Home() {
   const { address, isConnected } = useAccount();
-  const { chain } = useNetwork();
+  const chainId = useChainId();
   const { disconnect } = useDisconnect();
 
   const [draft, setDraft] = useState("");
@@ -239,6 +239,11 @@ export default function Home() {
     farcaster: true,
     instagram: false,
   });
+
+  const activeNetwork = useMemo(
+    () => networks.find((network) => network.id === chainId),
+    [chainId],
+  );
 
   const activeChannels = useMemo(
     () =>
