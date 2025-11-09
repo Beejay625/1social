@@ -19,12 +19,20 @@ type SocialPost = {
 
 type ApprovalStatus = "pending" | "approved" | "changes";
 
+type StepEscalation = {
+  notifyAfterHours: number;
+  routeTo: string;
+  fallback: string;
+  triggeredAt?: string;
+};
+
 type ApprovalStep = {
   id: string;
   label: string;
   approver: string;
   status: ApprovalStatus;
   due: string;
+  escalation?: StepEscalation;
 };
 
 type Comment = {
@@ -45,6 +53,7 @@ type PlannedPost = {
   owner: string;
   approvalSteps: ApprovalStep[];
   commentThread: Comment[];
+  approvalTemplateId?: string;
 };
 
 type MetricUnit = "k" | "%" | "score";
@@ -97,6 +106,22 @@ type ApprovalRoute = {
   stage: string;
   owners: string[];
   fallback: string;
+};
+
+type ApprovalTemplateStep = {
+  id: string;
+  label: string;
+  approver: string;
+  dueOffsetHours: number;
+  escalation?: Omit<StepEscalation, "triggeredAt">;
+};
+
+type ApprovalTemplate = {
+  id: string;
+  name: string;
+  description: string;
+  summary: string;
+  steps: ApprovalTemplateStep[];
 };
 
 type RepostEvent = {
