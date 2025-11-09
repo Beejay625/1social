@@ -1726,6 +1726,18 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+            <nav className="mt-6 flex flex-wrap gap-3 text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+              {dashboardSections.map((section) => (
+                <a
+                  key={section.id}
+                  href={`#${section.id}`}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] text-slate-100 transition hover:border-white/40 hover:bg-white/15"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-white/50" />
+                  {section.label}
+                </a>
+              ))}
+            </nav>
             </div>
             <div className="w-full max-w-md place-self-center space-y-5">
               <div className="relative overflow-hidden rounded-4xl border border-white/15 bg-slate-950/60 p-7 sm:p-8 shadow-2xl shadow-purple-600/20 backdrop-blur-3xl">
@@ -1778,8 +1790,8 @@ export default function Home() {
                 </p>
                     <p className="text-xs uppercase tracking-[0.3em] text-slate-300/60">
                   {activeNetwork?.name ?? "No network selected"}
-                </p>
-              </div>
+          </p>
+        </div>
 
                   <ul className="grid gap-3 text-sm text-slate-200/80 sm:grid-cols-2 sm:gap-4">
                     <li className="flex items-start gap-3">
