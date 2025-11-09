@@ -1,76 +1,63 @@
-export interface CalendarSync {
+export interface CalendarConnection {
   id: string;
-  name: string;
-  type: "google" | "outlook" | "apple" | "ical";
-  status: "connected" | "disconnected" | "syncing" | "error";
+  provider: "google" | "outlook" | "apple" | "ical";
+  account: string;
+  status: "connected" | "disconnected" | "error";
   lastSync: string;
-  syncFrequency: "realtime" | "hourly" | "daily";
-  calendars: SyncedCalendar[];
-  syncDirection: "bidirectional" | "import" | "export";
+  eventsSynced: number;
 }
 
-export interface SyncedCalendar {
+export interface CalendarEvent {
   id: string;
-  name: string;
-  color: string;
-  eventCount: number;
-  lastSynced: string;
-  enabled: boolean;
+  title: string;
+  startTime: string;
+  endTime: string;
+  calendar: string;
+  synced: boolean;
 }
 
-export const calendarSyncs: CalendarSync[] = [
+export const calendarConnections: CalendarConnection[] = [
   {
-    id: "sync-1",
-    name: "Google Calendar",
-    type: "google",
+    id: "conn-1",
+    provider: "google",
+    account: "user@example.com",
     status: "connected",
-    lastSync: new Date().toISOString(),
-    syncFrequency: "realtime",
-    calendars: [
-      {
-        id: "cal-1",
-        name: "Content Calendar",
-        color: "#3b82f6",
-        eventCount: 45,
-        lastSynced: new Date().toISOString(),
-        enabled: true,
-      },
-      {
-        id: "cal-2",
-        name: "Team Events",
-        color: "#8b5cf6",
-        eventCount: 12,
-        lastSynced: new Date(Date.now() - 3600000).toISOString(),
-        enabled: true,
-      },
-    ],
-    syncDirection: "bidirectional",
+    lastSync: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+    eventsSynced: 45,
   },
   {
-    id: "sync-2",
-    name: "Outlook Calendar",
-    type: "outlook",
+    id: "conn-2",
+    provider: "outlook",
+    account: "user@company.com",
     status: "connected",
-    lastSync: new Date(Date.now() - 7200000).toISOString(),
-    syncFrequency: "hourly",
-    calendars: [
-      {
-        id: "cal-3",
-        name: "Marketing Schedule",
-        color: "#10b981",
-        eventCount: 28,
-        lastSynced: new Date(Date.now() - 7200000).toISOString(),
-        enabled: true,
-      },
-    ],
-    syncDirection: "import",
+    lastSync: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+    eventsSynced: 32,
+  },
+];
+
+export const calendarEvents: CalendarEvent[] = [
+  {
+    id: "event-1",
+    title: "Product Launch",
+    startTime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2).toISOString(),
+    endTime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 60 * 60).toISOString(),
+    calendar: "google",
+    synced: true,
+  },
+  {
+    id: "event-2",
+    title: "Team Meeting",
+    startTime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3).toISOString(),
+    endTime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3 + 1000 * 60 * 30).toISOString(),
+    calendar: "outlook",
+    synced: true,
   },
 ];
 
 export const syncStats = {
-  totalCalendars: 3,
-  totalEvents: 85,
-  syncedToday: 23,
-  pendingSync: 2,
+  totalConnections: 3,
+  activeConnections: 2,
+  eventsSynced: 77,
+  lastSyncTime: "15 minutes ago",
+  syncSuccessRate: 98,
 };
-
