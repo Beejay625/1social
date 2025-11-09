@@ -1,42 +1,71 @@
-export const influencerProfiles = [
+export interface Influencer {
+  id: string;
+  name: string;
+  handle: string;
+  platform: string;
+  followers: number;
+  engagementRate: number;
+  category: string;
+  status: "contacted" | "negotiating" | "contracted" | "completed" | "declined";
+  reach: number;
+  lastContact: string;
+}
+
+export interface OutreachCampaign {
+  id: string;
+  name: string;
+  influencers: string[];
+  budget: number;
+  status: "planning" | "active" | "completed" | "cancelled";
+  startDate: string;
+  endDate: string;
+  expectedReach: number;
+}
+
+export const influencers: Influencer[] = [
   {
     id: "inf-1",
-    name: "Crypto Creator",
-    handle: "@cryptocreator",
+    name: "Alice Web3",
+    handle: "@aliceweb3",
+    platform: "farcaster",
     followers: 125000,
-    engagementRate: 4.8,
-    category: "crypto",
-    status: "contacted",
-    lastContact: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+    engagementRate: 8.5,
+    category: "Web3 Creator",
+    status: "contracted",
+    reach: 106250,
+    lastContact: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
   },
   {
     id: "inf-2",
-    name: "Tech Influencer",
-    handle: "@techinfluencer",
-    followers: 89000,
-    engagementRate: 5.2,
-    category: "technology",
-    status: "pending",
-    lastContact: null,
+    name: "Tech Guru",
+    handle: "@techguru",
+    platform: "x",
+    followers: 250000,
+    engagementRate: 6.2,
+    category: "Technology",
+    status: "negotiating",
+    reach: 155000,
+    lastContact: new Date(Date.now() - 1000 * 60 * 60 * 12).toISOString(),
   },
 ];
 
-export const outreachCampaigns = [
+export const outreachCampaigns: OutreachCampaign[] = [
   {
     id: "campaign-1",
-    name: "Q1 Product Launch",
-    influencers: 5,
-    responses: 3,
+    name: "Q4 Product Launch",
+    influencers: ["inf-1", "inf-2"],
+    budget: 15000,
     status: "active",
-    startDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(),
+    startDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(),
+    endDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 25).toISOString(),
+    expectedReach: 500000,
   },
 ];
 
 export const outreachStats = {
-  totalContacts: 24,
-  responseRate: 62.5,
-  avgEngagementRate: 4.9,
-  activeCampaigns: 2,
+  totalInfluencers: 25,
+  activeCampaigns: 3,
+  totalReach: 2500000,
+  avgEngagementRate: 7.2,
+  totalBudget: 45000,
 };
-
-
