@@ -1144,15 +1144,6 @@ const chartColorTokens = {
   instagram: "text-fuchsia-300",
 } as const;
 
-const scoreWidthClass = (score: number) => {
-  if (score >= 95) return "w-[95%]";
-  if (score >= 85) return "w-[85%]";
-  if (score >= 75) return "w-[75%]";
-  if (score >= 65) return "w-[65%]";
-  if (score >= 55) return "w-[55%]";
-  return "w-[40%]";
-};
-
 const metricKpiSeed: MetricKpi[] = [
   {
     id: "reach",
