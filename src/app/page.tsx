@@ -712,16 +712,21 @@ export default function Home() {
   ) => {
     event.preventDefault();
     const trimmed = workflowNote.trim();
-    if (!trimmed || !workflowTimeline.selectedPost) return;
+    if (!trimmed || !workflowContext.selectedPlan) return;
     const newComment: Comment = {
       id: `comment-${Date.now()}`,
-      postId: workflowTimeline.selectedPost.id,
       author: "You",
       message: trimmed,
-      createdAt: new Date().toISOString(),
-      tone: "info",
+      at: new Date().toISOString(),
+      tone: "note",
     };
-    setComments((prev) => [newComment, ...prev]);
+    setPlannedPosts((prev) =>
+      prev.map((plan) =>
+        plan.id === workflowContext.selectedPlan?.id
+          ? { ...plan, commentThread: [newComment, ...plan.commentThread] }
+          : plan,
+      ),
+    );
     setWorkflowNote("");
   };
 
