@@ -3472,6 +3472,14 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "content-benchmarking", label: "Content Benchmarking" },
   { id: "multi-language-management", label: "Multi-language Management" },
   { id: "performance-attribution", label: "Performance Attribution" },
+  { id: "realtime-collaboration", label: "Real-time Collaboration" },
+  { id: "conflict-detection", label: "Conflict Detection" },
+  { id: "bulk-operations", label: "Bulk Operations" },
+  { id: "account-health", label: "Account Health" },
+  { id: "content-suggestions", label: "Content Suggestions" },
+  { id: "content-version-history", label: "Content Version History" },
+  { id: "smart-notifications", label: "Smart Notifications" },
+  { id: "performance-alerts", label: "Performance Alerts" },
 ];
 const chartColorTokens = {
   reach: "text-sky-300",
