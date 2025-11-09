@@ -1770,6 +1770,9 @@ export default function Home() {
     );
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [searchTypeFilter, setSearchTypeFilter] = useState<string>("all");
+    const [selectedExportId, setSelectedExportId] = useState<string>(
+      exportHistory?.[0]?.id ?? "",
+    );
   const [selectedMentionId, setSelectedMentionId] = useState<string>(
     socialListeningMentions[0]?.id ?? "",
   );
