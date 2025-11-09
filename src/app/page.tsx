@@ -3651,6 +3651,14 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "brand-safety", label: "Brand Safety" },
   { id: "crisis-response", label: "Crisis Response" },
   { id: "multi-account", label: "Multi-Account Management" },
+  { id: "analytics-export", label: "Analytics Export" },
+  { id: "content-predictor", label: "Content Predictor" },
+  { id: "audience-growth", label: "Audience Growth" },
+  { id: "competitor-analysis", label: "Competitor Analysis" },
+  { id: "content-library", label: "Content Library" },
+  { id: "social-commerce", label: "Social Commerce" },
+  { id: "video-analytics", label: "Video Analytics" },
+  { id: "influencer-management", label: "Influencer Management" },
 ];
 const chartColorTokens = {
   reach: "text-sky-300",
