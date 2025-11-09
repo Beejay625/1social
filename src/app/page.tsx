@@ -22245,15 +22245,19 @@ export default function Home() {
                     }`}
                   >
                     <div className="flex items-start justify-between mb-2">
-                      <span className={`text-xs px-2 py-1 rounded-full uppercase ${
-                        insight.impact === "high"
-                          ? "bg-amber-500/20 text-amber-300"
+                      <span className={`text-xs px-2 py-1 rounded-full capitalize ${
+                        insight.type === "peak-moment"
+                          ? "bg-emerald-500/20 text-emerald-300"
+                          : insight.type === "drop-off"
+                          ? "bg-red-500/20 text-red-300"
                           : "bg-blue-500/20 text-blue-300"
                       }`}>
-                        {insight.impact}
+                        {insight.type.replace("-", " ")}
                       </span>
+                      {insight.timestamp && (
+                        <span className="text-xs text-slate-200/60">{Math.floor(insight.timestamp / 60)}:{(insight.timestamp % 60).toString().padStart(2, '0')}</span>
+                      )}
                     </div>
-                    <h4 className="text-sm font-semibold text-white mb-1">{insight.title}</h4>
                     <p className="text-xs text-slate-200/70 mb-2">{insight.description}</p>
                     <p className="text-xs text-emerald-300">💡 {insight.recommendation}</p>
                   </div>
