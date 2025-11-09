@@ -3765,8 +3765,7 @@ export default function Home() {
                   Distribution summary
                 </h3>
                 <span className="text-xs text-slate-200/70">
-                  {Object.values(distributionMatrix).filter(Boolean).length}/
-                  {Object.keys(channelCatalog).length} networks
+                  {`${activeDistributionLabels.length}/${Object.keys(channelCatalog).length} networks`}
                 </span>
               </div>
               <p className="mt-3 text-sm text-slate-100/75">
@@ -3775,13 +3774,10 @@ export default function Home() {
               </p>
               <div className="mt-4 space-y-3 text-xs text-slate-200/70">
                 <p>
-                  Active networks:{' '}
-                  {(
-                    Object.keys(distributionMatrix) as ChannelId[]
-                  )
-                    .filter((key) => distributionMatrix[key])
-                    .map((key) => channelCatalog[key].label)
-                    .join(", ") || "None"}
+                  Active networks:{" "}
+                  {activeDistributionLabels.length
+                    ? activeDistributionLabels.join(", ")
+                    : "None"}
                 </p>
                 <p>
                   Upcoming mirrors: {repostLedger.filter((event) => event.status !== "complete").length}
