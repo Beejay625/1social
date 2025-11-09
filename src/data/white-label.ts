@@ -1,117 +1,70 @@
-export interface BrandingSettings {
+export interface BrandingConfig {
   id: string;
   name: string;
-  logo: {
-    light: string;
-    dark: string;
-    favicon: string;
-  };
-  colors: {
-    primary: string;
-    secondary: string;
-    accent: string;
-    background: string;
-    text: string;
-  };
-  typography: {
-    fontFamily: string;
-    headingFont?: string;
-  };
+  logo?: string;
+  primaryColor: string;
+  secondaryColor: string;
+  fontFamily: string;
   customDomain?: string;
-  status: "active" | "draft" | "archived";
-  updatedAt: string;
+  favicon?: string;
+  status: "active" | "pending" | "inactive";
 }
 
 export interface WhiteLabelFeature {
   id: string;
   name: string;
-  description: string;
   enabled: boolean;
-  category: "branding" | "domain" | "email" | "support";
+  description: string;
 }
 
-export const brandingSettings: BrandingSettings[] = [
-  {
-    id: "branding-1",
-    name: "Default Branding",
-    logo: {
-      light: "/logos/logo-light.svg",
-      dark: "/logos/logo-dark.svg",
-      favicon: "/logos/favicon.ico",
-    },
-    colors: {
-      primary: "#8B5CF6",
-      secondary: "#EC4899",
-      accent: "#10B981",
-      background: "#0F172A",
-      text: "#FFFFFF",
-    },
-    typography: {
-      fontFamily: "Inter",
-      headingFont: "Inter",
-    },
-    status: "active",
-    updatedAt: new Date(Date.now() - 86400000 * 5).toISOString(),
-  },
-  {
-    id: "branding-2",
-    name: "Client Branding",
-    logo: {
-      light: "/logos/client-logo-light.svg",
-      dark: "/logos/client-logo-dark.svg",
-      favicon: "/logos/client-favicon.ico",
-    },
-    colors: {
-      primary: "#3B82F6",
-      secondary: "#1E40AF",
-      accent: "#60A5FA",
-      background: "#1E293B",
-      text: "#F1F5F9",
-    },
-    typography: {
-      fontFamily: "Roboto",
-      headingFont: "Roboto",
-    },
-    customDomain: "client.1social.app",
-    status: "active",
-    updatedAt: new Date(Date.now() - 86400000 * 2).toISOString(),
-  },
-];
+export const brandingConfig: BrandingConfig = {
+  id: "brand-1",
+  name: "Company Branding",
+  logo: "/branding/logo.png",
+  primaryColor: "#3B82F6",
+  secondaryColor: "#8B5CF6",
+  fontFamily: "Inter",
+  customDomain: "social.company.com",
+  favicon: "/branding/favicon.ico",
+  status: "active",
+};
 
 export const whiteLabelFeatures: WhiteLabelFeature[] = [
   {
     id: "feature-1",
     name: "Custom Logo",
-    description: "Upload custom logos for light and dark themes",
     enabled: true,
-    category: "branding",
+    description: "Replace default logo with your brand logo",
   },
   {
     id: "feature-2",
-    name: "Custom Domain",
-    description: "Use your own domain for the platform",
+    name: "Custom Colors",
     enabled: true,
-    category: "domain",
+    description: "Customize primary and secondary brand colors",
   },
   {
     id: "feature-3",
-    name: "Custom Email Templates",
-    description: "Branded email templates for notifications",
+    name: "Custom Domain",
     enabled: true,
-    category: "email",
+    description: "Use your own domain name",
   },
   {
     id: "feature-4",
-    name: "Custom Support Portal",
-    description: "White-label support portal with your branding",
+    name: "Custom Email Templates",
     enabled: false,
-    category: "support",
+    description: "Branded email notifications and reports",
+  },
+  {
+    id: "feature-5",
+    name: "Remove Branding",
+    enabled: true,
+    description: "Remove all platform branding elements",
   },
 ];
 
 export const whiteLabelStats = {
-  activeBrandings: 2,
-  customDomains: 1,
-  enabledFeatures: 3,
-  totalBrandings: 5,
+  customizationLevel: 85,
+  featuresEnabled: 4,
+  totalFeatures: 5,
+  lastUpdated: new Date(Date.now() - 86400000 * 3).toISOString(),
 };
