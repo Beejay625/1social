@@ -4387,6 +4387,9 @@ export default function Home() {
                   {aiCharacterCount} characters
                 </span>
               </div>
+              <p className="mt-3 text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                Base idea · {selectedIdea.headline}
+              </p>
               <textarea
                 value={aiDraft}
                 onChange={(event) => setAiDraft(event.target.value)}
@@ -4667,6 +4670,17 @@ export default function Home() {
                     </button>
                   );
                 })}
+              </div>
+              <div className="mt-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85">
+                <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                  <span>Active export</span>
+                  <span>{selectedExport.lastRun}</span>
+                </div>
+                <p className="mt-2 font-semibold text-white">{selectedExport.label}</p>
+                <p className="mt-1 text-xs text-slate-200/70">{selectedExport.description}</p>
+                <p className="mt-3 text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                  Destination: {selectedExport.destination}
+                </p>
               </div>
             </div>
           </article>
