@@ -19108,214 +19108,60 @@ export default function Home() {
           </aside>
         </section>
 
+        {/* Real-time Collaboration */}
         <section
-          id="sentiment-analysis"
-          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
-        >
-          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
-            <header className="flex flex-col gap-3">
-              <h2 className="text-2xl font-semibold text-white">Sentiment Analysis</h2>
-              <p className="text-sm text-slate-100/75">
-                Track and analyze sentiment across all platforms with real-time alerts and insights.
-              </p>
-            </header>
-
-            <div className="space-y-4">
-              {sentimentByPlatform.map((platform, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[platform.platform as ChannelId]?.dot || "bg-slate-400"}`} />
-                      <h3 className="text-lg font-semibold text-white capitalize">{platform.platform}</h3>
-                    </div>
-                    <span className={`text-xs px-3 py-1 rounded-full ${
-                      platform.sentiment >= 80
-                        ? "bg-emerald-500/20 text-emerald-300"
-                        : platform.sentiment >= 70
-                        ? "bg-blue-500/20 text-blue-300"
-                        : "bg-amber-500/20 text-amber-300"
-                    }`}>
-                      {platform.sentiment}% sentiment
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div>
-                      <p className="text-xs text-slate-200/60">Positive</p>
-                      <p className="mt-1 text-sm font-semibold text-emerald-300">{platform.positive}%</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-slate-200/60">Neutral</p>
-                      <p className="mt-1 text-sm font-semibold text-slate-300">{platform.neutral}%</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-slate-200/60">Negative</p>
-                      <p className="mt-1 text-sm font-semibold text-red-300">{platform.negative}%</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </article>
-
-          <aside className="flex flex-col gap-6">
-            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Overall Sentiment
-              </h3>
-              <div className="mt-4 space-y-4">
-                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-                  <p className="text-xs text-slate-200/60">Sentiment Score</p>
-                  <p className="mt-1 text-2xl font-semibold text-white">
-                    {sentimentMetrics.overallSentiment}%
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-                  <p className="text-xs text-slate-200/60">Positive Rate</p>
-                  <p className="mt-1 text-xl font-semibold text-emerald-300">
-                    {sentimentMetrics.positive}%
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-                  <p className="text-xs text-slate-200/60">Trend</p>
-                  <p className="mt-1 text-sm font-semibold text-emerald-300 capitalize">
-                    {sentimentMetrics.sentimentTrend}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </aside>
-        </section>
-
-        <section
-          id="distribution-analytics"
-          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
-        >
-          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
-            <header className="flex flex-col gap-3">
-              <h2 className="text-2xl font-semibold text-white">Distribution Analytics</h2>
-              <p className="text-sm text-slate-100/75">
-                Track how your content spreads across platforms and analyze distribution patterns.
-              </p>
-            </header>
-
-            <div className="space-y-4">
-              {topDistributedContent.map((content) => (
-                <div
-                  key={content.id}
-                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-white">{content.title}</h3>
-                      <div className="mt-2 flex flex-wrap gap-2">
-                        {content.platforms.map((platform, idx) => (
-                          <span
-                            key={idx}
-                            className={`h-2 w-2 rounded-full ${channelCatalog[platform as ChannelId]?.dot || "bg-slate-400"}`}
-                            title={platform}
-                          />
-                        ))}
-                      </div>
-                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
-                        <div>
-                          <p className="text-xs text-slate-200/60">Total Reach</p>
-                          <p className="mt-1 text-sm font-semibold text-white">
-                            {(content.totalReach / 1000).toFixed(1)}k
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-slate-200/60">Total Engagement</p>
-                          <p className="mt-1 text-sm font-semibold text-white">{content.totalEngagement}</p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-slate-200/60">Distribution Score</p>
-                          <p className="mt-1 text-sm font-semibold text-white">{content.distributionScore}</p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-slate-200/60">Viral Coefficient</p>
-                          <p className="mt-1 text-sm font-semibold text-emerald-300">{content.viralCoefficient}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </article>
-
-          <aside className="flex flex-col gap-6">
-            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Distribution Summary
-              </h3>
-              <div className="mt-4 space-y-4">
-                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-                  <p className="text-xs text-slate-200/60">Total Distributions</p>
-                  <p className="mt-1 text-2xl font-semibold text-white">
-                    {distributionMetrics.totalDistributions.toLocaleString()}
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-                  <p className="text-xs text-slate-200/60">Distribution Rate</p>
-                  <p className="mt-1 text-xl font-semibold text-white">
-                    {distributionMetrics.distributionRate}%
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-                  <p className="text-xs text-slate-200/60">Cross-Platform Posts</p>
-                  <p className="mt-1 text-xl font-semibold text-white">
-                    {distributionMetrics.crossPlatformPosts}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </aside>
-        </section>
-
-        <section
-          id="engagement-scoring"
-          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+          id="realtime-collaboration"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
         >
           <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
             <header className="flex flex-col gap-3">
-              <h2 className="text-2xl font-semibold text-white">Engagement Scoring</h2>
+              <h2 className="text-2xl font-semibold text-white">Real-time Collaboration</h2>
               <p className="text-sm text-slate-100/75">
-                Comprehensive scoring system for audience engagement quality and quantity.
+                Collaborate in real-time with live editing, presence indicators, and co-editing features.
               </p>
             </header>
 
-            <div className="space-y-4">
-              {engagementFactors.map((factor, idx) => (
+            <div className="space-y-6">
+              {activeCollaborationSessions.map((session) => (
                 <div
-                  key={idx}
+                  key={session.id}
                   className="rounded-3xl border border-white/15 bg-white/5 p-6"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-white">{factor.factor}</h3>
-                    <div className="flex items-center gap-2">
-                      <span className={`text-xs px-3 py-1 rounded-full ${
-                        factor.status === "excellent"
-                          ? "bg-emerald-500/20 text-emerald-300"
-                          : "bg-blue-500/20 text-blue-300"
-                      }`}>
-                        {factor.score}
-                      </span>
-                    </div>
+                    <h3 className="text-lg font-semibold text-white">Active Session</h3>
+                    <span className="text-xs px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-300">
+                      {session.editors.length} editors
+                    </span>
                   </div>
-                  <p className="text-sm text-slate-200/70">{factor.description}</p>
-                  <div className="mt-3">
-                    <div className="flex items-center justify-between text-xs text-slate-200/60 mb-1">
-                      <span>Weight: {factor.weight}%</span>
-                      <span>Score: {factor.score}</span>
-                    </div>
-                    <div className="h-2 rounded-full bg-slate-700/50 overflow-hidden">
+                  <div className="space-y-3">
+                    {session.editors.map((editor) => (
                       <div
-                        className="h-full bg-gradient-to-r from-blue-500 to-emerald-500"
-                        style={{ width: `${factor.score}%` }}
-                      />
+                        key={editor.id}
+                        className="flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                      >
+                        <div
+                          className={`h-10 w-10 rounded-full ${editor.color} flex items-center justify-center text-white font-semibold`}
+                        >
+                          {editor.avatar}
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-white">{editor.name}</p>
+                          <p className="text-xs text-slate-200/70">
+                            {editor.isTyping ? "Typing..." : `Position: ${editor.cursorPosition}`}
+                          </p>
+                        </div>
+                        <div className={`h-2 w-2 rounded-full ${editor.isTyping ? "bg-emerald-400 animate-pulse" : "bg-slate-400"}`} />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-white/10">
+                    <p className="text-xs text-slate-200/70 mb-2">Recent Changes</p>
+                    <div className="space-y-2">
+                      {session.changes.slice(0, 2).map((change) => (
+                        <div key={change.id} className="text-xs text-slate-200/60">
+                          <span className="text-white">{change.editorName}</span> {change.type}ed at position {change.position}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -19325,152 +19171,84 @@ export default function Home() {
 
           <aside className="flex flex-col gap-6">
             <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Overall Score
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Team Presence
               </h3>
-              <div className="mt-4 space-y-4">
-                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-                  <p className="text-xs text-slate-200/60">Engagement Score</p>
-                  <p className="mt-1 text-2xl font-semibold text-white">
-                    {engagementScore.overall}
-                  </p>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
-                    <p className="text-xs text-slate-200/60">Quality</p>
-                    <p className="mt-1 text-lg font-semibold text-emerald-300">{engagementScore.quality}</p>
-                  </div>
-                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
-                    <p className="text-xs text-slate-200/60">Quantity</p>
-                    <p className="mt-1 text-lg font-semibold text-blue-300">{engagementScore.quantity}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </aside>
-        </section>
-
-        <section
-          id="performance-insights"
-          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
-        >
-          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(251,191,36,0.25)] backdrop-blur-2xl">
-            <header className="flex flex-col gap-3">
-              <h2 className="text-2xl font-semibold text-white">Performance Insights</h2>
-              <p className="text-sm text-slate-100/75">
-                AI-powered insights and recommendations to optimize your content strategy.
-              </p>
-            </header>
-
-            <div className="space-y-4">
-              {actionableInsights.slice(0, 4).map((insight) => (
-                <div
-                  key={insight.id}
-                  className={`rounded-3xl border p-6 ${
-                    insight.type === "opportunity"
-                      ? "border-blue-400/50 bg-blue-400/10"
-                      : insight.type === "strength"
-                      ? "border-emerald-400/50 bg-emerald-400/10"
-                      : "border-amber-400/50 bg-amber-400/10"
-                  }`}
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className={`text-xs px-2 py-1 rounded-full uppercase ${
-                          insight.type === "opportunity"
-                            ? "bg-blue-500/20 text-blue-300"
-                            : insight.type === "strength"
-                            ? "bg-emerald-500/20 text-emerald-300"
-                            : "bg-amber-500/20 text-amber-300"
-                        }`}>
-                          {insight.type}
-                        </span>
-                        <span className="text-xs text-slate-200/70 capitalize">{insight.category}</span>
-                      </div>
-                      <h3 className="text-lg font-semibold text-white">{insight.title}</h3>
-                      <p className="mt-2 text-sm text-slate-200/80">{insight.description}</p>
-                      <p className="mt-3 text-xs font-semibold text-emerald-300">
-                        {insight.recommendation}
-                      </p>
-                      <div className="mt-3 flex items-center gap-4 text-xs text-slate-200/70">
-                        <span>Impact: {insight.impact}</span>
-                        <span>Confidence: {insight.confidence}%</span>
-                        <span>Expected: {insight.expectedImprovement}</span>
-                      </div>
+              <div className="space-y-3">
+                {presenceIndicators.map((presence) => (
+                  <div
+                    key={presence.userId}
+                    className="flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className={`h-10 w-10 rounded-full ${presence.color} flex items-center justify-center text-white font-semibold`}>
+                      {presence.avatar}
                     </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-white">{presence.name}</p>
+                      <p className="text-xs text-slate-200/70">{presence.currentSection}</p>
+                    </div>
+                    <div className={`h-2 w-2 rounded-full ${presence.status === "active" ? "bg-emerald-400" : "bg-amber-400"}`} />
                   </div>
-                </div>
-              ))}
-            </div>
-          </article>
-
-          <aside className="flex flex-col gap-6">
-            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(251,191,36,0.2)] backdrop-blur-2xl">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Insights Summary
-              </h3>
-              <div className="mt-4 space-y-4">
-                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-                  <p className="text-xs text-slate-200/60">Total Insights</p>
-                  <p className="mt-1 text-2xl font-semibold text-white">
-                    {insightImpact.total}
-                  </p>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
-                    <p className="text-xs text-slate-200/60">High Impact</p>
-                    <p className="mt-1 text-lg font-semibold text-emerald-300">{insightImpact.high}</p>
-                  </div>
-                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
-                    <p className="text-xs text-slate-200/60">Medium Impact</p>
-                    <p className="mt-1 text-lg font-semibold text-blue-300">{insightImpact.medium}</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </aside>
         </section>
 
+        {/* Conflict Detection */}
         <section
-          id="social-health"
-          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+          id="conflict-detection"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
         >
           <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.25)] backdrop-blur-2xl">
             <header className="flex flex-col gap-3">
-              <h2 className="text-2xl font-semibold text-white">Social Media Health</h2>
+              <h2 className="text-2xl font-semibold text-white">Conflict Detection</h2>
               <p className="text-sm text-slate-100/75">
-                Comprehensive health score tracking across all platforms and metrics.
+                Automatically detect and resolve scheduling conflicts, overlapping times, and content issues.
               </p>
             </header>
 
             <div className="space-y-4">
-              {healthMetrics.map((metric, idx) => (
+              {detectedConflicts.map((conflict) => (
                 <div
-                  key={idx}
-                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                  key={conflict.id}
+                  className={`rounded-3xl border p-6 ${
+                    conflict.severity === "error"
+                      ? "border-red-400/50 bg-red-400/10"
+                      : conflict.severity === "warning"
+                      ? "border-amber-400/50 bg-amber-400/10"
+                      : "border-blue-400/50 bg-blue-400/10"
+                  }`}
                 >
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">{metric.metric}</h3>
-                      <p className="mt-1 text-xs text-slate-200/70">{metric.description}</p>
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="text-lg font-semibold text-white">{conflict.title}</h3>
+                        <span
+                          className={`text-xs px-2 py-1 rounded-full ${
+                            conflict.severity === "error"
+                              ? "bg-red-500/20 text-red-300"
+                              : conflict.severity === "warning"
+                              ? "bg-amber-500/20 text-amber-300"
+                              : "bg-blue-500/20 text-blue-300"
+                          }`}
+                        >
+                          {conflict.severity}
+                        </span>
+                      </div>
+                      <p className="text-sm text-slate-200/70 mb-3">{conflict.description}</p>
+                      <p className="text-xs text-slate-200/60 mb-4">
+                        <span className="font-semibold">Suggested:</span> {conflict.suggestedResolution}
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <button className="text-xs px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20">
+                          Resolve
+                        </button>
+                        <button className="text-xs px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10">
+                          Dismiss
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <span className={`text-xs px-3 py-1 rounded-full ${
-                        metric.status === "excellent"
-                          ? "bg-emerald-500/20 text-emerald-300"
-                          : "bg-blue-500/20 text-blue-300"
-                      }`}>
-                        {metric.score}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-slate-200/70">
-                    <span className={`${metric.trend === "up" ? "text-emerald-300" : "text-slate-300"}`}>
-                      {metric.trend === "up" ? "↑" : "→"} {metric.change > 0 ? "+" : ""}{metric.change}
-                    </span>
-                    <span>·</span>
-                    <span className="capitalize">{metric.status}</span>
                   </div>
                 </div>
               ))}
@@ -19479,79 +19257,348 @@ export default function Home() {
 
           <aside className="flex flex-col gap-6">
             <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Overall Health Score
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Conflict Statistics
               </h3>
-              <div className="mt-4 space-y-4">
+              <div className="space-y-4">
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-                  <p className="text-xs text-slate-200/60">Health Score</p>
-                  <p className="mt-1 text-2xl font-semibold text-white">
-                    {healthScore.overall}
-                  </p>
-                  <p className="mt-1 text-xs text-emerald-300 capitalize">
-                    {healthScore.trend}
-                  </p>
+                  <p className="text-xs text-slate-200/60">Total Conflicts</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{conflictStats.total}</p>
                 </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
-                    <p className="text-xs text-slate-200/60">Content</p>
-                    <p className="mt-1 text-lg font-semibold text-emerald-300">{healthScore.content}</p>
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="rounded-xl border border-red-400/30 bg-red-400/10 p-3">
+                    <p className="text-xs text-red-300">Errors</p>
+                    <p className="mt-1 text-lg font-semibold text-white">{conflictStats.errors}</p>
                   </div>
-                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
-                    <p className="text-xs text-slate-200/60">Engagement</p>
-                    <p className="mt-1 text-lg font-semibold text-blue-300">{healthScore.engagement}</p>
+                  <div className="rounded-xl border border-amber-400/30 bg-amber-400/10 p-3">
+                    <p className="text-xs text-amber-300">Warnings</p>
+                    <p className="mt-1 text-lg font-semibold text-white">{conflictStats.warnings}</p>
                   </div>
+                  <div className="rounded-xl border border-blue-400/30 bg-blue-400/10 p-3">
+                    <p className="text-xs text-blue-300">Info</p>
+                    <p className="mt-1 text-lg font-semibold text-white">{conflictStats.info}</p>
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Resolved</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{conflictStats.resolved}</p>
+                  <p className="text-xs text-slate-200/60 mt-1">Pending: {conflictStats.pending}</p>
                 </div>
               </div>
             </div>
           </aside>
         </section>
 
+        {/* Bulk Operations */}
         <section
-          id="calendar-optimization"
-          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+          id="bulk-operations"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
         >
           <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
             <header className="flex flex-col gap-3">
-              <h2 className="text-2xl font-semibold text-white">Calendar Optimization</h2>
+              <h2 className="text-2xl font-semibold text-white">Bulk Operations</h2>
               <p className="text-sm text-slate-100/75">
-                AI-powered calendar optimization with optimal time slots and gap analysis.
+                Perform bulk actions on multiple posts: edit, delete, schedule, tag, and more.
               </p>
             </header>
 
             <div className="space-y-4">
-              {optimizationRecommendations.map((rec) => (
+              {bulkOperations.map((operation) => (
                 <div
-                  key={rec.id}
-                  className={`rounded-3xl border p-6 ${
-                    rec.priority === "high"
-                      ? "border-purple-400/50 bg-purple-400/10"
-                      : "border-blue-400/50 bg-blue-400/10"
-                  }`}
+                  key={operation.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
                 >
-                  <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300 uppercase">
+                        {operation.type}
+                      </span>
+                      <span
+                        className={`text-xs px-2 py-1 rounded-full ${
+                          operation.status === "completed"
+                            ? "bg-emerald-500/20 text-emerald-300"
+                            : operation.status === "processing"
+                            ? "bg-blue-500/20 text-blue-300"
+                            : "bg-amber-500/20 text-amber-300"
+                        }`}
+                      >
+                        {operation.status}
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-200/60">
+                      {new Date(operation.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4 mb-4">
+                    <div>
+                      <p className="text-xs text-slate-200/60">Affected</p>
+                      <p className="mt-1 text-lg font-semibold text-white">{operation.affectedCount}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60">Success</p>
+                      <p className="mt-1 text-lg font-semibold text-emerald-300">{operation.successCount}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60">Failed</p>
+                      <p className="mt-1 text-lg font-semibold text-red-300">{operation.failedCount}</p>
+                    </div>
+                  </div>
+                  {operation.errors && operation.errors.length > 0 && (
+                    <div className="rounded-xl border border-red-400/30 bg-red-400/10 p-3">
+                      <p className="text-xs text-red-300 mb-2">Errors:</p>
+                      <ul className="space-y-1">
+                        {operation.errors.slice(0, 2).map((error, idx) => (
+                          <li key={idx} className="text-xs text-red-200/80">{error}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6">
+              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Operation Templates
+              </h3>
+              <div className="grid grid-cols-2 gap-3">
+                {bulkOperationTemplates.map((template) => (
+                  <div
+                    key={template.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <p className="text-sm font-semibold text-white">{template.name}</p>
+                    <p className="mt-1 text-xs text-slate-200/70">{template.description}</p>
+                    <button className="mt-3 text-xs px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20">
+                      Use Template
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </article>
+        </section>
+
+        {/* Account Health */}
+        <section
+          id="account-health"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Account Health Monitoring</h2>
+              <p className="text-sm text-slate-100/75">
+                Monitor account health across all platforms with real-time metrics and issue detection.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {accountHealthMetrics.map((account) => (
+                <div
+                  key={account.accountId}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[account.platform as ChannelId]?.dot || "bg-slate-400"}`} />
+                      <h3 className="text-lg font-semibold text-white">{account.accountName}</h3>
+                      <span
+                        className={`text-xs px-2 py-1 rounded-full ${
+                          account.status === "healthy"
+                            ? "bg-emerald-500/20 text-emerald-300"
+                            : account.status === "warning"
+                            ? "bg-amber-500/20 text-amber-300"
+                            : "bg-red-500/20 text-red-300"
+                        }`}
+                      >
+                        {account.status}
+                      </span>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-2xl font-semibold text-white">{account.healthScore}</p>
+                      <p className="text-xs text-slate-200/60">Health Score</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-5 gap-3 mb-4">
+                    {Object.entries(account.metrics).map(([key, value]) => (
+                      <div key={key} className="text-center">
+                        <p className="text-xs text-slate-200/60 capitalize">{key.replace(/([A-Z])/g, " $1").trim()}</p>
+                        <p className="mt-1 text-sm font-semibold text-white">{typeof value === "number" ? value.toFixed(1) : value}</p>
+                      </div>
+                    ))}
+                  </div>
+                  {account.issues.length > 0 && (
+                    <div className="rounded-xl border border-amber-400/30 bg-amber-400/10 p-3">
+                      <p className="text-xs text-amber-300 mb-2">Issues Detected:</p>
+                      <ul className="space-y-1">
+                        {account.issues.map((issue) => (
+                          <li key={issue.id} className="text-xs text-amber-200/80">
+                            {issue.message}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Health Trends
+              </h3>
+              <div className="space-y-3">
+                {healthTrends.slice(-7).map((trend, idx) => (
+                  <div key={idx} className="rounded-2xl border border-white/10 bg-slate-950/40 p-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-xs text-slate-200/60">{new Date(trend.date).toLocaleDateString()}</p>
+                      <p className="text-sm font-semibold text-white">{trend.score}</p>
+                    </div>
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-slate-800">
+                      <div
+                        className="h-full bg-gradient-to-r from-emerald-400 to-green-400"
+                        style={{ width: `${trend.score}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Content Suggestions */}
+        <section
+          id="content-suggestions"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(251,191,36,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">AI Content Suggestions</h2>
+              <p className="text-sm text-slate-100/75">
+                Get AI-powered content suggestions based on trending topics, hashtags, and audience insights.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {contentSuggestions.map((suggestion) => (
+                <div
+                  key={suggestion.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className={`text-xs px-2 py-1 rounded-full uppercase ${
-                          rec.priority === "high"
-                            ? "bg-purple-500/20 text-purple-300"
-                            : "bg-blue-500/20 text-blue-300"
-                        }`}>
-                          {rec.priority} priority
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="text-lg font-semibold text-white">{suggestion.title}</h3>
+                        <span
+                          className={`text-xs px-2 py-1 rounded-full ${
+                            suggestion.impact === "high"
+                              ? "bg-emerald-500/20 text-emerald-300"
+                              : suggestion.impact === "medium"
+                              ? "bg-amber-500/20 text-amber-300"
+                              : "bg-slate-500/20 text-slate-300"
+                          }`}
+                        >
+                          {suggestion.impact} impact
                         </span>
-                        <span className="text-xs text-slate-200/70 capitalize">{rec.type}</span>
+                        <span className="text-xs px-2 py-1 rounded-full bg-blue-500/20 text-blue-300">
+                          {suggestion.confidence}% confidence
+                        </span>
                       </div>
-                      <h3 className="text-lg font-semibold text-white">{rec.title}</h3>
-                      <p className="mt-2 text-sm text-slate-200/80">{rec.description}</p>
-                      <div className="mt-3 flex items-center gap-4 text-xs text-slate-200/70">
-                        <span>Posts: {rec.postsAffected}</span>
-                        <span>Impact: {rec.impact}</span>
-                      </div>
-                      <div className="mt-3 flex items-center gap-4 text-xs">
-                        <span className="text-slate-300">Current: {rec.currentScore}</span>
-                        <span className="text-emerald-300">→ Potential: {rec.potentialScore}</span>
+                      <p className="text-sm text-slate-200/70 mb-3">{suggestion.description}</p>
+                      {suggestion.suggestedContent && (
+                        <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3 mb-3">
+                          <p className="text-xs text-slate-200/60 mb-1">Suggested Content:</p>
+                          <p className="text-sm text-white">{suggestion.suggestedContent}</p>
+                        </div>
+                      )}
+                      <div className="flex items-center gap-4 text-xs text-slate-200/60">
+                        {suggestion.estimatedReach && (
+                          <span>Est. Reach: {suggestion.estimatedReach.toLocaleString()}</span>
+                        )}
+                        {suggestion.estimatedEngagement && (
+                          <span>Est. Engagement: {suggestion.estimatedEngagement.toLocaleString()}</span>
+                        )}
                       </div>
                     </div>
+                  </div>
+                  <div className="flex items-center gap-2 mt-4">
+                    <button className="text-xs px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20">
+                      Use Suggestion
+                    </button>
+                    <button className="text-xs px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10">
+                      Dismiss
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+        </section>
+
+        {/* Content Version History */}
+        <section
+          id="content-version-history"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content Version History</h2>
+              <p className="text-sm text-slate-100/75">
+                Track all changes to your content with complete version history and comparison tools.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              {Object.entries(contentVersionHistory).slice(0, 1).map(([contentId, versions]) => (
+                <div key={contentId} className="rounded-3xl border border-white/15 bg-white/5 p-6">
+                  <h3 className="text-lg font-semibold text-white mb-4">Post: {contentId}</h3>
+                  <div className="space-y-4">
+                    {versions.map((version) => (
+                      <div
+                        key={version.id}
+                        className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-3">
+                            <div className="h-8 w-8 rounded-full bg-purple-500/20 flex items-center justify-center">
+                              <span className="text-xs font-semibold text-purple-300">v{version.version}</span>
+                            </div>
+                            <div>
+                              <p className="text-sm font-semibold text-white">{version.author.name}</p>
+                              <p className="text-xs text-slate-200/60">
+                                {new Date(version.createdAt).toLocaleString()}
+                              </p>
+                            </div>
+                          </div>
+                          <span
+                            className={`text-xs px-2 py-1 rounded-full ${
+                              version.status === "published"
+                                ? "bg-emerald-500/20 text-emerald-300"
+                                : "bg-amber-500/20 text-amber-300"
+                            }`}
+                          >
+                            {version.status}
+                          </span>
+                        </div>
+                        <div className="rounded-xl border border-white/5 bg-slate-900/40 p-3 mb-3">
+                          <p className="text-sm text-white whitespace-pre-wrap">{version.content}</p>
+                        </div>
+                        {version.changes.length > 0 && (
+                          <div className="space-y-1">
+                            <p className="text-xs text-slate-200/60 mb-1">Changes:</p>
+                            {version.changes.map((change, idx) => (
+                              <div key={idx} className="text-xs text-slate-200/70">
+                                <span className="text-white">{change.type}</span> {change.field}
+                                {change.position && ` at position ${change.position}`}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}
@@ -19559,31 +19606,222 @@ export default function Home() {
           </article>
 
           <aside className="flex flex-col gap-6">
-            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Optimization Score
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Version Statistics
               </h3>
-              <div className="mt-4 space-y-4">
+              <div className="space-y-4">
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-                  <p className="text-xs text-slate-200/60">Overall Score</p>
-                  <p className="mt-1 text-2xl font-semibold text-white">
-                    {optimizationScore.overall}
-                  </p>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
-                    <p className="text-xs text-slate-200/60">Timing</p>
-                    <p className="mt-1 text-lg font-semibold text-emerald-300">{optimizationScore.timing}</p>
-                  </div>
-                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
-                    <p className="text-xs text-slate-200/60">Frequency</p>
-                    <p className="mt-1 text-lg font-semibold text-blue-300">{optimizationScore.frequency}</p>
-                  </div>
+                  <p className="text-xs text-slate-200/60">Total Versions</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{versionStats.totalVersions}</p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-                  <p className="text-xs text-slate-200/60">Avg Improvement</p>
-                  <p className="mt-1 text-xl font-semibold text-emerald-300">
-                    {optimizationStats.avgImprovement}%
+                  <p className="text-xs text-slate-200/60">Total Changes</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{versionStats.totalChanges}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Most Active Editor</p>
+                  <p className="mt-1 text-lg font-semibold text-white">{versionStats.mostActiveEditor}</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Smart Notifications */}
+        <section
+          id="smart-notifications"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Smart Notifications</h2>
+              <p className="text-sm text-slate-100/75">
+                Intelligent notification system with priority levels, categorization, and smart filtering.
+              </p>
+            </header>
+
+            <div className="space-y-3">
+              {smartNotifications.map((notification) => (
+                <div
+                  key={notification.id}
+                  className={`rounded-2xl border p-4 ${
+                    notification.read
+                      ? "border-white/10 bg-slate-950/40"
+                      : "border-blue-400/50 bg-blue-400/10"
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className={`h-2 w-2 rounded-full mt-2 ${
+                      notification.priority === "urgent"
+                        ? "bg-red-400"
+                        : notification.priority === "high"
+                        ? "bg-amber-400"
+                        : notification.priority === "medium"
+                        ? "bg-blue-400"
+                        : "bg-slate-400"
+                    }`} />
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-sm font-semibold text-white">{notification.title}</h3>
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-white/10 text-slate-200">
+                          {notification.category}
+                        </span>
+                        {!notification.read && (
+                          <span className="h-2 w-2 rounded-full bg-blue-400" />
+                        )}
+                      </div>
+                      <p className="text-xs text-slate-200/70 mb-2">{notification.message}</p>
+                      {notification.actionLabel && (
+                        <button className="text-xs px-2 py-1 rounded-full bg-white/10 hover:bg-white/20 text-white">
+                          {notification.actionLabel}
+                        </button>
+                      )}
+                    </div>
+                    <p className="text-xs text-slate-200/60">
+                      {new Date(notification.createdAt).toLocaleTimeString()}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Notification Stats
+              </h3>
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{notificationStats.total}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Unread</p>
+                  <p className="mt-1 text-xl font-semibold text-blue-300">{notificationStats.unread}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Urgent</p>
+                  <p className="mt-1 text-xl font-semibold text-red-300">{notificationStats.urgent}</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Performance Alerts */}
+        <section
+          id="performance-alerts"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(239,68,68,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Performance Alerts</h2>
+              <p className="text-sm text-slate-100/75">
+                Get alerted when content performs unexpectedly well or poorly with actionable recommendations.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {performanceAlerts.map((alert) => (
+                <div
+                  key={alert.id}
+                  className={`rounded-3xl border p-6 ${
+                    alert.severity === "critical"
+                      ? "border-red-400/50 bg-red-400/10"
+                      : alert.severity === "warning"
+                      ? "border-amber-400/50 bg-amber-400/10"
+                      : "border-blue-400/50 bg-blue-400/10"
+                  }`}
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="text-lg font-semibold text-white">{alert.postTitle}</h3>
+                        <span
+                          className={`text-xs px-2 py-1 rounded-full ${
+                            alert.severity === "critical"
+                              ? "bg-red-500/20 text-red-300"
+                              : alert.severity === "warning"
+                              ? "bg-amber-500/20 text-amber-300"
+                              : "bg-blue-500/20 text-blue-300"
+                          }`}
+                        >
+                          {alert.type}
+                        </span>
+                        {alert.acknowledged && (
+                          <span className="text-xs px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-300">
+                            Acknowledged
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-slate-200/70 mb-3">{alert.message}</p>
+                      <div className="grid grid-cols-3 gap-3 mb-3">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Current</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{alert.currentValue}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Expected</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{alert.expectedValue}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Deviation</p>
+                          <p className={`mt-1 text-sm font-semibold ${
+                            alert.deviation > 0 ? "text-emerald-300" : "text-red-300"
+                          }`}>
+                            {alert.deviation > 0 ? "+" : ""}{alert.deviation}%
+                          </p>
+                        </div>
+                      </div>
+                      <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3 mb-3">
+                        <p className="text-xs text-slate-200/60 mb-1">Recommendation:</p>
+                        <p className="text-sm text-white">{alert.recommendation}</p>
+                      </div>
+                      {alert.actionTaken && (
+                        <p className="text-xs text-emerald-300">Action taken: {alert.actionTaken}</p>
+                      )}
+                    </div>
+                  </div>
+                  {!alert.acknowledged && (
+                    <button className="text-xs px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20">
+                      Acknowledge
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(239,68,68,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Alert Statistics
+              </h3>
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Alerts</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{alertStats.total}</p>
+                </div>
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="rounded-xl border border-red-400/30 bg-red-400/10 p-3">
+                    <p className="text-xs text-red-300">Critical</p>
+                    <p className="mt-1 text-lg font-semibold text-white">{alertStats.bySeverity.critical}</p>
+                  </div>
+                  <div className="rounded-xl border border-amber-400/30 bg-amber-400/10 p-3">
+                    <p className="text-xs text-amber-300">Warning</p>
+                    <p className="mt-1 text-lg font-semibold text-white">{alertStats.bySeverity.warning}</p>
+                  </div>
+                  <div className="rounded-xl border border-blue-400/30 bg-blue-400/10 p-3">
+                    <p className="text-xs text-blue-300">Info</p>
+                    <p className="mt-1 text-lg font-semibold text-white">{alertStats.bySeverity.info}</p>
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Unacknowledged</p>
+                  <p className="mt-1 text-xl font-semibold text-amber-300">
+                    {performanceAlerts.filter((a) => !a.acknowledged).length}
                   </p>
                 </div>
               </div>
