@@ -1275,6 +1275,131 @@ const competitorAnalysis = [
   },
 ];
 
+const socialListeningMentions = [
+  {
+    id: "listen-1",
+    keyword: "1Social",
+    source: "farcaster" as ChannelId,
+    author: "@crypto_builder",
+    content: "Just tried 1Social for the first time—game changer for cross-posting!",
+    sentiment: "positive",
+    engagement: 24,
+    timestamp: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+  },
+  {
+    id: "listen-2",
+    keyword: "1Social",
+    source: "x" as ChannelId,
+    author: "@web3_marketer",
+    content: "Anyone else having issues with 1Social's scheduling feature?",
+    sentiment: "negative",
+    engagement: 8,
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+  },
+  {
+    id: "listen-3",
+    keyword: "social media tool",
+    source: "lens" as ChannelId,
+    author: "@creator_dao",
+    content: "Looking for a tool that supports Farcaster and Instagram simultaneously",
+    sentiment: "neutral",
+    engagement: 12,
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(),
+  },
+];
+
+const influencerProfiles = [
+  {
+    id: "inf-1",
+    name: "Crypto Creator",
+    handle: "@crypto_creator",
+    channel: "farcaster" as ChannelId,
+    followers: 45600,
+    engagementRate: 8.4,
+    avgReach: 12400,
+    category: "Web3",
+    collaborationStatus: "active",
+    lastPost: "2 hours ago",
+  },
+  {
+    id: "inf-2",
+    name: "Design Studio",
+    handle: "@design_studio",
+    channel: "instagram" as ChannelId,
+    followers: 23400,
+    engagementRate: 6.8,
+    avgReach: 8900,
+    category: "Design",
+    collaborationStatus: "pending",
+    lastPost: "5 hours ago",
+  },
+];
+
+const crisisAlerts = [
+  {
+    id: "crisis-1",
+    severity: "high",
+    type: "Negative sentiment spike",
+    channel: "farcaster" as ChannelId,
+    description: "Negative mentions increased 45% in the last 2 hours",
+    affectedPosts: 3,
+    detectedAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+    status: "active",
+  },
+  {
+    id: "crisis-2",
+    severity: "medium",
+    type: "Engagement drop",
+    channel: "instagram" as ChannelId,
+    description: "Engagement rate dropped below baseline by 28%",
+    affectedPosts: 5,
+    detectedAt: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
+    status: "monitoring",
+  },
+];
+
+const socialCommerceProducts = [
+  {
+    id: "product-1",
+    name: "1Social Pro Plan",
+    price: "$99/month",
+    status: "active",
+    sales: 124,
+    revenue: "$12,276",
+    conversionRate: 3.2,
+    channels: ["farcaster", "instagram"] as ChannelId[],
+  },
+  {
+    id: "product-2",
+    name: "Creator Toolkit",
+    price: "$49/month",
+    status: "active",
+    sales: 89,
+    revenue: "$4,361",
+    conversionRate: 2.8,
+    channels: ["instagram"] as ChannelId[],
+  },
+];
+
+const calendarEvents = [
+  {
+    id: "event-1",
+    title: "Product launch",
+    date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3).toISOString(),
+    channels: ["farcaster", "instagram", "x"] as ChannelId[],
+    type: "campaign",
+    status: "scheduled",
+  },
+  {
+    id: "event-2",
+    title: "Community AMA",
+    date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7).toISOString(),
+    channels: ["farcaster"] as ChannelId[],
+    type: "event",
+    status: "planned",
+  },
+];
+
 const dashboardSections: { id: string; label: string }[] = [
   { id: "broadcast", label: "Compose" },
   { id: "plan", label: "Scheduling" },
