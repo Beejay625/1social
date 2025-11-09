@@ -2489,3 +2489,3961 @@ export default function Home() {
     setCalendarFocus(day);
   };
 
+  const handleForecastSelect = (forecastId: string) => {
+    setSelectedForecastId(forecastId);
+  };
+
+  const handleRecommendationSelect = (recId: string) => {
+    setSelectedRecommendationId(recId);
+  };
+
+  const handlePerformancePostSelect = (postId: string) => {
+    setSelectedPerformancePostId(postId);
+  };
+
+  const handleAutomationSelect = (autoId: string) => {
+    setSelectedAutomationId(autoId);
+  };
+
+  const handleNotificationSelect = (notifId: string) => {
+    setSelectedNotificationId(notifId);
+  };
+
+  const handleContentTemplateSelect = (templateId: string) => {
+    setSelectedContentTemplateId(templateId);
+  };
+
+  const handleAbTestSelect = (testId: string) => {
+    setSelectedAbTestId(testId);
+  };
+
+  const selectedPerformancePost = useMemo(
+    () =>
+      contentPerformancePosts.find((p) => p.id === selectedPerformancePostId) ??
+      contentPerformancePosts[0],
+    [selectedPerformancePostId],
+  );
+
+  const selectedAutomation = useMemo(
+    () =>
+      workflowAutomations.find((a) => a.id === selectedAutomationId) ?? workflowAutomations[0],
+    [selectedAutomationId],
+  );
+
+  const selectedContentTemplate = useMemo(
+    () =>
+      contentTemplates.find((t) => t.id === selectedContentTemplateId) ?? contentTemplates[0],
+    [selectedContentTemplateId],
+  );
+
+  const selectedAbTest = useMemo(
+    () => abTests.find((t) => t.id === selectedAbTestId) ?? abTests[0],
+    [selectedAbTestId],
+  );
+
+  const unreadNotifications = useMemo(
+    () => notifications.filter((n) => !n.read),
+    [],
+  );
+
+  const selectedForecast = useMemo(
+    () => intelligenceForecasts.find((f) => f.id === selectedForecastId) ?? intelligenceForecasts[0],
+    [selectedForecastId],
+  );
+
+  const selectedRecommendation = useMemo(
+    () =>
+      contentRecommendations.find((r) => r.id === selectedRecommendationId) ??
+      contentRecommendations[0],
+    [selectedRecommendationId],
+  );
+
+  const comparisonMetrics = useMemo(() => {
+    if (!activeComparisonPoint) {
+      return {
+        label: "—",
+        reach: "0k",
+        conversionRate: "0.0%",
+        conversions: "0",
+      };
+    }
+    return {
+      label: activeComparisonPoint.label,
+      reach: `${activeComparisonPoint.reach}k`,
+      conversionRate: `${activeComparisonPoint.conversionRate.toFixed(1)}%`,
+      conversions: activeComparisonPoint.conversions.toLocaleString(),
+    };
+  }, [activeComparisonPoint]);
+
+  const growthMetrics = useMemo(() => {
+    if (!activeGrowthPoint) {
+      return {
+        label: "—",
+        total: "0k",
+        farcaster: "0k",
+        instagram: "0k",
+      };
+    }
+    return {
+      label: activeGrowthPoint.label,
+      total: `${activeGrowthPoint.total}k`,
+      farcaster: `${activeGrowthPoint.farcaster}k`,
+      instagram: `${activeGrowthPoint.instagram}k`,
+    };
+  }, [activeGrowthPoint]);
+
+  const automatedInsight = useMemo(() => {
+    const kpis = analyticsSnapshot.metricDashboard.kpis;
+    if (!kpis.length) return null;
+    const ranked = [...kpis].sort((a, b) => b.delta - a.delta);
+    const focus = ranked[0];
+    const template =
+      metricInsightPool.find((entry) => entry.metric === focus.id) ??
+      metricInsightPool[0] ?? {
+        id: "fallback-insight",
+        headline: "Momentum steady",
+        detail: "Keep steady cadence to sustain reach.",
+        metric: "reach" as MetricKpiId,
+      };
+    const secondary = metricInsightPool.filter(
+      (entry) => entry.metric !== focus.id,
+    );
+    return {
+      primary: {
+        ...template,
+        metricLabel: focus.label,
+        value: formatMetricValue(focus.value, focus.unit),
+        delta: formatMetricDelta(focus.delta, focus.unit),
+        deltaLabel: focus.deltaLabel,
+      },
+      secondary,
+    };
+  }, [analyticsSnapshot.metricDashboard.kpis]);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-900 to-sky-600 text-white">
+      <main className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 py-16 lg:px-12">
+        <header className="relative isolate overflow-hidden rounded-4xl border border-white/15 bg-white/10 p-8 sm:p-10 shadow-[0_20px_70px_rgba(59,7,100,0.35)] backdrop-blur-2xl lg:px-12 lg:py-12">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 overflow-hidden"
+          >
+            <div className="absolute -left-32 top-10 h-64 w-64 rounded-full bg-gradient-to-br from-fuchsia-500/40 via-sky-400/30 to-indigo-500/40 blur-3xl" />
+            <div className="absolute bottom-[-6rem] right-[-3rem] h-72 w-72 rounded-full bg-gradient-to-br from-sky-400/30 via-purple-500/25 to-rose-500/30 blur-3xl" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.08)_0%,_transparent_55%)]" />
+          </div>
+          <div className="relative grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+            <div className="max-w-2xl space-y-6 sm:space-y-8">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.4em] text-slate-100/90">
+                <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.6)]" />
+                1Social Platform
+            </span>
+              <div className="space-y-4">
+                <h1 className="text-4xl font-semibold leading-tight text-white md:text-5xl lg:text-[52px]">
+                  Align your voice across every channel.
+          </h1>
+                <p className="text-lg leading-relaxed text-slate-100/80 md:text-xl">
+                  Share once, syndicate instantly, and keep Reown wallet
+                  signatures ready for Farcaster. This preview shows how your
+                  launch team can stay in lockstep.
+            </p>
+          </div>
+              <div className="grid gap-3 text-sm text-slate-100/80 sm:grid-cols-2">
+                <div className="flex items-start gap-3 rounded-3xl border border-white/15 bg-white/10 p-4">
+                  <span className="mt-0.5 h-2.5 w-2.5 rounded-full bg-emerald-300" />
+                <div>
+                    <p className="font-semibold text-white">Multichannel Posting</p>
+                    <p>Mirror every update to Farcaster and Instagram in seconds.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 rounded-3xl border border-white/15 bg-white/10 p-4">
+                  <span className="mt-0.5 h-2.5 w-2.5 rounded-full bg-sky-300" />
+                  <div>
+                    <p className="font-semibold text-white">Wallet-Ready Flows</p>
+                    <p>Stay connected with Reown AppKit to approve content fast.</p>
+                  </div>
+                </div>
+              </div>
+            <nav className="mt-6 flex flex-wrap gap-3 text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+              {dashboardSections.map((section) => (
+                <a
+                  key={section.id}
+                  href={`#${section.id}`}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] text-slate-100 transition hover:border-white/40 hover:bg-white/15"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-white/50" />
+                  {section.label}
+                </a>
+              ))}
+            </nav>
+            </div>
+            <div className="w-full max-w-md place-self-center space-y-5">
+              <div className="relative overflow-hidden rounded-4xl border border-white/15 bg-slate-950/60 p-7 sm:p-8 shadow-2xl shadow-purple-600/20 backdrop-blur-3xl">
+                <div className="absolute -top-10 right-[-30%] h-40 w-40 rounded-full bg-gradient-to-br from-sky-400/30 via-fuchsia-500/20 to-emerald-400/20 blur-2xl" />
+                <div className="absolute bottom-[-24%] left-[-10%] h-36 w-36 rounded-full bg-gradient-to-br from-indigo-500/25 via-purple-500/20 to-transparent blur-2xl" />
+                <div className="relative flex flex-col gap-6">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="space-y-2">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-slate-200/80">
+                    Wallet Center
+                  </p>
+                      <h2 className="text-lg font-semibold text-white">
+                    {isConnected
+                          ? "Reown wallet connected."
+                          : "Sign in with Reown wallet"}
+                      </h2>
+                      <p className="text-sm leading-relaxed text-slate-200/75">
+                        {isConnected
+                          ? "You are ready to approve Farcaster signatures and publish."
+                          : "Connect your Reown wallet to prep Farcaster signatures and sync drafts."}
+                  </p>
+                </div>
+                <span
+                      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold ${
+                    isConnected
+                          ? "border-emerald-400/40 bg-emerald-400/15 text-emerald-100"
+                          : "border-rose-400/40 bg-rose-400/20 text-rose-100"
+                  }`}
+                >
+                  <span
+                    className={`h-2 w-2 rounded-full ${
+                      isConnected ? "bg-emerald-300" : "bg-rose-300"
+                    }`}
+                  />
+                  {isConnected ? "Live" : "Offline"}
+                </span>
+              </div>
+
+                  <div className="grid gap-3 rounded-3xl border border-white/15 bg-slate-950/70 p-4 text-sm text-slate-100/80">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-xs uppercase tracking-[0.35em] text-slate-300/70">
+                        Address
+                      </span>
+                      <span className="rounded-full bg-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.3em] text-slate-200/70">
+                        {isConnected ? "Connected" : "Offline"}
+                      </span>
+                    </div>
+                    <p className="truncate text-base font-semibold text-white">
+                  {truncateAddress(address)}
+                </p>
+                    <p className="text-xs uppercase tracking-[0.3em] text-slate-300/60">
+                  {activeNetwork?.name ?? "No network selected"}
+          </p>
+        </div>
+
+                  <ul className="grid gap-3 text-sm text-slate-200/80 sm:grid-cols-2 sm:gap-4">
+                    <li className="flex items-start gap-3">
+                      <span className="mt-1 h-2.5 w-2.5 rounded-full bg-emerald-300" />
+                      <div>
+                        <p className="font-semibold text-white">Farcaster-ready signing</p>
+                        <p>Approve casts straight from the dashboard without tab-hopping.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="mt-1 h-2.5 w-2.5 rounded-full bg-sky-300" />
+                      <div>
+                        <p className="font-semibold text-white">Secure sync</p>
+                        <p>Reown AppKit keeps your session fresh across every channel.</p>
+                      </div>
+                    </li>
+                  </ul>
+
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <button
+                  type="button"
+                  onClick={handleOpenWallet}
+                      className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-400 via-indigo-500 to-fuchsia-500 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-indigo-500/40 transition hover:shadow-xl hover:shadow-indigo-500/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  {isConnected ? "Manage wallet" : "Connect wallet"}
+                </button>
+                {isConnected && (
+                  <button
+                    type="button"
+                    onClick={handleDisconnectWallet}
+                        className="inline-flex items-center justify-center rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/60 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  >
+                    Disconnect
+                  </button>
+                )}
+              </div>
+
+                  <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.3em] text-slate-300/70">
+                    <span>Mock environment</span>
+                    <span>No real posts sent</span>
+            </div>
+                </div>
+              </div>
+              <p className="text-[11px] uppercase tracking-[0.3em] text-slate-200/60 text-center sm:text-left">
+                Need help? Ping the team in #wallet-ops.
+          </p>
+        </div>
+          </div>
+        </header>
+
+        <section className="grid gap-4 rounded-4xl border border-white/15 bg-white/5 p-6 shadow-[0_14px_50px_rgba(76,29,149,0.25)] backdrop-blur-2xl sm:grid-cols-2 xl:grid-cols-3">
+          {metricCards.map((card) => (
+            <article
+              key={card.id}
+              className="relative flex flex-col justify-between gap-4 overflow-hidden rounded-3xl border border-white/10 bg-white/10 p-5 shadow-inner shadow-purple-900/20"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    {card.label}
+                  </p>
+                  <p className="mt-2 text-3xl font-semibold text-white">
+                    {card.displayValue}
+                  </p>
+                  <p className="mt-1 text-xs text-slate-200/70">{card.deltaLabel}</p>
+                </div>
+                <span
+                  className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${card.deltaTone.tone}`}
+                >
+                  <span>{card.deltaTone.icon}</span>
+                  {card.deltaLabel}
+                </span>
+              </div>
+              <svg
+                viewBox="0 0 160 48"
+                role="img"
+                aria-label={`${card.label} sparkline`}
+                className="h-16 w-full text-sky-300"
+              >
+                <path
+                  d={card.path}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="3"
+                />
+              </svg>
+            </article>
+          ))}
+        </section>
+
+        <section
+          id="broadcast"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/20 bg-white/10 p-8 shadow-[0_18px_60px_rgba(91,33,182,0.35)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold">Create a broadcast</h2>
+              <p className="text-sm text-slate-100/75">
+                Choose where this update should land. We will expand into more
+                social destinations soon.
+              </p>
+            </header>
+
+            <div className="flex flex-wrap gap-3">
+              {(Object.keys(channelCatalog) as ChannelId[]).map((channelId) => {
+                const channel = channelCatalog[channelId];
+                const active = channelState[channelId];
+                return (
+                  <button
+                    key={channelId}
+                    type="button"
+                    aria-label={`Toggle ${channel.label}`}
+                    onClick={() => handleToggle(channelId)}
+                    className={`group flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+                      active
+                        ? "border-transparent bg-white text-slate-900 shadow-xl shadow-white/30"
+                        : "border-white/30 bg-white/10 text-slate-100/80 hover:bg-white/20"
+                    }`}
+                  >
+                    <span
+                      className={`h-2.5 w-2.5 rounded-full transition ${
+                        active ? channel.dot : "bg-white/40"
+                      }`}
+                    />
+                    <span>{channel.label}</span>
+                  </button>
+                );
+              })}
+        </div>
+
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-5 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-inner shadow-purple-500/20"
+            >
+              <label className="space-y-2">
+                <span className="text-sm font-semibold uppercase tracking-wide text-slate-200/80">
+                  Your story
+                </span>
+                <textarea
+                  value={draft}
+                  onChange={(event) => setDraft(event.target.value)}
+                  placeholder="Tell the world what you're shipping..."
+                  className="min-h-[140px] w-full resize-none rounded-2xl border border-white/20 bg-slate-950/60 p-4 text-base text-slate-50 placeholder:text-slate-400 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/60"
+                />
+              </label>
+
+              <div className="flex flex-col gap-4 text-sm text-slate-100/70">
+                {activeChannels.map((channelId) => (
+                  <div
+                    key={channelId}
+                    className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-3"
+                  >
+                    <span
+                      className={`mt-1 h-2.5 w-2.5 rounded-full ${channelCatalog[channelId].dot}`}
+                    />
+                    <div>
+                      <p className="font-semibold text-white">
+                        {channelCatalog[channelId].label}
+                      </p>
+                      <p>{channelCatalog[channelId].description}</p>
+                    </div>
+                  </div>
+                ))}
+                {activeChannels.length === 0 && (
+                  <p className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-3 text-center font-medium text-slate-200/70">
+                    Select at least one channel to broadcast.
+                  </p>
+                )}
+              </div>
+
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-xs uppercase tracking-[0.4em] text-slate-200/60">
+                  Posting is simulated • No blockchain writes
+                </p>
+                <button
+                  type="submit"
+                  disabled={isPosting}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-fuchsia-500/40 transition hover:shadow-xl hover:shadow-fuchsia-500/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {isPosting ? "Sharing..." : "Post to all"}
+                </button>
+              </div>
+
+              <div aria-live="polite" className="min-h-6 text-sm">
+                {feedback && (
+                  <span
+                    className={`inline-flex items-center gap-2 rounded-full px-4 py-2 font-medium ${
+                      feedback.tone === "success"
+                        ? "bg-emerald-400/20 text-emerald-100"
+                        : "bg-rose-500/30 text-rose-100"
+                    }`}
+                  >
+                    <span
+                      className={`h-2 w-2 rounded-full ${
+                        feedback.tone === "success"
+                          ? "bg-emerald-300"
+                          : "bg-rose-300"
+                      }`}
+                    />
+                    {feedback.message}
+                  </span>
+                )}
+              </div>
+            </form>
+          </article>
+
+          <aside className="flex flex-col gap-6 rounded-4xl border border-white/20 bg-white/10 p-6 shadow-[0_18px_60px_rgba(14,116,144,0.35)] backdrop-blur-2xl">
+            <h2 className="text-xl font-semibold text-white">
+              Recent multichannel posts
+            </h2>
+            <div className="flex flex-col gap-4">
+              {posts.map((post) => (
+                <article
+                  key={post.id}
+                  className="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-5 shadow-lg shadow-black/20"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br ${post.avatarGradient} text-sm font-semibold uppercase text-white shadow-lg`}
+                      >
+                        {post.author.slice(0, 2)}
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-white">
+                          {post.author}
+                        </p>
+                        <p className="text-xs uppercase tracking-wider text-slate-300/60">
+                          {formatRelativeTime(post.createdAt)}
+          </p>
+        </div>
+                    </div>
+                    {post.highlight && (
+                      <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-slate-100/80">
+                        {post.highlight}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-sm leading-relaxed text-slate-100/85">
+                    {post.content}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {post.channels.map((channelId) => (
+                      <span
+                        key={`${post.id}-${channelId}`}
+                        className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider ${channelCatalog[channelId].badge}`}
+                      >
+                        <span
+                          className={`h-1.5 w-1.5 rounded-full ${channelCatalog[channelId].dot}`}
+                        />
+                        {channelCatalog[channelId].label}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              ))}
+        </div>
+          </aside>
+        </section>
+
+        <section
+          id="plan"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.85fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/20 bg-white/10 p-8 shadow-[0_18px_60px_rgba(56,189,248,0.3)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Plan the week</h2>
+              <p className="text-sm text-slate-100/75">
+                Stage drops for later. Scheduling is simulated, giving a feel for calendar orchestration.
+              </p>
+            </header>
+
+            <form
+              onSubmit={handleScheduleSubmit}
+              className="flex flex-col gap-5 rounded-3xl border border-white/10 bg-slate-950/40 p-6 shadow-inner shadow-sky-500/20"
+            >
+              <div className="grid gap-4 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)]">
+                <label className="flex flex-col gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-200/70">
+                    Headline
+                  </span>
+                  <input
+                    value={scheduleTitle}
+                    onChange={(event) => setScheduleTitle(event.target.value)}
+                    placeholder="e.g. Creators AMA countdown"
+                    className="rounded-2xl border border-white/20 bg-slate-900/60 px-4 py-3 text-sm text-white placeholder:text-slate-400 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/60"
+                  />
+                </label>
+                <label className="flex flex-col gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-200/70">
+                    Summary
+                  </span>
+                  <textarea
+                    value={scheduleSummary}
+                    onChange={(event) => setScheduleSummary(event.target.value)}
+                    placeholder="Optional teaser to brief the team."
+                    className="h-[88px] w-full resize-none rounded-2xl border border-white/20 bg-slate-900/60 px-4 py-3 text-sm text-white placeholder:text-slate-400 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/60"
+                  />
+                </label>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="flex flex-col gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-200/70">
+                    Launch date
+                  </span>
+                  <input
+                    type="date"
+                    value={scheduleDate}
+                    onChange={(event) => setScheduleDate(event.target.value)}
+                    className="rounded-2xl border border-white/20 bg-slate-900/60 px-4 py-3 text-sm text-white focus:border-white focus:outline-none focus:ring-2 focus:ring-white/60"
+                  />
+                </label>
+                <label className="flex flex-col gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-200/70">
+                    Launch time
+                  </span>
+                  <input
+                    type="time"
+                    value={scheduleTime}
+                    onChange={(event) => setScheduleTime(event.target.value)}
+                    className="rounded-2xl border border-white/20 bg-slate-900/60 px-4 py-3 text-sm text-white focus:border-white focus:outline-none focus:ring-2 focus:ring-white/60"
+                  />
+                </label>
+              </div>
+
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-200/70">
+                  Channels
+                </p>
+                <div className="mt-3 flex flex-wrap gap-3">
+                  {(Object.keys(channelCatalog) as ChannelId[]).map((channelId) => {
+                    const channel = channelCatalog[channelId];
+                    const active = scheduleChannels[channelId];
+                    return (
+                      <label
+                        key={`schedule-${channelId}`}
+                        className={`flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 ${
+                          active
+                            ? "border-transparent bg-white text-slate-900 shadow-xl shadow-white/25"
+                            : "border-white/30 bg-white/10 text-slate-100/80 hover:bg-white/15"
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={active}
+                          onChange={() => handleScheduleToggle(channelId)}
+                          className="sr-only"
+                        />
+                        <span
+                          className={`h-2.5 w-2.5 rounded-full ${
+                            active ? channel.dot : "bg-white/40"
+                          }`}
+                        />
+                        <span>{channel.label}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-xs text-slate-200/70">
+                  Scheduling is mock-only—use it to prototype cadence.
+                </p>
+                <button
+                  type="submit"
+                  disabled={isScheduling}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-400 via-cyan-500 to-blue-500 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-cyan-500/30 transition hover:shadow-xl hover:shadow-cyan-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {isScheduling ? "Scheduling..." : "Schedule broadcast"}
+                </button>
+              </div>
+
+              <div aria-live="polite" className="min-h-6 text-sm">
+                {scheduleFeedback && (
+                  <span
+                    className={`inline-flex items-center gap-2 rounded-full px-4 py-2 font-medium ${
+                      scheduleFeedback.tone === "success"
+                        ? "bg-emerald-400/20 text-emerald-100"
+                        : "bg-rose-500/30 text-rose-100"
+                    }`}
+                  >
+                    <span
+                      className={`h-2 w-2 rounded-full ${
+                        scheduleFeedback.tone === "success"
+                          ? "bg-emerald-300"
+                          : "bg-rose-300"
+                      }`}
+                    />
+                    {scheduleFeedback.message}
+                  </span>
+                )}
+              </div>
+            </form>
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.4em] text-slate-200/70">
+                  Upcoming timeline
+                </h3>
+                <span className="text-xs text-slate-100/70">
+                  {analyticsSnapshot.scheduledTotal} scheduled
+                </span>
+              </div>
+              <ol className="space-y-4">
+                {sortedPlannedPosts.map((plan) => {
+                  const accent =
+                    channelCatalog[plan.channels[0]]?.accent ??
+                    "from-slate-200 to-slate-400";
+                  const statusBadge = scheduleStatusStyles[plan.status];
+                  const isSelected =
+                    workflowContext.selectedPlan?.id === plan.id;
+                  const canApprove = plan.approvalSteps.some(
+                    (step) =>
+                      step.status === "pending" || step.status === "changes",
+                  );
+
+                  return (
+                    <li
+                      key={plan.id}
+                      className={`relative overflow-hidden rounded-3xl border bg-white/5 p-5 shadow-lg shadow-sky-900/20 transition ${
+                        isSelected
+                          ? "border-white/60 ring-2 ring-white/30"
+                          : "border-white/10 hover:border-white/30"
+                      }`}
+                    >
+                      <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-transparent via-white/40 to-transparent" />
+                      <div className="flex flex-col gap-4">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex items-center gap-3">
+                            <div
+                              className={`flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br ${accent} text-xs font-semibold uppercase text-white shadow-lg`}
+                            >
+                              {plan.owner.slice(0, 2)}
+                            </div>
+                            <div>
+                              <p className="text-sm font-semibold text-white">
+                                {plan.title}
+                              </p>
+                              <p className="text-xs uppercase tracking-wider text-slate-300/60">
+                                {formatScheduleLabel(plan.scheduledFor)} ·{" "}
+                                {formatTimeUntil(plan.scheduledFor)}
+                              </p>
+                            </div>
+                          </div>
+                          <span
+                            className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${statusBadge.badge}`}
+                          >
+                            <span
+                              className={`h-1.5 w-1.5 rounded-full ${statusBadge.dot}`}
+                            />
+                            {statusBadge.label}
+                          </span>
+                        </div>
+                        <p className="text-sm leading-relaxed text-slate-100/85">
+                          {plan.summary}
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {plan.channels.map((channelId) => (
+                            <span
+                              key={`${plan.id}-${channelId}`}
+                              className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider ${channelCatalog[channelId].badge}`}
+                            >
+                              <span
+                                className={`h-1.5 w-1.5 rounded-full ${channelCatalog[channelId].dot}`}
+                              />
+                              {channelCatalog[channelId].label}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {plan.approvalSteps.map((step) => {
+                            const token = approvalStatusTokens[step.status];
+                            return (
+                              <span
+                                key={`${plan.id}-${step.id}`}
+                                className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wide ${token.badge}`}
+                              >
+                                <span
+                                  className={`h-1.5 w-1.5 rounded-full ${token.dot}`}
+                                />
+                                {step.label}
+                                <span className="text-[10px] uppercase tracking-wider text-white/70">
+                                  {formatTimeUntil(step.due)}
+                                </span>
+                              </span>
+                            );
+                          })}
+                        </div>
+                        <div className="flex flex-wrap gap-3">
+                          <button
+                            type="button"
+                            onClick={() => handleApprovalAction(plan.id, "approve")}
+                            disabled={!canApprove}
+                            className="inline-flex items-center gap-2 rounded-full border border-white/30 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-white transition hover:border-white/60 hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            Approve step
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleApprovalAction(plan.id, "changes")}
+                            className="inline-flex items-center gap-2 rounded-full border border-amber-400/60 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-amber-100 transition hover:bg-amber-400/20"
+                          >
+                            Request edits
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleWorkflowSelect(plan.id)}
+                            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-white transition hover:border-white/40 hover:bg-white/10"
+                          >
+                            Review workflow
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
+                {sortedPlannedPosts.length === 0 && (
+                  <li className="rounded-3xl border border-dashed border-white/20 bg-white/5 p-6 text-center text-sm text-slate-100/70">
+                    No scheduled content yet. Queue your first post above.
+                  </li>
+                )}
+              </ol>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/20 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.25)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.4em] text-slate-200/70">
+                    Growth pulse
+                  </p>
+                  <h3 className="mt-2 text-xl font-semibold text-white">
+                    Snapshot analytics
+                  </h3>
+                </div>
+                <span
+                  className={`rounded-full px-3 py-1 text-xs font-semibold ${analyticsSnapshot.velocityToken.tone}`}
+                >
+                  {analyticsSnapshot.velocityToken.label}
+                </span>
+              </div>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                {analyticsSnapshot.tiles.map((tile) => (
+                  <div
+                    key={tile.id}
+                    className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-inner shadow-purple-900/20"
+                  >
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-200/70">
+                        {tile.title}
+                      </h4>
+                      <span
+                        className={`rounded-full px-3 py-1 text-[11px] font-semibold ${tile.badge.tone}`}
+                      >
+                        {tile.badge.label}
+                      </span>
+                    </div>
+                    <p className="mt-4 text-3xl font-semibold text-white">
+                      {tile.value}
+                    </p>
+                    <p className="mt-2 text-xs text-slate-100/70">{tile.helper}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-4xl border border-white/20 bg-white/10 p-6 shadow-[0_18px_60px_rgba(14,116,144,0.25)] backdrop-blur-2xl">
+              <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-200/70">
+                Channel breakdown
+              </h3>
+              <p className="mt-2 text-sm text-slate-100/75">
+                Compare live vs scheduled presence per network.
+              </p>
+              <div className="mt-5 space-y-5">
+                {analyticsSnapshot.channelBreakdown.map(
+                  ({ channelId, live, scheduled, livePercent, total }) => {
+                    const widthClass = percentWidthClass(
+                      total ? livePercent : 0,
+                    );
+                    const queuePercent = total
+                      ? Math.max(0, 100 - livePercent)
+                      : 100;
+                    return (
+                      <div
+                        key={channelId}
+                        className="space-y-3 rounded-3xl border border-white/10 bg-white/5 p-4"
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`h-2.5 w-2.5 rounded-full ${channelCatalog[channelId].dot}`}
+                            />
+                            <p className="text-sm font-semibold text-white">
+                              {channelCatalog[channelId].label}
+                            </p>
+                          </div>
+                          <span className="text-xs text-slate-200/70">
+                            {live} live · {scheduled} scheduled
+                          </span>
+                        </div>
+                        <div className="h-2 rounded-full bg-white/10">
+                          <div
+                            className={`h-full rounded-full bg-gradient-to-r ${channelCatalog[channelId].accent} ${widthClass}`}
+                          />
+                        </div>
+                        <p className="text-xs text-slate-200/70">
+                          Live {livePercent}% • Queue {queuePercent}%
+                        </p>
+                      </div>
+                    );
+                  },
+                )}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="workflow"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.95fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">
+                Workflow control center
+              </h2>
+              <p className="text-sm text-slate-100/75">
+                Assign ownership, track approvals, and keep the team in sync.
+                Select a planned post to review the latest activity.
+              </p>
+            </header>
+
+            <div className="flex flex-wrap gap-2">
+              {sortedPlannedPosts.map((plan) => {
+                const isActive = workflowContext.selectedPlan?.id === plan.id;
+                return (
+                  <button
+                    key={`workflow-tab-${plan.id}`}
+                    type="button"
+                    onClick={() => handleWorkflowSelect(plan.id)}
+                    className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold uppercase tracking-wide transition ${
+                      isActive
+                        ? "border-white/60 bg-white text-slate-900 shadow-lg shadow-white/30"
+                        : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                    }`}
+                    aria-current={isActive ? "true" : undefined}
+                  >
+                    <span className="text-xs font-medium text-slate-400">
+                      {plan.owner}
+                    </span>
+                    {plan.title}
+                  </button>
+                );
+              })}
+            </div>
+
+            {workflowContext.selectedPlan ? (
+              <div className="space-y-6">
+                <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+                  <div className="space-y-6">
+                    <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                      <div className="flex items-center justify-between gap-3">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                            Owner
+                          </p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {workflowContext.selectedPlan.owner}
+                          </p>
+                        </div>
+                        <span
+                          className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${scheduleStatusStyles[workflowContext.selectedPlan.status].badge}`}
+                        >
+                          <span
+                            className={`h-1.5 w-1.5 rounded-full ${scheduleStatusStyles[workflowContext.selectedPlan.status].dot}`}
+                          />
+                          {scheduleStatusStyles[workflowContext.selectedPlan.status].label}
+                        </span>
+                      </div>
+                      <p className="mt-4 text-xs uppercase tracking-[0.35em] text-slate-200/60">
+                        Launch window
+                      </p>
+                      <p className="mt-1 text-sm text-slate-100/80">
+                        {formatScheduleLabel(workflowContext.selectedPlan.scheduledFor)} ·{" "}
+                        {formatTimeUntil(workflowContext.selectedPlan.scheduledFor)}
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {workflowContext.selectedPlan.channels.map((channelId) => (
+                          <span
+                            key={`workflow-channel-${workflowContext.selectedPlan?.id}-${channelId}`}
+                            className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${channelCatalog[channelId].badge}`}
+                          >
+                            <span
+                              className={`h-1.5 w-1.5 rounded-full ${channelCatalog[channelId].dot}`}
+                            />
+                            {channelCatalog[channelId].label}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                        Approval steps
+                      </h3>
+                      <ol className="space-y-3">
+                        {workflowContext.steps.map((step) => {
+                          const token = approvalStatusTokens[step.status];
+                          return (
+                            <li
+                              key={`workflow-step-${step.id}`}
+                              className="flex items-center justify-between gap-4 rounded-3xl border border-white/15 bg-white/5 p-4"
+                            >
+                              <div className="flex items-center gap-3">
+                                <span
+                                  className={`h-2.5 w-2.5 rounded-full ${token.dot}`}
+                                />
+                                <div>
+                                  <p className="text-sm font-semibold text-white">
+                                    {step.label}
+                                  </p>
+                                  <p className="text-xs text-slate-200/70">
+                                    {step.approver} · {formatTimeUntil(step.due)}
+                                  </p>
+                                </div>
+                              </div>
+                              <span
+                                className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wide ${token.badge}`}
+                              >
+                                {token.label}
+                              </span>
+                            </li>
+                          );
+                        })}
+                      </ol>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                        Team comments
+                      </h3>
+                      <span className="text-xs text-slate-200/70">
+                        {workflowContext.comments.length} notes
+                      </span>
+                    </div>
+                    <div className="space-y-3 overflow-hidden rounded-3xl border border-white/15 bg-white/5 p-4">
+                      <div className="max-h-64 space-y-3 overflow-y-auto pr-2">
+                        {workflowContext.comments.map((comment) => (
+                          <article
+                            key={comment.id}
+                            className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                          >
+                            <div className="flex items-center justify-between gap-3">
+                              <p className="text-sm font-semibold text-white">
+                                {comment.author}
+                              </p>
+                              <span className="text-xs text-slate-300/70">
+                                {formatRelativeTime(comment.at)}
+                              </span>
+                            </div>
+                            <p className="mt-2 text-sm leading-relaxed text-slate-100/80">
+                              {comment.message}
+                            </p>
+                          </article>
+                        ))}
+                        {workflowContext.comments.length === 0 && (
+                          <p className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-4 text-center text-sm text-slate-200/70">
+                            No comments yet. Leave guidance for the team below.
+                          </p>
+                        )}
+                      </div>
+                      <form
+                        onSubmit={handleWorkflowCommentSubmit}
+                        className="mt-2 flex flex-col gap-3"
+                      >
+                        <label className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                          Add a note
+                        </label>
+                        <textarea
+                          value={workflowNote}
+                          onChange={(event) => setWorkflowNote(event.target.value)}
+                          placeholder="Share updates or requests for this post..."
+                          className="min-h-[96px] rounded-2xl border border-white/20 bg-slate-950/60 px-4 py-3 text-sm text-white placeholder:text-slate-400 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/60"
+                        />
+                        <button
+                          type="submit"
+                          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-purple-400 via-fuchsia-500 to-indigo-500 px-5 py-2 text-xs font-semibold uppercase tracking-wide text-white shadow-lg shadow-purple-600/40 transition hover:shadow-xl hover:shadow-purple-600/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                        >
+                          Post comment
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid gap-4 lg:grid-cols-2">
+                  <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Live presence
+                    </h3>
+                    <p className="mt-2 text-xs text-slate-200/70">
+                      Who is currently touching this rollout.
+                    </p>
+                    <ul className="mt-4 space-y-3">
+                      {teamPresenceRoster.map((member) => {
+                        const token = presenceStatusTokens[member.status];
+                        return (
+                          <li
+                            key={member.id}
+                            className="flex items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                          >
+                            <span
+                              className={`mt-1 h-2.5 w-2.5 rounded-full ${token.dot}`}
+                            />
+                            <div className="space-y-1 text-sm text-slate-100/80">
+                              <div className="flex items-center justify-between gap-3">
+                                <p className="font-semibold text-white">{member.name}</p>
+                                <span
+                                  className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${token.badge}`}
+                                >
+                                  {token.label}
+                                </span>
+                              </div>
+                              <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                                {member.role}
+                              </p>
+                              <p className="text-xs text-slate-200/70">{member.focus}</p>
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+
+                  <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Approval routing
+                    </h3>
+                    <p className="mt-2 text-xs text-slate-200/70">
+                      View who signs off each stage and how fallbacks trigger.
+                    </p>
+                    <ol className="mt-4 space-y-3">
+                      {approvalRoutes.map((route) => (
+                        <li
+                          key={route.id}
+                          className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                        >
+                          <div className="flex items-center justify-between gap-3">
+                            <p className="text-sm font-semibold text-white">{route.stage}</p>
+                            <span className="text-xs text-slate-200/70">
+                              {route.owners.length} owner{route.owners.length === 1 ? "" : "s"}
+                            </span>
+                          </div>
+                          <div className="mt-3 flex flex-wrap gap-2 text-xs text-slate-200/80">
+                            {route.owners.map((owner) => (
+                              <span
+                                key={`${route.id}-${owner}`}
+                                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 uppercase tracking-[0.3em]"
+                              >
+                                {owner}
+                              </span>
+                            ))}
+                          </div>
+                          <p className="mt-3 text-xs text-slate-200/70">{route.fallback}</p>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+
+                  <div className="grid gap-4 lg:grid-cols-3">
+                    <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                          Mentions
+                        </h3>
+                        <span className="text-xs text-slate-200/70">
+                          {collaborationMentions.filter((m) => !m.resolved && m.planId === workflowContext.selectedPlan?.id).length} active
+                        </span>
+                      </div>
+                      <ul className="mt-4 space-y-3">
+                        {collaborationMentions
+                          .filter((mention) => mention.planId === workflowContext.selectedPlan?.id)
+                          .map((mention) => (
+                            <li
+                              key={mention.id}
+                              className={`rounded-2xl border border-white/10 bg-slate-950/40 p-4 ${mention.resolved ? "opacity-60" : ""}`}
+                            >
+                              <div className="flex items-center justify-between gap-2">
+                                <p className="text-xs font-semibold text-white">{mention.mentionedBy}</p>
+                                <span className={`text-[10px] uppercase tracking-wider ${mention.resolved ? "text-emerald-300" : "text-amber-300"}`}>
+                                  {mention.resolved ? "Resolved" : "Pending"}
+                                </span>
+                              </div>
+                              <p className="mt-2 text-sm text-slate-100/80">{mention.message}</p>
+                              <p className="mt-2 text-xs text-slate-200/60">
+                                {formatRelativeTime(mention.at)}
+                              </p>
+                            </li>
+                          ))}
+                        {collaborationMentions.filter((m) => m.planId === workflowContext.selectedPlan?.id).length === 0 && (
+                          <li className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-4 text-center text-xs text-slate-200/70">
+                            No mentions for this post
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+
+                    <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                          Checklists
+                        </h3>
+                        <span className="text-xs text-slate-200/70">
+                          {collaborationChecklists
+                            .find((c) => c.planId === workflowContext.selectedPlan?.id)
+                            ?.items.filter((i) => !i.checked).length ?? 0} pending
+                        </span>
+                      </div>
+                      <ul className="mt-4 space-y-3">
+                        {collaborationChecklists
+                          .find((checklist) => checklist.planId === workflowContext.selectedPlan?.id)
+                          ?.items.map((item) => (
+                            <li
+                              key={item.id}
+                              className="flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/40 p-3"
+                            >
+                              <input
+                                type="checkbox"
+                                checked={item.checked}
+                                readOnly
+                                aria-label={item.label}
+                                className="h-4 w-4 rounded border-white/20 bg-white/5 text-emerald-400 focus:ring-2 focus:ring-emerald-400/50"
+                              />
+                              <div className="flex-1">
+                                <p className={`text-sm ${item.checked ? "text-slate-400 line-through" : "text-white"}`}>
+                                  {item.label}
+                                </p>
+                                <p className="text-xs text-slate-200/60">{item.assignedTo}</p>
+                              </div>
+                            </li>
+                          ))}
+                        {!collaborationChecklists.find((c) => c.planId === workflowContext.selectedPlan?.id) && (
+                          <li className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-4 text-center text-xs text-slate-200/70">
+                            No checklist for this post
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+
+                    <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                          Handoffs
+                        </h3>
+                        <span className="text-xs text-slate-200/70">
+                          {collaborationHandoffs.filter((h) => h.planId === workflowContext.selectedPlan?.id && h.status === "pending").length} active
+                        </span>
+                      </div>
+                      <ul className="mt-4 space-y-3">
+                        {collaborationHandoffs
+                          .filter((handoff) => handoff.planId === workflowContext.selectedPlan?.id)
+                          .map((handoff) => (
+                            <li
+                              key={handoff.id}
+                              className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                            >
+                              <div className="flex items-center justify-between gap-2">
+                                <div>
+                                  <p className="text-xs font-semibold text-white">{handoff.from} → {handoff.to}</p>
+                                  <p className="mt-1 text-sm text-slate-100/80">{handoff.action}</p>
+                                </div>
+                                <span className={`text-[10px] uppercase tracking-wider ${handoff.status === "completed" ? "text-emerald-300" : "text-amber-300"}`}>
+                                  {handoff.status}
+                                </span>
+                              </div>
+                              <p className="mt-2 text-xs text-slate-200/60">
+                                {formatRelativeTime(handoff.at)}
+                              </p>
+                            </li>
+                          ))}
+                        {collaborationHandoffs.filter((h) => h.planId === workflowContext.selectedPlan?.id).length === 0 && (
+                          <li className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-4 text-center text-xs text-slate-200/70">
+                            No handoffs for this post
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <p className="rounded-3xl border border-dashed border-white/20 bg-white/5 p-6 text-center text-sm text-slate-200/70">
+                Add a schedule first to unlock workflow tracking.
+              </p>
+            )}
+          </article>
+
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Audience insights</h2>
+              <p className="text-sm text-slate-100/75">
+                Track growth momentum, prime publishing windows, and actionable
+                follow-ups across Farcaster and Instagram.
+              </p>
+            </header>
+
+            <div className="grid gap-4 lg:grid-cols-2">
+              <div className="rounded-3xl border border-white/15 bg-slate-950/40 p-5">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Reach vs conversion
+                    </p>
+                    <p className="mt-1 text-xs text-slate-200/60">
+                      Toggle lines to inspect how reach drives wallet conversions.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => toggleComparisonSeries("reach")}
+                      className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
+                        comparisonVisibility.reach
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                    >
+                      Reach
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => toggleComparisonSeries("conversionRate")}
+                      className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
+                        comparisonVisibility.conversionRate
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                    >
+                      Conversion
+                    </button>
+                  </div>
+                </div>
+                <div className="mt-5 space-y-4">
+                  <div className="flex flex-wrap gap-4 text-sm text-white">
+                    <div>
+                      <p className="text-[11px] uppercase tracking-[0.25em] text-slate-200/60">
+                        Focus · {comparisonMetrics.label}
+                      </p>
+                    </div>
+                    {comparisonVisibility.reach && (
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                          Reach
+                        </p>
+                        <p className="text-lg font-semibold">
+                          {comparisonMetrics.reach}
+                        </p>
+                      </div>
+                    )}
+                    {comparisonVisibility.conversionRate && (
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                          Conversion rate
+                        </p>
+                        <p className="text-lg font-semibold">
+                          {comparisonMetrics.conversionRate}
+                        </p>
+                        <p className="text-xs text-slate-200/60">
+                          {comparisonMetrics.conversions} conversions
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  <svg
+                    viewBox="0 0 320 140"
+                    role="img"
+                    aria-label="Reach versus conversion chart"
+                    className="h-36 w-full text-white/40"
+                  >
+                    <line
+                      x1="0"
+                      y1="130"
+                      x2="320"
+                      y2="130"
+                      stroke="rgba(255,255,255,0.08)"
+                      strokeWidth="1"
+                    />
+                    {comparisonVisibility.reach && (
+                      <path
+                        d={comparisonChart.reachPath}
+                        className={`${chartColorTokens.reach}`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeWidth="3"
+                      />
+                    )}
+                    {comparisonVisibility.conversionRate && (
+                      <path
+                        d={comparisonChart.conversionPath}
+                        className={`${chartColorTokens.conversionRate}`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeWidth="3"
+                        strokeDasharray="6 4"
+                      />
+                    )}
+                  </svg>
+                  <div className="flex flex-wrap gap-2">
+                    {comparisonChart.points.map((point, index) => {
+                      const isActive = index === activeComparisonIndex;
+                      return (
+                        <button
+                          key={`comparison-${point.label}`}
+                          type="button"
+                          onMouseEnter={() => setActiveComparisonIndex(index)}
+                          onFocus={() => setActiveComparisonIndex(index)}
+                          className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
+                            isActive
+                              ? "border-white/80 bg-white text-slate-900 shadow-lg shadow-white/30"
+                              : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                          }`}
+                        >
+                          {point.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-3xl border border-white/15 bg-slate-950/40 p-5">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Audience momentum
+                    </p>
+                    <p className="mt-1 text-xs text-slate-200/60">
+                      Focus on total growth or drill into each network.
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => toggleGrowthSeries("total")}
+                      className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
+                        growthVisibility.total
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                    >
+                      Total
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => toggleGrowthSeries("farcaster")}
+                      className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
+                        growthVisibility.farcaster
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                    >
+                      Farcaster
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => toggleGrowthSeries("instagram")}
+                      className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
+                        growthVisibility.instagram
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                    >
+                      Instagram
+                    </button>
+                  </div>
+                </div>
+                <div className="mt-5 space-y-4">
+                  <div className="flex flex-wrap gap-4 text-sm text-white">
+                    <div>
+                      <p className="text-[11px] uppercase tracking-[0.25em] text-slate-200/60">
+                        Focus · {growthMetrics.label}
+                      </p>
+                    </div>
+                    {growthVisibility.total && (
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                          Total network
+                        </p>
+                        <p className="text-lg font-semibold">
+                          {growthMetrics.total}
+                        </p>
+                      </div>
+                    )}
+                    {growthVisibility.farcaster && (
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                          Farcaster
+                        </p>
+                        <p className="text-lg font-semibold">
+                          {growthMetrics.farcaster}
+                        </p>
+                      </div>
+                    )}
+                    {growthVisibility.instagram && (
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                          Instagram
+                        </p>
+                        <p className="text-lg font-semibold">
+                          {growthMetrics.instagram}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  <svg
+                    viewBox="0 0 320 140"
+                    role="img"
+                    aria-label="Audience growth comparison chart"
+                    className="h-36 w-full text-white/40"
+                  >
+                    <line
+                      x1="0"
+                      y1="130"
+                      x2="320"
+                      y2="130"
+                      stroke="rgba(255,255,255,0.08)"
+                      strokeWidth="1"
+                    />
+                    {growthVisibility.total && (
+                      <path
+                        d={growthChart.totalPath}
+                        className={`${chartColorTokens.total}`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeWidth="3"
+                      />
+                    )}
+                    {growthVisibility.farcaster && (
+                      <path
+                        d={growthChart.farcasterPath}
+                        className={`${chartColorTokens.farcaster}`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeWidth="3"
+                        strokeDasharray="4 4"
+                      />
+                    )}
+                    {growthVisibility.instagram && (
+                      <path
+                        d={growthChart.instagramPath}
+                        className={`${chartColorTokens.instagram}`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeWidth="3"
+                        strokeDasharray="2 4"
+                      />
+                    )}
+                  </svg>
+                  <div className="flex flex-wrap gap-2">
+                    {growthChart.points.map((point, index) => {
+                      const isActive = index === activeGrowthIndex;
+                      return (
+                        <button
+                          key={`growth-${point.label}`}
+                          type="button"
+                          onMouseEnter={() => setActiveGrowthIndex(index)}
+                          onFocus={() => setActiveGrowthIndex(index)}
+                          className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
+                            isActive
+                              ? "border-white/80 bg-white text-slate-900 shadow-lg shadow-white/30"
+                              : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                          }`}
+                        >
+                          {point.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-4">
+                <div className="flex items-center justify-between">
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Farcaster followers
+                  </p>
+                  <span className="text-xs font-semibold text-emerald-200">
+                    +{audienceInsights.farcasterDelta}
+                  </span>
+                </div>
+                <p className="mt-2 text-3xl font-semibold text-white">
+                  {audienceInsights.farcasterLatest}k
+                </p>
+                <svg
+                  viewBox="0 0 140 42"
+                  role="img"
+                  aria-label="Farcaster follower sparkline"
+                  className="mt-3 h-12 w-full text-emerald-300"
+                >
+                  <path
+                    d={audienceInsights.farcasterPath}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeWidth="3"
+                  />
+                </svg>
+              </div>
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-4">
+                <div className="flex items-center justify-between">
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Instagram followers
+                  </p>
+                  <span className="text-xs font-semibold text-fuchsia-200">
+                    +{audienceInsights.instagramDelta}
+                  </span>
+                </div>
+                <p className="mt-2 text-3xl font-semibold text-white">
+                  {audienceInsights.instagramLatest}k
+                </p>
+                <svg
+                  viewBox="0 0 140 42"
+                  role="img"
+                  aria-label="Instagram follower sparkline"
+                  className="mt-3 h-12 w-full text-fuchsia-300"
+                >
+                  <path
+                    d={audienceInsights.instagramPath}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeWidth="3"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Best time heatmap
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  Peak slot · {audienceInsights.topSlot.day} · {audienceInsights.topSlot.slot}
+                </span>
+              </div>
+              <div className="mt-4 overflow-hidden rounded-3xl border border-white/10 bg-slate-950/40">
+                <table className="w-full border-collapse text-xs text-slate-100">
+                  <thead>
+                    <tr>
+                      <th className="px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400">
+                        Slot
+                      </th>
+                      {audienceDays.map((day) => (
+                        <th
+                          key={`heatmap-day-${day}`}
+                          className="px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400"
+                        >
+                          {day}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bestTimeGrid.map((row) => (
+                      <tr key={`heatmap-${row.slot}`}>
+                        <th className="px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400">
+                          {row.slot}
+                        </th>
+                        {row.values.map((value: number, index: number) => (
+                          <td key={`heatmap-${row.slot}-${index}`} className="px-3 py-2">
+                            <span
+                              className={`flex h-8 w-12 items-center justify-center rounded-xl text-[11px] font-semibold ${heatLevelClass(
+                                value,
+                              )}`}
+                            >
+                              {value}
+                            </span>
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Channel benchmarking
+                  </h3>
+                  <span className="text-xs text-slate-200/70">Cohort median</span>
+                </div>
+                <div className="mt-4 space-y-4">
+                  {benchmarkMetrics.map((metric) => (
+                    <div key={metric.id} className="space-y-3">
+                      <div className="flex items-center justify-between text-sm text-white">
+                        <span>{metric.label}</span>
+                        <span className="text-xs text-slate-200/70">
+                          Cohort {metric.cohort}%
+                        </span>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between text-xs text-slate-200/70">
+                          <span>Farcaster</span>
+                          <span>{metric.farcaster}%</span>
+                        </div>
+                        <div className="h-2 rounded-full bg-white/10">
+                          <div
+                            className={`h-full rounded-full bg-gradient-to-r from-purple-400 via-fuchsia-500 to-orange-300 ${percentWidthClass(
+                              metric.farcaster,
+                            )}`}
+                          />
+                        </div>
+                        <div className="flex items-center justify-between text-xs text-slate-200/70">
+                          <span>Instagram</span>
+                          <span>{metric.instagram}%</span>
+                        </div>
+                        <div className="h-2 rounded-full bg-white/10">
+                          <div
+                            className={`h-full rounded-full bg-gradient-to-r from-amber-400 via-pink-500 to-red-400 ${percentWidthClass(
+                              metric.instagram,
+                            )}`}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Community sentiment
+                </h3>
+                <div className="mt-4 space-y-3">
+                  {sentimentSamples.map((sample) => (
+                    <div
+                      key={sample.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <p className="text-sm font-semibold text-white">{sample.segment}</p>
+                        <span className="text-xs text-emerald-200">
+                          +{sample.positive - sample.negative} net
+                        </span>
+                      </div>
+                      <div className="mt-3 grid grid-cols-3 gap-2 text-[11px] text-slate-200/70">
+                        <span>Pos {sample.positive}%</span>
+                        <span>Neu {sample.neutral}%</span>
+                        <span>Neg {sample.negative}%</span>
+                      </div>
+                      <p className="mt-3 text-xs text-slate-100/75">{sample.highlight}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Retention funnel
+                </h3>
+                <span className="text-xs text-slate-200/70">Last 30 days</span>
+              </div>
+              <div className="mt-4 space-y-3">
+                {retentionStages.map((stage) => (
+                  <div key={stage.id} className="space-y-2">
+                    <div className="flex items-center justify-between text-sm text-white">
+                      <span>{stage.stage}</span>
+                      <span>{stage.rate}%</span>
+                    </div>
+                    <div className="h-2 rounded-full bg-white/10">
+                      <div
+                        className={`h-full rounded-full bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400 ${percentWidthClass(
+                          stage.rate,
+                        )}`}
+                      />
+                    </div>
+                    <p className="text-xs text-slate-200/70">{stage.note}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Audience segmentation
+                </h3>
+                <span className="text-xs text-slate-200/70">{audienceSegments.length} segments</span>
+              </div>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                {audienceSegments.map((segment) => {
+                  const coverageDiff = segment.coverage - segment.benchmark;
+                  const trendPath = buildSparklinePath(segment.trend);
+                  return (
+                    <div
+                      key={segment.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-semibold text-white">{segment.label}</p>
+                          <p className="mt-1 text-xs text-slate-200/70">
+                            {channelCatalog[segment.channel].label} · {(segment.size / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <span className={`text-xs font-semibold ${coverageDiff >= 0 ? "text-emerald-300" : "text-amber-300"}`}>
+                          {coverageDiff >= 0 ? "+" : ""}{coverageDiff}% vs benchmark
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-3 gap-2 text-xs">
+                        <div>
+                          <p className="text-slate-200/60">Growth</p>
+                          <p className="mt-1 font-semibold text-white">+{segment.growth}%</p>
+                        </div>
+                        <div>
+                          <p className="text-slate-200/60">Engagement</p>
+                          <p className="mt-1 font-semibold text-white">{segment.engagement}%</p>
+                        </div>
+                        <div>
+                          <p className="text-slate-200/60">Coverage</p>
+                          <p className="mt-1 font-semibold text-white">{segment.coverage}%</p>
+                        </div>
+                      </div>
+                      <svg
+                        viewBox="0 0 140 30"
+                        role="img"
+                        aria-label={`${segment.label} coverage trend`}
+                        className="mt-3 h-8 w-full text-sky-300"
+                      >
+                        <path
+                          d={trendPath}
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeWidth="2"
+                        />
+                      </svg>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Sentiment trends
+                  </h3>
+                  <span className="text-xs text-slate-200/70">Last 7 days</span>
+                </div>
+                <div className="mt-4 space-y-3">
+                  <svg
+                    viewBox="0 0 320 120"
+                    role="img"
+                    aria-label="Sentiment trend chart"
+                    className="h-32 w-full text-white/40"
+                  >
+                    <line
+                      x1="0"
+                      y1="110"
+                      x2="320"
+                      y2="110"
+                      stroke="rgba(255,255,255,0.08)"
+                      strokeWidth="1"
+                    />
+                    <path
+                      d={buildSparklinePath(sentimentHistory.map((h) => h.positive))}
+                      className="text-emerald-300"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeWidth="2"
+                    />
+                    <path
+                      d={buildSparklinePath(sentimentHistory.map((h) => h.neutral))}
+                      className="text-slate-400"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeWidth="2"
+                      strokeDasharray="4 4"
+                    />
+                    <path
+                      d={buildSparklinePath(sentimentHistory.map((h) => h.negative))}
+                      className="text-rose-300"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeWidth="2"
+                      strokeDasharray="2 4"
+                    />
+                  </svg>
+                  <div className="flex flex-wrap gap-4 text-xs">
+                    <div className="flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-emerald-300" />
+                      <span className="text-slate-200/70">Positive</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-slate-400" />
+                      <span className="text-slate-200/70">Neutral</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-rose-300" />
+                      <span className="text-slate-200/70">Negative</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Sentiment alerts
+                  </h3>
+                  <span className="text-xs text-slate-200/70">
+                    {sentimentAlerts.filter((a) => !a.resolved).length} active
+                  </span>
+                </div>
+                <ul className="mt-4 space-y-3">
+                  {sentimentAlerts.map((alert) => (
+                    <li
+                      key={alert.id}
+                      className={`rounded-2xl border p-4 ${alert.severity === "medium" ? "border-amber-400/50 bg-amber-400/10" : "border-slate-400/50 bg-slate-400/10"}`}
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className={`text-[10px] uppercase tracking-wider ${alert.severity === "medium" ? "text-amber-300" : "text-slate-300"}`}>
+                          {alert.type.replace("_", " ")}
+                        </span>
+                        <span className="text-xs text-slate-200/70">
+                          {channelCatalog[alert.channel].label}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm text-white">{alert.message}</p>
+                      <p className="mt-2 text-xs text-slate-200/60">
+                        {formatRelativeTime(alert.at)}
+                      </p>
+                    </li>
+                  ))}
+                  {sentimentAlerts.length === 0 && (
+                    <li className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-4 text-center text-xs text-slate-200/70">
+                      No active alerts
+                    </li>
+                  )}
+                </ul>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Recommendation playbooks
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {recommendationPlaybooks.filter((p) => p.priority === "high").length} high priority
+                </span>
+              </div>
+              <div className="mt-4 space-y-4">
+                {recommendationPlaybooks.map((playbook) => {
+                  const completedSteps = playbook.steps.filter((s) => s.status === "completed").length;
+                  const totalSteps = playbook.steps.length;
+                  return (
+                    <div
+                      key={playbook.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-5"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <h4 className="text-sm font-semibold text-white">{playbook.title}</h4>
+                            <span className={`text-[10px] uppercase tracking-wider ${playbook.priority === "high" ? "text-rose-300" : "text-amber-300"}`}>
+                              {playbook.priority}
+                            </span>
+                          </div>
+                          <p className="mt-2 text-xs text-slate-200/70">
+                            {completedSteps}/{totalSteps} steps completed
+                          </p>
+                        </div>
+                        <span className={`text-xs font-semibold uppercase tracking-wider ${playbook.metric === "conversion" ? chartColorTokens.conversionRate : chartColorTokens[playbook.metric] ?? "text-slate-300"}`}>
+                          {playbook.metric}
+                        </span>
+                      </div>
+                      <ul className="mt-4 space-y-2">
+                        {playbook.steps.map((step) => (
+                          <li
+                            key={step.id}
+                            className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-3"
+                          >
+                            <span className={`h-2 w-2 rounded-full ${step.status === "completed" ? "bg-emerald-300" : "bg-slate-400"}`} />
+                            <p className={`flex-1 text-sm ${step.status === "completed" ? "text-slate-400 line-through" : "text-white"}`}>
+                              {step.action}
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-200/70">
+                            Creative angles
+                          </p>
+                          <ul className="mt-2 space-y-1">
+                            {playbook.creativeAngles.map((angle, idx) => (
+                              <li key={idx} className="text-xs text-slate-200/70">
+                                • {angle}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-200/70">
+                            Channel guidance
+                          </p>
+                          <ul className="mt-2 space-y-1">
+                            {Object.entries(playbook.channelGuidance).map(([channel, guidance]) => (
+                              <li key={channel} className="text-xs text-slate-200/70">
+                                <span className="font-semibold text-white">{channelCatalog[channel as ChannelId].label}:</span> {guidance}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Recommendations
+              </h3>
+              <div className="grid gap-3">
+                {insightRecommendations.map((item) => (
+                  <article
+                    key={item.id}
+                    className="rounded-3xl border border-white/15 bg-white/5 p-4 shadow-inner shadow-purple-900/20"
+                  >
+                    <p className="text-sm font-semibold text-white">{item.title}</p>
+                    <p className="mt-2 text-sm text-slate-100/80">{item.detail}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section
+          id="insights"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.95fr)]"
+        >
+          <div>
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Best time heatmap
+              </h3>
+              <span className="text-xs text-slate-200/70">
+                Peak: {audienceInsights?.topSlot.day} · {audienceInsights?.topSlot.slot}
+              </span>
+            </div>
+            <div className="mt-4 overflow-hidden rounded-3xl border border-white/15 bg-slate-950/40">
+              <table className="w-full border-collapse text-xs text-slate-100">
+                <thead>
+                  <tr>
+                    <th className="px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400">
+                      Slot
+                    </th>
+                    {audienceDays.map((day) => (
+                      <th
+                        key={`day-${day}`}
+                        className="px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400"
+                      >
+                        {day}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {bestTimeGrid.map((row) => (
+                    <tr key={`slot-${row.slot}`}>
+                      <th className="px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400">
+                        {row.slot}
+                      </th>
+                      {row.values.map((value: number, index: number) => (
+                        <td key={`slot-${row.slot}-${index}`} className="px-3 py-2">
+                          <span
+                            className={`flex h-8 w-12 items-center justify-center rounded-xl text-[11px] font-semibold ${heatLevelClass(
+                              value,
+                            )}`}
+                          >
+                            {value}
+                          </span>
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+              Recommendations
+            </h3>
+            <div className="grid gap-3">
+              {automatedInsight && (
+                <article className="rounded-3xl border border-emerald-400/40 bg-emerald-500/10 p-5 shadow-inner shadow-emerald-500/20">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-emerald-200">
+                    Automated signal · {automatedInsight.primary.metricLabel}
+                  </p>
+                  <h4 className="mt-2 text-lg font-semibold text-white">
+                    {automatedInsight.primary.headline}
+                  </h4>
+                  <p className="mt-2 text-sm text-emerald-50/80">
+                    {automatedInsight.primary.detail}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-emerald-100">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/20 px-3 py-1">
+                      {automatedInsight.primary.value}
+                    </span>
+                    <span className="inline-flex items-center gap-2 rounded-full border border-emerald-300/50 bg-emerald-400/30 px-3 py-1 text-emerald-900">
+                      {automatedInsight.primary.delta}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-xs uppercase tracking-[0.3em] text-emerald-100/70">
+                    {automatedInsight.primary.deltaLabel}
+                  </p>
+                  {automatedInsight.secondary.length > 0 && (
+                    <ul className="mt-4 space-y-2 text-xs text-emerald-100/80">
+                      {automatedInsight.secondary.map((item) => (
+                        <li key={item.id} className="flex items-start gap-2">
+                          <span className="mt-1 h-1.5 w-1.5 rounded-full bg-emerald-300" />
+                          <span>{item.headline}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </article>
+              )}
+              {insightRecommendations.map((item) => (
+                <article
+                  key={item.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-4 shadow-inner shadow-purple-900/20"
+                >
+                  <p className="text-sm font-semibold text-white">
+                    {item.title}
+                  </p>
+                  <p className="mt-2 text-sm text-slate-100/80">
+                    {item.detail}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-4">
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Farcaster followers
+                </p>
+                <span className="text-xs font-semibold text-emerald-200">
+                  +{audienceInsights.farcasterDelta}
+                </span>
+              </div>
+              <p className="mt-2 text-3xl font-semibold text-white">
+                {audienceInsights.farcasterLatest}k
+              </p>
+              <svg
+                viewBox="0 0 140 42"
+                role="img"
+                aria-label="Farcaster follower sparkline"
+                className="mt-3 h-12 w-full text-emerald-300"
+              >
+                <path
+                  d={audienceInsights.farcasterPath}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="3"
+                />
+              </svg>
+            </div>
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-4">
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Instagram followers
+                </p>
+                <span className="text-xs font-semibold text-fuchsia-200">
+                  +{audienceInsights.instagramDelta}
+                </span>
+              </div>
+              <p className="mt-2 text-3xl font-semibold text-white">
+                {audienceInsights.instagramLatest}k
+              </p>
+              <svg
+                viewBox="0 0 140 42"
+                role="img"
+                aria-label="Instagram follower sparkline"
+                className="mt-3 h-12 w-full text-fuchsia-300"
+              >
+                <path
+                  d={audienceInsights.instagramPath}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="3"
+                />
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="distribution"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(56,189,248,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Distribution control</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage channel availability, track mirrors, and review syndication performance at
+                a glance.
+              </p>
+            </header>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Channel availability
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {Object.values(distributionMatrix).filter(Boolean).length} active
+                </span>
+              </div>
+              <p className="mt-3 text-xs text-slate-200/70">
+                Toggle which networks automatically receive mirrored drops.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-3">
+                {(Object.keys(channelCatalog) as ChannelId[]).map((channelId) => {
+                  const channel = channelCatalog[channelId];
+                  const active = distributionMatrix[channelId];
+                  return (
+                    <button
+                      key={`distribution-toggle-${channelId}`}
+                      type="button"
+                      onClick={() => handleDistributionToggle(channelId)}
+                      className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold uppercase tracking-wide transition ${
+                        active
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                    >
+                      <span
+                        className={`h-2.5 w-2.5 rounded-full ${active ? channel.dot : "bg-white/40"}`}
+                      />
+                      {channel.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Repost tracker
+                  </h3>
+                  <span className="text-xs text-slate-200/70">{repostLedger.length} routes</span>
+                </div>
+                <ul className="mt-4 space-y-3">
+                  {repostLedger.map((event) => (
+                    <li
+                      key={event.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between text-sm text-white">
+                        <span>{channelCatalog[event.source].label} →</span>
+                        <span>{event.scheduledFor}</span>
+                      </div>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {event.targets.map((target) => (
+                          <span
+                            key={`${event.id}-${target}`}
+                            className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${channelCatalog[target].badge}`}
+                          >
+                            {channelCatalog[target].label}
+                          </span>
+                        ))}
+                      </div>
+                      <span
+                        className={`mt-3 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${repostStatusTokens[event.status].badge}`}
+                      >
+                        {repostStatusTokens[event.status].label}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Syndication history
+                  </h3>
+                  <span className="text-xs text-slate-200/70">
+                    {syndicationHistory.length} syncs
+                  </span>
+                </div>
+                <ol className="mt-4 space-y-3">
+                  {syndicationHistory.map((entry) => (
+                    <li
+                      key={entry.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between text-sm text-white">
+                        <span>{entry.title}</span>
+                        <span className="text-xs text-slate-200/70">{entry.timestamp}</span>
+                      </div>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {entry.networks.map((networkId) => (
+                          <span
+                            key={`${entry.id}-${networkId}`}
+                            className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${channelCatalog[networkId].badge}`}
+                          >
+                            {channelCatalog[networkId].label}
+                          </span>
+                        ))}
+                      </div>
+                      <p className="mt-2 text-xs text-slate-200/70">{entry.effect}</p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(14,116,144,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Distribution summary
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {`${activeDistributionLabels.length}/${Object.keys(channelCatalog).length} networks`}
+                </span>
+              </div>
+              <p className="mt-3 text-sm text-slate-100/75">
+                Keep the multi-network footprint balanced—toggle channels above to simulate rollout
+                reach.
+              </p>
+              <div className="mt-4 space-y-3 text-xs text-slate-200/70">
+                <p>
+                  Active networks:{" "}
+                  {activeDistributionLabels.length
+                    ? activeDistributionLabels.join(", ")
+                    : "None"}
+                </p>
+                <p>
+                  Upcoming mirrors: {repostLedger.filter((event) => event.status !== "complete").length}
+                </p>
+                <p>
+                  Completed syncs: {repostLedger.filter((event) => event.status === "complete").length}
+                </p>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="ai"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(147,51,234,0.35)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">AI Studio</h2>
+              <p className="text-sm text-slate-100/75">
+                Auto-draft posts, tune tone, and pull smart replies before publishing everywhere.
+              </p>
+            </header>
+
+            <div className="rounded-3xl border border-white/15 bg-slate-950/40 p-6">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Auto-draft composer
+                  </h3>
+                  <p className="mt-2 text-xs text-slate-200/70">
+                    Feed AI the scenario. Adjust tone and persona to converge on the right voice.
+                  </p>
+                </div>
+                <span className="text-xs text-slate-200/60">
+                  {aiCharacterCount} characters
+                </span>
+              </div>
+              <p className="mt-3 text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                Base idea · {selectedIdea.headline}
+              </p>
+              <textarea
+                value={aiDraft}
+                onChange={(event) => setAiDraft(event.target.value)}
+                placeholder="Summarize the AMA highlights with a confident tone..."
+                className="mt-4 min-h-[160px] w-full resize-y rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-400 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/60"
+              />
+              <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,1fr)]">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Tone
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {aiToneOptions.map((tone) => {
+                      const active = tone.id === selectedToneId;
+                      return (
+                        <button
+                          key={tone.id}
+                          type="button"
+                          onClick={() => handleToneSelect(tone.id)}
+                          className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                            active
+                              ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                              : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                          }`}
+                        >
+                          {tone.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <p className="mt-3 text-xs text-slate-200/70">{selectedTone.description}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Persona
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {aiPersonas.map((persona) => {
+                      const active = persona.id === selectedPersonaId;
+                      return (
+                        <button
+                          key={persona.id}
+                          type="button"
+                          onClick={() => handlePersonaSelect(persona.id)}
+                          className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                            active
+                              ? "border-emerald-400/50 bg-emerald-400/20 text-emerald-100 shadow-lg shadow-emerald-500/30"
+                              : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                          }`}
+                        >
+                          {persona.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <p className="mt-3 text-xs text-slate-200/70">{selectedPersona.summary}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Jump-start ideas
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {aiDraftIdeas.length} suggestions
+                </span>
+              </div>
+              <div className="mt-4 grid gap-3 lg:grid-cols-3">
+                {aiDraftIdeas.map((idea) => {
+                  const active = idea.id === selectedIdeaId;
+                  return (
+                    <div
+                      key={idea.id}
+                      className={`flex h-full flex-col justify-between rounded-2xl border border-white/10 bg-slate-950/40 p-4 ${
+                        active ? "ring-1 ring-white/40" : ""
+                      }`}
+                    >
+                      <div>
+                        <p className="text-sm font-semibold text-white">{idea.headline}</p>
+                        <p className="mt-2 text-xs text-slate-200/70">{idea.snippet}</p>
+                      </div>
+                      <div className="mt-4 flex items-center justify-between text-xs text-slate-200/70">
+                        <button
+                          type="button"
+                          onClick={() => handleApplyIdea(idea.id, idea.snippet)}
+                          className="inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-1 uppercase tracking-[0.3em] text-white hover:border-white/40 hover:bg-white/10"
+                        >
+                          Use idea
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleIdeaSelect(idea.id)}
+                          className={`rounded-full border px-2 py-1 text-[10px] uppercase tracking-[0.3em] ${
+                            active
+                              ? "border-white/70 bg-white text-slate-900"
+                              : "border-white/20 text-slate-200/70"
+                          }`}
+                        >
+                          Mark
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.25)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Smart replies
+                </h3>
+                <span className="text-xs text-slate-200/70">{aiSmartReplies.length} queued</span>
+              </div>
+              <ul className="mt-4 space-y-3">
+                {aiSmartReplies.map((item) => (
+                  <li
+                    key={item.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      <span>{channelCatalog[item.channel].label}</span>
+                      <span>{item.author}</span>
+                    </div>
+                    <p className="mt-2 text-sm text-slate-100/85">{item.message}</p>
+                    <button
+                      type="button"
+                      onClick={() => handleInsertSmartReply(item.suggestion)}
+                      className="mt-3 inline-flex items-center gap-2 rounded-full border border-emerald-400/50 bg-emerald-400/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-emerald-100 hover:border-emerald-300/70 hover:bg-emerald-400/30"
+                    >
+                      Insert suggestion
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(56,189,248,0.25)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  AI activity log
+                </h3>
+                <span className="text-xs text-slate-200/70">{aiActivityLog.length} entries</span>
+              </div>
+              <ul className="mt-4 space-y-3">
+                {aiActivityLog.map((entry) => (
+                  <li
+                    key={entry.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/80"
+                  >
+                    <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      <span>{entry.action}</span>
+                      <span>{entry.timestamp}</span>
+                    </div>
+                    <p className="mt-2">{entry.detail}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="reporting"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(14,165,233,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Reporting hub</h2>
+              <p className="text-sm text-slate-100/75">
+                Preview decks, schedule exports, and review KPI snapshots before sharing with
+                stakeholders.
+              </p>
+            </header>
+
+            <div className="flex flex-wrap gap-2">
+              {[
+                { id: "overview", label: "Executive overview" },
+                { id: "exports", label: "Decks & exports" },
+                { id: "deep-dive", label: "Variance deep-dive" },
+              ].map((view) => {
+                const active = reportingView === view.id;
+                return (
+                  <button
+                    key={view.id}
+                    type="button"
+                    onClick={() =>
+                      handleReportingViewChange(view.id as "overview" | "exports" | "deep-dive")
+                    }
+                    className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold uppercase tracking-wide transition ${
+                      active
+                        ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                        : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                    }`}
+                  >
+                    {view.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            {reportingView === "overview" && (
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Executive dashboard
+                  </h3>
+                  <div className="mt-3 grid gap-3 md:grid-cols-3">
+                    {reportingExecMetrics.map((metric) => {
+                      const active = metric.id === selectedExecMetricId;
+                      return (
+                        <button
+                          key={metric.id}
+                          type="button"
+                          onClick={() => handleExecMetricSelect(metric.id)}
+                          className={`flex h-full flex-col justify-between rounded-3xl border p-5 text-left transition ${
+                            active
+                              ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                              : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                          }`}
+                        >
+                          <div className="space-y-3">
+                            <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                              {metric.label}
+                            </p>
+                            <div
+                              className={`inline-flex items-center gap-2 rounded-full border border-white/10 bg-gradient-to-r ${metric.gradient} px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white`}
+                            >
+                              {metric.primary}
+                            </div>
+                            <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                              {metric.delta}
+                            </p>
+                          </div>
+                          <p className="text-xs text-slate-200/80">{metric.summary}</p>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-4 rounded-3xl border border-white/15 bg-slate-950/40 p-5 text-sm text-slate-100/85">
+                    <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      Spotlight insight
+                    </p>
+                    <p className="mt-2 text-base font-semibold text-white">
+                      {selectedExecMetric.summary}
+                    </p>
+                    <p className="mt-2 text-xs text-slate-200/70">
+                      Calibrate next week's briefing with this data point—auto-attach to Monday's KPI
+                      deck.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                        Goal runway
+                      </h3>
+                      <p className="mt-2 text-xs text-slate-200/70">
+                        Track mission-critical KPIs with owner visibility.
+                      </p>
+                    </div>
+                    <span className="text-xs text-slate-200/70">
+                      {goalProgressWithPercent.filter((goal) => goal.percentage >= 1).length} goals
+                      completed
+                    </span>
+                  </div>
+                  <ul className="mt-4 space-y-3">
+                    {goalProgressWithPercent.map((goal) => {
+                      const widthClass = pickProgressWidthClass(goal.percentage);
+                      return (
+                        <li
+                          key={goal.id}
+                          className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85"
+                        >
+                          <div className="flex items-center justify-between">
+                            <p className="font-semibold text-white">{goal.title}</p>
+                            <span className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                              {goal.due}
+                            </span>
+                          </div>
+                          <p className="mt-1 text-xs text-slate-200/70">Owner: {goal.owner}</p>
+                          <div className="mt-3 h-2 rounded-full bg-white/10">
+                            <div
+                              className={`h-full rounded-full bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 ${widthClass}`}
+                            />
+                          </div>
+                          <p className="mt-2 text-xs text-slate-200/70">
+                            {goal.current.toLocaleString()} / {goal.target.toLocaleString()}{" "}
+                            ({Math.round(goal.percentage * 100)}%)
+                          </p>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            {reportingView === "exports" && (
+              <>
+                <div className="grid gap-4 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)]">
+                  <div className="space-y-3">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Deck library
+                    </h3>
+                    <ul className="space-y-2">
+                      {reportingDecks.map((deck) => {
+                        const active = deck.id === selectedDeckId;
+                        return (
+                          <li key={deck.id}>
+                            <button
+                              type="button"
+                              onClick={() => handleDeckSelect(deck.id)}
+                              className={`flex w-full items-center justify-between gap-3 rounded-2xl border px-3 py-3 text-left text-sm transition ${
+                                active
+                                  ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                                  : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                              }`}
+                            >
+                              <div>
+                                <p className="font-semibold">{deck.title}</p>
+                                <p className="text-xs text-slate-200/70">{deck.timeframe}</p>
+                              </div>
+                              <span className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                                {deck.status}
+                              </span>
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                  <div className="rounded-3xl border border-white/15 bg-slate-950/40 p-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Deck preview
+                    </p>
+                      <div
+                        className={`mt-4 flex h-48 flex-col justify-between rounded-3xl border border-white/10 bg-gradient-to-br ${selectedDeck.accent} p-6 text-white`}
+                      >
+                        <div>
+                          <p className="text-xs uppercase tracking-[0.3em] text-white/70">
+                            {selectedDeck.timeframe}
+                          </p>
+                          <h4 className="mt-3 text-xl font-semibold">{selectedDeck.title}</h4>
+                        </div>
+                        <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em]">
+                          <span>{selectedDeck.size}</span>
+                          <span>{selectedDeck.status}</span>
+                        </div>
+                      </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                      >
+                        Download PDF
+                      </button>
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                      >
+                        Share link
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Export automations
+                    </h3>
+                    <span className="text-xs text-slate-200/70">{reportingExports.length} jobs</span>
+                  </div>
+                  <div className="mt-4 grid gap-3 lg:grid-cols-3">
+                    {reportingExports.map((exportJob) => {
+                      const active = exportJob.id === selectedExportId;
+                      return (
+                        <button
+                          key={exportJob.id}
+                          type="button"
+                          onClick={() => handleExportSelect(exportJob.id)}
+                          className={`flex h-full flex-col justify-between rounded-2xl border px-4 py-4 text-left text-sm transition ${
+                            active
+                              ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                              : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                          }`}
+                        >
+                          <div>
+                            <p className="font-semibold">{exportJob.label}</p>
+                            <p className="mt-2 text-xs text-slate-200/70">
+                              {exportJob.description}
+                            </p>
+                          </div>
+                          <div className="mt-4 space-y-1 text-[11px] uppercase tracking-[0.3em] text-slate-200/60">
+                            <p>{exportJob.lastRun}</p>
+                            <p>{exportJob.destination}</p>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85">
+                    <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      <span>Active export</span>
+                      <span>{selectedExport.lastRun}</span>
+                    </div>
+                    <p className="mt-2 font-semibold text-white">{selectedExport.label}</p>
+                    <p className="mt-1 text-xs text-slate-200/70">{selectedExport.description}</p>
+                    <p className="mt-3 text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      Destination: {selectedExport.destination}
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {reportingView === "deep-dive" && (
+              <div className="space-y-6">
+                <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                        Variance explorer
+                      </h3>
+                      <p className="mt-2 text-xs text-slate-200/70">
+                        Diagnose where performance diverged from targets.
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {reportingVarianceBreakdowns.map((set) => {
+                        const active = set.id === selectedVarianceId;
+                        return (
+                          <button
+                            key={set.id}
+                            type="button"
+                            onClick={() => handleVarianceSelect(set.id)}
+                            className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                              active
+                                ? "border-emerald-400/60 bg-emerald-400/20 text-emerald-100"
+                                : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                            }`}
+                          >
+                            {set.dimension}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <p className="mt-3 text-xs text-slate-200/70">
+                    Comparing {selectedVariance.range}
+                  </p>
+                  <ul className="mt-4 space-y-3">
+                    {selectedVariance.items.map((item) => {
+                      const widthClass = pickProgressWidthClass(item.contribution);
+                      return (
+                        <li
+                          key={item.label}
+                          className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85"
+                        >
+                          <div className="flex items-center justify-between">
+                            <p className="font-semibold text-white">{item.label}</p>
+                            <span className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                              {item.variance}
+                            </span>
+                          </div>
+                          <div className="mt-3 h-2 rounded-full bg-white/10">
+                            <div
+                              className={`h-full rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-purple-500 ${widthClass}`}
+                            />
+                          </div>
+                          <p className="mt-2 text-xs text-slate-200/70">
+                            Contribution to delta: {(item.contribution * 100).toFixed(0)}%
+                          </p>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+
+                <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Benchmark matrix
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {reportingBenchmarkMatrix.map((row) => {
+                        const active = row.channel === selectedBenchmarkChannel;
+                        return (
+                          <button
+                            key={row.channel}
+                            type="button"
+                            onClick={() => handleBenchmarkSelect(row.channel)}
+                            className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                              active
+                                ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                                : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                            }`}
+                          >
+                            {channelCatalog[row.channel].label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div className="mt-4 overflow-hidden rounded-2xl border border-white/10">
+                    <table className="min-w-full divide-y divide-white/10 text-sm text-slate-100/85">
+                      <thead className="bg-white/5 text-xs uppercase tracking-[0.35em] text-slate-200/70">
+                        <tr>
+                          <th className="px-4 py-3 text-left">Channel</th>
+                          <th className="px-4 py-3 text-left">Your score</th>
+                          <th className="px-4 py-3 text-left">Cohort</th>
+                          <th className="px-4 py-3 text-left">Percentile</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-white/10 bg-slate-950/30">
+                        {reportingBenchmarkMatrix.map((row) => {
+                          const active = row.channel === selectedBenchmarkChannel;
+                          return (
+                            <tr
+                              key={row.channel}
+                              className={active ? "bg-white/10" : ""}
+                            >
+                              <td className="px-4 py-3 uppercase tracking-[0.3em]">
+                                {channelCatalog[row.channel].label}
+                              </td>
+                              <td className="px-4 py-3">{row.yourScore}</td>
+                              <td className="px-4 py-3 text-slate-200/70">{row.cohort}</td>
+                              <td className="px-4 py-3 text-slate-200/70">{row.percentile}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="mt-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85">
+                    <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      {channelCatalog[benchmarkDetails.channel].label} focus
+                    </p>
+                    <p className="mt-2 text-base font-semibold text-white">
+                      {benchmarkDetails.percentile} percentile vs cohort score {benchmarkDetails.cohort}.
+                    </p>
+                    <p className="mt-2 text-xs text-slate-200/70">
+                      Share this with the team to double down on what's working and triage the laggards.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  KPI snapshots
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {reportingSnapshots.length} metrics
+                </span>
+              </div>
+              <div className="mt-4 space-y-3">
+                {reportingSnapshots.map((snapshot) => (
+                  <div
+                    key={snapshot.id}
+                    className={`rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white ${snapshot.tone}`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <p className="font-semibold">{snapshot.title}</p>
+                      <span className="text-lg font-semibold">{snapshot.value}</span>
+                    </div>
+                    <p className="mt-2 text-xs text-white/80">{snapshot.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(14,165,233,0.2)] backdrop-blur-2xl">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Alert center
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {reportingAlertFilters.map((filter) => {
+                    const active = selectedAlertFilter === filter.id;
+                    return (
+                      <button
+                        key={filter.id}
+                        type="button"
+                        onClick={() => handleAlertFilterChange(filter.id)}
+                        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                          active
+                            ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                            : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                        }`}
+                      >
+                        {filter.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <ul className="mt-4 space-y-3">
+                {filteredAlerts.map((alert) => (
+                  <li
+                    key={alert.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85"
+                  >
+                    <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      <span>{alert.title}</span>
+                      <span>{alert.timestamp}</span>
+                    </div>
+                    <p className="mt-2 text-xs text-slate-200/75">{alert.detail}</p>
+                    <button
+                      type="button"
+                      className="mt-3 inline-flex items-center gap-2 rounded-full border border-emerald-400/50 bg-emerald-400/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-emerald-100 hover:border-emerald-300/70 hover:bg-emerald-400/30"
+                    >
+                      {alert.action}
+                    </button>
+                  </li>
+                ))}
+                {filteredAlerts.length === 0 && (
+                  <li className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-6 text-center text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                    No alerts for this filter.
+                  </li>
+                )}
+              </ul>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="engagement"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Engagement center</h2>
+              <p className="text-sm text-slate-100/75">
+                Triage replies, apply smart responses, and route feedback without leaving the
+                dashboard.
+              </p>
+            </header>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex flex-wrap gap-2">
+                  {engagementFilters.sentiments.map((filter) => {
+                    const active = selectedSentimentFilter === filter.id;
+                    const count = engagementCounts.sentiments[filter.id] ?? 0;
+                    return (
+                      <button
+                        key={filter.id}
+                        type="button"
+                        onClick={() => handleSentimentFilterChange(filter.id)}
+                        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                          active
+                            ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                            : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                        }`}
+                      >
+                        {filter.label}
+                        <span className="text-[10px] text-slate-200/70">{count}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {engagementFilters.status.map((filter) => {
+                    const active = selectedEngagementStatus === filter.id;
+                    const count = engagementCounts.statuses[filter.id] ?? 0;
+                    return (
+                      <button
+                        key={filter.id}
+                        type="button"
+                        onClick={() => handleStatusFilterChange(filter.id)}
+                        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                          active
+                            ? "border-emerald-400/50 bg-emerald-400/20 text-emerald-100"
+                            : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                        }`}
+                      >
+                        {filter.label}
+                        <span className="text-[10px]">
+                          {count}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <ul className="mt-4 space-y-3">
+                {filteredEngagementItems.map((item) => (
+                  <li
+                    key={item.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85"
+                  >
+                    <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      <span>{channelCatalog[item.channel].label}</span>
+                      <span>{item.timeAgo}</span>
+                    </div>
+                    <div className="mt-2 flex items-center justify-between">
+                      <p className="font-semibold text-white">{item.author}</p>
+                      <span className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                        {item.status}
+                      </span>
+                    </div>
+                    <p className="mt-2">{item.message}</p>
+                    <div className="mt-3 flex flex-wrap gap-2 text-[11px] uppercase tracking-[0.3em] text-slate-200/60">
+                      {item.tags.map((tag) => (
+                        <span
+                          key={`${item.id}-${tag}`}
+                          className="rounded-full border border-white/15 bg-white/10 px-3 py-1"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                      >
+                        Reply
+                      </button>
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                      >
+                        Assign
+                      </button>
+                    </div>
+                  </li>
+                ))}
+                {filteredEngagementItems.length === 0 && (
+                  <li className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-6 text-center text-sm text-slate-200/70">
+                    All caught up for this filter.
+                  </li>
+                )}
+              </ul>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Triage queues
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {engagementTriageQueues.reduce((acc, queue) => acc + queue.count, 0)} total
+                </span>
+              </div>
+              <div className="mt-4 space-y-3">
+                {engagementTriageQueues.map((queue) => (
+                  <div
+                    key={queue.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/80"
+                  >
+                    <div className="flex items-center justify-between">
+                      <p className="font-semibold text-white">{queue.title}</p>
+                      <span className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                        {queue.count}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-xs text-slate-200/70">{queue.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="automation"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(14,116,144,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Campaign automation</h2>
+              <p className="text-sm text-slate-100/75">
+                Launch best-practice playbooks, coordinate recurring drops, and ensure every
+                warm-up sequence stays on pace.
+              </p>
+            </header>
+
+            <div className="flex flex-wrap gap-3">
+              {automationTemplates.map((template) => {
+                const isActive = selectedTemplate?.id === template.id;
+                return (
+                  <button
+                    key={template.id}
+                    type="button"
+                    onClick={() => handleTemplateSelect(template.id)}
+                    className={`inline-flex items-center gap-3 rounded-3xl border px-4 py-3 text-sm font-semibold uppercase tracking-wide transition ${
+                      isActive
+                        ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                        : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                    }`}
+                  >
+                    <span className="text-[11px] font-medium text-slate-400">
+                      {template.cadence}
+                    </span>
+                    {template.name}
+                  </button>
+                );
+              })}
+            </div>
+
+            {selectedTemplate && (
+              <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+                <div className="rounded-3xl border border-white/15 bg-white/5 p-6">
+                  <h3 className="text-sm font-semibold text-white">
+                    {selectedTemplate.name}
+                  </h3>
+                  <p className="mt-2 text-sm text-slate-100/80">
+                    {selectedTemplate.description}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {selectedTemplate.channels.map((channelId) => (
+                      <span
+                        key={`${selectedTemplate.id}-${channelId}`}
+                        className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${channelCatalog[channelId].badge}`}
+                      >
+                        <span
+                          className={`h-1.5 w-1.5 rounded-full ${channelCatalog[channelId].dot}`}
+                        />
+                        {channelCatalog[channelId].label}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-4 grid gap-3 text-xs uppercase tracking-[0.35em] text-slate-200/70 sm:grid-cols-2">
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
+                      <p>Cadence</p>
+                      <p className="mt-1 text-sm font-semibold tracking-normal text-white">
+                        {selectedTemplate.cadence}
+                      </p>
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
+                      <p>Duration</p>
+                      <p className="mt-1 text-sm font-semibold tracking-normal text-white">
+                        {selectedTemplate.duration}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4 rounded-3xl border border-white/15 bg-white/5 p-6">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Recurring schedule
+                    </h3>
+                    <span className="text-xs text-slate-200/70">Mocked timeline</span>
+                  </div>
+                  <div className="space-y-2 text-sm text-white">
+                    <p>Drop window</p>
+                    <div className="grid gap-2 sm:grid-cols-2">
+                      <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                          Start
+                        </p>
+                        <p>Next Monday · 09:00 UTC</p>
+                      </div>
+                      <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                          Repeat
+                        </p>
+                        <p>Every 2 weeks</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Upcoming drops
+                    </p>
+                    <ul className="space-y-2 text-sm text-slate-100/80">
+                      <li className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                        <span>Week 1 · Tease cast</span>
+                        <span>Mon · 09:00</span>
+                      </li>
+                      <li className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                        <span>Week 1 · IG stories</span>
+                        <span>Tue · 12:00</span>
+                      </li>
+                      <li className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                        <span>Week 2 · Launch reel</span>
+                        <span>Thu · 14:00</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Warm-up programs
+                </h3>
+                <span className="text-xs text-slate-200/70">Health scores</span>
+              </div>
+              <div className="mt-4 space-y-3">
+                {warmupPrograms.map((program) => {
+                  const token = warmupHealthTokens[program.health];
+                  return (
+                    <div
+                      key={program.id}
+                      className="rounded-3xl border border-white/10 bg-white/5 p-4"
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="text-sm font-semibold text-white">{program.title}</p>
+                        <span
+                          className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${token.badge}`}
+                        >
+                          <span className={`h-1.5 w-1.5 rounded-full ${token.dot}`} />
+                          {token.label}
+                        </span>
+                      </div>
+                      <div className="mt-3">
+                        <div className="flex items-center justify-between text-xs text-slate-200/70">
+                          <span>Score</span>
+                          <span>{program.score}</span>
+                        </div>
+                        <div className="h-2 rounded-full bg-white/10">
+                          <div
+                            className={`h-full rounded-full bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400 ${scoreWidthClass(
+                              program.score,
+                            )}`}
+                          />
+                        </div>
+                      </div>
+                      <p className="mt-3 text-xs text-slate-200/70">{program.nextAction}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Sequence board
+                </h3>
+                <span className="text-xs text-slate-200/70">{sequencePlays.length} programs</span>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {sequencePlays.map((sequence) => {
+                  const isActive = selectedSequence?.id === sequence.id;
+                  return (
+                    <button
+                      key={sequence.id}
+                      type="button"
+                      onClick={() => handleSequenceSelect(sequence.id)}
+                      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
+                        isActive
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                    >
+                      {sequence.label}
+                    </button>
+                  );
+                })}
+              </div>
+              {selectedSequence && (
+                <div className="mt-4 space-y-3 rounded-3xl border border-white/10 bg-white/5 p-4">
+                  <div className="flex items-center justify-between text-sm text-white">
+                    <span>{selectedSequence.label}</span>
+                    <span className="text-xs text-slate-200/70">
+                      {selectedSequence.steps} steps · {selectedSequence.window}
+                    </span>
+                  </div>
+                  <span
+                    className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${sequenceStatusTokens[selectedSequence.status].badge}`}
+                  >
+                    {sequenceStatusTokens[selectedSequence.status].label}
+                  </span>
+                  <ul className="space-y-2 text-sm text-slate-100/80">
+                    <li className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                      Step 1 · Kickoff DM
+                    </li>
+                    <li className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                      Step 2 · Warm audience thread
+                    </li>
+                    <li className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                      Step 3 · Reel + highlights
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="ops"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.85fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,7,100,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Publishing ops</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage creative assets, compare revisions, and align your content calendar in
+                one streamlined mock view.
+              </p>
+            </header>
+
+            <div className="grid gap-4 lg:grid-cols-2">
+              {assetLibrary.map((asset) => (
+                <div
+                  key={asset.id}
+                  className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-5 shadow-inner shadow-purple-900/15"
+                >
+                  <div className="absolute inset-0 opacity-20 blur-2xl transition duration-500 group-hover:opacity-30">
+                    <div
+                      className={`absolute inset-4 rounded-3xl bg-gradient-to-br ${asset.accent}`}
+                    />
+                  </div>
+                  <div className="relative space-y-3">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white/80">
+                      {asset.type}
+                    </span>
+                    <h3 className="text-sm font-semibold text-white">{asset.title}</h3>
+                    <div className="flex items-center justify-between text-xs text-slate-200/70">
+                      <span>{asset.owner}</span>
+                      <span>{asset.updatedAt}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Version history
+              </h3>
+              <ol className="mt-4 space-y-3">
+                {versionHistory.map((entry) => (
+                  <li
+                    key={entry.id}
+                    className="flex items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <span className="mt-1 h-2 w-2 rounded-full bg-white/40" />
+                    <div className="space-y-1 text-sm text-slate-100/80">
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="font-semibold text-white">{entry.author}</p>
+                        <span className="text-xs text-slate-200/70">{entry.timestamp}</span>
+                      </div>
+                      <p>{entry.summary}</p>
+                      <span
+                        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${
+                          entry.status === "live"
+                            ? "border-emerald-400/50 bg-emerald-400/20 text-emerald-100"
+                            : entry.status === "queued"
+                            ? "border-sky-400/50 bg-sky-400/20 text-sky-100"
+                            : "border-white/20 bg-white/10 text-slate-100"
+                        }`}
+                      >
+                        {entry.status}
+                      </span>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(14,116,144,0.25)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Content calendar
+                </h3>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleCalendarViewToggle("week")}
+                    className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                      calendarView === "week"
+                        ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                        : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                    }`}
+                  >
+                    Week
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleCalendarViewToggle("month")}
+                    className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                      calendarView === "month"
+                        ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                        : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                    }`}
+                  >
+                    Month
+                  </button>
+                </div>
+              </div>
+              <p className="mt-3 text-xs text-slate-200/70">
+                {calendarView === "week"
+                  ? "Review the coming week's cross-channel cadence."
+                  : "Month view coming soon — using weekly mock data."}
+              </p>
+              <div className="mt-4 grid gap-3">
+                <div className="flex flex-wrap gap-2">
+                  {audienceDays.map((day) => {
+                    const isFocus = calendarFocus === day;
+                    return (
+                      <button
+                        key={`calendar-day-${day}`}
+                        type="button"
+                        onClick={() => handleCalendarFocusChange(day)}
+                        className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                          isFocus
+                            ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                            : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                        }`}
+                      >
+                        {day}
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
+                  <div className="grid gap-3">
+                    {calendarByDay.map(({ day, slots }) => {
+                      const isFocus = calendarFocus === day;
+                      return (
+                        <div key={`calendar-column-${day}`} className="space-y-2">
+                          <p
+                            className={`text-xs font-semibold uppercase tracking-[0.35em] ${
+                              isFocus ? "text-white" : "text-slate-200/70"
+                            }`}
+                          >
+                            {day}
+                          </p>
+                          {slots.length === 0 && (
+                            <p className="rounded-2xl border border-dashed border-white/15 bg-white/5 px-3 py-2 text-xs text-slate-200/60">
+                              Open slot
+                            </p>
+                          )}
+                          {slots.map((slot) => (
+                            <div
+                              key={slot.id}
+                              className={`space-y-2 rounded-2xl border border-white/10 bg-slate-950/40 px-3 py-2 ${
+                                isFocus ? "ring-1 ring-white/30" : ""
+                              }`}
+                            >
+                              <div className="flex items-center justify-between text-xs text-slate-200/80">
+                                <span>{slot.time}</span>
+                                <span>{slot.owner}</span>
+                              </div>
+                              <p className="text-sm font-semibold text-white">{slot.label}</p>
+                              <div className="flex flex-wrap items-center gap-2">
+                                <span
+                                  className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${impactTokens[slot.impact].badge}`}
+                                >
+                                  {impactTokens[slot.impact].label}
+                                </span>
+                                {slot.channels.map((channelId) => (
+                                  <span
+                                    key={`${slot.id}-${channelId}`}
+                                    className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${channelCatalog[channelId].badge}`}
+                                  >
+                                    {channelCatalog[channelId].label}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="intelligence"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.35)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Intelligence hub</h2>
+              <p className="text-sm text-slate-100/75">
+                Predictive forecasts, anomaly detection, and what-if scenarios to stay ahead of
+                performance trends.
+              </p>
+            </header>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Performance forecasts
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {intelligenceForecasts.length} predictions
+                </span>
+              </div>
+              <div className="mt-4 grid gap-3 lg:grid-cols-3">
+                {intelligenceForecasts.map((forecast) => {
+                  const active = forecast.id === selectedForecastId;
+                  return (
+                    <button
+                      key={forecast.id}
+                      type="button"
+                      onClick={() => handleForecastSelect(forecast.id)}
+                      className={`flex h-full flex-col justify-between rounded-2xl border px-4 py-4 text-left text-sm transition ${
+                        active
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                    >
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                          {forecast.metric}
+                        </p>
+                        <p className="mt-2 text-lg font-semibold text-white">
+                          {forecast.predicted}
+                        </p>
+                        <p className="mt-1 text-xs text-slate-200/70">{forecast.timeframe}</p>
+                      </div>
+                      <div className="mt-3 flex items-center justify-between text-xs">
+                        <span className="text-slate-200/70">
+                          Confidence: {Math.round(forecast.confidence * 100)}%
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="mt-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85">
+                <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                  {selectedForecast.metric} forecast
+                </p>
+                <p className="mt-2 text-base font-semibold text-white">
+                  Predicted: {selectedForecast.predicted} (from {selectedForecast.current})
+                </p>
+                <p className="mt-2 text-xs text-slate-200/70">
+                  Key factors: {selectedForecast.factors.join(", ")}
+                </p>
+                <p className="mt-3 text-xs text-slate-200/70">
+                  Confidence: {Math.round(selectedForecast.confidence * 100)}% ·{" "}
+                  {selectedForecast.timeframe}
+                </p>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Anomaly detection
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {intelligenceAnomalies.length} detected
+                </span>
+              </div>
+              <ul className="mt-4 space-y-3">
+                {intelligenceAnomalies.map((anomaly) => (
+                  <li
+                    key={anomaly.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85"
+                  >
+                    <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      <span>{anomaly.type}</span>
+                      <span>{anomaly.detectedAt}</span>
+                    </div>
+                    <p className="mt-2 font-semibold text-white">
+                      {anomaly.metric} on {channelCatalog[anomaly.channel].label}:{" "}
+                      {anomaly.deviation}
+                    </p>
+                    <p className="mt-2 text-xs text-slate-200/70">{anomaly.explanation}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Forecast accuracy
+              </h3>
+              <p className="mt-2 text-sm text-slate-100/85">
+                Last 30 days: 87% accuracy across all predictions. Model improves with more data.
+              </p>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="content"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.35)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content intelligence</h2>
+              <p className="text-sm text-slate-100/75">
+                Hashtag trends, format recommendations, and content performance insights to optimize
+                your strategy.
+              </p>
+            </header>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Hashtag trends
+                </h3>
+                <span className="text-xs text-slate-200/70">{contentHashtags.length} tracked</span>
+              </div>
+              <div className="mt-4 grid gap-3 lg:grid-cols-2">
+                {contentHashtags.map((item) => (
+                  <div
+                    key={item.tag}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85"
+                  >
+                    <div className="flex items-center justify-between">
+                      <p className="font-semibold text-white">{item.tag}</p>
+                      <span
+                        className={`text-xs uppercase tracking-[0.3em] ${
+                          item.trend === "up"
+                            ? "text-emerald-300"
+                            : item.trend === "down"
+                              ? "text-rose-300"
+                              : "text-slate-300"
+                        }`}
+                      >
+                        {item.trend}
+                      </span>
+                    </div>
+                    <div className="mt-2 flex items-center justify-between text-xs text-slate-200/70">
+                      <span>{item.usage.toLocaleString()} uses</span>
+                      <span>{item.growth}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Content recommendations
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {contentRecommendations.length} suggestions
+                </span>
+              </div>
+              <ul className="mt-4 space-y-3">
+                {contentRecommendations.map((rec) => {
+                  const active = rec.id === selectedRecommendationId;
+                  return (
+                    <li key={rec.id}>
+                      <button
+                        type="button"
+                        onClick={() => handleRecommendationSelect(rec.id)}
+                        className={`w-full rounded-2xl border px-4 py-3 text-left text-sm transition ${
+                          active
+                            ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                            : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                            {rec.type}
+                          </span>
+                          <span
+                            className={`text-xs uppercase tracking-[0.3em] ${
+                              rec.impact === "High"
+                                ? "text-emerald-300"
+                                : rec.impact === "Medium"
+                                  ? "text-amber-300"
+                                  : "text-slate-300"
+                            }`}
+                          >
+                            {rec.impact}
+                          </span>
+                        </div>
+                        <p className="mt-2 text-sm font-semibold text-white">{rec.suggestion}</p>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Recommendation impact
+              </h3>
+              <p className="mt-2 text-sm text-slate-100/85">
+                {selectedRecommendation.suggestion}
+              </p>
+              <p className="mt-3 text-xs text-slate-200/70">
+                Impact level: {selectedRecommendation.impact}
+              </p>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="team"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Team management</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage team members, roles, permissions, and track activity across the dashboard.
+              </p>
+            </header>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Team members
+                </h3>
+                <span className="text-xs text-slate-200/70">{teamMembers.length} active</span>
+              </div>
+              <ul className="mt-4 space-y-3">
+                {teamMembers.map((member) => (
+                  <li
+                    key={member.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div
+                        className={`flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br ${member.gradient} text-xs font-semibold uppercase text-white shadow-lg`}
+                      >
+                        {member.avatar}
+                      </div>
+                      <div className="flex-1 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm font-semibold text-white">{member.name}</p>
+                          <span className="text-xs text-slate-200/70">{member.lastActive}</span>
+                        </div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                          {member.role}
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {member.permissions.map((perm) => (
+                            <span
+                              key={`${member.id}-${perm}`}
+                              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-slate-100"
+                            >
+                              {perm}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Activity log
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {teamActivityLog.length} recent actions
+                </span>
+              </div>
+              <ul className="mt-4 space-y-3">
+                {teamActivityLog.map((activity) => (
+                  <li
+                    key={activity.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85"
+                  >
+                    <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      <span>{activity.member}</span>
+                      <span>{activity.timestamp}</span>
+                    </div>
+                    <p className="mt-2 font-semibold text-white">{activity.action}</p>
+                    <p className="mt-1 text-xs text-slate-200/70">{activity.target}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Team summary
+              </h3>
+              <p className="mt-2 text-sm text-slate-100/85">
+                {teamMembers.length} active members with varying permission levels. All team
+                activity is logged for transparency.
+              </p>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="integrations"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(14,165,233,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Integrations hub</h2>
+              <p className="text-sm text-slate-100/75">
+                Connect external tools, sync data, and automate workflows across your stack.
+              </p>
+            </header>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Available integrations
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {integrationsAvailable.length} services
+                </span>
+              </div>
+              <div className="mt-4 grid gap-3 lg:grid-cols-2">
+                {integrationsAvailable.map((integration) => (
+                  <div
+                    key={integration.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-xs font-semibold uppercase text-white">
+                            {integration.icon}
+                          </div>
+                          <div>
+                            <p className="text-sm font-semibold text-white">{integration.name}</p>
+                            <p className="mt-1 text-xs text-slate-200/70">
+                              {integration.description}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <span
+                        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${
+                          integration.status === "connected"
+                            ? "border-emerald-400/50 bg-emerald-400/20 text-emerald-100"
+                            : "border-white/20 bg-white/5 text-slate-100"
+                        }`}
+                      >
+                        {integration.status === "connected" ? "Connected" : "Available"}
+                      </span>
+                    </div>
+                    <div className="mt-3 flex gap-2">
+                      {integration.status === "connected" ? (
+                        <button
+                          type="button"
+                          className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                        >
+                          Manage
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="inline-flex items-center gap-2 rounded-full border border-emerald-400/50 bg-emerald-400/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-emerald-100 hover:border-emerald-300/70 hover:bg-emerald-400/30"
+                        >
+                          Connect
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Integration status
+              </h3>
+              <p className="mt-2 text-sm text-slate-100/85">
+                {integrationsAvailable.filter((i) => i.status === "connected").length} connected,{" "}
+                {integrationsAvailable.filter((i) => i.status === "available").length} available to
+                connect.
+              </p>
+            </div>
+          </aside>
+        </section>
+      </main>
+    </div>
+  );
+}
