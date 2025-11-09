@@ -2955,6 +2955,267 @@ const repurposingSuggestions = [
   },
 ];
 
+// Social media content performance dashboard
+const contentPerformanceDashboard = [
+  {
+    id: "perf-dash-1",
+    metric: "Total Impressions",
+    value: 1250000,
+    change: 15.2,
+    trend: "up",
+    period: "Last 7 days",
+  },
+  {
+    id: "perf-dash-2",
+    metric: "Total Clicks",
+    value: 8900,
+    change: 22.5,
+    trend: "up",
+    period: "Last 7 days",
+  },
+  {
+    id: "perf-dash-3",
+    metric: "Conversion Rate",
+    value: 4.5,
+    change: 8.3,
+    trend: "up",
+    period: "Last 7 days",
+  },
+];
+
+// Social media content library management
+const contentLibraryManagement = [
+  {
+    id: "lib-mgmt-1",
+    category: "Videos",
+    count: 24,
+    totalSize: "125.5 MB",
+    lastUpdated: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+  },
+  {
+    id: "lib-mgmt-2",
+    category: "Images",
+    count: 156,
+    totalSize: "89.2 MB",
+    lastUpdated: new Date(Date.now() - 1000 * 60 * 60 * 6).toISOString(),
+  },
+  {
+    id: "lib-mgmt-3",
+    category: "Documents",
+    count: 32,
+    totalSize: "12.8 MB",
+    lastUpdated: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+  },
+];
+
+// Social media content performance comparison
+const contentPerformanceComparison = [
+  {
+    id: "comp-perf-1",
+    period: "This Week",
+    reach: 125000,
+    engagement: 12400,
+    clicks: 890,
+    conversions: 45,
+  },
+  {
+    id: "comp-perf-2",
+    period: "Last Week",
+    reach: 98000,
+    engagement: 8900,
+    clicks: 650,
+    conversions: 32,
+  },
+  {
+    id: "comp-perf-3",
+    period: "This Month",
+    reach: 1250000,
+    engagement: 124000,
+    clicks: 8900,
+    conversions: 450,
+  },
+];
+
+// Social media competitor analysis
+const socialMediaCompetitorAnalysis = [
+  {
+    id: "comp-social-1",
+    competitor: "Competitor A",
+    followers: 125000,
+    engagementRate: 8.5,
+    avgPostsPerWeek: 12,
+    growthRate: 5.2,
+    yourAdvantage: "Higher engagement rate",
+  },
+  {
+    id: "comp-social-2",
+    competitor: "Competitor B",
+    followers: 89000,
+    engagementRate: 7.8,
+    avgPostsPerWeek: 8,
+    growthRate: 3.5,
+    yourAdvantage: "More consistent posting",
+  },
+  {
+    id: "comp-social-3",
+    competitor: "Competitor C",
+    followers: 156000,
+    engagementRate: 6.9,
+    avgPostsPerWeek: 15,
+    growthRate: 4.8,
+    yourAdvantage: "Better content quality",
+  },
+];
+
+// Content scheduling optimization
+const contentSchedulingOptimization = [
+  {
+    id: "sched-opt-1",
+    day: "Monday",
+    bestTime: "10:00 AM",
+    expectedEngagement: 12400,
+    currentAvg: 8900,
+    improvement: 39.3,
+  },
+  {
+    id: "sched-opt-2",
+    day: "Wednesday",
+    bestTime: "3:00 PM",
+    expectedEngagement: 15600,
+    currentAvg: 11200,
+    improvement: 39.3,
+  },
+  {
+    id: "sched-opt-3",
+    day: "Friday",
+    bestTime: "12:00 PM",
+    expectedEngagement: 18900,
+    currentAvg: 14500,
+    improvement: 30.3,
+  },
+];
+
+// Social media engagement analytics
+const socialMediaEngagementAnalytics = [
+  {
+    id: "eng-analytics-1",
+    channel: "farcaster" as ChannelId,
+    likes: 12400,
+    comments: 890,
+    shares: 1560,
+    saves: 2340,
+    engagementRate: 9.9,
+  },
+  {
+    id: "eng-analytics-2",
+    channel: "instagram" as ChannelId,
+    likes: 8900,
+    comments: 650,
+    shares: 890,
+    saves: 1890,
+    engagementRate: 10.0,
+  },
+  {
+    id: "eng-analytics-3",
+    channel: "x" as ChannelId,
+    likes: 15600,
+    comments: 1240,
+    shares: 2340,
+    saves: 0,
+    engagementRate: 12.1,
+  },
+];
+
+// Content calendar integration
+const contentCalendarIntegration = [
+  {
+    id: "cal-integration-1",
+    service: "Google Calendar",
+    status: "connected",
+    eventsSynced: 24,
+    lastSync: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+  },
+  {
+    id: "cal-integration-2",
+    service: "Outlook Calendar",
+    status: "connected",
+    eventsSynced: 18,
+    lastSync: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+  },
+  {
+    id: "cal-integration-3",
+    service: "Apple Calendar",
+    status: "disconnected",
+    eventsSynced: 0,
+    lastSync: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+  },
+];
+
+// Social media automation rules
+const socialMediaAutomationRules = [
+  {
+    id: "auto-rule-1",
+    name: "Auto-reply to mentions",
+    trigger: "Brand mention detected",
+    action: "Send thank you message",
+    status: "active",
+    executions: 124,
+    lastExecuted: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+  },
+  {
+    id: "auto-rule-2",
+    name: "Schedule best time posts",
+    trigger: "New post created",
+    action: "Optimize posting time",
+    status: "active",
+    executions: 89,
+    lastExecuted: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+  },
+  {
+    id: "auto-rule-3",
+    name: "Auto-archive old posts",
+    trigger: "Post older than 30 days",
+    action: "Archive post",
+    status: "paused",
+    executions: 12,
+    lastExecuted: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+  },
+];
+
+// Content performance tracking
+const contentPerformanceTracking = [
+  {
+    id: "track-perf-1",
+    contentTitle: "Product Launch Announcement",
+    platform: "farcaster" as ChannelId,
+    impressions: 125000,
+    engagement: 12400,
+    clicks: 890,
+    conversions: 45,
+    date: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+  },
+  {
+    id: "track-perf-2",
+    contentTitle: "Community Spotlight",
+    platform: "instagram" as ChannelId,
+    impressions: 98000,
+    engagement: 8900,
+    clicks: 650,
+    conversions: 32,
+    date: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(),
+  },
+  {
+    id: "track-perf-3",
+    contentTitle: "Educational Tutorial",
+    platform: "x" as ChannelId,
+    impressions: 156000,
+    engagement: 18900,
+    clicks: 1240,
+    conversions: 78,
+    date: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
+  },
+];
+
 const dashboardSections: { id: string; label: string }[] = [
   { id: "broadcast", label: "Compose" },
   { id: "plan", label: "Scheduling" },
