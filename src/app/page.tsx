@@ -329,6 +329,241 @@ const initialPlannedPosts: PlannedPost[] = [
   },
 ];
 
+const automationTemplates: AutomationTemplate[] = [
+  {
+    id: "launch-cadence",
+    name: "Launch cadence",
+    description: "3-part tease, launch, recap flow across Farcaster & Instagram.",
+    channels: ["farcaster", "instagram"],
+    cadence: "3 drops in 48h",
+    duration: "2 days",
+  },
+  {
+    id: "creator-spotlight",
+    name: "Creator spotlight",
+    description: "Weekly spotlight featuring community wins and behind-the-scenes.",
+    channels: ["instagram"],
+    cadence: "1 drop per week",
+    duration: "4 weeks",
+  },
+  {
+    id: "farcaster-thread",
+    name: "Farcaster threadstorm",
+    description: "Deep-dive threads paired with follow-up AMAs on Reown.",
+    channels: ["farcaster"],
+    cadence: "Thread + AMA",
+    duration: "3 days",
+  },
+];
+
+const warmupPrograms: WarmupProgram[] = [
+  {
+    id: "growth-track",
+    title: "Growth track warm-up",
+    health: "excellent",
+    score: 92,
+    nextAction: "Queue creator DM invites",
+  },
+  {
+    id: "re-engage",
+    title: "Re-engage cohort",
+    health: "steady",
+    score: 78,
+    nextAction: "Schedule reminder drop",
+  },
+  {
+    id: "new-subs",
+    title: "New subscriber primer",
+    health: "watch",
+    score: 63,
+    nextAction: "Refresh welcome template assets",
+  },
+];
+
+const sequencePlays: SequencePlay[] = [
+  {
+    id: "sequence-1",
+    label: "Launch runway",
+    steps: 4,
+    window: "7 days",
+    status: "active",
+  },
+  {
+    id: "sequence-2",
+    label: "Creator drip",
+    steps: 3,
+    window: "14 days",
+    status: "paused",
+  },
+  {
+    id: "sequence-3",
+    label: "Community nurture",
+    steps: 5,
+    window: "21 days",
+    status: "draft",
+  },
+];
+
+const benchmarkMetrics: BenchmarkMetric[] = [
+  {
+    id: "engagement",
+    label: "Avg engagement / post",
+    farcaster: 18,
+    instagram: 26,
+    cohort: 14,
+  },
+  {
+    id: "reach",
+    label: "Audience reach %",
+    farcaster: 42,
+    instagram: 48,
+    cohort: 33,
+  },
+  {
+    id: "save-rate",
+    label: "Save rate %",
+    farcaster: 8,
+    instagram: 21,
+    cohort: 9,
+  },
+];
+
+const sentimentSamples: SentimentSample[] = [
+  {
+    id: "builders",
+    segment: "Builders",
+    positive: 64,
+    neutral: 27,
+    negative: 9,
+    highlight: "High praise for roadmap clarity.",
+  },
+  {
+    id: "creators",
+    segment: "Creators",
+    positive: 53,
+    neutral: 31,
+    negative: 16,
+    highlight: "Requests for more behind-the-scenes.",
+  },
+  {
+    id: "collectors",
+    segment: "Collectors",
+    positive: 48,
+    neutral: 39,
+    negative: 13,
+    highlight: "Watching token integrations closely.",
+  },
+];
+
+const retentionStages: RetentionStage[] = [
+  {
+    id: "stage-aware",
+    stage: "Aware",
+    rate: 92,
+    note: "+6% WoW via multi-channel launches",
+  },
+  {
+    id: "stage-engage",
+    stage: "Engaged",
+    rate: 74,
+    note: "Creators reels lifted engagement",
+  },
+  {
+    id: "stage-advocate",
+    stage: "Advocate",
+    rate: 38,
+    note: "Warm-up sequences fueling referrals",
+  },
+];
+
+const assetLibrary: AssetItem[] = [
+  {
+    id: "asset-1",
+    title: "AMA carousel v2",
+    type: "image",
+    owner: "Ameena",
+    updatedAt: "2h ago",
+    accent: "from-purple-400 via-fuchsia-500 to-rose-400",
+  },
+  {
+    id: "asset-2",
+    title: "Founder AMA recap",
+    type: "video",
+    owner: "Leo",
+    updatedAt: "6h ago",
+    accent: "from-sky-400 via-cyan-400 to-emerald-400",
+  },
+  {
+    id: "asset-3",
+    title: "Community stats one-pager",
+    type: "doc",
+    owner: "Kai",
+    updatedAt: "1d ago",
+    accent: "from-amber-400 via-orange-400 to-pink-400",
+  },
+  {
+    id: "asset-4",
+    title: "Creator testimonials cut",
+    type: "video",
+    owner: "You",
+    updatedAt: "3d ago",
+    accent: "from-indigo-400 via-purple-400 to-teal-400",
+  },
+];
+
+const versionHistory: VersionEntry[] = [
+  {
+    id: "version-1",
+    author: "Kai",
+    summary: "Adjusted CTA messaging pre-launch.",
+    timestamp: "Today • 13:20 UTC",
+    status: "live",
+  },
+  {
+    id: "version-2",
+    author: "Leo",
+    summary: "Updated hero animation assets.",
+    timestamp: "Today • 09:05 UTC",
+    status: "queued",
+  },
+  {
+    id: "version-3",
+    author: "Ameena",
+    summary: "Archived v1 onboarding flow copy.",
+    timestamp: "Yesterday • 18:41 UTC",
+    status: "archived",
+  },
+];
+
+const calendarSlots: CalendarSlot[] = [
+  {
+    id: "cal-1",
+    label: "Creator AMA warm-up",
+    day: "Tue",
+    time: "10:00",
+    owner: "Ameena",
+    channels: ["farcaster"],
+    impact: "boost",
+  },
+  {
+    id: "cal-2",
+    label: "Launch sync reel",
+    day: "Thu",
+    time: "14:00",
+    owner: "Leo",
+    channels: ["instagram"],
+    impact: "spotlight",
+  },
+  {
+    id: "cal-3",
+    label: "Community pulse thread",
+    day: "Sat",
+    time: "11:00",
+    owner: "Kai",
+    channels: ["farcaster"],
+    impact: "check-in",
+  },
+];
 const audienceTrendData = [
   { day: "Mon", farcaster: 12, instagram: 24 },
   { day: "Tue", farcaster: 18, instagram: 28 },
