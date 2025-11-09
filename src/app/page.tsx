@@ -1229,6 +1229,34 @@ export default function Home() {
     };
   }, [activeGrowthPoint]);
 
+  const automatedInsight = useMemo(() => {
+    const kpis = analyticsSnapshot.metricDashboard.kpis;
+    if (!kpis.length) return null;
+    const ranked = [...kpis].sort((a, b) => b.delta - a.delta);
+    const focus = ranked[0];
+    const template =
+      metricInsightPool.find((entry) => entry.metric === focus.id) ??
+      metricInsightPool[0] ?? {
+        id: "fallback-insight",
+        headline: "Momentum steady",
+        detail: "Keep steady cadence to sustain reach.",
+        metric: "reach" as MetricKpiId,
+      };
+    const secondary = metricInsightPool.filter(
+      (entry) => entry.metric !== focus.id,
+    );
+    return {
+      primary: {
+        ...template,
+        metricLabel: focus.label,
+        value: formatMetricValue(focus.value, focus.unit),
+        delta: formatMetricDelta(focus.delta, focus.unit),
+        deltaLabel: focus.deltaLabel,
+      },
+      secondary,
+    };
+  }, [analyticsSnapshot.metricDashboard.kpis]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-900 to-sky-600 text-white">
       <main className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 py-16 lg:px-12">
