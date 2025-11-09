@@ -1770,9 +1770,6 @@ export default function Home() {
     );
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [searchTypeFilter, setSearchTypeFilter] = useState<string>("all");
-    const [selectedExportId, setSelectedExportId] = useState<string>(
-      exportHistory?.[0]?.id ?? "",
-    );
   const [selectedMentionId, setSelectedMentionId] = useState<string>(
     socialListeningMentions[0]?.id ?? "",
   );
@@ -9556,6 +9553,422 @@ export default function Home() {
             </div>
           </aside>
         </section>
+
+        <section
+          id="moderation"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(239,68,68,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content moderation</h2>
+              <p className="text-sm text-slate-100/75">
+                Review and manage flagged content, spam, and inappropriate posts across all channels.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {moderationQueue.map((item) => (
+                <div
+                  key={item.id}
+                  className={`rounded-3xl border p-6 ${item.severity === "high" ? "border-red-400/50 bg-red-400/10" : item.severity === "medium" ? "border-amber-400/50 bg-amber-400/10" : "border-white/15 bg-white/5"}`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[item.channel].dot}`} />
+                        <span className="text-sm font-semibold text-white">{item.author}</span>
+                        <span className={`text-[10px] uppercase tracking-wider ${item.severity === "high" ? "text-red-300" : item.severity === "medium" ? "text-amber-300" : "text-slate-300"}`}>
+                          {item.severity}
+                        </span>
+                        <span className={`text-[10px] uppercase tracking-wider ${item.status === "pending" ? "text-amber-300" : "text-emerald-300"}`}>
+                          {item.status}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm text-slate-100/85">{item.content}</p>
+                      <div className="mt-4 flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>Flagged: {item.flaggedReason}</span>
+                        <span>·</span>
+                        <span>{formatRelativeTime(item.reportedAt)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(239,68,68,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Moderation stats
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Pending reviews</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {moderationQueue.filter((m) => m.status === "pending").length}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">High severity</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {moderationQueue.filter((m) => m.severity === "high").length}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Reviewed today</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {moderationQueue.filter((m) => m.status === "reviewed").length}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="brand-safety"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Brand safety</h2>
+              <p className="text-sm text-slate-100/75">
+                Monitor brand reputation, detect threats, and protect your brand identity across platforms.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {brandSafetyAlerts.map((alert) => (
+                <div
+                  key={alert.id}
+                  className={`rounded-3xl border p-6 ${alert.severity === "high" && !alert.resolved ? "border-red-400/50 bg-red-400/10" : alert.severity === "medium" && !alert.resolved ? "border-amber-400/50 bg-amber-400/10" : "border-white/15 bg-white/5"}`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[alert.channel].dot}`} />
+                        <h3 className="text-lg font-semibold text-white">{alert.message}</h3>
+                        <span className={`text-[10px] uppercase tracking-wider ${alert.severity === "high" ? "text-red-300" : "text-amber-300"}`}>
+                          {alert.severity}
+                        </span>
+                        {alert.resolved && (
+                          <span className="text-[10px] uppercase tracking-wider text-emerald-300">
+                            resolved
+                          </span>
+                        )}
+                      </div>
+                      <p className="mt-2 text-xs text-slate-200/70 capitalize">
+                        {alert.type.replace("_", " ")} · {alert.mentions} mentions
+                      </p>
+                      <div className="mt-4 flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>{formatRelativeTime(alert.at)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Safety overview
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active alerts</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {brandSafetyAlerts.filter((a) => !a.resolved).length}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">High severity</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {brandSafetyAlerts.filter((a) => a.severity === "high" && !a.resolved).length}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Resolved</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {brandSafetyAlerts.filter((a) => a.resolved).length}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="api-management"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">API management</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage API keys, monitor usage, and control access to your social media management platform.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {apiKeys.map((apiKey) => (
+                <div
+                  key={apiKey.id}
+                  className={`rounded-3xl border p-6 ${apiKey.status === "active" ? "border-emerald-400/50 bg-emerald-400/10" : "border-white/15 bg-white/5"}`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{apiKey.name}</h3>
+                        <span className={`text-[10px] uppercase tracking-wider ${apiKey.status === "active" ? "text-emerald-300" : "text-slate-300"}`}>
+                          {apiKey.status}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-xs text-slate-200/70 font-mono">{apiKey.key}</p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {apiKey.permissions.map((perm) => (
+                          <span
+                            key={`${apiKey.id}-${perm}`}
+                            className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-slate-200/70"
+                          >
+                            {perm}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 text-xs">
+                        <div>
+                          <p className="text-slate-200/60">Total requests</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {apiKey.requests.toLocaleString()}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-slate-200/60">Last used</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {formatRelativeTime(apiKey.lastUsed)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  API stats
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active keys</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {apiKeys.filter((k) => k.status === "active").length}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total requests</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {apiKeys.reduce((acc, k) => acc + k.requests, 0).toLocaleString()}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg per key</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {Math.round(apiKeys.reduce((acc, k) => acc + k.requests, 0) / apiKeys.length).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="hashtag-analytics"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Hashtag analytics</h2>
+              <p className="text-sm text-slate-100/75">
+                Track hashtag performance, growth trends, and engagement metrics across your campaigns.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {hashtagAnalytics.map((hashtag) => (
+                <div
+                  key={hashtag.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{hashtag.hashtag}</h3>
+                        <span className={`text-[10px] uppercase tracking-wider ${hashtag.trend === "up" ? "text-emerald-300" : "text-red-300"}`}>
+                          {hashtag.trend}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Posts</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {hashtag.posts.toLocaleString()}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Reach</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(hashtag.reach / 1000).toFixed(0)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Engagement</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(hashtag.engagement / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Growth</p>
+                          <p className={`mt-1 text-sm font-semibold ${hashtag.growth > 0 ? "text-emerald-300" : "text-red-300"}`}>
+                            {hashtag.growth > 0 ? "+" : ""}{hashtag.growth}%
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Hashtag summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total hashtags</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{hashtagAnalytics.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total posts</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {hashtagAnalytics.reduce((acc, h) => acc + h.posts, 0).toLocaleString()}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Combined reach</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {(hashtagAnalytics.reduce((acc, h) => acc + h.reach, 0) / 1000).toFixed(0)}k
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="performance-comparison"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Performance comparison</h2>
+              <p className="text-sm text-slate-100/75">
+                Compare current performance metrics against previous periods to track growth and identify trends.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {performanceComparison.map((comp) => (
+                <div
+                  key={comp.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{comp.metric}</h3>
+                        <span className={`text-[10px] uppercase tracking-wider ${comp.trend === "up" ? "text-emerald-300" : "text-red-300"}`}>
+                          {comp.trend}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-3 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Current</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {typeof comp.current === "number" && comp.current > 1000
+                              ? (comp.current / 1000).toFixed(1) + "k"
+                              : comp.current}
+                            {comp.metric === "Engagement Rate" && "%"}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Previous</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {typeof comp.previous === "number" && comp.previous > 1000
+                              ? (comp.previous / 1000).toFixed(1) + "k"
+                              : comp.previous}
+                            {comp.metric === "Engagement Rate" && "%"}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Change</p>
+                          <p className={`mt-1 text-sm font-semibold ${comp.change > 0 ? "text-emerald-300" : "text-red-300"}`}>
+                            {comp.change > 0 ? "+" : ""}{comp.change}%
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Comparison summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Metrics tracked</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{performanceComparison.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Improving</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {performanceComparison.filter((c) => c.trend === "up").length}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Declining</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {performanceComparison.filter((c) => c.trend === "down").length}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
       </main>
     </div>
   );
