@@ -1595,6 +1595,22 @@ export default function Home() {
     );
   };
 
+  const handleTemplateSelect = (templateId: string) => {
+    setSelectedTemplateId(templateId);
+  };
+
+  const handleSequenceSelect = (sequenceId: string) => {
+    setSelectedSequenceId(sequenceId);
+  };
+
+  const handleCalendarViewToggle = (view: "week" | "month") => {
+    setCalendarView(view);
+  };
+
+  const handleCalendarFocusChange = (day: string) => {
+    setCalendarFocus(day);
+  };
+
   const comparisonMetrics = useMemo(() => {
     if (!activeComparisonPoint) {
       return {
