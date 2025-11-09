@@ -3420,6 +3420,21 @@ export default function Home() {
   const [selectedAccount, setSelectedAccount] = useState<string>(
     socialAccounts?.[0]?.id ?? "",
   );
+  const [selectedMention, setSelectedMention] = useState<string>(
+    brandMentions?.[0]?.id ?? "",
+  );
+  const [selectedScheduledPost, setSelectedScheduledPost] = useState<string>(
+    scheduledPosts?.[0]?.id ?? "",
+  );
+  const [selectedBudgetCategory, setSelectedBudgetCategory] = useState<string>(
+    budgetCategories?.[0]?.id ?? "",
+  );
+  const [selectedRepurposing, setSelectedRepurposing] = useState<string>(
+    repurposingSuggestions?.[0]?.id ?? "",
+  );
+  const [selectedCrisisAlert, setSelectedCrisisAlert] = useState<string>(
+    crisisAlerts?.[0]?.id ?? "",
+  );
   const [selectedSentimentFilter, setSelectedSentimentFilter] =
     useState<string>("all");
   const [selectedEngagementStatus, setSelectedEngagementStatus] =
