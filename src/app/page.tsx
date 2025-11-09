@@ -712,28 +712,23 @@ export default function Home() {
   ) => {
     event.preventDefault();
     const trimmed = workflowNote.trim();
-    if (!trimmed || !workflowContext.selectedPlan) return;
+    if (!trimmed || !workflowTimeline.selectedPost) return;
     const newComment: Comment = {
       id: `comment-${Date.now()}`,
+      postId: workflowTimeline.selectedPost.id,
       author: "You",
       message: trimmed,
-      at: new Date().toISOString(),
-      tone: "note",
+      createdAt: new Date().toISOString(),
+      tone: "info",
     };
-    setPlannedPosts((prev) =>
-      prev.map((plan) =>
-        plan.id === workflowContext.selectedPlan?.id
-          ? { ...plan, commentThread: [newComment, ...plan.commentThread] }
-          : plan,
-      ),
-    );
+    setComments((prev) => [newComment, ...prev]);
     setWorkflowNote("");
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-900 to-sky-600 text-white">
       <main className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 py-16 lg:px-12">
-        <header className="relative isolate overflow-hidden rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_20px_70px_rgba(59,7,100,0.35)] backdrop-blur-2xl lg:px-12 lg:py-12">
+        <header className="relative isolate overflow-hidden rounded-4xl border border-white/15 bg-white/10 p-8 sm:p-10 shadow-[0_20px_70px_rgba(59,7,100,0.35)] backdrop-blur-2xl lg:px-12 lg:py-12">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -743,7 +738,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.08)_0%,_transparent_55%)]" />
           </div>
           <div className="relative grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-            <div className="max-w-2xl space-y-6">
+            <div className="max-w-2xl space-y-6 sm:space-y-8">
               <span className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.4em] text-slate-100/90">
                 <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.6)]" />
                 1Social Platform
@@ -776,7 +771,7 @@ export default function Home() {
               </div>
             </div>
             <div className="w-full max-w-md place-self-center space-y-5">
-              <div className="relative overflow-hidden rounded-4xl border border-white/15 bg-slate-950/60 p-7 shadow-2xl shadow-purple-600/20 backdrop-blur-3xl">
+              <div className="relative overflow-hidden rounded-4xl border border-white/15 bg-slate-950/60 p-7 sm:p-8 shadow-2xl shadow-purple-600/20 backdrop-blur-3xl">
                 <div className="absolute -top-10 right-[-30%] h-40 w-40 rounded-full bg-gradient-to-br from-sky-400/30 via-fuchsia-500/20 to-emerald-400/20 blur-2xl" />
                 <div className="absolute bottom-[-24%] left-[-10%] h-36 w-36 rounded-full bg-gradient-to-br from-indigo-500/25 via-purple-500/20 to-transparent blur-2xl" />
                 <div className="relative flex flex-col gap-6">
@@ -829,7 +824,7 @@ export default function Home() {
                     </p>
                   </div>
 
-                  <ul className="grid gap-3 text-sm text-slate-200/80">
+                  <ul className="grid gap-3 text-sm text-slate-200/80 sm:grid-cols-2 sm:gap-4">
                     <li className="flex items-start gap-3">
                       <span className="mt-1 h-2.5 w-2.5 rounded-full bg-emerald-300" />
                       <div>
@@ -846,7 +841,7 @@ export default function Home() {
                     </li>
                   </ul>
 
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <button
                       type="button"
                       onClick={handleOpenWallet}
@@ -871,7 +866,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <p className="text-[11px] uppercase tracking-[0.3em] text-slate-200/60">
+              <p className="text-[11px] uppercase tracking-[0.3em] text-slate-200/60 text-center sm:text-left">
                 Need help? Ping the team in #wallet-ops.
               </p>
             </div>
