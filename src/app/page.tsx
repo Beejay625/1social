@@ -1219,8 +1219,8 @@ export default function Home() {
   }, [selectedWorkflowPostId, sortedPlannedPosts]);
 
   const audienceInsights = useMemo(() => {
-    const farcasterSeries = audienceTrendData.map((item) => item.farcaster);
-    const instagramSeries = audienceTrendData.map((item) => item.instagram);
+    const farcasterSeries = audienceTrendSeries.map((item) => item.farcaster);
+    const instagramSeries = audienceTrendSeries.map((item) => item.instagram);
     const farcasterPath = buildSparklinePath(farcasterSeries);
     const instagramPath = buildSparklinePath(instagramSeries);
     const farcasterDelta =
