@@ -13,6 +13,7 @@ import {
   warmupHealthTokens,
 } from "@/constants/statusTokens";
 import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
+import { formatMetricDelta, formatMetricValue, metricDeltaTone } from "@/utils/metrics";
 import { percentWidthClass, scoreWidthClass } from "@/utils/progress";
 import { formatRelativeTime, formatScheduleLabel, formatTimeUntil } from "@/utils/time";
 import { useEffect, useMemo, useState } from "react";
