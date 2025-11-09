@@ -82,6 +82,9 @@ Visit http://localhost:3000
 - **User Management & Permissions** - Manage team members, roles, and access
 
 ### Content Management
+- **Video Management** - Manage and analyze video content performance across platforms
+- **Video Analytics** - Track video views, engagement rates, and top performers
+- **Video Templates** - Pre-built video templates for quick content creation
 - **Content Library** - Manage media assets, templates, and reusable content
 - **Content Library Management** - Organize and manage your content library by category
 - **Social Media Content Library** - Manage and organize your media assets, templates, and reusable content
