@@ -4438,28 +4438,30 @@ export default function Home() {
                     Comparing {selectedVariance.range}
                   </p>
                   <ul className="mt-4 space-y-3">
-                    {selectedVariance.items.map((item) => (
-                      <li
-                        key={item.label}
-                        className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85"
-                      >
-                        <div className="flex items-center justify-between">
-                          <p className="font-semibold text-white">{item.label}</p>
-                          <span className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
-                            {item.variance}
-                          </span>
-                        </div>
-                        <div className="mt-3 h-2 rounded-full bg-white/10">
-                          <div
-                            className="h-full rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-purple-500"
-                            style={{ width: `${Math.min(item.contribution * 100, 100)}%` }}
-                          />
-                        </div>
-                        <p className="mt-2 text-xs text-slate-200/70">
-                          Contribution to delta: {(item.contribution * 100).toFixed(0)}%
-                        </p>
-                      </li>
-                    ))}
+                    {selectedVariance.items.map((item) => {
+                      const widthClass = pickProgressWidthClass(item.contribution);
+                      return (
+                        <li
+                          key={item.label}
+                          className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85"
+                        >
+                          <div className="flex items-center justify-between">
+                            <p className="font-semibold text-white">{item.label}</p>
+                            <span className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                              {item.variance}
+                            </span>
+                          </div>
+                          <div className="mt-3 h-2 rounded-full bg-white/10">
+                            <div
+                              className={`h-full rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-purple-500 ${widthClass}`}
+                            />
+                          </div>
+                          <p className="mt-2 text-xs text-slate-200/70">
+                            Contribution to delta: {(item.contribution * 100).toFixed(0)}%
+                          </p>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
 
