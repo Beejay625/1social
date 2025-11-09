@@ -3,7 +3,7 @@
 import { networks } from "@/config";
 import { appKitModal } from "@/context";
 import { channelCatalog } from "@/constants/channelCatalog";
-import {
+import { 
   approvalStatusTokens,
   impactTokens,
   presenceStatusTokens,
@@ -12,6 +12,16 @@ import {
   sequenceStatusTokens,
   warmupHealthTokens,
 } from "@/constants/statusTokens";
+import {
+  audienceDays,
+  bestTimeGrid,
+  conversionStages,
+  growthMomentumTrend,
+  insightRecommendations,
+  metricInsightPool,
+  metricKpiSeed,
+  reachConversionTrend,
+} from "@/data/dashboard";
 import { truncateAddress, velocityBadge } from "@/utils/account";
 import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
 import { formatMetricDelta, formatMetricValue, metricDeltaTone } from "@/utils/metrics";
