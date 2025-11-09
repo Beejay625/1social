@@ -158,6 +158,7 @@ Visit http://localhost:3000
 - **Revenue Tracking** - Track revenue from sponsored posts and affiliate links
 - **Multi-language Support** - Manage content across multiple languages
 - **Notification Center** - Centralize notifications for approvals, mentions, and alerts
+- **Smart Notifications** - Intelligent notifications that prioritize what matters most with priority levels and read/unread tracking
 - **Social Media Audit Tools** - Run comprehensive audits to identify issues and get recommendations
 - **Social Media Audit** - Comprehensive audit of your social media presence with category-based scoring, issue identification (critical/warning/info), actionable recommendations, and audit history tracking
 - **Content Forecasting** - AI-powered predictions for content performance before publishing with confidence scores and key factors
@@ -165,7 +166,9 @@ Visit http://localhost:3000
 - **Content Benchmarking** - Compare your performance against industry benchmarks and top performers with percentile rankings
 - **Multi-language Management** - Comprehensive translation workflows with AI translation, human review, and localization settings
 - **Performance Attribution** - Deep dive into content performance and attribution across the customer journey with first-touch, last-touch, and assisted conversions
+- **Performance Alerts** - Automated alerts for performance metrics that exceed thresholds with severity levels and trend tracking
 - **Mobile App Management** - Manage mobile app versions, features, and user analytics across iOS and Android with download tracking, ratings, and device statistics
+- **Account Health** - Monitor the health status of all connected social media accounts with health scores, issue tracking, and trend analysis
 - **Sentiment Analysis** - Track and analyze sentiment across all platforms with real-time alerts, sentiment trends, and top sentiment drivers
 - **Distribution Analytics** - Track how content spreads across platforms with viral coefficient, distribution patterns, and cross-platform performance
 - **Engagement Scoring** - Comprehensive scoring system for audience engagement quality and quantity with weighted factors and recommendations
