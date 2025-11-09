@@ -173,6 +173,11 @@ import {
   reportTemplates,
 } from "@/data/report-builder";
 import {
+  recycledContent,
+  recyclingRules,
+  recyclingStats,
+} from "@/data/recycling";
+import {
   notificationChannels,
   notificationPreferences,
   recentNotifications,
