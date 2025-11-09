@@ -168,12 +168,16 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 
 ## Key Capabilities
 
-- **70+ Feature Modules** - Comprehensive social media management suite
+- **80+ Feature Modules** - Comprehensive social media management suite
 - **Multi-channel Publishing** - Publish to 5+ platforms simultaneously
 - **AI-Powered Insights** - Machine learning for content optimization
 - **Real-time Analytics** - Live performance tracking and reporting
 - **Team Collaboration** - Built-in tools for team workflows
 - **Automation** - Reduce manual work with intelligent automation
+- **Social Commerce** - Sell products directly through social media
+- **Video Management** - Complete video content management and analytics
+- **Engagement Automation** - Automated tools for audience engagement
+- **Trend Monitoring** - Real-time trend tracking and alerts
 - **Compliance** - Ensure brand safety and legal compliance
 - **Advanced Reporting** - Export data in multiple formats for analysis
 
