@@ -1,143 +1,93 @@
-export interface CommerceProduct {
+export interface Product {
   id: string;
   name: string;
   description: string;
   price: number;
-  currency: string;
   image: string;
-  platform: string;
+  category: string;
   status: "active" | "draft" | "archived";
   metrics: {
     views: number;
     clicks: number;
-    purchases: number;
+    conversions: number;
     revenue: number;
-    conversionRate: number;
   };
   createdAt: string;
 }
 
-export interface CommerceOrder {
+export interface ShoppingPost {
   id: string;
   productId: string;
   productName: string;
   platform: string;
-  customer: string;
-  amount: number;
-  currency: string;
-  status: "pending" | "completed" | "cancelled" | "refunded";
-  orderDate: string;
+  postUrl: string;
+  performance: {
+    impressions: number;
+    clicks: number;
+    conversions: number;
+    revenue: number;
+    conversionRate: number;
+  };
+  publishedAt: string;
 }
 
-export interface CommerceAnalytics {
-  totalRevenue: number;
-  totalOrders: number;
-  avgOrderValue: number;
-  conversionRate: number;
-  topProduct: string;
-  revenueGrowth: number;
-  ordersGrowth: number;
-}
-
-export const commerceProducts: CommerceProduct[] = [
+export const products: Product[] = [
   {
     id: "product-1",
     name: "Premium Subscription",
-    description: "Monthly premium subscription with all features",
+    description: "Monthly premium subscription plan",
     price: 29.99,
-    currency: "USD",
-    image: "/products/premium-subscription.jpg",
-    platform: "farcaster",
+    image: "/products/premium.jpg",
+    category: "Subscription",
     status: "active",
     metrics: {
       views: 12500,
       clicks: 890,
-      purchases: 67,
-      revenue: 2009.33,
-      conversionRate: 7.5,
+      conversions: 45,
+      revenue: 1349.55,
     },
-    createdAt: new Date(Date.now() - 86400000 * 30).toISOString(),
+    createdAt: new Date(Date.now() - 2592000000).toISOString(),
   },
   {
     id: "product-2",
-    name: "Enterprise Plan",
-    description: "Annual enterprise plan for teams",
-    price: 299.99,
-    currency: "USD",
-    image: "/products/enterprise-plan.jpg",
-    platform: "instagram",
+    name: "Pro Tools Bundle",
+    description: "Complete toolkit for professionals",
+    price: 99.99,
+    image: "/products/tools.jpg",
+    category: "Software",
     status: "active",
     metrics: {
       views: 8900,
-      clicks: 450,
-      purchases: 23,
-      revenue: 6899.77,
-      conversionRate: 5.1,
+      clicks: 567,
+      conversions: 23,
+      revenue: 2299.77,
     },
-    createdAt: new Date(Date.now() - 86400000 * 20).toISOString(),
-  },
-  {
-    id: "product-3",
-    name: "Starter Kit",
-    description: "Getting started kit for new users",
-    price: 49.99,
-    currency: "USD",
-    image: "/products/starter-kit.jpg",
-    platform: "x",
-    status: "active",
-    metrics: {
-      views: 15600,
-      clicks: 1200,
-      purchases: 89,
-      revenue: 4449.11,
-      conversionRate: 7.4,
-    },
-    createdAt: new Date(Date.now() - 86400000 * 15).toISOString(),
+    createdAt: new Date(Date.now() - 1728000000).toISOString(),
   },
 ];
 
-export const recentOrders: CommerceOrder[] = [
+export const shoppingPosts: ShoppingPost[] = [
   {
-    id: "order-1",
+    id: "shop-post-1",
     productId: "product-1",
     productName: "Premium Subscription",
     platform: "farcaster",
-    customer: "@user123",
-    amount: 29.99,
-    currency: "USD",
-    status: "completed",
-    orderDate: new Date(Date.now() - 3600000).toISOString(),
-  },
-  {
-    id: "order-2",
-    productId: "product-3",
-    productName: "Starter Kit",
-    platform: "x",
-    customer: "@user456",
-    amount: 49.99,
-    currency: "USD",
-    status: "completed",
-    orderDate: new Date(Date.now() - 7200000).toISOString(),
-  },
-  {
-    id: "order-3",
-    productId: "product-2",
-    productName: "Enterprise Plan",
-    platform: "instagram",
-    customer: "@user789",
-    amount: 299.99,
-    currency: "USD",
-    status: "pending",
-    orderDate: new Date(Date.now() - 10800000).toISOString(),
+    postUrl: "https://farcaster.xyz/...",
+    performance: {
+      impressions: 12500,
+      clicks: 890,
+      conversions: 45,
+      revenue: 1349.55,
+      conversionRate: 5.1,
+    },
+    publishedAt: new Date(Date.now() - 86400000).toISOString(),
   },
 ];
 
-export const commerceAnalytics: CommerceAnalytics = {
-  totalRevenue: 13358.21,
-  totalOrders: 179,
-  avgOrderValue: 74.63,
-  conversionRate: 6.7,
-  topProduct: "Premium Subscription",
-  revenueGrowth: 15.8,
-  ordersGrowth: 12.3,
+export const commerceStats = {
+  totalProducts: 12,
+  activeProducts: 8,
+  totalRevenue: 45678.90,
+  totalConversions: 234,
+  avgConversionRate: 4.2,
 };

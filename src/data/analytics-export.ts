@@ -1,17 +1,18 @@
 export interface ExportJob {
   id: string;
   name: string;
-  type: "analytics" | "content" | "engagement" | "reports";
-  format: "pdf" | "csv" | "excel" | "json";
+  type: "report" | "data" | "analytics";
+  format: "pdf" | "csv" | "excel" | "json" | "png";
   status: "pending" | "processing" | "completed" | "failed";
   createdAt: string;
   completedAt?: string;
-  fileSize?: string;
   downloadUrl?: string;
+  size?: number;
+  sizeFormatted?: string;
   filters?: {
-    dateRange: string;
-    platforms: string[];
-    metrics: string[];
+    dateRange: { start: string; end: string };
+    platforms?: string[];
+    metrics?: string[];
   };
 }
 
@@ -19,25 +20,30 @@ export interface ExportTemplate {
   id: string;
   name: string;
   description: string;
-  type: string;
-  format: string;
-  metrics: string[];
+  type: "report" | "data" | "analytics";
+  format: "pdf" | "csv" | "excel";
+  includes: string[];
   usageCount: number;
+  lastUsed?: string;
 }
 
 export const exportJobs: ExportJob[] = [
   {
     id: "export-1",
-    name: "Q1 Analytics Report",
-    type: "analytics",
+    name: "Monthly Performance Report",
+    type: "report",
     format: "pdf",
     status: "completed",
-    createdAt: new Date(Date.now() - 86400000).toISOString(),
-    completedAt: new Date(Date.now() - 82800000).toISOString(),
-    fileSize: "2.4 MB",
-    downloadUrl: "/exports/q1-analytics.pdf",
+    createdAt: new Date(Date.now() - 3600000).toISOString(),
+    completedAt: new Date(Date.now() - 1800000).toISOString(),
+    downloadUrl: "/exports/monthly-report-jan-2024.pdf",
+    size: 2450000,
+    sizeFormatted: "2.45 MB",
     filters: {
-      dateRange: "Jan 1 - Mar 31, 2024",
+      dateRange: {
+        start: new Date(Date.now() - 2592000000).toISOString(),
+        end: new Date().toISOString(),
+      },
       platforms: ["farcaster", "instagram", "x"],
       metrics: ["reach", "engagement", "conversions"],
     },
@@ -45,27 +51,34 @@ export const exportJobs: ExportJob[] = [
   {
     id: "export-2",
     name: "Content Performance Data",
-    type: "content",
+    type: "data",
     format: "csv",
-    status: "processing",
-    createdAt: new Date(Date.now() - 1800000).toISOString(),
+    status: "completed",
+    createdAt: new Date(Date.now() - 7200000).toISOString(),
+    completedAt: new Date(Date.now() - 5400000).toISOString(),
+    downloadUrl: "/exports/content-performance.csv",
+    size: 890000,
+    sizeFormatted: "890 KB",
     filters: {
-      dateRange: "Last 30 days",
+      dateRange: {
+        start: new Date(Date.now() - 604800000).toISOString(),
+        end: new Date().toISOString(),
+      },
       platforms: ["all"],
-      metrics: ["impressions", "clicks", "engagement"],
     },
   },
   {
     id: "export-3",
-    name: "Engagement Metrics",
-    type: "engagement",
-    format: "excel",
-    status: "pending",
-    createdAt: new Date(Date.now() - 600000).toISOString(),
+    name: "Analytics Dashboard Export",
+    type: "analytics",
+    format: "png",
+    status: "processing",
+    createdAt: new Date(Date.now() - 1800000).toISOString(),
     filters: {
-      dateRange: "Last 7 days",
-      platforms: ["farcaster", "instagram"],
-      metrics: ["likes", "comments", "shares"],
+      dateRange: {
+        start: new Date(Date.now() - 86400000 * 7).toISOString(),
+        end: new Date().toISOString(),
+      },
     },
   },
 ];
@@ -73,28 +86,41 @@ export const exportJobs: ExportJob[] = [
 export const exportTemplates: ExportTemplate[] = [
   {
     id: "template-1",
-    name: "Executive Summary",
-    description: "High-level metrics for executive reporting",
-    type: "analytics",
+    name: "Monthly Performance Report",
+    description: "Comprehensive monthly performance report with all key metrics",
+    type: "report",
     format: "pdf",
-    metrics: ["reach", "engagement", "conversions", "roi"],
-    usageCount: 45,
+    includes: ["Overview", "Platform Breakdown", "Top Content", "Engagement Analysis"],
+    usageCount: 12,
+    lastUsed: new Date(Date.now() - 86400000 * 5).toISOString(),
   },
   {
     id: "template-2",
-    name: "Detailed Analytics",
-    description: "Comprehensive analytics export",
+    name: "Content Performance CSV",
+    description: "Export all content performance data in CSV format",
+    type: "data",
+    format: "csv",
+    includes: ["Content ID", "Title", "Platform", "Metrics", "Performance Score"],
+    usageCount: 28,
+    lastUsed: new Date(Date.now() - 86400000 * 2).toISOString(),
+  },
+  {
+    id: "template-3",
+    name: "Analytics Dashboard",
+    description: "Export analytics dashboard as image",
     type: "analytics",
-    format: "excel",
-    metrics: ["all"],
-    usageCount: 89,
+    format: "png",
+    includes: ["Charts", "Metrics", "Trends"],
+    usageCount: 15,
+    lastUsed: new Date(Date.now() - 86400000 * 7).toISOString(),
   },
 ];
 
 export const exportStats = {
   totalExports: 156,
-  exportsToday: 8,
-  avgFileSize: "1.8 MB",
+  exportsThisMonth: 23,
+  avgExportSize: 1.8,
+  avgExportSizeFormatted: "1.8 MB",
   mostUsedFormat: "pdf",
+  mostUsedTemplate: "Monthly Performance Report",
 };
-
