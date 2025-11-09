@@ -2730,9 +2730,10 @@ export default function Home() {
             </div>
 
             {workflowContext.selectedPlan ? (
-              <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-                <div className="space-y-6">
-                  <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="space-y-6">
+                <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+                  <div className="space-y-6">
+                    <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
                     <div className="flex items-center justify-between gap-3">
                       <div>
                         <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
@@ -2867,10 +2868,10 @@ export default function Home() {
                     </form>
                   </div>
                 </div>
-              </div>
+                </div>
 
-              <div className="grid gap-4 lg:grid-cols-2">
-                <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                <div className="grid gap-4 lg:grid-cols-2">
+                  <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
                   <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
                     Live presence
                   </h3>
