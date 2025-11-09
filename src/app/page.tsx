@@ -564,6 +564,15 @@ const calendarSlots: CalendarSlot[] = [
     impact: "check-in",
   },
 ];
+
+const dashboardSections: { id: string; label: string }[] = [
+  { id: "broadcast", label: "Compose" },
+  { id: "plan", label: "Scheduling" },
+  { id: "workflow", label: "Workflow" },
+  { id: "insights", label: "Insights" },
+  { id: "automation", label: "Automation" },
+  { id: "ops", label: "Ops" },
+];
 const audienceTrendData = [
   { day: "Mon", farcaster: 12, instagram: 24 },
   { day: "Tue", farcaster: 18, instagram: 28 },
@@ -1694,7 +1703,7 @@ export default function Home() {
               <div className="space-y-4">
                 <h1 className="text-4xl font-semibold leading-tight text-white md:text-5xl lg:text-[52px]">
                   Align your voice across every channel.
-            </h1>
+          </h1>
                 <p className="text-lg leading-relaxed text-slate-100/80 md:text-xl">
                   Share once, syndicate instantly, and keep Reown wallet
                   signatures ready for Farcaster. This preview shows how your
@@ -1897,7 +1906,7 @@ export default function Home() {
                   </button>
                 );
               })}
-            </div>
+        </div>
 
             <form
               onSubmit={handleSubmit}
