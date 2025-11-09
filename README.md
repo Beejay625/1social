@@ -80,7 +80,9 @@ Visit http://localhost:3000
 - **Team Collaboration Tools** - Review boards, creative briefs, and asset requests
 - **Content Collaboration Tools** - Streamline team workflows with review boards, creative briefs, and asset requests
 - **Team Performance Metrics** - Track individual team member performance
+- **Team Performance Analytics** - Comprehensive team performance tracking with individual scores, engagement rates, response times, approval rates, and team goals with progress tracking
 - **Content Approval Workflows** - Multi-step approval processes with templates
+- **Workflow Builder** - Create custom approval workflows with multiple steps, conditions, automation, and assignees
 - **Approval Queue** - Review and approve content submissions
 - **Content Approval Queue** - Review and approve content submissions from team members
 - **User Management & Permissions** - Manage team members, roles, and access
