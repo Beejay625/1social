@@ -1195,6 +1195,40 @@ export default function Home() {
     );
   };
 
+  const comparisonMetrics = useMemo(() => {
+    if (!activeComparisonPoint) {
+      return {
+        label: "—",
+        reach: "0k",
+        conversionRate: "0.0%",
+        conversions: "0",
+      };
+    }
+    return {
+      label: activeComparisonPoint.label,
+      reach: `${activeComparisonPoint.reach}k`,
+      conversionRate: `${activeComparisonPoint.conversionRate.toFixed(1)}%`,
+      conversions: activeComparisonPoint.conversions.toLocaleString(),
+    };
+  }, [activeComparisonPoint]);
+
+  const growthMetrics = useMemo(() => {
+    if (!activeGrowthPoint) {
+      return {
+        label: "—",
+        total: "0k",
+        farcaster: "0k",
+        instagram: "0k",
+      };
+    }
+    return {
+      label: activeGrowthPoint.label,
+      total: `${activeGrowthPoint.total}k`,
+      farcaster: `${activeGrowthPoint.farcaster}k`,
+      instagram: `${activeGrowthPoint.instagram}k`,
+    };
+  }, [activeGrowthPoint]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-900 to-sky-600 text-white">
       <main className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 py-16 lg:px-12">
