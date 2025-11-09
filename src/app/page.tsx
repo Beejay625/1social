@@ -348,6 +348,50 @@ import {
   attributionFunnel,
   attributionInsights,
 } from "@/data/content-performance-attribution";
+import {
+  sentimentMetrics,
+  sentimentByPlatform,
+  sentimentTrends,
+  sentimentAlerts,
+  topSentimentDrivers,
+  sentimentInsights,
+} from "@/data/sentiment-analysis";
+import {
+  distributionMetrics,
+  distributionByChannel,
+  topDistributedContent,
+  distributionPatterns,
+  distributionInsights,
+} from "@/data/distribution-analytics";
+import {
+  engagementScore,
+  engagementByPlatform,
+  engagementFactors,
+  engagementTrends,
+  engagementRecommendations,
+} from "@/data/engagement-scoring";
+import {
+  performanceInsights,
+  insightCategories,
+  insightImpact,
+  actionableInsights,
+} from "@/data/performance-insights";
+import {
+  healthScore,
+  healthMetrics,
+  healthTrends,
+  healthAlerts,
+  healthRecommendations,
+  healthByPlatform,
+} from "@/data/social-health";
+import {
+  optimizationScore,
+  optimizationRecommendations,
+  optimalTimeSlots,
+  calendarGaps,
+  optimizationStats,
+  optimizationHistory,
+} from "@/data/calendar-optimization";
 import { truncateAddress, velocityBadge } from "@/utils/account";
 import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
 import { formatMetricDelta, formatMetricValue, metricDeltaTone } from "@/utils/metrics";
