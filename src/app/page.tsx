@@ -2567,6 +2567,12 @@ export default function Home() {
   const [selectedWorkflowTemplate, setSelectedWorkflowTemplate] = useState<string>(
     workflowTemplates?.[0]?.id ?? "",
   );
+  const [selectedAutomationRule, setSelectedAutomationRule] = useState<string>(
+    automationRules?.[0]?.id ?? "",
+  );
+  const [selectedAnalyticsReport, setSelectedAnalyticsReport] = useState<string>(
+    analyticsReports?.[0]?.id ?? "",
+  );
   const [selectedSentimentFilter, setSelectedSentimentFilter] =
     useState<string>("all");
   const [selectedEngagementStatus, setSelectedEngagementStatus] =
