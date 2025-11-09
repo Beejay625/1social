@@ -16,6 +16,16 @@ type SocialPost = {
   createdAt: string;
 };
 
+type PlannedPost = {
+  id: string;
+  title: string;
+  summary: string;
+  scheduledFor: string;
+  channels: ChannelId[];
+  status: "queued" | "draft" | "approved";
+  owner: string;
+};
+
 const channelCatalog: Record<
   ChannelId,
   {
