@@ -161,6 +161,12 @@ Visit http://localhost:3000
 - **Multi-language Management** - Comprehensive translation workflows with AI translation, human review, and localization settings
 - **Performance Attribution** - Deep dive into content performance and attribution across the customer journey with first-touch, last-touch, and assisted conversions
 - **Mobile App Management** - Manage mobile app versions, features, and user analytics across iOS and Android with download tracking, ratings, and device statistics
+- **Sentiment Analysis** - Track and analyze sentiment across all platforms with real-time alerts, sentiment trends, and top sentiment drivers
+- **Distribution Analytics** - Track how content spreads across platforms with viral coefficient, distribution patterns, and cross-platform performance
+- **Engagement Scoring** - Comprehensive scoring system for audience engagement quality and quantity with weighted factors and recommendations
+- **Performance Insights** - AI-powered insights and recommendations to optimize content strategy with opportunity, strength, and warning insights
+- **Social Media Health** - Comprehensive health score tracking across all platforms and metrics with trend analysis and alerts
+- **Calendar Optimization** - AI-powered calendar optimization with optimal time slots, gap analysis, and posting schedule recommendations
 
 ## Tech Stack
 
