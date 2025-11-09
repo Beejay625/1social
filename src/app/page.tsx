@@ -67,6 +67,21 @@ import {
   contentVersions,
   workflowAutomationRules,
 } from "@/data/content";
+import {
+  exportFormats,
+  exportHistory,
+  importSources,
+} from "@/data/export";
+import {
+  activeSessions,
+  securityLogs,
+  securitySettings,
+} from "@/data/security";
+import {
+  billingPlans,
+  invoiceHistory,
+  usageMetrics,
+} from "@/data/billing";
 import { truncateAddress, velocityBadge } from "@/utils/account";
 import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
 import { formatMetricDelta, formatMetricValue, metricDeltaTone } from "@/utils/metrics";
@@ -1637,11 +1652,6 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "crisis", label: "Crisis Management" },
   { id: "commerce", label: "Social Commerce" },
   { id: "calendar-advanced", label: "Advanced Calendar" },
-  { id: "moderation", label: "Content Moderation" },
-  { id: "brand-safety", label: "Brand Safety" },
-  { id: "api-management", label: "API Management" },
-  { id: "hashtag-analytics", label: "Hashtag Analytics" },
-  { id: "performance-comparison", label: "Performance Comparison" },
 ];
 const chartColorTokens = {
   reach: "text-sky-300",
