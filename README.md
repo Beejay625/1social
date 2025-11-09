@@ -220,11 +220,12 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Performance Insights** - AI-powered actionable insights with opportunity, strength, and warning categories
 - **Social Media Health** - Overall health score tracking with trend analysis and metric breakdowns
 - **Calendar Optimization** - AI-powered calendar optimization with optimal time slots and gap analysis
-- **Social Listening Dashboard** - Real-time keyword monitoring, trending topics, and sentiment analysis
-- **Brand Mentions Tracking** - Comprehensive brand mention tracking with sentiment analysis and growth metrics
-- **Team Performance Analytics** - Individual and team performance tracking with goals and productivity metrics
-- **Crisis Management Dashboard** - Automated crisis detection, severity alerts, and response tracking
-- **Workflow Builder** - Custom workflow creation with multi-step processes and automation
+- **Advanced Scheduling Queue** - Queue management with priority levels, estimated performance, and optimization recommendations
+- **Brand Mentions Tracking** - Comprehensive brand mention tracking with sentiment analysis, response tracking, and growth metrics
+- **Team Performance Analytics** - Individual and team performance tracking with goals, productivity metrics, and scorecards
+- **Crisis Management Dashboard** - Automated crisis detection, severity alerts, response tracking, and resolution metrics
+- **Approval Workflows** - Multi-step approval workflows with templates, progress tracking, and bottleneck identification
+- **Social Listening Dashboard** - Real-time keyword monitoring, trending topics, sentiment analysis, and platform breakdowns
 
 ## Project Structure
 
