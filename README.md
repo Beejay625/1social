@@ -299,6 +299,30 @@ src/
 - Localization settings and cultural adaptation
 - Translation status monitoring and management
 
+### Sentiment & Distribution
+- Real-time sentiment analysis across all platforms
+- Sentiment trends and alerts with severity levels
+- Top sentiment drivers and impact analysis
+- Content distribution patterns and viral coefficient tracking
+- Cross-platform distribution analytics
+- Distribution score and optimization recommendations
+
+### Engagement & Health Scoring
+- Comprehensive engagement scoring system
+- Weighted engagement factors (response time, engagement rate, content quality)
+- Quality vs quantity engagement metrics
+- Social media health score tracking
+- Health metrics breakdown (content, engagement, growth, compliance)
+- Health trend analysis and alerts
+
+### Performance Insights & Optimization
+- AI-powered performance insights with confidence scores
+- Opportunity, strength, and warning insight categories
+- Actionable recommendations with expected improvements
+- Calendar optimization with optimal time slots
+- Gap analysis and posting schedule recommendations
+- Optimization score tracking and improvement metrics
+
 ## Contributing
 
 This is a comprehensive social media management platform with extensive features for content creation, scheduling, analytics, team collaboration, and automation.
