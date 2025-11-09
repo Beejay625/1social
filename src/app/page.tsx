@@ -1821,6 +1821,13 @@ export default function Home() {
     setSelectedTemplateId(templateId);
   };
 
+  const handleDistributionToggle = (channelId: ChannelId) => {
+    setDistributionMatrix((prev) => ({
+      ...prev,
+      [channelId]: !prev[channelId],
+    }));
+  };
+
   const handleSequenceSelect = (sequenceId: string) => {
     setSelectedSequenceId(sequenceId);
   };
