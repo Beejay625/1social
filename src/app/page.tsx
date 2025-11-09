@@ -2414,6 +2414,46 @@ export default function Home() {
     }));
   };
 
+  const handleToneSelect = (toneId: string) => {
+    setSelectedToneId(toneId);
+  };
+
+  const handlePersonaSelect = (personaId: string) => {
+    setSelectedPersonaId(personaId);
+  };
+
+  const handleIdeaSelect = (ideaId: string) => {
+    setSelectedIdeaId(ideaId);
+  };
+
+  const handleApplyIdea = (ideaId: string, snippet: string) => {
+    setSelectedIdeaId(ideaId);
+    setAiDraft(snippet);
+  };
+
+  const handleInsertSmartReply = (suggestion: string) => {
+    setAiDraft((prev) => {
+      if (!prev.trim()) return suggestion;
+      return `${prev.trim()}\n\n${suggestion}`;
+    });
+  };
+
+  const handleDeckSelect = (deckId: string) => {
+    setSelectedDeckId(deckId);
+  };
+
+  const handleExportSelect = (exportId: string) => {
+    setSelectedExportId(exportId);
+  };
+
+  const handleSentimentFilterChange = (filterId: string) => {
+    setSelectedSentimentFilter(filterId);
+  };
+
+  const handleStatusFilterChange = (filterId: string) => {
+    setSelectedEngagementStatus(filterId);
+  };
+
   const handleSequenceSelect = (sequenceId: string) => {
     setSelectedSequenceId(sequenceId);
   };
