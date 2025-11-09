@@ -74,3 +74,4 @@ export const predictorStats = {
   topPerformingPrediction: "Educational thread about Web3 trends",
 };
 
+

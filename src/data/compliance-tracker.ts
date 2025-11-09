@@ -72,3 +72,4 @@ export const complianceStats = {
   complianceRate: 92.4,
 };
 
+
