@@ -136,6 +136,7 @@ Visit http://localhost:3000
 - **Brand Safety** - Monitor brand reputation and detect threats
 - **Social Media Compliance & Legal** - Ensure content meets legal requirements
 - **Social Media Crisis Response** - Monitor and respond to crises with automated workflows
+- **Crisis Management Dashboard** - Comprehensive crisis management with severity-based alerts, automated detection, response tracking, and resolution metrics
 
 ### Integrations & API
 - **Webhook Integrations** - Configure webhooks for various events
