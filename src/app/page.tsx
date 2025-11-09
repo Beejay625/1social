@@ -1107,6 +1107,170 @@ const syndicationHistory: SyndicationEntry[] = [
   },
 ];
 
+const intelligenceForecasts = [
+  {
+    id: "forecast-1",
+    metric: "Reach velocity",
+    current: "18%",
+    predicted: "+24%",
+    timeframe: "Next 7 days",
+    confidence: 0.87,
+    factors: ["Seasonal uptick", "Scheduled AMA", "Creator spotlight"],
+  },
+  {
+    id: "forecast-2",
+    metric: "Engagement rate",
+    current: "26%",
+    predicted: "+31%",
+    timeframe: "Next 14 days",
+    confidence: 0.72,
+    factors: ["Content mix shift", "Best-time optimization"],
+  },
+  {
+    id: "forecast-3",
+    metric: "Follower growth",
+    current: "+12%",
+    predicted: "+18%",
+    timeframe: "Next 30 days",
+    confidence: 0.91,
+    factors: ["Viral potential", "Cross-channel sync"],
+  },
+];
+
+const intelligenceAnomalies = [
+  {
+    id: "anomaly-1",
+    type: "Spike",
+    channel: "farcaster" as ChannelId,
+    metric: "Reach",
+    deviation: "+142%",
+    detectedAt: "2 hours ago",
+    explanation: "Unusual engagement spike on AMA announcement—likely viral momentum.",
+  },
+  {
+    id: "anomaly-2",
+    type: "Dip",
+    channel: "instagram" as ChannelId,
+    metric: "Saves",
+    deviation: "-38%",
+    detectedAt: "5 hours ago",
+    explanation: "Save rate dropped below threshold—check content format changes.",
+  },
+];
+
+const contentHashtags = [
+  { tag: "#web3", trend: "up", usage: 1240, growth: "+18%" },
+  { tag: "#buildinpublic", trend: "up", usage: 890, growth: "+12%" },
+  { tag: "#creator", trend: "stable", usage: 650, growth: "+3%" },
+  { tag: "#nft", trend: "down", usage: 420, growth: "-8%" },
+];
+
+const contentRecommendations = [
+  {
+    id: "rec-1",
+    type: "Format",
+    suggestion: "Try carousel posts—your carousel content performs 34% better than single images.",
+    impact: "High",
+  },
+  {
+    id: "rec-2",
+    type: "Timing",
+    suggestion: "Shift Instagram posts to 18:00 UTC—your audience is 2.3x more active then.",
+    impact: "Medium",
+  },
+  {
+    id: "rec-3",
+    type: "Topic",
+    suggestion: "Double down on 'community wins' content—it drives 28% more saves.",
+    impact: "High",
+  },
+];
+
+const teamMembers = [
+  {
+    id: "member-1",
+    name: "Ameena",
+    role: "Strategy Lead",
+    avatar: "AM",
+    gradient: "from-rose-400 via-violet-500 to-indigo-500",
+    permissions: ["Schedule", "Approve", "Export"],
+    lastActive: "5 min ago",
+  },
+  {
+    id: "member-2",
+    name: "Kai",
+    role: "Content Manager",
+    avatar: "KA",
+    gradient: "from-emerald-400 via-cyan-500 to-blue-500",
+    permissions: ["Schedule", "Edit"],
+    lastActive: "12 min ago",
+  },
+  {
+    id: "member-3",
+    name: "Leo",
+    role: "Creative Director",
+    avatar: "LE",
+    gradient: "from-amber-400 via-orange-500 to-pink-500",
+    permissions: ["Edit", "Approve"],
+    lastActive: "1 hour ago",
+  },
+];
+
+const teamActivityLog = [
+  {
+    id: "activity-1",
+    member: "Ameena",
+    action: "Approved workflow",
+    target: "Founder AMA teaser",
+    timestamp: "2 min ago",
+  },
+  {
+    id: "activity-2",
+    member: "Kai",
+    action: "Scheduled post",
+    target: "Design drops recap",
+    timestamp: "15 min ago",
+  },
+  {
+    id: "activity-3",
+    member: "Leo",
+    action: "Uploaded asset",
+    target: "Creator highlight reel",
+    timestamp: "1 hour ago",
+  },
+];
+
+const integrationsAvailable = [
+  {
+    id: "integ-1",
+    name: "Google Analytics",
+    description: "Sync audience insights and conversion data.",
+    status: "connected",
+    icon: "GA",
+  },
+  {
+    id: "integ-2",
+    name: "Slack",
+    description: "Get alerts and updates in your workspace.",
+    status: "connected",
+    icon: "SL",
+  },
+  {
+    id: "integ-3",
+    name: "Zapier",
+    description: "Automate workflows with 5000+ apps.",
+    status: "available",
+    icon: "ZP",
+  },
+  {
+    id: "integ-4",
+    name: "Notion",
+    description: "Export reports and sync content calendar.",
+    status: "available",
+    icon: "NO",
+  },
+];
+
 const dashboardSections: { id: string; label: string }[] = [
   { id: "broadcast", label: "Compose" },
   { id: "plan", label: "Scheduling" },
@@ -1118,6 +1282,10 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "insights", label: "Insights" },
   { id: "automation", label: "Automation" },
   { id: "ops", label: "Ops" },
+  { id: "intelligence", label: "Intelligence" },
+  { id: "content", label: "Content Intel" },
+  { id: "team", label: "Team" },
+  { id: "integrations", label: "Integrations" },
 ];
 const chartColorTokens = {
   reach: "text-sky-300",
