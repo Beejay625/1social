@@ -3730,6 +3730,14 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "social-commerce", label: "Social Commerce" },
   { id: "video-analytics", label: "Video Analytics" },
   { id: "influencer-management", label: "Influencer Management" },
+  { id: "social-auditing", label: "Social Auditing" },
+  { id: "content-recycling", label: "Content Recycling" },
+  { id: "white-label", label: "White-Label Branding" },
+  { id: "custom-reports", label: "Custom Reports" },
+  { id: "sentiment-dashboard", label: "Sentiment Dashboard" },
+  { id: "distribution-analytics", label: "Distribution Analytics" },
+  { id: "engagement-scoring", label: "Engagement Scoring" },
+  { id: "performance-insights", label: "Performance Insights" },
 ];
 const chartColorTokens = {
   reach: "text-sky-300",
