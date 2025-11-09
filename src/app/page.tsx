@@ -197,6 +197,10 @@ const velocityBadge = (value: number) => {
 };
 
 export default function Home() {
+  const { address, isConnected } = useAccount();
+  const { chain } = useNetwork();
+  const { disconnect } = useDisconnect();
+
   const [draft, setDraft] = useState("");
   const [isPosting, setIsPosting] = useState(false);
   const [feedback, setFeedback] = useState<
@@ -208,6 +212,23 @@ export default function Home() {
   });
   const [posts, setPosts] = useState<SocialPost[]>(initialPosts);
 
+  const [plannedPosts, setPlannedPosts] =
+    useState<PlannedPost[]>(initialPlannedPosts);
+  const [scheduleTitle, setScheduleTitle] = useState("");
+  const [scheduleSummary, setScheduleSummary] = useState("");
+  const [scheduleDate, setScheduleDate] = useState("");
+  const [scheduleTime, setScheduleTime] = useState("");
+  const [isScheduling, setIsScheduling] = useState(false);
+  const [scheduleFeedback, setScheduleFeedback] = useState<
+    { tone: "error" | "success"; message: string } | null
+  >(null);
+  const [scheduleChannels, setScheduleChannels] = useState<
+    Record<ChannelId, boolean>
+  >({
+    farcaster: true,
+    instagram: false,
+  });
+
   const activeChannels = useMemo(
     () =>
       (Object.keys(channelState) as ChannelId[]).filter(
@@ -216,8 +237,120 @@ export default function Home() {
     [channelState],
   );
 
+  const scheduleActiveChannels = useMemo(
+    () =>
+      (Object.keys(scheduleChannels) as ChannelId[]).filter(
+        (id) => scheduleChannels[id],
+      ),
+    [scheduleChannels],
+  );
+
+  const sortedPlannedPosts = useMemo(
+    () =>
+      [...plannedPosts].sort(
+        (a, b) =>
+          new Date(a.scheduledFor).getTime() -
+          new Date(b.scheduledFor).getTime(),
+      ),
+    [plannedPosts],
+  );
+
+  const analyticsSnapshot = useMemo(() => {
+    const farcasterLive = posts.filter((post) =>
+      post.channels.includes("farcaster"),
+    ).length;
+    const instagramLive = posts.filter((post) =>
+      post.channels.includes("instagram"),
+    ).length;
+    const crossposted = posts.filter((post) => post.channels.length > 1).length;
+    const scheduledTotal = plannedPosts.length;
+    const reachVelocity = Math.min(
+      100,
+      farcasterLive * 12 + instagramLive * 10 + scheduledTotal * 8,
+    );
+    const next = sortedPlannedPosts[0];
+    const syncCoverage = posts.length
+      ? Math.round((crossposted / posts.length) * 100)
+      : 0;
+    const runwayHours = next
+      ? Math.max(
+          1,
+          Math.round(
+            (new Date(next.scheduledFor).getTime() - Date.now()) /
+              (1000 * 60 * 60),
+          ),
+        )
+      : 0;
+    const runwayLabel = !next
+      ? "Add a plan"
+      : runwayHours <= 3
+      ? "Today"
+      : `${Math.floor(runwayHours / 24)}d ${runwayHours % 24}h`;
+    const velocityToken = velocityBadge(reachVelocity);
+    const channelBreakdown = (Object.keys(channelCatalog) as ChannelId[]).map(
+      (channelId) => {
+        const live = posts.filter((post) =>
+          post.channels.includes(channelId),
+        ).length;
+        const scheduled = plannedPosts.filter((plan) =>
+          plan.channels.includes(channelId),
+        ).length;
+        const total = live + scheduled;
+        const livePercent = total ? Math.round((live / total) * 100) : 0;
+        return {
+          channelId,
+          live,
+          scheduled,
+          livePercent,
+          total,
+        };
+      },
+    );
+    const tiles = [
+      {
+        id: "velocity",
+        title: "Reach velocity",
+        value: `${reachVelocity}%`,
+        helper: `Live: ${farcasterLive + instagramLive} • Scheduled: ${scheduledTotal}`,
+        badge: velocityToken,
+      },
+      {
+        id: "alignment",
+        title: "Cross-channel alignment",
+        value: `${syncCoverage}%`,
+        helper: `${crossposted} of ${posts.length || 0} posts mirrored`,
+        badge: { label: "Sync rate", tone: "bg-white/15 text-white" },
+      },
+      {
+        id: "runway",
+        title: "Schedule runway",
+        value: runwayLabel,
+        helper: `Next slot: ${
+          next ? formatScheduleLabel(next.scheduledFor) : "Nothing booked"
+        }`,
+        badge: { label: "Planner", tone: "bg-sky-400/25 text-sky-100" },
+      },
+    ];
+    return {
+      farcasterLive,
+      instagramLive,
+      scheduledTotal,
+      tiles,
+      channelBreakdown,
+      nextSlot: next ? formatScheduleLabel(next.scheduledFor) : "Add a slot",
+      velocityToken,
+    };
+  }, [plannedPosts, posts, sortedPlannedPosts]);
+
   const handleToggle = (channelId: ChannelId) => {
     setChannelState((prev) => ({
+      ...prev,
+      [channelId]: !prev[channelId],
+    }));
+  };
+
+  const handleScheduleToggle = (channelId: ChannelId) => {
+    setScheduleChannels((prev) => ({
       ...prev,
       [channelId]: !prev[channelId],
     }));
@@ -266,6 +399,83 @@ export default function Home() {
           .join(" & ")}`,
       });
     }, 700);
+  };
+
+  const handleScheduleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (isScheduling) return;
+
+    const trimmedTitle = scheduleTitle.trim();
+    if (!trimmedTitle) {
+      setScheduleFeedback({
+        tone: "error",
+        message: "Give your scheduled post a headline.",
+      });
+      return;
+    }
+
+    if (!scheduleDate || !scheduleTime) {
+      setScheduleFeedback({
+        tone: "error",
+        message: "Choose when this update should launch.",
+      });
+      return;
+    }
+
+    if (scheduleActiveChannels.length === 0) {
+      setScheduleFeedback({
+        tone: "error",
+        message: "Pick at least one channel for the schedule.",
+      });
+      return;
+    }
+
+    setIsScheduling(true);
+    setScheduleFeedback(null);
+
+    const isoTimestamp = new Date(
+      `${scheduleDate}T${scheduleTime}:00`,
+    ).toISOString();
+
+    window.setTimeout(() => {
+      setPlannedPosts((prev) => [
+        ...prev,
+        {
+          id: `plan-${Date.now()}`,
+          title: trimmedTitle,
+          summary:
+            scheduleSummary.trim() ||
+            "We will enrich this summary closer to launch.",
+          scheduledFor: isoTimestamp,
+          channels: scheduleActiveChannels,
+          status: "queued",
+          owner: "You",
+        },
+      ]);
+      setScheduleTitle("");
+      setScheduleSummary("");
+      setScheduleDate("");
+      setScheduleTime("");
+      setScheduleChannels({
+        farcaster: true,
+        instagram: false,
+      });
+      setIsScheduling(false);
+      setScheduleFeedback({
+        tone: "success",
+        message: `Slotted for ${formatScheduleLabel(isoTimestamp)} on ${scheduleActiveChannels
+          .map((id) => channelCatalog[id].label)
+          .join(" & ")}`,
+      });
+    }, 600);
+  };
+
+  const handleOpenWallet = () => {
+    appKitModal.open();
+  };
+
+  const handleDisconnectWallet = () => {
+    disconnect();
   };
 
   return (
