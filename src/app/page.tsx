@@ -16623,6 +16623,666 @@ export default function Home() {
           </aside>
         </section>
 
+        <section
+          id="content-performance-dashboard"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(99,102,241,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Social media content performance dashboard</h2>
+              <p className="text-sm text-slate-100/75">
+                Comprehensive overview of your social media performance metrics and trends.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {contentPerformanceDashboard.map((dashboard) => (
+                <div
+                  key={dashboard.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{dashboard.metric}</h3>
+                        <span className="text-xs text-slate-200/70">{dashboard.period}</span>
+                        <span className={`text-[10px] uppercase tracking-wider ${dashboard.trend === "up" ? "text-emerald-300" : "text-red-300"}`}>
+                          {dashboard.trend}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Value</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {typeof dashboard.value === "number" && dashboard.value > 1000
+                              ? (dashboard.value / 1000).toFixed(1) + "k"
+                              : dashboard.value}
+                            {dashboard.metric === "Conversion Rate" ? "%" : ""}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Change</p>
+                          <p className={`mt-1 text-sm font-semibold ${dashboard.change > 0 ? "text-emerald-300" : "text-red-300"}`}>
+                            {dashboard.change > 0 ? "+" : ""}{dashboard.change}%
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(99,102,241,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Dashboard summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Metrics tracked</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{contentPerformanceDashboard.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg change</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    +{Math.round(contentPerformanceDashboard.reduce((acc, d) => acc + d.change, 0) / contentPerformanceDashboard.length)}%
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="content-library-management"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Social media content library management</h2>
+              <p className="text-sm text-slate-100/75">
+                Organize and manage your content library by category with detailed tracking.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {contentLibraryManagement.map((item) => (
+                <div
+                  key={item.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-white">{item.category}</h3>
+                      <div className="mt-4 grid grid-cols-3 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Count</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{item.count}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Total size</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{item.totalSize}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Last updated</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {formatRelativeTime(item.lastUpdated)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Library summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total categories</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{contentLibraryManagement.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total items</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {contentLibraryManagement.reduce((acc, item) => acc + item.count, 0)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="content-performance-comparison"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Social media content performance comparison</h2>
+              <p className="text-sm text-slate-100/75">
+                Compare performance metrics across different time periods to track growth.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {contentPerformanceComparison.map((comparison) => (
+                <div
+                  key={comparison.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-white">{comparison.period}</h3>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Reach</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(comparison.reach / 1000).toFixed(0)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Engagement</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(comparison.engagement / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Clicks</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{comparison.clicks}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Conversions</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{comparison.conversions}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Comparison summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Periods compared</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{contentPerformanceComparison.length}</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="social-competitor-analysis"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(251,146,60,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Social media competitor analysis</h2>
+              <p className="text-sm text-slate-100/75">
+                Track competitor performance and identify your competitive advantages.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {socialMediaCompetitorAnalysis.map((competitor) => (
+                <div
+                  key={competitor.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-white">{competitor.competitor}</h3>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Followers</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(competitor.followers / 1000).toFixed(0)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Engagement rate</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{competitor.engagementRate}%</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Posts/week</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{competitor.avgPostsPerWeek}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Growth rate</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{competitor.growthRate}%</p>
+                        </div>
+                      </div>
+                      <div className="mt-4 flex items-center gap-4 text-xs">
+                        <div>
+                          <p className="text-slate-200/60">Your advantage</p>
+                          <p className="mt-1 text-sm font-semibold text-emerald-300">{competitor.yourAdvantage}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(251,146,60,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Competitor summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Competitors tracked</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{socialMediaCompetitorAnalysis.length}</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="content-scheduling-optimization"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content scheduling optimization</h2>
+              <p className="text-sm text-slate-100/75">
+                Get AI-powered recommendations for optimal posting times by day of week.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {contentSchedulingOptimization.map((optimization) => (
+                <div
+                  key={optimization.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{optimization.day}</h3>
+                        <span className="text-xs text-slate-200/70">Best time: {optimization.bestTime}</span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Expected engagement</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(optimization.expectedEngagement / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Current avg</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(optimization.currentAvg / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Improvement</p>
+                          <p className="mt-1 text-sm font-semibold text-emerald-300">
+                            +{optimization.improvement}%
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Optimization summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Days optimized</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{contentSchedulingOptimization.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg improvement</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    +{Math.round(contentSchedulingOptimization.reduce((acc, o) => acc + o.improvement, 0) / contentSchedulingOptimization.length)}%
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="social-engagement-analytics"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Social media engagement analytics</h2>
+              <p className="text-sm text-slate-100/75">
+                Detailed engagement breakdown by channel including likes, comments, shares, and saves.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {socialMediaEngagementAnalytics.map((analytics) => (
+                <div
+                  key={analytics.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[analytics.channel].dot}`} />
+                        <h3 className="text-lg font-semibold text-white">
+                          {channelCatalog[analytics.channel].label}
+                        </h3>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-5">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Likes</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(analytics.likes / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Comments</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{analytics.comments}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Shares</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{analytics.shares}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Saves</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{analytics.saves || 0}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Engagement rate</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{analytics.engagementRate}%</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Analytics summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Channels tracked</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{socialMediaEngagementAnalytics.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total engagement</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {(socialMediaEngagementAnalytics.reduce((acc, a) => acc + a.likes + a.comments + a.shares + a.saves, 0) / 1000).toFixed(0)}k
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="content-calendar-integration"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content calendar integration</h2>
+              <p className="text-sm text-slate-100/75">
+                Integrate your content calendar with external calendar services for seamless scheduling.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {contentCalendarIntegration.map((integration) => (
+                <div
+                  key={integration.id}
+                  className={`rounded-3xl border p-6 ${integration.status === "connected" ? "border-emerald-400/50 bg-emerald-400/10" : "border-white/15 bg-white/5"}`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{integration.service}</h3>
+                        <span className={`text-[10px] uppercase tracking-wider ${integration.status === "connected" ? "text-emerald-300" : "text-slate-300"}`}>
+                          {integration.status}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Events synced</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{integration.eventsSynced}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Last sync</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {formatRelativeTime(integration.lastSync)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Integration summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Connected services</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {contentCalendarIntegration.filter((i) => i.status === "connected").length}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total events</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {contentCalendarIntegration.reduce((acc, i) => acc + i.eventsSynced, 0)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="social-automation-rules"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Social media automation rules</h2>
+              <p className="text-sm text-slate-100/75">
+                Create and manage automation rules with trigger-based actions and execution tracking.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {socialMediaAutomationRules.map((rule) => (
+                <div
+                  key={rule.id}
+                  className={`rounded-3xl border p-6 ${rule.status === "active" ? "border-emerald-400/50 bg-emerald-400/10" : "border-white/15 bg-white/5"}`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{rule.name}</h3>
+                        <span className={`text-[10px] uppercase tracking-wider ${rule.status === "active" ? "text-emerald-300" : "text-slate-300"}`}>
+                          {rule.status}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Trigger</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{rule.trigger}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Action</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{rule.action}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Executions</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{rule.executions}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Last executed</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {formatRelativeTime(rule.lastExecuted)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Rules summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active rules</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {socialMediaAutomationRules.filter((r) => r.status === "active").length}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total executions</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {socialMediaAutomationRules.reduce((acc, r) => acc + r.executions, 0)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="content-performance-tracking"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(251,146,60,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content performance tracking</h2>
+              <p className="text-sm text-slate-100/75">
+                Track detailed performance metrics for individual content pieces across platforms.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {contentPerformanceTracking.map((track) => (
+                <div
+                  key={track.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[track.platform].dot}`} />
+                        <h3 className="text-lg font-semibold text-white">{track.contentTitle}</h3>
+                        <span className="text-xs text-slate-200/70">
+                          {formatRelativeTime(track.date)}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-5">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Impressions</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(track.impressions / 1000).toFixed(0)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Engagement</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(track.engagement / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Clicks</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{track.clicks}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Conversions</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{track.conversions}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(251,146,60,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Tracking summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Content tracked</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{contentPerformanceTracking.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total conversions</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {contentPerformanceTracking.reduce((acc, t) => acc + t.conversions, 0)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
       </main>
     </div>
   );
