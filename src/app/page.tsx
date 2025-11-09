@@ -19108,6 +19108,489 @@ export default function Home() {
           </aside>
         </section>
 
+        <section
+          id="sentiment-analysis"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Sentiment Analysis</h2>
+              <p className="text-sm text-slate-100/75">
+                Track and analyze sentiment across all platforms with real-time alerts and insights.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {sentimentByPlatform.map((platform, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[platform.platform as ChannelId]?.dot || "bg-slate-400"}`} />
+                      <h3 className="text-lg font-semibold text-white capitalize">{platform.platform}</h3>
+                    </div>
+                    <span className={`text-xs px-3 py-1 rounded-full ${
+                      platform.sentiment >= 80
+                        ? "bg-emerald-500/20 text-emerald-300"
+                        : platform.sentiment >= 70
+                        ? "bg-blue-500/20 text-blue-300"
+                        : "bg-amber-500/20 text-amber-300"
+                    }`}>
+                      {platform.sentiment}% sentiment
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <p className="text-xs text-slate-200/60">Positive</p>
+                      <p className="mt-1 text-sm font-semibold text-emerald-300">{platform.positive}%</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60">Neutral</p>
+                      <p className="mt-1 text-sm font-semibold text-slate-300">{platform.neutral}%</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60">Negative</p>
+                      <p className="mt-1 text-sm font-semibold text-red-300">{platform.negative}%</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Overall Sentiment
+              </h3>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Sentiment Score</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {sentimentMetrics.overallSentiment}%
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Positive Rate</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">
+                    {sentimentMetrics.positive}%
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Trend</p>
+                  <p className="mt-1 text-sm font-semibold text-emerald-300 capitalize">
+                    {sentimentMetrics.sentimentTrend}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="distribution-analytics"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Distribution Analytics</h2>
+              <p className="text-sm text-slate-100/75">
+                Track how your content spreads across platforms and analyze distribution patterns.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {topDistributedContent.map((content) => (
+                <div
+                  key={content.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-white">{content.title}</h3>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {content.platforms.map((platform, idx) => (
+                          <span
+                            key={idx}
+                            className={`h-2 w-2 rounded-full ${channelCatalog[platform as ChannelId]?.dot || "bg-slate-400"}`}
+                            title={platform}
+                          />
+                        ))}
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Total Reach</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(content.totalReach / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Total Engagement</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{content.totalEngagement}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Distribution Score</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{content.distributionScore}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Viral Coefficient</p>
+                          <p className="mt-1 text-sm font-semibold text-emerald-300">{content.viralCoefficient}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Distribution Summary
+              </h3>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Distributions</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {distributionMetrics.totalDistributions.toLocaleString()}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Distribution Rate</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {distributionMetrics.distributionRate}%
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Cross-Platform Posts</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {distributionMetrics.crossPlatformPosts}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="engagement-scoring"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Engagement Scoring</h2>
+              <p className="text-sm text-slate-100/75">
+                Comprehensive scoring system for audience engagement quality and quantity.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {engagementFactors.map((factor, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-white">{factor.factor}</h3>
+                    <div className="flex items-center gap-2">
+                      <span className={`text-xs px-3 py-1 rounded-full ${
+                        factor.status === "excellent"
+                          ? "bg-emerald-500/20 text-emerald-300"
+                          : "bg-blue-500/20 text-blue-300"
+                      }`}>
+                        {factor.score}
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-sm text-slate-200/70">{factor.description}</p>
+                  <div className="mt-3">
+                    <div className="flex items-center justify-between text-xs text-slate-200/60 mb-1">
+                      <span>Weight: {factor.weight}%</span>
+                      <span>Score: {factor.score}</span>
+                    </div>
+                    <div className="h-2 rounded-full bg-slate-700/50 overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-blue-500 to-emerald-500"
+                        style={{ width: `${factor.score}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Overall Score
+              </h3>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Engagement Score</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {engagementScore.overall}
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                    <p className="text-xs text-slate-200/60">Quality</p>
+                    <p className="mt-1 text-lg font-semibold text-emerald-300">{engagementScore.quality}</p>
+                  </div>
+                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                    <p className="text-xs text-slate-200/60">Quantity</p>
+                    <p className="mt-1 text-lg font-semibold text-blue-300">{engagementScore.quantity}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="performance-insights"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(251,191,36,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Performance Insights</h2>
+              <p className="text-sm text-slate-100/75">
+                AI-powered insights and recommendations to optimize your content strategy.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {actionableInsights.slice(0, 4).map((insight) => (
+                <div
+                  key={insight.id}
+                  className={`rounded-3xl border p-6 ${
+                    insight.type === "opportunity"
+                      ? "border-blue-400/50 bg-blue-400/10"
+                      : insight.type === "strength"
+                      ? "border-emerald-400/50 bg-emerald-400/10"
+                      : "border-amber-400/50 bg-amber-400/10"
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className={`text-xs px-2 py-1 rounded-full uppercase ${
+                          insight.type === "opportunity"
+                            ? "bg-blue-500/20 text-blue-300"
+                            : insight.type === "strength"
+                            ? "bg-emerald-500/20 text-emerald-300"
+                            : "bg-amber-500/20 text-amber-300"
+                        }`}>
+                          {insight.type}
+                        </span>
+                        <span className="text-xs text-slate-200/70 capitalize">{insight.category}</span>
+                      </div>
+                      <h3 className="text-lg font-semibold text-white">{insight.title}</h3>
+                      <p className="mt-2 text-sm text-slate-200/80">{insight.description}</p>
+                      <p className="mt-3 text-xs font-semibold text-emerald-300">
+                        {insight.recommendation}
+                      </p>
+                      <div className="mt-3 flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>Impact: {insight.impact}</span>
+                        <span>Confidence: {insight.confidence}%</span>
+                        <span>Expected: {insight.expectedImprovement}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(251,191,36,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Insights Summary
+              </h3>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Insights</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {insightImpact.total}
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                    <p className="text-xs text-slate-200/60">High Impact</p>
+                    <p className="mt-1 text-lg font-semibold text-emerald-300">{insightImpact.high}</p>
+                  </div>
+                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                    <p className="text-xs text-slate-200/60">Medium Impact</p>
+                    <p className="mt-1 text-lg font-semibold text-blue-300">{insightImpact.medium}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="social-health"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Social Media Health</h2>
+              <p className="text-sm text-slate-100/75">
+                Comprehensive health score tracking across all platforms and metrics.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {healthMetrics.map((metric, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{metric.metric}</h3>
+                      <p className="mt-1 text-xs text-slate-200/70">{metric.description}</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className={`text-xs px-3 py-1 rounded-full ${
+                        metric.status === "excellent"
+                          ? "bg-emerald-500/20 text-emerald-300"
+                          : "bg-blue-500/20 text-blue-300"
+                      }`}>
+                        {metric.score}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-slate-200/70">
+                    <span className={`${metric.trend === "up" ? "text-emerald-300" : "text-slate-300"}`}>
+                      {metric.trend === "up" ? "↑" : "→"} {metric.change > 0 ? "+" : ""}{metric.change}
+                    </span>
+                    <span>·</span>
+                    <span className="capitalize">{metric.status}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Overall Health Score
+              </h3>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Health Score</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {healthScore.overall}
+                  </p>
+                  <p className="mt-1 text-xs text-emerald-300 capitalize">
+                    {healthScore.trend}
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                    <p className="text-xs text-slate-200/60">Content</p>
+                    <p className="mt-1 text-lg font-semibold text-emerald-300">{healthScore.content}</p>
+                  </div>
+                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                    <p className="text-xs text-slate-200/60">Engagement</p>
+                    <p className="mt-1 text-lg font-semibold text-blue-300">{healthScore.engagement}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="calendar-optimization"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Calendar Optimization</h2>
+              <p className="text-sm text-slate-100/75">
+                AI-powered calendar optimization with optimal time slots and gap analysis.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {optimizationRecommendations.map((rec) => (
+                <div
+                  key={rec.id}
+                  className={`rounded-3xl border p-6 ${
+                    rec.priority === "high"
+                      ? "border-purple-400/50 bg-purple-400/10"
+                      : "border-blue-400/50 bg-blue-400/10"
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className={`text-xs px-2 py-1 rounded-full uppercase ${
+                          rec.priority === "high"
+                            ? "bg-purple-500/20 text-purple-300"
+                            : "bg-blue-500/20 text-blue-300"
+                        }`}>
+                          {rec.priority} priority
+                        </span>
+                        <span className="text-xs text-slate-200/70 capitalize">{rec.type}</span>
+                      </div>
+                      <h3 className="text-lg font-semibold text-white">{rec.title}</h3>
+                      <p className="mt-2 text-sm text-slate-200/80">{rec.description}</p>
+                      <div className="mt-3 flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>Posts: {rec.postsAffected}</span>
+                        <span>Impact: {rec.impact}</span>
+                      </div>
+                      <div className="mt-3 flex items-center gap-4 text-xs">
+                        <span className="text-slate-300">Current: {rec.currentScore}</span>
+                        <span className="text-emerald-300">→ Potential: {rec.potentialScore}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Optimization Score
+              </h3>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Overall Score</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {optimizationScore.overall}
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                    <p className="text-xs text-slate-200/60">Timing</p>
+                    <p className="mt-1 text-lg font-semibold text-emerald-300">{optimizationScore.timing}</p>
+                  </div>
+                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                    <p className="text-xs text-slate-200/60">Frequency</p>
+                    <p className="mt-1 text-lg font-semibold text-blue-300">{optimizationScore.frequency}</p>
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg Improvement</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">
+                    {optimizationStats.avgImprovement}%
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
       </main>
     </div>
   );
