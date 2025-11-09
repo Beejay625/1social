@@ -1,121 +1,68 @@
-export interface Hashtag {
-  id: string;
-  tag: string;
-  platform: string;
-  volume: number;
-  growth: number;
-  engagement: number;
-  difficulty: "low" | "medium" | "high";
-  relatedTags: string[];
-  topPosts: number;
-  trend: "rising" | "stable" | "declining";
-}
-
 export interface HashtagResearch {
   id: string;
-  query: string;
-  hashtags: Hashtag[];
-  insights: {
-    bestTimeToPost: string;
-    recommendedTags: string[];
-    audienceOverlap: number;
-  };
-  createdAt: string;
+  hashtag: string;
+  volume: number;
+  growth: number;
+  difficulty: "low" | "medium" | "high";
+  relatedHashtags: string[];
+  topPosts: number;
+  avgEngagement: number;
 }
 
-export interface HashtagPerformance {
+export interface HashtagTrend {
   hashtag: string;
-  platform: string;
-  impressions: number;
-  engagement: number;
-  reach: number;
-  usageCount: number;
-  avgEngagementRate: number;
+  trend: "up" | "down" | "stable";
+  change: number;
+  volume: number;
 }
 
 export const hashtagResearch: HashtagResearch[] = [
   {
-    id: "research-1",
-    query: "social media management",
-    hashtags: [
-      {
-        id: "tag-1",
-        tag: "#SocialMediaManagement",
-        platform: "all",
-        volume: 125000,
-        growth: 15.5,
-        engagement: 8.2,
-        difficulty: "medium",
-        relatedTags: ["#SMM", "#SocialMedia", "#Marketing"],
-        topPosts: 450,
-        trend: "rising",
-      },
-      {
-        id: "tag-2",
-        tag: "#ContentMarketing",
-        platform: "all",
-        volume: 89000,
-        growth: 8.3,
-        engagement: 7.5,
-        difficulty: "high",
-        relatedTags: ["#Content", "#Marketing", "#DigitalMarketing"],
-        topPosts: 320,
-        trend: "stable",
-      },
-    ],
-    insights: {
-      bestTimeToPost: "Tuesday 2 PM",
-      recommendedTags: ["#SocialMediaManagement", "#ContentMarketing", "#DigitalMarketing"],
-      audienceOverlap: 65,
-    },
-    createdAt: new Date(Date.now() - 86400000).toISOString(),
-  },
-];
-
-export const hashtagPerformance: HashtagPerformance[] = [
-  {
-    hashtag: "#Web3Builders",
-    platform: "farcaster",
-    impressions: 45000,
-    engagement: 3200,
-    reach: 38000,
-    usageCount: 45,
-    avgEngagementRate: 7.1,
-  },
-  {
-    hashtag: "#SocialMediaTools",
-    platform: "x",
-    impressions: 32000,
-    engagement: 2100,
-    reach: 28000,
-    usageCount: 32,
-    avgEngagementRate: 6.6,
-  },
-];
-
-export const trendingHashtags: Hashtag[] = [
-  {
-    id: "trend-1",
-    tag: "#AIPowered",
-    platform: "all",
-    volume: 245000,
-    growth: 245.5,
-    engagement: 12.3,
-    difficulty: "low",
-    relatedTags: ["#AI", "#Automation", "#Innovation"],
-    topPosts: 890,
-    trend: "rising",
-  },
-  {
-    id: "trend-2",
-    tag: "#Web3Social",
-    platform: "farcaster",
-    volume: 156000,
-    growth: 189.2,
-    engagement: 9.8,
+    id: "hashtag-1",
+    hashtag: "#web3creator",
+    volume: 15200,
+    growth: 18.5,
     difficulty: "medium",
-    relatedTags: ["#Web3", "#Decentralized", "#Social"],
-    topPosts: 567,
-    trend: "rising",
+    relatedHashtags: ["#web3", "#creator", "#decentralized"],
+    topPosts: 1240,
+    avgEngagement: 890,
+  },
+  {
+    id: "hashtag-2",
+    hashtag: "#socialmedia",
+    volume: 245000,
+    growth: 5.2,
+    difficulty: "high",
+    relatedHashtags: ["#marketing", "#content", "#digital"],
+    topPosts: 8900,
+    avgEngagement: 1200,
   },
 ];
+
+export const hashtagTrends: HashtagTrend[] = [
+  {
+    hashtag: "#web3creator",
+    trend: "up",
+    change: 18.5,
+    volume: 15200,
+  },
+  {
+    hashtag: "#decentralized",
+    trend: "up",
+    change: 12.3,
+    volume: 8900,
+  },
+  {
+    hashtag: "#socialmedia",
+    trend: "stable",
+    change: 2.1,
+    volume: 245000,
+  },
+];
+
+export const researchStats = {
+  hashtagsResearched: 45,
+  trendingHashtags: 12,
+  avgVolume: 12500,
+  topHashtag: "#web3creator",
+};
