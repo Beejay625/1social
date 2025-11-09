@@ -2291,7 +2291,7 @@ export default function Home() {
                       className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
                         growthVisibility.farcaster
                           ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
-                          : "border-white/20 bg-white/5 text-slate-100 hover-border-white/40 hover:bg-white/10"
+                          : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
                       }`}
                       aria-pressed={growthVisibility.farcaster}
                     >
