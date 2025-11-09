@@ -1851,6 +1851,239 @@ const postAnalytics = [
   },
 ];
 
+// Content calendar views
+const calendarViews = [
+  {
+    id: "view-1",
+    name: "Week View",
+    posts: 24,
+    scheduled: 18,
+    draft: 6,
+    dateRange: "Dec 16 - Dec 22",
+  },
+  {
+    id: "view-2",
+    name: "Month View",
+    posts: 89,
+    scheduled: 72,
+    draft: 17,
+    dateRange: "December 2024",
+  },
+  {
+    id: "view-3",
+    name: "List View",
+    posts: 156,
+    scheduled: 134,
+    draft: 22,
+    dateRange: "All Time",
+  },
+];
+
+// Team collaboration tools
+const collaborationTools = [
+  {
+    id: "collab-1",
+    name: "Content Review Board",
+    type: "review",
+    activeMembers: 5,
+    pendingReviews: 12,
+    completedToday: 8,
+  },
+  {
+    id: "collab-2",
+    name: "Creative Briefs",
+    type: "brief",
+    activeMembers: 3,
+    pendingReviews: 4,
+    completedToday: 2,
+  },
+  {
+    id: "collab-3",
+    name: "Asset Requests",
+    type: "request",
+    activeMembers: 7,
+    pendingReviews: 6,
+    completedToday: 5,
+  },
+];
+
+// Content performance predictions
+const performancePredictions = [
+  {
+    id: "pred-1",
+    postTitle: "Product Launch Announcement",
+    predictedReach: 125000,
+    predictedEngagement: 12400,
+    confidence: 85,
+    bestTime: "10:00 AM",
+    bestDay: "Tuesday",
+  },
+  {
+    id: "pred-2",
+    postTitle: "Community Spotlight",
+    predictedReach: 89000,
+    predictedEngagement: 8900,
+    confidence: 78,
+    bestTime: "3:00 PM",
+    bestDay: "Thursday",
+  },
+  {
+    id: "pred-3",
+    postTitle: "Tutorial Series",
+    predictedReach: 156000,
+    predictedEngagement: 18900,
+    confidence: 92,
+    bestTime: "12:00 PM",
+    bestDay: "Monday",
+  },
+];
+
+// Automated content suggestions
+const automatedSuggestions = [
+  {
+    id: "suggestion-1",
+    type: "trending_topic",
+    title: "Post about #Web3Social trend",
+    reason: "Trending hashtag with 24.5% growth",
+    estimatedEngagement: 8.5,
+    priority: "high",
+  },
+  {
+    id: "suggestion-2",
+    type: "best_time",
+    title: "Schedule post for 10:00 AM Tuesday",
+    reason: "Historically highest engagement time",
+    estimatedEngagement: 9.2,
+    priority: "medium",
+  },
+  {
+    id: "suggestion-3",
+    type: "content_gap",
+    title: "Create educational content",
+    reason: "Low engagement on educational posts",
+    estimatedEngagement: 7.8,
+    priority: "low",
+  },
+];
+
+// Social media monitoring dashboard
+const monitoringAlerts = [
+  {
+    id: "alert-1",
+    type: "mention",
+    source: "farcaster",
+    message: "Brand mentioned in trending post",
+    sentiment: "positive",
+    reach: 12500,
+    at: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+  },
+  {
+    id: "alert-2",
+    type: "hashtag",
+    source: "instagram",
+    message: "#Web3Social trending in your niche",
+    sentiment: "neutral",
+    reach: 8900,
+    at: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+  },
+  {
+    id: "alert-3",
+    type: "competitor",
+    source: "x",
+    message: "Competitor launched new feature",
+    sentiment: "neutral",
+    reach: 15600,
+    at: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(),
+  },
+];
+
+// Content scheduling optimization
+const schedulingOptimization = [
+  {
+    id: "opt-1",
+    channel: "farcaster" as ChannelId,
+    optimalTime: "10:00 AM",
+    optimalDay: "Tuesday",
+    expectedEngagement: 9.5,
+    currentAvgEngagement: 7.2,
+    improvement: 31.9,
+  },
+  {
+    id: "opt-2",
+    channel: "instagram" as ChannelId,
+    optimalTime: "3:00 PM",
+    optimalDay: "Thursday",
+    expectedEngagement: 8.8,
+    currentAvgEngagement: 6.5,
+    improvement: 35.4,
+  },
+  {
+    id: "opt-3",
+    channel: "x" as ChannelId,
+    optimalTime: "12:00 PM",
+    optimalDay: "Monday",
+    expectedEngagement: 7.9,
+    currentAvgEngagement: 5.8,
+    improvement: 36.2,
+  },
+];
+
+// Audience growth tracking
+const audienceGrowth = [
+  {
+    id: "growth-1",
+    channel: "farcaster" as ChannelId,
+    currentFollowers: 125000,
+    growthThisWeek: 2500,
+    growthRate: 2.0,
+    trend: "up" as const,
+  },
+  {
+    id: "growth-2",
+    channel: "instagram" as ChannelId,
+    currentFollowers: 89000,
+    growthThisWeek: 1800,
+    growthRate: 2.1,
+    trend: "up" as const,
+  },
+  {
+    id: "growth-3",
+    channel: "x" as ChannelId,
+    currentFollowers: 156000,
+    growthThisWeek: 3200,
+    growthRate: 2.1,
+    trend: "up" as const,
+  },
+];
+
+// Engagement rate analysis
+const engagementRateAnalysis = [
+  {
+    id: "eng-1",
+    metric: "Average Engagement Rate",
+    value: 8.5,
+    benchmark: 6.2,
+    performance: "above_average",
+    change: 12.3,
+  },
+  {
+    id: "eng-2",
+    metric: "Peak Engagement Time",
+    value: 10.2,
+    benchmark: 7.8,
+    performance: "above_average",
+    change: 30.8,
+  },
+  {
+    id: "eng-3",
+    metric: "Content Quality Score",
+    value: 7.8,
+    benchmark: 6.5,
+    performance: "above_average",
+    change: 20.0,
+  },
+];
+
 const dashboardSections: { id: string; label: string }[] = [
   { id: "broadcast", label: "Compose" },
   { id: "plan", label: "Scheduling" },
