@@ -939,6 +939,269 @@ const instantiateApprovalSteps = (
   });
 };
 
+const aiToneOptions = [
+  {
+    id: "confident",
+    label: "Confident",
+    description: "Direct, upbeat copy for launches and bold announcements.",
+  },
+  {
+    id: "friendly",
+    label: "Friendly",
+    description: "Warm tone to humanize updates and community shoutouts.",
+  },
+  {
+    id: "analytical",
+    label: "Analytical",
+    description: "Data-forward voice for performance threads and recaps.",
+  },
+  {
+    id: "playful",
+    label: "Playful",
+    description: "Light and witty for memes, teasers, and hype reels.",
+  },
+];
+
+const aiPersonas = [
+  {
+    id: "founder",
+    label: "Founder POV",
+    summary: "Highlights vision, roadmap, and strategic takeaways.",
+  },
+  {
+    id: "community",
+    label: "Community Squad",
+    summary: "Amplifies wins, spotlights creators, and invites feedback.",
+  },
+  {
+    id: "product",
+    label: "Product Updates",
+    summary: "Explains new features, guides users, and asks for inputs.",
+  },
+];
+
+const aiDraftIdeas = [
+  {
+    id: "idea-1",
+    headline: "Post-launch gratitude thread",
+    snippet:
+      "Huge thanks to everyone who joined today's AMA—here are three takeaways we promised, plus a Carrot on what's next.",
+  },
+  {
+    id: "idea-2",
+    headline: "Tease tomorrow's drop",
+    snippet:
+      "Tomorrow we unbox our creator analytics hub. Get ready for KPI snapshots, auto exports, and sentiment overlays.",
+  },
+  {
+    id: "idea-3",
+    headline: "Community highlight reel",
+    snippet:
+      "We spotlighted 5 builders who grew >20% this month. Here's the combo of tactics they used and templates to remix.",
+  },
+];
+
+const aiSmartReplies = [
+  {
+    id: "reply-1",
+    channel: "farcaster" as ChannelId,
+    author: "Jess C.",
+    message: "Loved the new onboarding deck—does it cover campaign sequencing?",
+    suggestion:
+      "Thanks Jess! Yes—slides 6-8 walk through the sequencing playbook. Happy to DM a version tailored for your team.",
+  },
+  {
+    id: "reply-2",
+    channel: "lens" as ChannelId,
+    author: "BuilderDAO",
+    message: "Seeing inconsistent analytics exports this week.",
+    suggestion:
+      "Great question. CSV exports ship with the next release—shoot me your email and I'll add you to the early group.",
+  },
+  {
+    id: "reply-3",
+    channel: "x" as ChannelId,
+    author: "Nova",
+    message: "Can we try the AI tone tweaks on custom workflows?",
+    suggestion:
+      "We're testing custom tone training with a few teams right now. DM me your use case and I'll loop you in.",
+  },
+];
+
+const aiActivityLog = [
+  {
+    id: "activity-1",
+    action: "Tone adjustment",
+    detail: "Shifted the AMA recap to the confident tone template.",
+    timestamp: "2 min ago",
+  },
+  {
+    id: "activity-2",
+    action: "Auto draft",
+    detail: "Generated draft for next week's creator spotlight.",
+    timestamp: "12 min ago",
+  },
+  {
+    id: "activity-3",
+    action: "Smart reply",
+    detail: "Suggested Lens response for BuilderDAO.",
+    timestamp: "25 min ago",
+  },
+];
+
+const reportingDecks = [
+  {
+    id: "deck-weekly",
+    title: "Weekly performance deck",
+    timeframe: "Last 7 days",
+    size: "12 slides",
+    status: "Fresh",
+    accent: "from-fuchsia-500 via-purple-500 to-indigo-500",
+  },
+  {
+    id: "deck-monthly",
+    title: "Month-end recap",
+    timeframe: "May 2025",
+    size: "22 slides",
+    status: "Queued",
+    accent: "from-emerald-400 via-teal-400 to-sky-400",
+  },
+  {
+    id: "deck-investor",
+    title: "Investor growth brief",
+    timeframe: "Quarter to date",
+    size: "16 slides",
+    status: "Needs review",
+    accent: "from-amber-400 via-orange-400 to-pink-400",
+  },
+];
+
+const reportingExports = [
+  {
+    id: "export-csv",
+    label: "CSV sync",
+    description: "Export audience growth + engagement metrics.",
+    lastRun: "Today • 08:10 UTC",
+    destination: "Google Sheets • Marketing KPIs",
+  },
+  {
+    id: "export-s3",
+    label: "S3 archival",
+    description: "Store daily raw metrics for analytics warehouse.",
+    lastRun: "Yesterday • 21:45 UTC",
+    destination: "s3://1social/rollups/",
+  },
+  {
+    id: "export-airtable",
+    label: "Airtable snapshot",
+    description: "Push KPI snapshots for stakeholder dashboard.",
+    lastRun: "Today • 05:30 UTC",
+    destination: "Airtable • 1Social KPIs",
+  },
+];
+
+const reportingSnapshots = [
+  {
+    id: "snapshot-reach",
+    title: "Reach velocity",
+    value: "+18%",
+    description: "Comparing current week vs. rolling average.",
+    tone: "bg-emerald-400/20 text-emerald-100",
+  },
+  {
+    id: "snapshot-retention",
+    title: "Retention lift",
+    value: "+6 pts",
+    description: "Alignment across Farcaster + Lens campaigns.",
+    tone: "bg-sky-400/20 text-sky-100",
+  },
+  {
+    id: "snapshot-engagement",
+    title: "Engagement blend",
+    value: "26%",
+    description: "Aggregate saves, replies, and reshares.",
+    tone: "bg-purple-400/20 text-purple-100",
+  },
+];
+
+const engagementFilters = {
+  sentiments: [
+    { id: "all", label: "All" },
+    { id: "positive", label: "Positive" },
+    { id: "neutral", label: "Neutral" },
+    { id: "negative", label: "Needs attention" },
+  ],
+  status: [
+    { id: "open", label: "Open" },
+    { id: "in-progress", label: "In progress" },
+    { id: "resolved", label: "Resolved" },
+  ],
+};
+
+const engagementInboxItems = [
+  {
+    id: "inbox-1",
+    author: "Jess C.",
+    channel: "farcaster" as ChannelId,
+    message: "AMA replay was 🔥 — can we get the deck you showed?",
+    sentiment: "positive",
+    status: "open",
+    timeAgo: "6 min",
+    tags: ["Deck request", "AMA"],
+  },
+  {
+    id: "inbox-2",
+    author: "LensCollective",
+    channel: "lens" as ChannelId,
+    message: "Seeing inconsistent analytics exports this week.",
+    sentiment: "negative",
+    status: "in-progress",
+    timeAgo: "18 min",
+    tags: ["Analytics", "Exports"],
+  },
+  {
+    id: "inbox-3",
+    author: "Kai (internal)",
+    channel: "x" as ChannelId,
+    message: "Pulled a smart reply for BuilderDAO thread—looks good?",
+    sentiment: "neutral",
+    status: "resolved",
+    timeAgo: "42 min",
+    tags: ["Smart reply", "Follow-up"],
+  },
+  {
+    id: "inbox-4",
+    author: "Nova",
+    channel: "instagram" as ChannelId,
+    message: "Need access to the AI tone panel for our team.",
+    sentiment: "positive",
+    status: "open",
+    timeAgo: "1 hr",
+    tags: ["AI", "Request"],
+  },
+];
+
+const engagementTriageQueues = [
+  {
+    id: "queue-priority",
+    title: "Priority follow-ups",
+    count: 3,
+    description: "High-impact creators or urgent issues to address today.",
+  },
+  {
+    id: "queue-feedback",
+    title: "Feedback to review",
+    count: 5,
+    description: "Product feedback awaiting routing to owners.",
+  },
+  {
+    id: "queue-automation",
+    title: "Automation ready",
+    count: 4,
+    description: "Conversations prepped for smart reply or auto close.",
+  },
+];
+
 const repostLedger: RepostEvent[] = [
   {
     id: "repost-1",
