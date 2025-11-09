@@ -19068,6 +19068,612 @@ export default function Home() {
           </aside>
         </section>
 
+        {/* Social Listening Dashboard */}
+        <section
+          id="listening-dashboard"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Social Listening Dashboard</h2>
+              <p className="text-sm text-slate-100/75">
+                Monitor keywords, track mentions, and understand audience sentiment in real-time.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {listeningAlerts.map((alert) => (
+                <div
+                  key={alert.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{alert.keyword}</h3>
+                        <span
+                          className={`text-xs ${
+                            alert.sentiment === "positive"
+                              ? "text-emerald-300"
+                              : alert.sentiment === "negative"
+                                ? "text-rose-300"
+                                : "text-slate-300"
+                          }`}
+                        >
+                          {alert.sentiment}
+                        </span>
+                        <span
+                          className={`text-xs ${
+                            alert.trend === "up" ? "text-emerald-300" : alert.trend === "down" ? "text-rose-300" : "text-slate-300"
+                          }`}
+                        >
+                          {alert.trend === "up" ? "↑" : alert.trend === "down" ? "↓" : "→"}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-3 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Mentions</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{alert.mentions}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Top Channels</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {alert.topChannels.join(", ")}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Last Mention</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{alert.lastMention}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6">
+              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Trending Topics
+              </h3>
+              <div className="space-y-3">
+                {listeningTopics.map((topic) => (
+                  <div
+                    key={topic.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">{topic.topic}</p>
+                        <div className="mt-2 flex items-center gap-4 text-xs text-slate-200/70">
+                          <span>Volume: {topic.volume.toLocaleString()}</span>
+                          <span>·</span>
+                          <span className="text-emerald-300">Growth: +{topic.growth}%</span>
+                          <span>·</span>
+                          <span>Sentiment: {(topic.sentiment * 100).toFixed(0)}%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Listening Stats
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Mentions</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {listeningStats.totalMentions.toLocaleString()}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg Sentiment</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">
+                    {(listeningStats.avgSentiment * 100).toFixed(0)}%
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active Alerts</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{listeningStats.alertsActive}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Topics Tracked</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{listeningStats.topicsTracked}</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Team Performance Analytics */}
+        <section
+          id="team-performance-analytics"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Team Performance Analytics</h2>
+              <p className="text-sm text-slate-100/75">
+                Track individual team member performance, goals, and productivity metrics.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {teamMembersPerformance.map((member) => (
+                <div
+                  key={member.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{member.name}</h3>
+                        <span className="text-xs text-slate-200/70">{member.role}</span>
+                        <span className="text-xs font-semibold text-emerald-300">
+                          Score: {member.score}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-4 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Posts Created</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{member.postsCreated}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Engagement Rate</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{member.engagementRate}%</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Response Time</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{member.avgResponseTime}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Approval Rate</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {Math.round((member.contentApproved / (member.contentApproved + member.contentRejected)) * 100)}%
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6">
+              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Team Goals
+              </h3>
+              <div className="space-y-3">
+                {teamGoals.map((goal) => (
+                  <div
+                    key={goal.id}
+                    className={`rounded-2xl border p-4 ${
+                      goal.status === "completed"
+                        ? "border-emerald-400/50 bg-emerald-400/10"
+                        : goal.status === "on-track"
+                          ? "border-blue-400/50 bg-blue-400/10"
+                          : "border-amber-400/50 bg-amber-400/10"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">{goal.goal}</p>
+                        <div className="mt-2 flex items-center gap-4 text-xs text-slate-200/70">
+                          <span>
+                            {goal.current}/{goal.target} ({Math.round((goal.current / goal.target) * 100)}%)
+                          </span>
+                          <span>·</span>
+                          <span>Due: {formatRelativeTime(goal.deadline)}</span>
+                        </div>
+                        <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-slate-800">
+                          <div
+                            className={`h-full ${
+                              goal.status === "completed"
+                                ? "bg-emerald-400"
+                                : goal.status === "on-track"
+                                  ? "bg-blue-400"
+                                  : "bg-amber-400"
+                            }`}
+                            style={{ width: `${Math.min((goal.current / goal.target) * 100, 100)}%` }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Team Stats
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg Engagement Rate</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {teamPerformanceStats.avgEngagementRate}%
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Posts</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{teamPerformanceStats.totalPosts}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg Response Time</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {teamPerformanceStats.avgResponseTime}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Top Performer</p>
+                  <p className="mt-1 text-sm font-semibold text-white">
+                    {teamPerformanceStats.topPerformer}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Brand Mentions */}
+        <section
+          id="brand-mentions"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Brand Mentions</h2>
+              <p className="text-sm text-slate-100/75">
+                Track all mentions of your brand across platforms with sentiment analysis.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {brandMentions.map((mention) => (
+                <div
+                  key={mention.id}
+                  className={`rounded-3xl border p-6 ${
+                    mention.sentiment === "positive"
+                      ? "border-emerald-400/30 bg-emerald-400/5"
+                      : mention.sentiment === "negative"
+                        ? "border-rose-400/30 bg-rose-400/5"
+                        : "border-white/15 bg-white/5"
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[mention.platform as keyof typeof channelCatalog]?.dot || "bg-slate-400"}`} />
+                        <span className="text-sm font-semibold text-white">{mention.author}</span>
+                        <span className="text-xs text-slate-200/70">on {mention.platform}</span>
+                        <span
+                          className={`text-xs ${
+                            mention.sentiment === "positive"
+                              ? "text-emerald-300"
+                              : mention.sentiment === "negative"
+                                ? "text-rose-300"
+                                : "text-slate-300"
+                          }`}
+                        >
+                          {mention.sentiment}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm text-slate-200/80">{mention.content}</p>
+                      <div className="mt-4 flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>{mention.engagement} engagements</span>
+                        <span>·</span>
+                        <span>{formatRelativeTime(mention.timestamp)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Mention Stats
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Mentions</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {brandMentionStats.totalMentions.toLocaleString()}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Sentiment Score</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">
+                    {(brandMentionStats.sentimentScore * 100).toFixed(0)}%
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Positive</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">
+                    {brandMentionStats.positiveMentions}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Negative</p>
+                  <p className="mt-1 text-xl font-semibold text-rose-300">
+                    {brandMentionStats.negativeMentions}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Growth Rate</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    +{brandMentionStats.growthRate}%
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Crisis Management Dashboard */}
+        <section
+          id="crisis-management-dashboard"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(239,68,68,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Crisis Management Dashboard</h2>
+              <p className="text-sm text-slate-100/75">
+                Monitor and respond to potential crises with automated alerts and response workflows.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {crisisAlerts.map((alert) => (
+                <div
+                  key={alert.id}
+                  className={`rounded-3xl border p-6 ${
+                    alert.severity === "critical"
+                      ? "border-rose-400/50 bg-rose-400/10"
+                      : alert.severity === "high"
+                        ? "border-orange-400/50 bg-orange-400/10"
+                        : alert.severity === "medium"
+                          ? "border-amber-400/50 bg-amber-400/10"
+                          : "border-blue-400/50 bg-blue-400/10"
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <span
+                          className={`rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-wider ${
+                            alert.severity === "critical"
+                              ? "bg-rose-400/20 text-rose-300"
+                              : alert.severity === "high"
+                                ? "bg-orange-400/20 text-orange-300"
+                                : alert.severity === "medium"
+                                  ? "bg-amber-400/20 text-amber-300"
+                                  : "bg-blue-400/20 text-blue-300"
+                          }`}
+                        >
+                          {alert.severity}
+                        </span>
+                        <h3 className="text-lg font-semibold text-white">{alert.title}</h3>
+                        <span
+                          className={`text-[10px] uppercase tracking-wider ${
+                            alert.status === "active" ? "text-rose-300" : alert.status === "resolved" ? "text-emerald-300" : "text-slate-300"
+                          }`}
+                        >
+                          {alert.status}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm text-slate-200/80">{alert.description}</p>
+                      <div className="mt-4 flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>{channelCatalog[alert.platform as keyof typeof channelCatalog]?.label || alert.platform}</span>
+                        <span>·</span>
+                        <span>{alert.mentions} mentions</span>
+                        <span>·</span>
+                        <span>{formatRelativeTime(alert.detectedAt)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {crisisResponses.length > 0 && (
+              <div className="mt-6">
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Recent Responses
+                </h3>
+                <div className="space-y-3">
+                  {crisisResponses.map((response) => (
+                    <div
+                      key={response.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <p className="text-sm font-semibold text-white">{response.action}</p>
+                      <div className="mt-2 flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>By {response.takenBy}</span>
+                        <span>·</span>
+                        <span>{formatRelativeTime(response.timestamp)}</span>
+                      </div>
+                      <p className="mt-2 text-xs text-emerald-300">{response.result}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(239,68,68,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Crisis Stats
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active Crises</p>
+                  <p className="mt-1 text-2xl font-semibold text-rose-300">{crisisStats.activeCrises}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Resolved Today</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">
+                    {crisisStats.resolvedToday}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg Response Time</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {crisisStats.avgResponseTime}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Resolution Rate</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">
+                    {crisisStats.resolutionRate}%
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Risk Level</p>
+                  <p className="mt-1 text-xl font-semibold text-amber-300">
+                    {crisisStats.riskLevel}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Workflow Builder */}
+        <section
+          id="workflow-builder"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Workflow Builder</h2>
+              <p className="text-sm text-slate-100/75">
+                Create custom approval workflows with multiple steps, conditions, and automation.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {workflowTemplates.map((workflow) => (
+                <div
+                  key={workflow.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{workflow.name}</h3>
+                        <span
+                          className={`text-[10px] uppercase tracking-wider ${
+                            workflow.enabled ? "text-emerald-300" : "text-slate-300"
+                          }`}
+                        >
+                          {workflow.enabled ? "Active" : "Inactive"}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm text-slate-200/70">{workflow.description}</p>
+                      <div className="mt-4 space-y-2">
+                        {workflow.steps.map((step, idx) => (
+                          <div
+                            key={step.id}
+                            className="flex items-center gap-3 rounded-xl border border-white/10 bg-slate-950/40 p-3"
+                          >
+                            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-purple-400/20 text-xs font-semibold text-purple-300">
+                              {step.order}
+                            </span>
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2">
+                                <span
+                                  className={`rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-wider ${
+                                    step.type === "approval"
+                                      ? "bg-blue-400/20 text-blue-300"
+                                      : step.type === "review"
+                                        ? "bg-purple-400/20 text-purple-300"
+                                        : step.type === "notification"
+                                          ? "bg-amber-400/20 text-amber-300"
+                                          : "bg-emerald-400/20 text-emerald-300"
+                                  }`}
+                                >
+                                  {step.type}
+                                </span>
+                                <p className="text-sm font-semibold text-white">{step.name}</p>
+                              </div>
+                              {step.assignee && (
+                                <p className="mt-1 text-xs text-slate-200/70">Assignee: {step.assignee}</p>
+                              )}
+                              {step.conditions && step.conditions.length > 0 && (
+                                <p className="mt-1 text-xs text-slate-200/60">
+                                  Conditions: {step.conditions.join(", ")}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="mt-4 flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>{workflow.executions} executions</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Workflow Stats
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active Workflows</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{workflowStats.activeWorkflows}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Executions</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {workflowStats.totalExecutions.toLocaleString()}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg Completion Time</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {workflowStats.avgCompletionTime}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Success Rate</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">
+                    {workflowStats.successRate}%
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
       </main>
     </div>
   );
