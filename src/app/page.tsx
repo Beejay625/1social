@@ -106,6 +106,36 @@ import {
   backupSchedules,
   restorePoints,
 } from "@/data/backup";
+import {
+  performanceMetrics,
+  systemAlerts,
+  uptimeStats,
+} from "@/data/performance";
+import {
+  auditLogs,
+  compliancePolicies,
+  dataRetentionPolicies,
+} from "@/data/compliance";
+import {
+  customIntegrations,
+  integrationEvents,
+  integrationTemplates,
+} from "@/data/integrations-builder";
+import {
+  activeWorkflows,
+  workflowTemplates,
+  workflowTriggers,
+} from "@/data/workflows";
+import {
+  moderationQueue,
+  moderationRules,
+  moderationStats,
+} from "@/data/moderation";
+import {
+  apiDocumentation,
+  codeSnippets,
+  sdkVersions,
+} from "@/data/developer";
 import { truncateAddress, velocityBadge } from "@/utils/account";
 import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
 import { formatMetricDelta, formatMetricValue, metricDeltaTone } from "@/utils/metrics";
