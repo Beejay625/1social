@@ -1,3 +1,37 @@
+export interface ApprovalWorkflow {
+  id: string;
+  name: string;
+  description: string;
+  steps: WorkflowStep[];
+  isActive: boolean;
+  usedCount: number;
+}
+
+export interface WorkflowStep {
+  id: string;
+  name: string;
+  approver: {
+    name: string;
+    role: string;
+  };
+  required: boolean;
+  order: number;
+}
+
+export interface WorkflowInstance {
+  id: string;
+  workflowId: string;
+  contentTitle: string;
+  status: "approved" | "rejected" | "in-progress" | "pending";
+  currentStep: number;
+  steps: Array<{
+    name: string;
+    status: "completed" | "in-progress" | "pending";
+    completedAt?: string;
+  }>;
+  startedAt: string;
+}
+
 export const workflowStats = {
   activeWorkflows: 8,
   pendingApprovals: 12,
@@ -5,38 +39,129 @@ export const workflowStats = {
   approvalRate: 92,
 };
 
-export const activeWorkflows = [
+export const approvalWorkflows: ApprovalWorkflow[] = [
   {
     id: "workflow-1",
-    name: "Product Launch Content",
-    status: "pending",
-    currentStep: "Content Review",
-    assignedTo: "Sarah Chen",
-    progress: 60,
-    startedAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
-    estimatedCompletion: new Date(Date.now() + 1000 * 60 * 60 * 2).toISOString(),
+    name: "Standard Content Review",
+    description: "Standard 3-step content approval process",
+    isActive: true,
+    usedCount: 45,
     steps: [
-      { name: "Draft Creation", status: "completed", completedAt: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString() },
-      { name: "Content Review", status: "in_progress", assignedTo: "Sarah Chen" },
-      { name: "Legal Review", status: "pending" },
-      { name: "Final Approval", status: "pending" },
+      {
+        id: "step-1",
+        name: "Content Review",
+        approver: { name: "Sarah Chen", role: "Content Manager" },
+        required: true,
+        order: 1,
+      },
+      {
+        id: "step-2",
+        name: "Legal Review",
+        approver: { name: "Legal Team", role: "Legal" },
+        required: true,
+        order: 2,
+      },
+      {
+        id: "step-3",
+        name: "Final Approval",
+        approver: { name: "Mike Johnson", role: "Marketing Director" },
+        required: true,
+        order: 3,
+      },
     ],
   },
   {
     id: "workflow-2",
-    name: "Social Media Campaign",
-    status: "in_progress",
-    currentStep: "Legal Review",
-    assignedTo: "Mike Johnson",
-    progress: 75,
-    startedAt: new Date(Date.now() - 1000 * 60 * 60 * 6).toISOString(),
-    estimatedCompletion: new Date(Date.now() + 1000 * 60 * 60 * 1).toISOString(),
+    name: "Quick Approval",
+    description: "Single-step quick approval for low-risk content",
+    isActive: true,
+    usedCount: 67,
     steps: [
-      { name: "Campaign Planning", status: "completed", completedAt: new Date(Date.now() - 1000 * 60 * 60 * 8).toISOString() },
-      { name: "Content Creation", status: "completed", completedAt: new Date(Date.now() - 1000 * 60 * 60 * 7).toISOString() },
-      { name: "Legal Review", status: "in_progress", assignedTo: "Mike Johnson" },
+      {
+        id: "step-1",
+        name: "Quick Review",
+        approver: { name: "Sarah Chen", role: "Content Manager" },
+        required: true,
+        order: 1,
+      },
+    ],
+  },
+  {
+    id: "workflow-3",
+    name: "Executive Review",
+    description: "Multi-step approval for high-stakes content",
+    isActive: true,
+    usedCount: 12,
+    steps: [
+      {
+        id: "step-1",
+        name: "Content Review",
+        approver: { name: "Sarah Chen", role: "Content Manager" },
+        required: true,
+        order: 1,
+      },
+      {
+        id: "step-2",
+        name: "Legal Review",
+        approver: { name: "Legal Team", role: "Legal" },
+        required: true,
+        order: 2,
+      },
+      {
+        id: "step-3",
+        name: "Marketing Review",
+        approver: { name: "Mike Johnson", role: "Marketing Director" },
+        required: true,
+        order: 3,
+      },
+      {
+        id: "step-4",
+        name: "Executive Approval",
+        approver: { name: "CEO", role: "Executive" },
+        required: true,
+        order: 4,
+      },
+    ],
+  },
+];
+
+export const activeWorkflows = approvalWorkflows.filter((w) => w.isActive);
+
+export const workflowInstances: WorkflowInstance[] = [
+  {
+    id: "instance-1",
+    workflowId: "workflow-1",
+    contentTitle: "Product Launch Announcement",
+    status: "in-progress",
+    currentStep: 2,
+    steps: [
+      { name: "Content Review", status: "completed", completedAt: new Date(Date.now() - 3600000).toISOString() },
+      { name: "Legal Review", status: "in-progress" },
       { name: "Final Approval", status: "pending" },
     ],
+    startedAt: new Date(Date.now() - 7200000).toISOString(),
+  },
+  {
+    id: "instance-2",
+    workflowId: "workflow-2",
+    contentTitle: "Weekly Community Update",
+    status: "approved",
+    currentStep: 1,
+    steps: [{ name: "Quick Review", status: "completed", completedAt: new Date(Date.now() - 1800000).toISOString() }],
+    startedAt: new Date(Date.now() - 3600000).toISOString(),
+  },
+  {
+    id: "instance-3",
+    workflowId: "workflow-1",
+    contentTitle: "Social Media Campaign",
+    status: "pending",
+    currentStep: 1,
+    steps: [
+      { name: "Content Review", status: "pending" },
+      { name: "Legal Review", status: "pending" },
+      { name: "Final Approval", status: "pending" },
+    ],
+    startedAt: new Date(Date.now() - 1800000).toISOString(),
   },
 ];
 
