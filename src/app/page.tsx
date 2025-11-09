@@ -6443,6 +6443,642 @@ export default function Home() {
             </div>
           </aside>
         </section>
+
+        <section
+          id="performance"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(251,146,60,0.35)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content performance</h2>
+              <p className="text-sm text-slate-100/75">
+                Deep-dive analytics for individual posts with engagement trends and metric breakdowns.
+              </p>
+            </header>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Top performing posts
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {contentPerformancePosts.length} posts
+                </span>
+              </div>
+              <div className="mt-4 grid gap-3">
+                {contentPerformancePosts.map((post) => {
+                  const active = post.id === selectedPerformancePostId;
+                  return (
+                    <button
+                      key={post.id}
+                      type="button"
+                      onClick={() => handlePerformancePostSelect(post.id)}
+                      className={`rounded-2xl border px-4 py-4 text-left text-sm transition ${
+                        active
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-semibold">{post.title}</p>
+                          <p className="mt-1 text-xs text-slate-200/70">
+                            {channelCatalog[post.channel].label} ·{" "}
+                            {formatRelativeTime(post.publishedAt)}
+                          </p>
+                        </div>
+                        <span
+                          className={`text-xs uppercase tracking-[0.3em] ${
+                            post.performance === "excellent"
+                              ? "text-emerald-300"
+                              : post.performance === "good"
+                                ? "text-amber-300"
+                                : "text-slate-300"
+                          }`}
+                        >
+                          {post.performance}
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Performance metrics
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {selectedPerformancePost.title}
+                </span>
+              </div>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">Reach</p>
+                  <p className="mt-2 text-xl font-semibold text-white">
+                    {selectedPerformancePost.metrics.reach.toLocaleString()}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">Engagement</p>
+                  <p className="mt-2 text-xl font-semibold text-white">
+                    {selectedPerformancePost.metrics.engagement.toLocaleString()}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">Saves</p>
+                  <p className="mt-2 text-xl font-semibold text-white">
+                    {selectedPerformancePost.metrics.saves.toLocaleString()}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">Shares</p>
+                  <p className="mt-2 text-xl font-semibold text-white">
+                    {selectedPerformancePost.metrics.shares.toLocaleString()}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">Clicks</p>
+                  <p className="mt-2 text-xl font-semibold text-white">
+                    {selectedPerformancePost.metrics.clicks.toLocaleString()}
+                  </p>
+                </div>
+              </div>
+              <div className="mt-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                  Engagement trend
+                </p>
+                <svg
+                  viewBox="0 0 140 40"
+                  role="img"
+                  aria-label="Performance trend"
+                  className="mt-3 h-12 w-full text-emerald-300"
+                >
+                  <path
+                    d={buildSparklinePath(selectedPerformancePost.trend)}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeWidth="2"
+                  />
+                </svg>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Performance summary
+              </h3>
+              <p className="mt-2 text-sm text-slate-100/85">
+                Track individual post performance across all channels. Compare metrics and identify
+                top-performing content patterns.
+              </p>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="notifications"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.35)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-semibold text-white">Notifications</h2>
+                {unreadNotifications.length > 0 && (
+                  <span className="inline-flex items-center justify-center rounded-full bg-rose-500 px-3 py-1 text-xs font-semibold text-white">
+                    {unreadNotifications.length} new
+                  </span>
+                )}
+              </div>
+              <p className="text-sm text-slate-100/75">
+                Stay updated on approvals, mentions, performance alerts, and team activity.
+              </p>
+            </header>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Recent notifications
+                </h3>
+                <span className="text-xs text-slate-200/70">{notifications.length} total</span>
+              </div>
+              <ul className="mt-4 space-y-3">
+                {notifications.map((notif) => {
+                  const active = notif.id === selectedNotificationId;
+                  return (
+                    <li key={notif.id}>
+                      <button
+                        type="button"
+                        onClick={() => handleNotificationSelect(notif.id)}
+                        className={`w-full rounded-2xl border px-4 py-4 text-left text-sm transition ${
+                          active
+                            ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                            : notif.read
+                              ? "border-white/10 bg-slate-950/40 text-slate-100/70"
+                              : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2">
+                              <p className="font-semibold">{notif.title}</p>
+                              {!notif.read && (
+                                <span className="h-2 w-2 rounded-full bg-rose-400" />
+                              )}
+                            </div>
+                            <p className="mt-1 text-xs text-slate-200/70">{notif.message}</p>
+                            <p className="mt-2 text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                              {formatRelativeTime(notif.timestamp)}
+                            </p>
+                          </div>
+                          <span
+                            className={`text-xs uppercase tracking-[0.3em] ${
+                              notif.priority === "high"
+                                ? "text-rose-300"
+                                : notif.priority === "medium"
+                                  ? "text-amber-300"
+                                  : "text-slate-300"
+                            }`}
+                          >
+                            {notif.priority}
+                          </span>
+                        </div>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Notification settings
+              </h3>
+              <p className="mt-2 text-sm text-slate-100/85">
+                Configure which notifications you receive. Manage approval alerts, mentions, and
+                performance updates.
+              </p>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="templates"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content templates</h2>
+              <p className="text-sm text-slate-100/75">
+                Reusable content structures proven to perform well across your channels.
+              </p>
+            </header>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Template library
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {contentTemplates.length} templates
+                </span>
+              </div>
+              <div className="mt-4 grid gap-3 lg:grid-cols-3">
+                {contentTemplates.map((template) => {
+                  const active = template.id === selectedContentTemplateId;
+                  return (
+                    <button
+                      key={template.id}
+                      type="button"
+                      onClick={() => handleContentTemplateSelect(template.id)}
+                      className={`flex h-full flex-col justify-between rounded-2xl border px-4 py-4 text-left text-sm transition ${
+                        active
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                    >
+                      <div>
+                        <p className="font-semibold">{template.name}</p>
+                        <p className="mt-1 text-xs text-slate-200/70">{template.category}</p>
+                        <p className="mt-2 text-xs text-slate-200/60">{template.structure}</p>
+                      </div>
+                      <div className="mt-3 flex items-center justify-between text-xs">
+                        <span className="text-slate-200/70">{template.usage} uses</span>
+                        <span className="text-emerald-300">{template.avgPerformance}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Template details
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {selectedContentTemplate.name}
+                </span>
+              </div>
+              <div className="mt-4 space-y-3">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                    Structure
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-white">
+                    {selectedContentTemplate.structure}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                    Channels
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {selectedContentTemplate.channels.map((channelId) => (
+                      <span
+                        key={`${selectedContentTemplate.id}-${channelId}`}
+                        className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${channelCatalog[channelId].badge}`}
+                      >
+                        <span
+                          className={`h-1.5 w-1.5 rounded-full ${channelCatalog[channelId].dot}`}
+                        />
+                        {channelCatalog[channelId].label}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                    Performance
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-white">
+                    {selectedContentTemplate.avgPerformance} avg improvement
+                  </p>
+                  <p className="mt-1 text-xs text-slate-200/70">
+                    Used {selectedContentTemplate.usage} times
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Template usage
+              </h3>
+              <p className="mt-2 text-sm text-slate-100/85">
+                Templates help maintain consistency and improve performance. Use them as starting
+                points for your content.
+              </p>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="testing"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(14,165,233,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">A/B Testing</h2>
+              <p className="text-sm text-slate-100/75">
+                Test different variations of your content to optimize performance and engagement.
+              </p>
+            </header>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Active tests
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {abTests.filter((t) => t.status === "running").length} running
+                </span>
+              </div>
+              <div className="mt-4 space-y-4">
+                {abTests.map((test) => {
+                  const active = test.id === selectedAbTestId;
+                  const winner = test.winner
+                    ? test.variants.find((v) => v.id === test.winner)
+                    : null;
+                  return (
+                    <button
+                      key={test.id}
+                      type="button"
+                      onClick={() => handleAbTestSelect(test.id)}
+                      className={`w-full rounded-2xl border px-4 py-4 text-left text-sm transition ${
+                        active
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-semibold">{test.name}</p>
+                          <p className="mt-1 text-xs text-slate-200/70">
+                            {test.participants.toLocaleString()} participants ·{" "}
+                            {formatRelativeTime(test.startDate)}
+                          </p>
+                        </div>
+                        <span
+                          className={`text-xs uppercase tracking-[0.3em] ${
+                            test.status === "running"
+                              ? "text-emerald-300"
+                              : test.status === "completed"
+                                ? "text-slate-300"
+                                : "text-amber-300"
+                          }`}
+                        >
+                          {test.status}
+                        </span>
+                      </div>
+                      <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                        {test.variants.map((variant) => (
+                          <div
+                            key={variant.id}
+                            className={`rounded-xl border p-3 ${
+                              winner?.id === variant.id
+                                ? "border-emerald-400/50 bg-emerald-400/10"
+                                : "border-white/10 bg-slate-950/40"
+                            }`}
+                          >
+                            <div className="flex items-center justify-between">
+                              <p className="text-xs font-semibold text-white">{variant.label}</p>
+                              {winner?.id === variant.id && (
+                                <span className="text-[10px] uppercase tracking-wider text-emerald-300">
+                                  Winner
+                                </span>
+                              )}
+                            </div>
+                            <p className="mt-1 text-xs text-slate-200/70">
+                              {variant.performance}% performance
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Test insights
+              </h3>
+              <p className="mt-2 text-sm text-slate-100/85">
+                {selectedAbTest.name}: {selectedAbTest.variants.length} variants tested with{" "}
+                {selectedAbTest.participants.toLocaleString()} participants.
+              </p>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="competitors"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.35)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Competitor analysis</h2>
+              <p className="text-sm text-slate-100/75">
+                Track competitor performance, compare metrics, and identify opportunities to improve
+                your strategy.
+              </p>
+            </header>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Tracked competitors
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {competitorAnalysis.length} competitors
+                </span>
+              </div>
+              <div className="mt-4 space-y-4">
+                {competitorAnalysis.map((competitor) => (
+                  <div
+                    key={competitor.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-semibold text-white">{competitor.name}</p>
+                        <p className="mt-1 text-xs text-slate-200/70">
+                          {channelCatalog[competitor.channel].label}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                          Followers
+                        </p>
+                        <p className="mt-1 text-sm font-semibold text-white">
+                          {competitor.metrics.followers.toLocaleString()}
+                        </p>
+                        <p
+                          className={`mt-1 text-xs ${
+                            competitor.comparison.followers.startsWith("+")
+                              ? "text-emerald-300"
+                              : "text-rose-300"
+                          }`}
+                        >
+                          {competitor.comparison.followers} vs you
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                          Engagement
+                        </p>
+                        <p className="mt-1 text-sm font-semibold text-white">
+                          {competitor.metrics.avgEngagement}%
+                        </p>
+                        <p
+                          className={`mt-1 text-xs ${
+                            competitor.comparison.engagement.startsWith("+")
+                              ? "text-emerald-300"
+                              : "text-rose-300"
+                          }`}
+                        >
+                          {competitor.comparison.engagement} vs you
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                          Frequency
+                        </p>
+                        <p className="mt-1 text-sm font-semibold text-white">
+                          {competitor.metrics.postFrequency}
+                        </p>
+                        <p className="mt-1 text-xs text-slate-200/70">
+                          {competitor.comparison.frequency} vs you
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                          Top content
+                        </p>
+                        <p className="mt-1 text-sm font-semibold text-white">
+                          {competitor.metrics.topContent}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Competitive insights
+              </h3>
+              <p className="mt-2 text-sm text-slate-100/85">
+                Monitor competitor strategies and identify gaps in your content approach. Use these
+                insights to refine your posting strategy.
+              </p>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="automation-advanced"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.35)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Workflow automations</h2>
+              <p className="text-sm text-slate-100/75">
+                Create automated workflows with triggers, conditions, and actions to streamline your
+                content operations.
+              </p>
+            </header>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Automation rules
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {workflowAutomations.filter((a) => a.status === "active").length} active
+                </span>
+              </div>
+              <div className="mt-4 space-y-4">
+                {workflowAutomations.map((automation) => {
+                  const active = automation.id === selectedAutomationId;
+                  return (
+                    <button
+                      key={automation.id}
+                      type="button"
+                      onClick={() => handleAutomationSelect(automation.id)}
+                      className={`w-full rounded-2xl border px-4 py-4 text-left text-sm transition ${
+                        active
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-semibold">{automation.name}</p>
+                          <p className="mt-1 text-xs text-slate-200/70">
+                            {automation.trigger} → {automation.action}
+                          </p>
+                        </div>
+                        <span
+                          className={`text-xs uppercase tracking-[0.3em] ${
+                            automation.status === "active"
+                              ? "text-emerald-300"
+                              : "text-slate-300"
+                          }`}
+                        >
+                          {automation.status}
+                        </span>
+                      </div>
+                      <div className="mt-3 rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                          Condition
+                        </p>
+                        <p className="mt-1 text-sm font-semibold text-white">
+                          {automation.condition}
+                        </p>
+                      </div>
+                      <div className="mt-3 flex items-center justify-between text-xs text-slate-200/70">
+                        <span>Runs: {automation.runs}</span>
+                        <span>Last run: 2 hours ago</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Automation summary
+              </h3>
+              <p className="mt-2 text-sm text-slate-100/85">
+                {selectedAutomation.name}: {selectedAutomation.runs} runs completed. Status:{" "}
+                {selectedAutomation.status}.
+              </p>
+            </div>
+          </aside>
+        </section>
       </main>
     </div>
   );
