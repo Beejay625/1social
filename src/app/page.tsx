@@ -1661,12 +1661,18 @@ export default function Home() {
   const [selectedRecommendationId, setSelectedRecommendationId] = useState<string>(
     contentRecommendations[0]?.id ?? "",
   );
-  const [selectedPerformancePostId, setSelectedPerformancePostId] = useState<string>(
-    contentPerformancePosts?.[0]?.id ?? "",
-  );
-  const [selectedAutomationId, setSelectedAutomationId] = useState<string>(
-    workflowAutomations?.[0]?.id ?? "",
-  );
+    const [selectedPerformancePostId, setSelectedPerformancePostId] = useState<string>(
+      contentPerformanceData?.[0]?.id ?? "",
+    );
+    const [selectedAutomationId, setSelectedAutomationId] = useState<string>(
+      workflowAutomationRules?.[0]?.id ?? "",
+    );
+    const [selectedSegmentId, setSelectedSegmentId] = useState<string>(
+      audienceSegments?.[0]?.id ?? "",
+    );
+    const [selectedAssetId, setSelectedAssetId] = useState<string>(
+      contentLibrary?.[0]?.id ?? "",
+    );
   const [selectedNotificationId, setSelectedNotificationId] = useState<string>("");
   const [selectedMentionId, setSelectedMentionId] = useState<string>(
     socialListeningMentions[0]?.id ?? "",
