@@ -266,6 +266,14 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Scheduling Queue** - Advanced queue management with priority ordering and automatic retry
 - **Engagement Tools** - Automated engagement with auto-replies, mention tracking, and moderation
 - **Hashtag Research** - Hashtag analytics, trending tag discovery, and performance insights
+- **Analytics Export** - Export analytics data in multiple formats (PDF, CSV, Excel, JSON) with templates
+- **Content Predictor** - AI-powered content performance predictions with confidence scores
+- **Audience Growth** - Track follower growth across platforms with trend analysis
+- **Competitor Analysis** - Monitor competitor performance and identify competitive advantages
+- **Content Library** - Organize and manage media assets, templates, and reusable content
+- **Social Commerce** - Sell products directly through social media with sales tracking
+- **Video Analytics** - Track video performance with watch time, completion rate, and insights
+- **Influencer Management** - Manage influencer relationships and track collaboration performance
 
 ## Project Structure
 
