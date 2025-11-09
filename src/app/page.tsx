@@ -2,7 +2,7 @@
 
 import { networks } from "@/config";
 import { appKitModal } from "@/context";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAccount, useChainId, useDisconnect } from "wagmi";
 
 type ChannelId = "farcaster" | "instagram";
