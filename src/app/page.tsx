@@ -9647,7 +9647,7 @@ export default function Home() {
             </header>
 
             <div className="space-y-4">
-              {exportHistory.map((exportItem) => (
+              {exportHistoryItems.map((exportItem) => (
                 <div
                   key={exportItem.id}
                   className={`rounded-3xl border p-6 ${exportItem.status === "completed" ? "border-emerald-400/50 bg-emerald-400/10" : "border-amber-400/50 bg-amber-400/10"}`}
