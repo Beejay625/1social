@@ -1185,6 +1185,21 @@ export default function Home() {
     useState<string>("all");
   const [selectedEngagementStatus, setSelectedEngagementStatus] =
     useState<string>("open");
+  const [reportingView, setReportingView] = useState<"overview" | "exports" | "deep-dive">(
+    "overview",
+  );
+  const [selectedExecMetricId, setSelectedExecMetricId] = useState<string>(
+    reportingExecMetrics[0]?.id ?? "",
+  );
+  const [selectedVarianceId, setSelectedVarianceId] = useState<string>(
+    reportingVarianceBreakdowns[0]?.id ?? "",
+  );
+  const [selectedBenchmarkChannel, setSelectedBenchmarkChannel] = useState<ChannelId>(
+    reportingBenchmarkMatrix[0]?.channel ?? "farcaster",
+  );
+  const [selectedAlertFilter, setSelectedAlertFilter] = useState<string>(
+    reportingAlertFilters[0]?.id ?? "all",
+  );
   const [calendarView, setCalendarView] = useState<"week" | "month">("week");
   const [calendarFocus, setCalendarFocus] = useState<string>("Thu");
 
