@@ -1125,27 +1125,6 @@ const insightRecommendations = [
   },
 ];
 
-const scheduleStatusStyles: Record<
-  PlannedPost["status"],
-  { label: string; badge: string; dot: string }
-> = {
-  approved: {
-    label: "Approved",
-    badge: "bg-emerald-400/20 text-emerald-50 border border-emerald-300/40",
-    dot: "bg-emerald-300",
-  },
-  queued: {
-    label: "Queued",
-    badge: "bg-cyan-400/20 text-cyan-50 border border-cyan-300/40",
-    dot: "bg-cyan-300",
-  },
-  draft: {
-    label: "Needs edits",
-    badge: "bg-amber-400/20 text-amber-50 border border-amber-300/40",
-    dot: "bg-amber-300",
-  },
-};
-
 const truncateAddress = (value?: string) => {
   if (!value) return "Not connected";
   return `${value.slice(0, 6)}…${value.slice(-4)}`;
