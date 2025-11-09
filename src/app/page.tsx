@@ -22177,7 +22177,7 @@ export default function Home() {
                         <span className={`h-2 w-2 rounded-full ${channelCatalog[video.platform as ChannelId]?.dot || "bg-slate-400"}`} />
                         <span className="capitalize">{video.platform}</span>
                         <span>·</span>
-                        <span>{video.durationFormatted}</span>
+                        <span>{Math.floor(video.duration / 60)}:{(video.duration % 60).toString().padStart(2, '0')}</span>
                         <span>·</span>
                         <span>{formatRelativeTime(video.publishedAt)}</span>
                       </div>
@@ -22188,15 +22188,15 @@ export default function Home() {
                         </div>
                         <div>
                           <p className="text-xs text-slate-200/60">Watch Time</p>
-                          <p className="mt-1 text-sm font-semibold text-white">{video.metrics.watchTimeFormatted}</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{Math.floor(video.metrics.watchTime / 3600)}h</p>
                         </div>
                         <div>
-                          <p className="text-xs text-slate-200/60">Avg Watch %</p>
-                          <p className="mt-1 text-sm font-semibold text-emerald-300">{video.metrics.avgWatchPercentage}%</p>
+                          <p className="text-xs text-slate-200/60">Avg Watch</p>
+                          <p className="mt-1 text-sm font-semibold text-emerald-300">{video.metrics.avgWatchTime}%</p>
                         </div>
                         <div>
-                          <p className="text-xs text-slate-200/60">Eng. Rate</p>
-                          <p className="mt-1 text-sm font-semibold text-emerald-300">{video.metrics.engagementRate}%</p>
+                          <p className="text-xs text-slate-200/60">Completion</p>
+                          <p className="mt-1 text-sm font-semibold text-emerald-300">{video.metrics.completionRate}%</p>
                         </div>
                       </div>
                     </div>
