@@ -1701,7 +1701,7 @@ const userRoles = [
 ];
 
 // Export & backup
-const exportHistory = [
+const exportHistoryItems = [
   {
     id: "export-1",
     name: "Q1 Campaign Data",
