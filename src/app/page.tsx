@@ -9692,12 +9692,12 @@ export default function Home() {
               <div className="mt-4 space-y-4">
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
                   <p className="text-xs text-slate-200/60">Total exports</p>
-                  <p className="mt-1 text-2xl font-semibold text-white">{exportHistory.length}</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{exportHistoryItems.length}</p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
                   <p className="text-xs text-slate-200/60">Completed</p>
                   <p className="mt-1 text-xl font-semibold text-white">
-                    {exportHistory.filter((e) => e.status === "completed").length}
+                    {exportHistoryItems.filter((e) => e.status === "completed").length}
                   </p>
                 </div>
               </div>
