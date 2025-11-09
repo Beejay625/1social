@@ -1059,16 +1059,6 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "automation", label: "Automation" },
   { id: "ops", label: "Ops" },
 ];
-const audienceTrendData = [
-  { day: "Mon", farcaster: 12, instagram: 24 },
-  { day: "Tue", farcaster: 18, instagram: 28 },
-  { day: "Wed", farcaster: 26, instagram: 32 },
-  { day: "Thu", farcaster: 28, instagram: 36 },
-  { day: "Fri", farcaster: 34, instagram: 44 },
-  { day: "Sat", farcaster: 30, instagram: 40 },
-  { day: "Sun", farcaster: 22, instagram: 37 },
-];
-
 const chartColorTokens = {
   reach: "text-sky-300",
   conversionRate: "text-amber-300",
