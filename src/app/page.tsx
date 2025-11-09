@@ -1095,49 +1095,6 @@ const velocityBadge = (value: number) => {
   return { label: "Warming up", tone: "bg-rose-400/25 text-rose-100" };
 };
 
-const formatMetricValue = (value: number, unit: MetricUnit) => {
-  if (unit === "k") {
-    return `${value.toLocaleString()}k`;
-  }
-  if (unit === "%") {
-    return `${value.toFixed(1)}%`;
-  }
-  return `${value.toFixed(0)} pts`;
-};
-
-const formatMetricDelta = (delta: number, unit: MetricUnit) => {
-  const prefix = delta > 0 ? "+" : delta < 0 ? "" : "±";
-  if (delta === 0) {
-    return `${prefix}0${unit === "score" ? " pts" : unit === "%" ? "%" : "k"}`;
-  }
-  if (unit === "k") {
-    return `${prefix}${Math.abs(delta).toFixed(0)}k`;
-  }
-  if (unit === "%") {
-    return `${prefix}${Math.abs(delta).toFixed(1)}%`;
-  }
-  return `${prefix}${Math.abs(delta).toFixed(0)} pts`;
-};
-
-const metricDeltaTone = (delta: number) => {
-  if (delta > 0) {
-    return {
-      tone: "bg-emerald-400/20 text-emerald-100",
-      icon: "▲",
-    };
-  }
-  if (delta < 0) {
-    return {
-      tone: "bg-rose-500/30 text-rose-100",
-      icon: "▼",
-    };
-  }
-  return {
-    tone: "bg-white/10 text-white",
-    icon: "■",
-  };
-};
-
 const chartColorTokens = {
   reach: "text-sky-300",
   conversionRate: "text-amber-300",
