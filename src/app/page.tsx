@@ -4134,6 +4134,251 @@ export default function Home() {
               </div>
             </div>
 
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Audience segmentation
+                </h3>
+                <span className="text-xs text-slate-200/70">{audienceSegments.length} segments</span>
+              </div>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                {audienceSegments.map((segment) => {
+                  const coverageDiff = segment.coverage - segment.benchmark;
+                  const trendPath = buildSparklinePath(segment.trend);
+                  return (
+                    <div
+                      key={segment.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-semibold text-white">{segment.label}</p>
+                          <p className="mt-1 text-xs text-slate-200/70">
+                            {channelCatalog[segment.channel].label} · {(segment.size / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <span className={`text-xs font-semibold ${coverageDiff >= 0 ? "text-emerald-300" : "text-amber-300"}`}>
+                          {coverageDiff >= 0 ? "+" : ""}{coverageDiff}% vs benchmark
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-3 gap-2 text-xs">
+                        <div>
+                          <p className="text-slate-200/60">Growth</p>
+                          <p className="mt-1 font-semibold text-white">+{segment.growth}%</p>
+                        </div>
+                        <div>
+                          <p className="text-slate-200/60">Engagement</p>
+                          <p className="mt-1 font-semibold text-white">{segment.engagement}%</p>
+                        </div>
+                        <div>
+                          <p className="text-slate-200/60">Coverage</p>
+                          <p className="mt-1 font-semibold text-white">{segment.coverage}%</p>
+                        </div>
+                      </div>
+                      <svg
+                        viewBox="0 0 140 30"
+                        role="img"
+                        aria-label={`${segment.label} coverage trend`}
+                        className="mt-3 h-8 w-full text-sky-300"
+                      >
+                        <path
+                          d={trendPath}
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeWidth="2"
+                        />
+                      </svg>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Sentiment trends
+                  </h3>
+                  <span className="text-xs text-slate-200/70">Last 7 days</span>
+                </div>
+                <div className="mt-4 space-y-3">
+                  <svg
+                    viewBox="0 0 320 120"
+                    role="img"
+                    aria-label="Sentiment trend chart"
+                    className="h-32 w-full text-white/40"
+                  >
+                    <line
+                      x1="0"
+                      y1="110"
+                      x2="320"
+                      y2="110"
+                      stroke="rgba(255,255,255,0.08)"
+                      strokeWidth="1"
+                    />
+                    <path
+                      d={buildSparklinePath(sentimentHistory.map((h) => h.positive))}
+                      className="text-emerald-300"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeWidth="2"
+                    />
+                    <path
+                      d={buildSparklinePath(sentimentHistory.map((h) => h.neutral))}
+                      className="text-slate-400"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeWidth="2"
+                      strokeDasharray="4 4"
+                    />
+                    <path
+                      d={buildSparklinePath(sentimentHistory.map((h) => h.negative))}
+                      className="text-rose-300"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeWidth="2"
+                      strokeDasharray="2 4"
+                    />
+                  </svg>
+                  <div className="flex flex-wrap gap-4 text-xs">
+                    <div className="flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-emerald-300" />
+                      <span className="text-slate-200/70">Positive</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-slate-400" />
+                      <span className="text-slate-200/70">Neutral</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-rose-300" />
+                      <span className="text-slate-200/70">Negative</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Sentiment alerts
+                  </h3>
+                  <span className="text-xs text-slate-200/70">
+                    {sentimentAlerts.filter((a) => !a.resolved).length} active
+                  </span>
+                </div>
+                <ul className="mt-4 space-y-3">
+                  {sentimentAlerts.map((alert) => (
+                    <li
+                      key={alert.id}
+                      className={`rounded-2xl border p-4 ${alert.severity === "medium" ? "border-amber-400/50 bg-amber-400/10" : "border-slate-400/50 bg-slate-400/10"}`}
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className={`text-[10px] uppercase tracking-wider ${alert.severity === "medium" ? "text-amber-300" : "text-slate-300"}`}>
+                          {alert.type.replace("_", " ")}
+                        </span>
+                        <span className="text-xs text-slate-200/70">
+                          {channelCatalog[alert.channel].label}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm text-white">{alert.message}</p>
+                      <p className="mt-2 text-xs text-slate-200/60">
+                        {formatRelativeTime(alert.at)}
+                      </p>
+                    </li>
+                  ))}
+                  {sentimentAlerts.length === 0 && (
+                    <li className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-4 text-center text-xs text-slate-200/70">
+                      No active alerts
+                    </li>
+                  )}
+                </ul>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Recommendation playbooks
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  {recommendationPlaybooks.filter((p) => p.priority === "high").length} high priority
+                </span>
+              </div>
+              <div className="mt-4 space-y-4">
+                {recommendationPlaybooks.map((playbook) => {
+                  const completedSteps = playbook.steps.filter((s) => s.status === "completed").length;
+                  const totalSteps = playbook.steps.length;
+                  return (
+                    <div
+                      key={playbook.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-5"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <h4 className="text-sm font-semibold text-white">{playbook.title}</h4>
+                            <span className={`text-[10px] uppercase tracking-wider ${playbook.priority === "high" ? "text-rose-300" : "text-amber-300"}`}>
+                              {playbook.priority}
+                            </span>
+                          </div>
+                          <p className="mt-2 text-xs text-slate-200/70">
+                            {completedSteps}/{totalSteps} steps completed
+                          </p>
+                        </div>
+                        <span className={`text-xs font-semibold uppercase tracking-wider ${chartColorTokens[playbook.metric]}`}>
+                          {playbook.metric}
+                        </span>
+                      </div>
+                      <ul className="mt-4 space-y-2">
+                        {playbook.steps.map((step) => (
+                          <li
+                            key={step.id}
+                            className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-3"
+                          >
+                            <span className={`h-2 w-2 rounded-full ${step.status === "completed" ? "bg-emerald-300" : "bg-slate-400"}`} />
+                            <p className={`flex-1 text-sm ${step.status === "completed" ? "text-slate-400 line-through" : "text-white"}`}>
+                              {step.action}
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-200/70">
+                            Creative angles
+                          </p>
+                          <ul className="mt-2 space-y-1">
+                            {playbook.creativeAngles.map((angle, idx) => (
+                              <li key={idx} className="text-xs text-slate-200/70">
+                                • {angle}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-200/70">
+                            Channel guidance
+                          </p>
+                          <ul className="mt-2 space-y-1">
+                            {Object.entries(playbook.channelGuidance).map(([channel, guidance]) => (
+                              <li key={channel} className="text-xs text-slate-200/70">
+                                <span className="font-semibold text-white">{channelCatalog[channel as ChannelId].label}:</span> {guidance}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
             <div className="space-y-3">
               <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
                 Recommendations
