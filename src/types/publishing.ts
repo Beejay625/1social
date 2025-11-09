@@ -241,3 +241,9 @@ export type MetricInsight = {
   metric: MetricKpiId;
 };
 
+export type AudienceTrendPoint = {
+  day: string;
+  farcaster: number;
+  instagram: number;
+};
+
