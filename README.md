@@ -233,6 +233,14 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Team Performance Analytics** - Individual and team performance tracking with goals and productivity metrics
 - **Crisis Management Dashboard** - Automated crisis detection, severity alerts, and response tracking
 - **Workflow Builder** - Custom workflow creation with multi-step processes and automation
+- **Real-time Collaboration** - Live collaboration with presence indicators and active session tracking
+- **Conflict Detection** - Automatic conflict detection and resolution for concurrent edits
+- **Bulk Operations** - Perform bulk actions on multiple items with progress tracking
+- **Content Suggestions** - AI-powered content suggestions with confidence scores
+- **Content Version History** - Complete version tracking with restore capabilities
+- **Smart Notifications** - Intelligent notification prioritization system
+- **Performance Alerts** - Automated performance metric alerts with thresholds
+- **Account Health Monitoring** - Health status tracking for all connected accounts
 - **Real-time Collaboration** - Live editing sessions with presence indicators and co-editing capabilities
 - **Conflict Detection** - Automatic detection of scheduling conflicts with resolution suggestions
 - **Bulk Operations** - Efficient bulk editing, scheduling, and tagging with operation templates
