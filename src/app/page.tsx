@@ -3516,6 +3516,14 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "content-version-history", label: "Content Version History" },
   { id: "smart-notifications", label: "Smart Notifications" },
   { id: "performance-alerts", label: "Performance Alerts" },
+  { id: "calendar-sync", label: "Calendar Sync" },
+  { id: "advanced-listening", label: "Advanced Listening" },
+  { id: "approval-workflows", label: "Approval Workflows" },
+  { id: "analytics-dashboards", label: "Analytics Dashboards" },
+  { id: "template-library", label: "Template Library" },
+  { id: "scheduling-queue", label: "Scheduling Queue" },
+  { id: "engagement-tools", label: "Engagement Tools" },
+  { id: "hashtag-research", label: "Hashtag Research" },
 ];
 const chartColorTokens = {
   reach: "text-sky-300",
