@@ -496,14 +496,59 @@ export default function Home() {
               how the unified publishing flow will feel.
             </p>
           </div>
-          <div className="flex flex-col items-start gap-4">
-            <div className="rounded-3xl border border-white/20 bg-white/10 px-6 py-5 text-start shadow-lg backdrop-blur-2xl">
-              <p className="text-sm text-slate-100/70">
-                Connect your wallet to enable Farcaster signing, powered by
-                Reown AppKit.
-              </p>
-              <div className="mt-4 flex justify-center">
-                <appkit-button />
+          <div className="w-full max-w-md space-y-5">
+            <div className="rounded-4xl border border-white/20 bg-white/10 p-6 shadow-lg backdrop-blur-2xl">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-200/70">
+                    Wallet Center
+                  </p>
+                  <p className="mt-2 text-sm text-slate-100/75">
+                    {isConnected
+                      ? "Wallet connected via Reown AppKit."
+                      : "Connect to prep Farcaster signatures."}
+                  </p>
+                </div>
+                <span
+                  className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${
+                    isConnected
+                      ? "bg-emerald-400/20 text-emerald-50"
+                      : "bg-rose-400/25 text-rose-50"
+                  }`}
+                >
+                  <span
+                    className={`h-2 w-2 rounded-full ${
+                      isConnected ? "bg-emerald-300" : "bg-rose-300"
+                    }`}
+                  />
+                  {isConnected ? "Live" : "Offline"}
+                </span>
+              </div>
+              <div className="mt-5 rounded-3xl border border-white/15 bg-slate-950/40 px-4 py-3 text-sm text-slate-100/80">
+                <p className="font-semibold text-white">
+                  {truncateAddress(address)}
+                </p>
+                <p className="mt-1 text-xs uppercase tracking-[0.28em] text-slate-300/60">
+                  {chain?.name ?? "No network selected"}
+                </p>
+              </div>
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={handleOpenWallet}
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-400 via-indigo-500 to-fuchsia-500 px-5 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-indigo-500/40 transition hover:shadow-xl hover:shadow-indigo-500/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  {isConnected ? "Manage wallet" : "Connect wallet"}
+                </button>
+                {isConnected && (
+                  <button
+                    type="button"
+                    onClick={handleDisconnectWallet}
+                    className="inline-flex items-center justify-center rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/60 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  >
+                    Disconnect
+                  </button>
+                )}
               </div>
             </div>
             <p className="text-xs uppercase tracking-[0.2em] text-slate-200/60">
