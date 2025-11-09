@@ -1703,7 +1703,7 @@ export default function Home() {
               <div className="space-y-4">
                 <h1 className="text-4xl font-semibold leading-tight text-white md:text-5xl lg:text-[52px]">
                   Align your voice across every channel.
-          </h1>
+            </h1>
                 <p className="text-lg leading-relaxed text-slate-100/80 md:text-xl">
                   Share once, syndicate instantly, and keep Reown wallet
                   signatures ready for Farcaster. This preview shows how your
@@ -1790,8 +1790,8 @@ export default function Home() {
                 </p>
                     <p className="text-xs uppercase tracking-[0.3em] text-slate-300/60">
                   {activeNetwork?.name ?? "No network selected"}
-          </p>
-        </div>
+                </p>
+              </div>
 
                   <ul className="grid gap-3 text-sm text-slate-200/80 sm:grid-cols-2 sm:gap-4">
                     <li className="flex items-start gap-3">
@@ -1921,7 +1921,7 @@ export default function Home() {
                   </button>
                 );
               })}
-        </div>
+            </div>
 
             <form
               onSubmit={handleSubmit}
@@ -2945,6 +2945,173 @@ export default function Home() {
               </div>
             </div>
           </article>
+        </section>
+
+        <section
+          id="insights"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.95fr)]"
+        >
+          <div>
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Best time heatmap
+              </h3>
+              <span className="text-xs text-slate-200/70">
+                Peak: {audienceInsights?.topSlot.day} · {audienceInsights?.topSlot.slot}
+              </span>
+            </div>
+            <div className="mt-4 overflow-hidden rounded-3xl border border-white/15 bg-slate-950/40">
+              <table className="w-full border-collapse text-xs text-slate-100">
+                <thead>
+                  <tr>
+                    <th className="px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400">
+                      Slot
+                    </th>
+                    {audienceDays.map((day) => (
+                      <th
+                        key={`day-${day}`}
+                        className="px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400"
+                      >
+                        {day}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {bestTimeGrid.map((row) => (
+                    <tr key={`slot-${row.slot}`}>
+                      <th className="px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400">
+                        {row.slot}
+                      </th>
+                      {row.values.map((value, index) => (
+                        <td key={`slot-${row.slot}-${index}`} className="px-3 py-2">
+                          <span
+                            className={`flex h-8 w-12 items-center justify-center rounded-xl text-[11px] font-semibold ${heatLevelClass(
+                              value,
+                            )}`}
+                          >
+                            {value}
+                          </span>
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+              Recommendations
+            </h3>
+            <div className="grid gap-3">
+              {automatedInsight && (
+                <article className="rounded-3xl border border-emerald-400/40 bg-emerald-500/10 p-5 shadow-inner shadow-emerald-500/20">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-emerald-200">
+                    Automated signal · {automatedInsight.primary.metricLabel}
+                  </p>
+                  <h4 className="mt-2 text-lg font-semibold text-white">
+                    {automatedInsight.primary.headline}
+                  </h4>
+                  <p className="mt-2 text-sm text-emerald-50/80">
+                    {automatedInsight.primary.detail}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-emerald-100">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/20 px-3 py-1">
+                      {automatedInsight.primary.value}
+                    </span>
+                    <span className="inline-flex items-center gap-2 rounded-full border border-emerald-300/50 bg-emerald-400/30 px-3 py-1 text-emerald-900">
+                      {automatedInsight.primary.delta}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-xs uppercase tracking-[0.3em] text-emerald-100/70">
+                    {automatedInsight.primary.deltaLabel}
+                  </p>
+                  {automatedInsight.secondary.length > 0 && (
+                    <ul className="mt-4 space-y-2 text-xs text-emerald-100/80">
+                      {automatedInsight.secondary.map((item) => (
+                        <li key={item.id} className="flex items-start gap-2">
+                          <span className="mt-1 h-1.5 w-1.5 rounded-full bg-emerald-300" />
+                          <span>{item.headline}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </article>
+              )}
+              {insightRecommendations.map((item) => (
+                <article
+                  key={item.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-4 shadow-inner shadow-purple-900/20"
+                >
+                  <p className="text-sm font-semibold text-white">
+                    {item.title}
+                  </p>
+                  <p className="mt-2 text-sm text-slate-100/80">
+                    {item.detail}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-4">
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Farcaster followers
+                </p>
+                <span className="text-xs font-semibold text-emerald-200">
+                  +{audienceInsights.farcasterDelta}
+                </span>
+              </div>
+              <p className="mt-2 text-3xl font-semibold text-white">
+                {audienceInsights.farcasterLatest}k
+              </p>
+              <svg
+                viewBox="0 0 140 42"
+                role="img"
+                aria-label="Farcaster follower sparkline"
+                className="mt-3 h-12 w-full text-emerald-300"
+              >
+                <path
+                  d={audienceInsights.farcasterPath}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="3"
+                />
+              </svg>
+            </div>
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-4">
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Instagram followers
+                </p>
+                <span className="text-xs font-semibold text-fuchsia-200">
+                  +{audienceInsights.instagramDelta}
+                </span>
+              </div>
+              <p className="mt-2 text-3xl font-semibold text-white">
+                {audienceInsights.instagramLatest}k
+              </p>
+              <svg
+                viewBox="0 0 140 42"
+                role="img"
+                aria-label="Instagram follower sparkline"
+                className="mt-3 h-12 w-full text-fuchsia-300"
+              >
+                <path
+                  d={audienceInsights.instagramPath}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="3"
+                />
+              </svg>
+            </div>
+          </div>
         </section>
       </main>
     </div>
