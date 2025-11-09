@@ -1,6 +1,8 @@
 'use client';
 
+import { appKitModal } from "@/context";
 import { useMemo, useState } from "react";
+import { useAccount, useDisconnect, useNetwork } from "wagmi";
 
 type ChannelId = "farcaster" | "instagram";
 
