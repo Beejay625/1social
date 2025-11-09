@@ -223,3 +223,21 @@ export type CalendarSlot = {
   impact: CalendarImpact;
 };
 
+export type InsightRecommendation = {
+  id: string;
+  title: string;
+  detail: string;
+};
+
+export type BestTimeSlot = {
+  slot: string;
+  values: number[];
+};
+
+export type MetricInsight = {
+  id: string;
+  headline: string;
+  detail: string;
+  metric: MetricKpiId;
+};
+
