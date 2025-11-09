@@ -479,6 +479,46 @@ export default function Home() {
     };
   }, [selectedWorkflowPostId, sortedPlannedPosts]);
 
+  const audienceInsights = useMemo(() => {
+    const farcasterSeries = audienceTrendData.map((item) => item.farcaster);
+    const instagramSeries = audienceTrendData.map((item) => item.instagram);
+    const farcasterPath = buildSparklinePath(farcasterSeries);
+    const instagramPath = buildSparklinePath(instagramSeries);
+    const farcasterDelta =
+      farcasterSeries[farcasterSeries.length - 1] - farcasterSeries[0];
+    const instagramDelta =
+      instagramSeries[instagramSeries.length - 1] - instagramSeries[0];
+    const farcasterLatest = farcasterSeries[farcasterSeries.length - 1];
+    const instagramLatest = instagramSeries[instagramSeries.length - 1];
+
+    const topSlot = bestTimeGrid
+      .flatMap((row) =>
+        row.values.map((value, columnIndex) => ({
+          slot: row.slot,
+          day: audienceDays[columnIndex],
+          value,
+        })),
+      )
+      .reduce(
+        (best, current) => (current.value > best.value ? current : best),
+        {
+          slot: bestTimeGrid[0].slot,
+          day: audienceDays[0],
+          value: bestTimeGrid[0].values[0],
+        },
+      );
+
+    return {
+      farcasterPath,
+      instagramPath,
+      farcasterDelta,
+      instagramDelta,
+      farcasterLatest,
+      instagramLatest,
+      topSlot,
+    };
+  }, []);
+
   const analyticsSnapshot = useMemo(() => {
     const farcasterLive = posts.filter((post) =>
       post.channels.includes("farcaster"),
