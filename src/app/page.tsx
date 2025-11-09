@@ -877,6 +877,34 @@ const approvalTemplates: ApprovalTemplate[] = [
   },
 ];
 
+const getApprovalTemplate = (templateId: string | undefined | null) =>
+  approvalTemplates.find((template) => template.id === templateId) ?? null;
+
+const instantiateApprovalSteps = (
+  template: ApprovalTemplate,
+  scheduledFor: string,
+  seed: string,
+): ApprovalStep[] => {
+  const launchTime = new Date(scheduledFor).getTime();
+  return template.steps.map((step, index) => {
+    const dueTime =
+      launchTime + step.dueOffsetHours * 60 * 60 * 1000;
+    const baseEscalation = step.escalation
+      ? {
+          ...step.escalation,
+        }
+      : undefined;
+    return {
+      id: `${step.id}-${seed}-${index}`,
+      label: step.label,
+      approver: step.approver,
+      status: "pending",
+      due: new Date(dueTime).toISOString(),
+      escalation: baseEscalation,
+    };
+  });
+};
+
 const repostLedger: RepostEvent[] = [
   {
     id: "repost-1",
