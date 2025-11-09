@@ -966,6 +966,9 @@ export default function Home() {
   const [channelState, setChannelState] = useState<Record<ChannelId, boolean>>({
     farcaster: true,
     instagram: true,
+    x: false,
+    lens: false,
+    mirror: false,
   });
   const [posts, setPosts] = useState<SocialPost[]>(initialPosts);
 
@@ -984,6 +987,9 @@ export default function Home() {
   >({
     farcaster: true,
     instagram: false,
+    x: false,
+    lens: false,
+    mirror: false,
   });
   const [selectedWorkflowPostId, setSelectedWorkflowPostId] = useState<string>(
     initialPlannedPosts[0]?.id ?? "",
