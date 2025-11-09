@@ -769,6 +769,41 @@ export default function Home() {
         badge: { label: "Planner", tone: "bg-sky-400/25 text-sky-100" },
       },
     ];
+    const enhancedKpis = metricKpiSeed.map((kpi) => {
+      if (kpi.id === "reach") {
+        const value = Math.round(
+          kpi.value + (farcasterLive + instagramLive + scheduledTotal) * 3,
+        );
+        const delta = Math.round(kpi.delta + crossposted * 0.8);
+        return { ...kpi, value, delta };
+      }
+      if (kpi.id === "conversion") {
+        const value = parseFloat(
+          (kpi.value + Math.min(1.2, activeChannels.length * 0.2)).toFixed(1),
+        );
+        const delta = parseFloat(
+          (kpi.delta + (activeChannels.length > 1 ? 0.2 : 0)).toFixed(1),
+        );
+        return { ...kpi, value, delta };
+      }
+      if (kpi.id === "growth") {
+        const value = Math.round(
+          kpi.value + Math.max(0, plannedPosts.length - 2) * 2,
+        );
+        const delta = Math.round(kpi.delta + channelBreakdown.length * 1.5);
+        return { ...kpi, value, delta };
+      }
+      return kpi;
+    });
+    const metricDashboard = {
+      kpis: enhancedKpis,
+      chartSeries: {
+        reachConversion: reachConversionTrend,
+        growthMomentum: growthMomentumTrend,
+      },
+      conversionStages,
+      insightPool: metricInsightPool,
+    };
     return {
       farcasterLive,
       instagramLive,
@@ -777,8 +812,9 @@ export default function Home() {
       channelBreakdown,
       nextSlot: next ? formatScheduleLabel(next.scheduledFor) : "Add a slot",
       velocityToken,
+      metricDashboard,
     };
-  }, [plannedPosts, posts, sortedPlannedPosts]);
+  }, [plannedPosts, posts, sortedPlannedPosts, activeChannels]);
 
   const handleToggle = (channelId: ChannelId) => {
     setChannelState((prev) => ({
