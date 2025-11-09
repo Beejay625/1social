@@ -21970,11 +21970,13 @@ export default function Home() {
                       <div className="flex items-center justify-between mb-2">
                         <h3 className="text-lg font-semibold text-white">{asset.name}</h3>
                         <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300 uppercase">
-                          {asset.format}
+                          {asset.type}
                         </span>
                       </div>
                       <div className="flex items-center gap-4 text-xs text-slate-200/60 mb-3">
-                        <span>{(asset.size / 1000000).toFixed(2)} MB</span>
+                        <span>{asset.size}</span>
+                        <span>·</span>
+                        <span>{asset.category}</span>
                         <span>·</span>
                         <span>Used {asset.usageCount} times</span>
                         {asset.lastUsed && (
@@ -22006,15 +22008,15 @@ export default function Home() {
               <div className="space-y-4">
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
                   <p className="text-xs text-slate-200/60">Total Assets</p>
-                  <p className="mt-1 text-2xl font-semibold text-white">{contentLibraryStats.totalAssets}</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{libraryStats.totalAssets}</p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
                   <p className="text-xs text-slate-200/60">Total Size</p>
-                  <p className="mt-1 text-xl font-semibold text-white">{contentLibraryStats.totalSizeFormatted}</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{libraryStats.totalSize}</p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
                   <p className="text-xs text-slate-200/60">Recent Uploads</p>
-                  <p className="mt-1 text-xl font-semibold text-emerald-300">{contentLibraryStats.recentUploads}</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{libraryStats.recentUploads}</p>
                 </div>
               </div>
             </div>
@@ -22023,19 +22025,16 @@ export default function Home() {
                 Folders
               </h3>
               <div className="space-y-3">
-                {contentFolders.map((folder) => (
+                {contentCategories.map((category) => (
                   <div
-                    key={folder.id}
+                    key={category.id}
                     className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
                   >
                     <div className="flex items-center gap-3">
-                      <div
-                        className="h-8 w-8 rounded-lg"
-                        style={{ backgroundColor: folder.color }}
-                      />
+                      <span className="text-2xl">{category.icon}</span>
                       <div className="flex-1">
-                        <p className="text-sm font-semibold text-white">{folder.name}</p>
-                        <p className="text-xs text-slate-200/60">{folder.assetCount} assets</p>
+                        <p className="text-sm font-semibold text-white">{category.name}</p>
+                        <p className="text-xs text-slate-200/60">{category.assetCount} assets</p>
                       </div>
                     </div>
                   </div>
@@ -22152,7 +22151,7 @@ export default function Home() {
             </header>
 
             <div className="space-y-4">
-              {videoPerformances.map((video) => (
+              {videoPerformance.map((video) => (
                 <div
                   key={video.id}
                   className="rounded-3xl border border-white/15 bg-white/5 p-6"
@@ -23449,20 +23448,12 @@ export default function Home() {
                   <p className="mt-1 text-2xl font-semibold text-white">{exportStats.totalExports}</p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-                  <p className="text-xs text-slate-200/60">Exports This Month</p>
-                  <p className="mt-1 text-xl font-semibold text-emerald-300">{exportStats.exportsThisMonth}</p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-                  <p className="text-xs text-slate-200/60">Avg Export Size</p>
-                  <p className="mt-1 text-lg font-semibold text-white">{exportStats.avgExportSizeFormatted}</p>
+                  <p className="text-xs text-slate-200/60">Exports Today</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{exportStats.exportsToday}</p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
                   <p className="text-xs text-slate-200/60">Most Used Format</p>
                   <p className="mt-1 text-lg font-semibold text-white uppercase">{exportStats.mostUsedFormat}</p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-                  <p className="text-xs text-slate-200/60">Most Used Template</p>
-                  <p className="mt-1 text-sm font-semibold text-white">{exportStats.mostUsedTemplate}</p>
                 </div>
               </div>
             </div>
