@@ -10214,6 +10214,552 @@ export default function Home() {
           </aside>
         </section>
 
+        <section
+          id="help"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Help Center</h2>
+              <p className="text-sm text-slate-100/75">
+                Find answers, tutorials, and get support for your questions.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Categories
+                </h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {helpCategories.map((category) => {
+                    const isSelected = category.id === selectedHelpCategory;
+                    return (
+                      <button
+                        key={category.id}
+                        type="button"
+                        onClick={() => setSelectedHelpCategory(category.id)}
+                        className={`rounded-2xl border p-4 text-left transition ${
+                          isSelected
+                            ? "border-white/30 bg-white/10"
+                            : "border-white/10 bg-slate-950/40 hover:border-white/20"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl">{category.icon}</span>
+                          <div className="flex-1">
+                            <p className="text-sm font-semibold text-white">{category.name}</p>
+                            <p className="mt-1 text-xs text-slate-200/70">{category.articles} articles</p>
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Popular Articles
+                </h3>
+                <div className="space-y-3">
+                  {popularArticles.map((article) => (
+                    <div
+                      key={article.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <p className="text-sm font-semibold text-white">{article.title}</p>
+                      <div className="mt-2 flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>{article.views} views</span>
+                        <span>·</span>
+                        <span>{article.helpful}% helpful</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Support Tickets
+              </h3>
+              <div className="mt-4 space-y-3">
+                {supportTickets.map((ticket) => (
+                  <div
+                    key={ticket.id}
+                    className={`rounded-2xl border p-4 ${
+                      ticket.status === "open"
+                        ? "border-rose-400/50 bg-rose-400/10"
+                        : ticket.status === "in-progress"
+                          ? "border-amber-400/50 bg-amber-400/10"
+                          : "border-white/10 bg-slate-950/40"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">{ticket.subject}</p>
+                        <div className="mt-2 flex items-center gap-3 text-xs text-slate-200/70">
+                          <span className="uppercase">{ticket.status}</span>
+                          <span>·</span>
+                          <span className="uppercase">{ticket.priority}</span>
+                          <span>·</span>
+                          <span>{formatRelativeTime(ticket.lastReply)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="changelog"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Changelog</h2>
+              <p className="text-sm text-slate-100/75">
+                Stay updated with the latest releases and upcoming features.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              {releases.map((release) => (
+                <div
+                  key={release.id}
+                  className={`rounded-2xl border p-4 ${
+                    release.type === "major"
+                      ? "border-purple-400/50 bg-purple-400/10"
+                      : "border-white/10 bg-slate-950/40"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <p className="text-lg font-semibold text-white">v{release.version}</p>
+                        <span className="text-[10px] uppercase tracking-wider text-slate-200/70">
+                          {release.type}
+                        </span>
+                      </div>
+                      <p className="mt-1 text-xs text-slate-200/70">
+                        {formatRelativeTime(release.date)}
+                      </p>
+                      {release.features.length > 0 && (
+                        <div className="mt-3">
+                          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                            New Features
+                          </p>
+                          <ul className="space-y-1 text-xs text-slate-200/70">
+                            {release.features.map((feature, idx) => (
+                              <li key={idx} className="flex items-center gap-2">
+                                <span className="text-emerald-300">+</span>
+                                <span>{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {release.improvements.length > 0 && (
+                        <div className="mt-3">
+                          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                            Improvements
+                          </p>
+                          <ul className="space-y-1 text-xs text-slate-200/70">
+                            {release.improvements.map((improvement, idx) => (
+                              <li key={idx} className="flex items-center gap-2">
+                                <span className="text-blue-300">~</span>
+                                <span>{improvement}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {release.fixes.length > 0 && (
+                        <div className="mt-3">
+                          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                            Fixes
+                          </p>
+                          <ul className="space-y-1 text-xs text-slate-200/70">
+                            {release.fixes.map((fix, idx) => (
+                              <li key={idx} className="flex items-center gap-2">
+                                <span className="text-rose-300">×</span>
+                                <span>{fix}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Upcoming Features
+              </h3>
+              <div className="mt-4 space-y-3">
+                {upcomingFeatures.map((feature) => (
+                  <div
+                    key={feature.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <p className="text-sm font-semibold text-white">{feature.title}</p>
+                    <p className="mt-1 text-xs text-slate-200/70">{feature.description}</p>
+                    <div className="mt-3 flex items-center gap-3 text-xs text-slate-200/70">
+                      <span className="uppercase">{feature.status}</span>
+                      <span>·</span>
+                      <span>{feature.estimatedRelease}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="mobile"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Mobile Apps</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage your social media on the go with our mobile applications.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Available Apps
+                </h3>
+                <div className="space-y-3">
+                  {mobileApps.map((app) => (
+                    <div
+                      key={app.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <p className="text-lg font-semibold text-white">{app.platform}</p>
+                          <p className="mt-1 text-xs text-slate-200/70">v{app.version}</p>
+                          <div className="mt-3 flex items-center gap-4 text-xs text-slate-200/70">
+                            <span>{app.downloads.toLocaleString()} downloads</span>
+                            <span>·</span>
+                            <span>⭐ {app.rating}</span>
+                            <span>·</span>
+                            <span>{app.reviews} reviews</span>
+                          </div>
+                        </div>
+                        <span
+                          className={`text-[10px] uppercase tracking-wider ${
+                            app.status === "active" ? "text-emerald-300" : "text-slate-300"
+                          }`}
+                        >
+                          {app.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Features
+                </h3>
+                <div className="space-y-3">
+                  {mobileFeatures.map((feature) => (
+                    <div
+                      key={feature.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-white">{feature.name}</p>
+                          <p className="mt-1 text-xs text-slate-200/70">{feature.description}</p>
+                        </div>
+                        <span
+                          className={`text-[10px] uppercase tracking-wider ${
+                            feature.enabled ? "text-emerald-300" : "text-slate-300"
+                          }`}
+                        >
+                          {feature.enabled ? "Enabled" : "Disabled"}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Device Usage
+              </h3>
+              <div className="mt-4 space-y-3">
+                {deviceStats.map((stat) => (
+                  <div key={stat.device} className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-white">{stat.device}</span>
+                      <span className="text-sm font-semibold text-white">{stat.percentage}%</span>
+                    </div>
+                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+                      <div
+                        className="h-full bg-blue-400"
+                        style={{ width: `${stat.percentage}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="brand"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Brand Guidelines</h2>
+              <p className="text-sm text-slate-100/75">
+                Access brand assets, guidelines, and usage information.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Brand Assets
+                </h3>
+                <div className="space-y-3">
+                  {brandAssets.map((asset) => (
+                    <div
+                      key={asset.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-white">{asset.name}</p>
+                          <div className="mt-2 flex items-center gap-3 text-xs text-slate-200/70">
+                            <span className="uppercase">{asset.type}</span>
+                            <span>·</span>
+                            <span className="uppercase">{asset.format}</span>
+                            <span>·</span>
+                            <span>{asset.size}</span>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                        >
+                          Download
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Brand Colors
+                </h3>
+                <div className="grid grid-cols-4 gap-3">
+                  {Object.entries(brandGuidelines.colors).map(([name, color]) => (
+                    <div key={name} className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                      <div
+                        className="mb-2 h-12 w-full rounded-lg"
+                        style={{ backgroundColor: color }}
+                      />
+                      <p className="text-xs font-semibold text-white capitalize">{name}</p>
+                      <p className="mt-1 font-mono text-xs text-slate-200/70">{color}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Usage Statistics
+              </h3>
+              <div className="mt-4 space-y-3">
+                {brandUsage.map((usage) => (
+                  <div
+                    key={usage.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">{usage.platform}</p>
+                        <div className="mt-2 flex items-center gap-3 text-xs text-slate-200/70">
+                          <span>{usage.instances} instances</span>
+                          <span>·</span>
+                          <span>Last used {formatRelativeTime(usage.lastUsed)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="backup"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Backup & Restore</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage automated backups and restore points for your data.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Backup Schedules
+                </h3>
+                <div className="space-y-3">
+                  {backupSchedules.map((schedule) => (
+                    <div
+                      key={schedule.id}
+                      className={`rounded-2xl border p-4 ${
+                        schedule.status === "active"
+                          ? "border-emerald-400/50 bg-emerald-400/10"
+                          : "border-white/10 bg-slate-950/40"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-white">{schedule.name}</p>
+                          <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-slate-200/70">
+                            <span className="uppercase">{schedule.frequency}</span>
+                            <span>·</span>
+                            <span>{schedule.time}</span>
+                            <span>·</span>
+                            <span>{schedule.size}</span>
+                          </div>
+                          <div className="mt-3 flex items-center gap-4 text-xs text-slate-200/70">
+                            <span>Last: {formatRelativeTime(schedule.lastRun)}</span>
+                            <span>·</span>
+                            <span>Next: {formatRelativeTime(schedule.nextRun)}</span>
+                          </div>
+                        </div>
+                        <span
+                          className={`text-[10px] uppercase tracking-wider ${
+                            schedule.status === "active" ? "text-emerald-300" : "text-slate-300"
+                          }`}
+                        >
+                          {schedule.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Backup History
+                </h3>
+                <div className="space-y-3">
+                  {backupHistory.map((backup) => (
+                    <div
+                      key={backup.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-white">
+                            {backup.type === "automatic" ? "Automatic Backup" : "Manual Backup"}
+                          </p>
+                          <div className="mt-2 flex items-center gap-3 text-xs text-slate-200/70">
+                            <span>{backup.size}</span>
+                            <span>·</span>
+                            <span>{formatRelativeTime(backup.date)}</span>
+                          </div>
+                        </div>
+                        <span
+                          className={`text-[10px] uppercase tracking-wider ${
+                            backup.status === "completed" ? "text-emerald-300" : "text-amber-300"
+                          }`}
+                        >
+                          {backup.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Restore Points
+              </h3>
+              <div className="mt-4 space-y-3">
+                {restorePoints.map((point) => (
+                  <div
+                    key={point.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">{point.name}</p>
+                        <div className="mt-2 flex items-center gap-3 text-xs text-slate-200/70">
+                          <span>{point.size}</span>
+                          <span>·</span>
+                          <span>{formatRelativeTime(point.date)}</span>
+                        </div>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {point.items.map((item) => (
+                            <span
+                              key={item}
+                              className="rounded-full bg-white/10 px-2 py-1 text-[10px] text-slate-200/70"
+                            >
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                      >
+                        Restore
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
       </main>
     </div>
   );
