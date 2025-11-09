@@ -82,6 +82,39 @@ type ConversionStage = {
   delta: number;
 };
 
+type PresenceStatus = "drafting" | "reviewing" | "approving" | "observing";
+
+type PresenceMember = {
+  id: string;
+  name: string;
+  role: string;
+  status: PresenceStatus;
+  focus: string;
+};
+
+type ApprovalRoute = {
+  id: string;
+  stage: string;
+  owners: string[];
+  fallback: string;
+};
+
+type RepostEvent = {
+  id: string;
+  source: ChannelId;
+  targets: ChannelId[];
+  scheduledFor: string;
+  status: "mirroring" | "queued" | "complete";
+};
+
+type SyndicationEntry = {
+  id: string;
+  title: string;
+  timestamp: string;
+  networks: ChannelId[];
+  effect: string;
+};
+
 type AutomationTemplate = {
   id: string;
   name: string;
