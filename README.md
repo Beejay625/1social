@@ -258,6 +258,34 @@ src/
 - API management
 - Export capabilities (PDF, CSV, Excel)
 
+### Predictive Analytics & Attribution
+- Content forecasting with AI-powered performance predictions
+- Multiple attribution models (first-touch, last-touch, linear, time-decay, position-based)
+- Industry benchmarking with percentile rankings
+- Performance attribution tracking across customer journey
+- Conversion path analysis with first-touch, last-touch, and assisted conversions
+
+### Multi-language & Localization
+- AI-powered translation workflows
+- Human review and approval process
+- Multi-language content performance tracking
+- Localization settings and cultural adaptation
+- Translation status monitoring and management
+
+## Contributing
+
+This is a comprehensive social media management platform with extensive features for content creation, scheduling, analytics, team collaboration, and automation.
+
+## License
+
+MIT
+
+### Integrations
+- Calendar integrations (Google, Outlook, Apple)
+- Webhook configurations
+- API management
+- Export capabilities (PDF, CSV, Excel)
+
 ## Contributing
 
 This is a comprehensive social media management platform with extensive features for content creation, scheduling, analytics, team collaboration, and automation.
