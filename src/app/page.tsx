@@ -196,6 +196,16 @@ const velocityBadge = (value: number) => {
   return { label: "Warming up", tone: "bg-rose-400/25 text-rose-100" };
 };
 
+const percentWidthClass = (percent: number) => {
+  if (percent >= 95) return "w-[95%]";
+  if (percent >= 80) return "w-[80%]";
+  if (percent >= 65) return "w-[65%]";
+  if (percent >= 50) return "w-[50%]";
+  if (percent >= 35) return "w-[35%]";
+  if (percent >= 20) return "w-[20%]";
+  return "w-[12%]";
+};
+
 export default function Home() {
   const { address, isConnected } = useAccount();
   const { chain } = useNetwork();
