@@ -1452,6 +1452,164 @@ const engagementAutomationRules = [
   },
 ];
 
+// Content moderation
+const moderationQueue = [
+  {
+    id: "mod-1",
+    content: "Check out our new product launch! 🚀",
+    author: "@user123",
+    channel: "farcaster" as ChannelId,
+    flaggedReason: "spam",
+    severity: "medium",
+    reportedAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+    status: "pending",
+  },
+  {
+    id: "mod-2",
+    content: "This is amazing! Love it!",
+    author: "@user456",
+    channel: "instagram" as ChannelId,
+    flaggedReason: "inappropriate",
+    severity: "low",
+    reportedAt: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
+    status: "reviewed",
+  },
+  {
+    id: "mod-3",
+    content: "Great work team!",
+    author: "@user789",
+    channel: "x" as ChannelId,
+    flaggedReason: "copyright",
+    severity: "high",
+    reportedAt: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+    status: "pending",
+  },
+];
+
+// Brand safety alerts
+const brandSafetyAlerts = [
+  {
+    id: "safety-1",
+    type: "negative_sentiment",
+    channel: "farcaster" as ChannelId,
+    message: "Spike in negative mentions detected",
+    severity: "high",
+    mentions: 45,
+    at: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+    resolved: false,
+  },
+  {
+    id: "safety-2",
+    type: "competitor_mention",
+    channel: "instagram" as ChannelId,
+    message: "Competitor mentioned in trending post",
+    severity: "medium",
+    mentions: 12,
+    at: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(),
+    resolved: false,
+  },
+  {
+    id: "safety-3",
+    type: "fake_account",
+    channel: "x" as ChannelId,
+    message: "Potential fake account impersonating brand",
+    severity: "high",
+    mentions: 1,
+    at: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+    resolved: true,
+  },
+];
+
+// API management
+const apiKeys = [
+  {
+    id: "api-1",
+    name: "Production API Key",
+    key: "sk_live_...abc123",
+    permissions: ["read", "write", "publish"],
+    lastUsed: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+    requests: 12500,
+    status: "active",
+  },
+  {
+    id: "api-2",
+    name: "Development API Key",
+    key: "sk_test_...xyz789",
+    permissions: ["read", "write"],
+    lastUsed: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+    requests: 3200,
+    status: "active",
+  },
+  {
+    id: "api-3",
+    name: "Analytics Only",
+    key: "sk_analytics_...def456",
+    permissions: ["read"],
+    lastUsed: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
+    requests: 8900,
+    status: "revoked",
+  },
+];
+
+// Hashtag analytics
+const hashtagAnalytics = [
+  {
+    id: "hashtag-1",
+    hashtag: "#Web3Social",
+    posts: 1240,
+    reach: 245000,
+    engagement: 8900,
+    growth: 24.5,
+    trend: "up" as const,
+  },
+  {
+    id: "hashtag-2",
+    hashtag: "#Decentralized",
+    posts: 890,
+    reach: 189000,
+    engagement: 5600,
+    growth: 12.3,
+    trend: "up" as const,
+  },
+  {
+    id: "hashtag-3",
+    hashtag: "#CryptoCommunity",
+    posts: 2100,
+    reach: 456000,
+    engagement: 12300,
+    growth: -5.2,
+    trend: "down" as const,
+  },
+];
+
+// Post performance comparison
+const performanceComparison = [
+  {
+    id: "comp-1",
+    metric: "Reach",
+    current: 125000,
+    previous: 98000,
+    change: 27.6,
+    trend: "up" as const,
+  },
+  {
+    id: "comp-2",
+    metric: "Engagement Rate",
+    current: 8.5,
+    previous: 7.2,
+    change: 18.1,
+    trend: "up" as const,
+  },
+  {
+    id: "comp-3",
+    metric: "Conversion",
+    current: 890,
+    previous: 1200,
+    change: -25.8,
+    trend: "down" as const,
+  },
+];
+
 const dashboardSections: { id: string; label: string }[] = [
   { id: "broadcast", label: "Compose" },
   { id: "plan", label: "Scheduling" },
