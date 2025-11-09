@@ -1,130 +1,84 @@
 export interface ContentAsset {
   id: string;
   name: string;
-  type: "image" | "video" | "document" | "audio" | "template";
+  type: "image" | "video" | "document" | "template";
+  category: string;
   url: string;
   thumbnail?: string;
-  size: number;
-  format: string;
+  size: string;
   uploadedAt: string;
   uploadedBy: string;
   tags: string[];
   usageCount: number;
   lastUsed?: string;
-  metadata?: {
-    dimensions?: { width: number; height: number };
-    duration?: number;
-    durationFormatted?: string;
-  };
 }
 
-export interface ContentFolder {
+export interface ContentCategory {
   id: string;
   name: string;
-  description?: string;
+  description: string;
   assetCount: number;
-  createdAt: string;
-  color?: string;
+  icon: string;
 }
 
-export const contentAssets: ContentAsset[] = [
+export const contentLibrary: ContentAsset[] = [
   {
     id: "asset-1",
     name: "Product Launch Banner",
     type: "image",
-    url: "/assets/product-launch-banner.jpg",
-    thumbnail: "/assets/thumbnails/product-launch-banner.jpg",
-    size: 2450000,
-    format: "jpg",
-    uploadedAt: new Date(Date.now() - 86400000 * 5).toISOString(),
+    category: "Marketing",
+    url: "/assets/product-banner.jpg",
+    thumbnail: "/assets/thumbnails/product-banner.jpg",
+    size: "2.4 MB",
+    uploadedAt: new Date(Date.now() - 2592000000).toISOString(),
     uploadedBy: "Sarah Chen",
     tags: ["product", "launch", "banner"],
     usageCount: 12,
-    lastUsed: new Date(Date.now() - 86400000 * 2).toISOString(),
-    metadata: {
-      dimensions: { width: 1920, height: 1080 },
-    },
-  },
-  {
-    id: "asset-2",
-    name: "Tutorial Video - Getting Started",
-    type: "video",
-    url: "/assets/tutorial-getting-started.mp4",
-    thumbnail: "/assets/thumbnails/tutorial-getting-started.jpg",
-    size: 45600000,
-    format: "mp4",
-    uploadedAt: new Date(Date.now() - 86400000 * 10).toISOString(),
-    uploadedBy: "Mike Johnson",
-    tags: ["tutorial", "video", "getting-started"],
-    usageCount: 8,
-    lastUsed: new Date(Date.now() - 86400000 * 3).toISOString(),
-    metadata: {
-      duration: 180,
-      durationFormatted: "3:00",
-    },
-  },
-  {
-    id: "asset-3",
-    name: "Brand Guidelines PDF",
-    type: "document",
-    url: "/assets/brand-guidelines.pdf",
-    thumbnail: "/assets/thumbnails/brand-guidelines.jpg",
-    size: 3200000,
-    format: "pdf",
-    uploadedAt: new Date(Date.now() - 86400000 * 30).toISOString(),
-    uploadedBy: "Emma Wilson",
-    tags: ["brand", "guidelines", "document"],
-    usageCount: 45,
     lastUsed: new Date(Date.now() - 86400000).toISOString(),
   },
   {
-    id: "asset-4",
-    name: "Social Media Template - Announcement",
-    type: "template",
-    url: "/assets/templates/announcement.psd",
-    thumbnail: "/assets/thumbnails/announcement-template.jpg",
-    size: 12000000,
-    format: "psd",
-    uploadedAt: new Date(Date.now() - 86400000 * 15).toISOString(),
-    uploadedBy: "Sarah Chen",
-    tags: ["template", "announcement", "design"],
-    usageCount: 23,
-    lastUsed: new Date(Date.now() - 86400000 * 5).toISOString(),
+    id: "asset-2",
+    name: "Tutorial Video",
+    type: "video",
+    category: "Educational",
+    url: "/assets/tutorial-video.mp4",
+    thumbnail: "/assets/thumbnails/tutorial-video.jpg",
+    size: "45.8 MB",
+    uploadedAt: new Date(Date.now() - 1728000000).toISOString(),
+    uploadedBy: "Mike Johnson",
+    tags: ["tutorial", "video", "educational"],
+    usageCount: 8,
+    lastUsed: new Date(Date.now() - 172800000).toISOString(),
   },
 ];
 
-export const contentFolders: ContentFolder[] = [
+export const contentCategories: ContentCategory[] = [
   {
-    id: "folder-1",
-    name: "Product Assets",
-    description: "All product-related images and videos",
+    id: "marketing",
+    name: "Marketing",
+    description: "Marketing materials and promotional content",
     assetCount: 45,
-    createdAt: new Date(Date.now() - 2592000000).toISOString(),
-    color: "#3b82f6",
+    icon: "📢",
   },
   {
-    id: "folder-2",
+    id: "educational",
+    name: "Educational",
+    description: "Tutorials and educational content",
+    assetCount: 23,
+    icon: "📚",
+  },
+  {
+    id: "templates",
     name: "Templates",
     description: "Reusable content templates",
-    assetCount: 28,
-    createdAt: new Date(Date.now() - 1728000000).toISOString(),
-    color: "#8b5cf6",
-  },
-  {
-    id: "folder-3",
-    name: "Brand Assets",
-    description: "Logos, brand guidelines, and brand materials",
-    assetCount: 32,
-    createdAt: new Date(Date.now() - 2592000000).toISOString(),
-    color: "#10b981",
+    assetCount: 34,
+    icon: "📝",
   },
 ];
 
-export const contentLibraryStats = {
+export const libraryStats = {
   totalAssets: 156,
-  totalSize: 2340000000,
-  totalSizeFormatted: "2.34 GB",
-  mostUsedAsset: "Product Launch Banner",
+  totalSize: "2.4 GB",
+  mostUsedCategory: "Marketing",
   recentUploads: 8,
 };
-
