@@ -82,6 +82,82 @@ type ConversionStage = {
   delta: number;
 };
 
+type AutomationTemplate = {
+  id: string;
+  name: string;
+  description: string;
+  channels: ChannelId[];
+  cadence: string;
+  duration: string;
+};
+
+type WarmupProgram = {
+  id: string;
+  title: string;
+  health: "excellent" | "steady" | "watch";
+  score: number;
+  nextAction: string;
+};
+
+type SequencePlay = {
+  id: string;
+  label: string;
+  steps: number;
+  window: string;
+  status: "active" | "paused" | "draft";
+};
+
+type BenchmarkMetric = {
+  id: string;
+  label: string;
+  farcaster: number;
+  instagram: number;
+  cohort: number;
+};
+
+type SentimentSample = {
+  id: string;
+  segment: string;
+  positive: number;
+  neutral: number;
+  negative: number;
+  highlight: string;
+};
+
+type RetentionStage = {
+  id: string;
+  stage: string;
+  rate: number;
+  note: string;
+};
+
+type AssetItem = {
+  id: string;
+  title: string;
+  type: "image" | "video" | "doc";
+  owner: string;
+  updatedAt: string;
+  accent: string;
+};
+
+type VersionEntry = {
+  id: string;
+  author: string;
+  summary: string;
+  timestamp: string;
+  status: "live" | "queued" | "archived";
+};
+
+type CalendarSlot = {
+  id: string;
+  label: string;
+  day: string;
+  time: string;
+  owner: string;
+  channels: ChannelId[];
+  impact: "spotlight" | "boost" | "check-in";
+};
+
 const channelCatalog: Record<
   ChannelId,
   {
@@ -1278,7 +1354,7 @@ export default function Home() {
               <div className="space-y-4">
                 <h1 className="text-4xl font-semibold leading-tight text-white md:text-5xl lg:text-[52px]">
                   Align your voice across every channel.
-            </h1>
+          </h1>
                 <p className="text-lg leading-relaxed text-slate-100/80 md:text-xl">
                   Share once, syndicate instantly, and keep Reown wallet
                   signatures ready for Farcaster. This preview shows how your
@@ -1481,7 +1557,7 @@ export default function Home() {
                   </button>
                 );
               })}
-            </div>
+        </div>
 
             <form
               onSubmit={handleSubmit}
