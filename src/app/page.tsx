@@ -842,7 +842,7 @@ const impactTokens: Record<
     label: "Boost",
     badge: "bg-sky-400/25 text-sky-100 border border-sky-300/40",
   },
-  check-in: {
+  "check-in": {
     label: "Check-in",
     badge: "bg-emerald-400/20 text-emerald-100 border border-emerald-300/40",
   },
@@ -1703,7 +1703,7 @@ export default function Home() {
               <div className="space-y-4">
                 <h1 className="text-4xl font-semibold leading-tight text-white md:text-5xl lg:text-[52px]">
                   Align your voice across every channel.
-          </h1>
+            </h1>
                 <p className="text-lg leading-relaxed text-slate-100/80 md:text-xl">
                   Share once, syndicate instantly, and keep Reown wallet
                   signatures ready for Farcaster. This preview shows how your
@@ -1790,8 +1790,8 @@ export default function Home() {
                 </p>
                     <p className="text-xs uppercase tracking-[0.3em] text-slate-300/60">
                   {activeNetwork?.name ?? "No network selected"}
-          </p>
-        </div>
+                </p>
+              </div>
 
                   <ul className="grid gap-3 text-sm text-slate-200/80 sm:grid-cols-2 sm:gap-4">
                     <li className="flex items-start gap-3">
@@ -1921,7 +1921,7 @@ export default function Home() {
                   </button>
                 );
               })}
-        </div>
+            </div>
 
             <form
               onSubmit={handleSubmit}
