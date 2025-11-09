@@ -3794,43 +3794,6 @@ export default function Home() {
               </p>
             </header>
 
-            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                  Channel availability
-                </h3>
-                <span className="text-xs text-slate-200/70">
-                  {Object.values(distributionMatrix).filter(Boolean).length} active
-                </span>
-              </div>
-              <p className="mt-3 text-xs text-slate-200/70">
-                Toggle which networks receive mirrored drops by default.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-3">
-                {(Object.keys(channelCatalog) as ChannelId[]).map((channelId) => {
-                  const channel = channelCatalog[channelId];
-                  const active = distributionMatrix[channelId];
-                  return (
-                    <button
-                      key={`distribution-toggle-${channelId}`}
-                      type="button"
-                      onClick={() => handleDistributionToggle(channelId)}
-                      className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold uppercase tracking-wide transition ${
-                        active
-                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
-                          : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
-                      }`}
-                    >
-                      <span
-                        className={`h-2.5 w-2.5 rounded-full ${active ? channel.dot : "bg-white/40"}`}
-                      />
-                      {channel.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
             <div className="flex flex-wrap gap-3">
               {automationTemplates.map((template) => {
                 const isActive = selectedTemplate?.id === template.id;
