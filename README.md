@@ -345,64 +345,35 @@ src/
 - Gap analysis and posting schedule recommendations
 - Optimization score tracking and improvement metrics
 
-### Calendar & Scheduling Management
-- Calendar sync with Google Calendar, Outlook, Apple Calendar, and iCal
-- Bidirectional calendar synchronization
-- Real-time and scheduled sync options
-- Multiple calendar support with color coding
-- Scheduling queue with priority ordering
-- Automatic retry for failed posts
-- Conflict resolution strategies
-- Queue statistics and monitoring
+### Scheduling & Queue Management
+- Advanced scheduling queue with priority management
+- Estimated performance metrics (reach, engagement) before posting
+- Queue optimization recommendations
+- Status tracking (scheduled, pending)
+- Multi-platform queue management
 
-### Advanced Social Listening & Monitoring
-- Keyword monitoring across all platforms
-- Real-time mention tracking
-- Sentiment analysis (positive, neutral, negative)
-- Listening query management
-- Trending topic discovery
-- Mention dashboard with statistics
-- Platform-specific mention tracking
+### Brand & Mention Tracking
+- Real-time brand mention tracking across all platforms
+- Sentiment analysis for each mention
+- Response tracking and response time metrics
+- Mention growth trends and alerts
+- Top mention drivers and impact analysis
 
-### Content Templates & Workflows
-- Template library with categorized templates
-- Variable-based templates for dynamic content
-- Template usage tracking and analytics
-- Multi-step approval workflows
-- Auto-approval with timeout conditions
-- Workflow instance tracking
-- Step-by-step approval status
-- Custom workflow creation and management
+### Team & Workflow Management
+- Individual team member performance tracking
+- Team goals and progress monitoring
+- Content creation and engagement generation metrics
+- Multi-step approval workflows with templates
+- Workflow progress tracking and bottleneck identification
+- Step assignments and completion status
 
-### Analytics & Dashboards
-- Custom analytics dashboards
-- Widget-based dashboard layouts
-- Key metrics tracking
-- Performance trend visualization
-- Dashboard sharing and collaboration
-- Default and custom dashboard views
-- Real-time metric updates
-- Dashboard view statistics
-
-### Engagement Automation & Tools
-- Auto-reply rules with trigger conditions
-- Mention tracking across platforms
-- Comment moderation tools
-- DM management automation
-- Engagement campaign tracking
-- Campaign progress monitoring
-- Success rate analytics
-- Engagement tool statistics
-
-### Hashtag Research & Analytics
-- Hashtag research and discovery
-- Volume and growth tracking
-- Engagement rate analysis
-- Difficulty assessment
-- Trending hashtag identification
-- Performance tracking for used hashtags
-- Best time to post recommendations
-- Audience overlap analysis
+### Crisis & Listening Management
+- Automated crisis detection with severity levels
+- Crisis response tracking and resolution metrics
+- Response templates by category and severity
+- Social listening with keyword monitoring
+- Trending topics tracking with relevance scoring
+- Real-time alerts for spikes and sentiment changes
 
 ## Contributing
 
