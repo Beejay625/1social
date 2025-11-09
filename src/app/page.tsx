@@ -3304,6 +3304,15 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "calendar-views", label: "Calendar Views" },
   { id: "hashtag-performance", label: "Hashtag Performance" },
   { id: "repurposing-suggestions", label: "Repurposing Suggestions" },
+  { id: "content-performance-dashboard", label: "Content Performance Dashboard" },
+  { id: "content-library-management", label: "Content Library Management" },
+  { id: "content-performance-comparison", label: "Content Performance Comparison" },
+  { id: "social-competitor-analysis", label: "Social Competitor Analysis" },
+  { id: "content-scheduling-optimization", label: "Content Scheduling Optimization" },
+  { id: "social-engagement-analytics", label: "Social Engagement Analytics" },
+  { id: "content-calendar-integration", label: "Content Calendar Integration" },
+  { id: "social-automation-rules", label: "Social Automation Rules" },
+  { id: "content-performance-tracking", label: "Content Performance Tracking" },
 ];
 const chartColorTokens = {
   reach: "text-sky-300",
