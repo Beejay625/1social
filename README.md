@@ -46,6 +46,8 @@ Visit http://localhost:3000
 - **Post Analytics Deep Dive** - Detailed analytics for individual posts
 
 ### Engagement & Social
+- **Engagement Tools** - Automated engagement tools including auto-reply, mention tracking, and comment moderation
+- **Engagement Metrics** - Track total engagements, response times, and satisfaction rates
 - **Engagement Inbox** - Centralized inbox for managing all social interactions
 - **Engagement Analytics** - Track detailed engagement metrics (likes, comments, shares, saves)
 - **Social Media Engagement Analytics** - Detailed engagement breakdown by channel
