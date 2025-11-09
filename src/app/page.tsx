@@ -2718,30 +2718,6 @@ const performanceDashboard = [
   },
 ];
 
-// Content collaboration tools
-const collaborationTools = [
-  {
-    id: "collab-1",
-    tool: "Content Review Board",
-    activeUsers: 5,
-    pendingReviews: 8,
-    completedToday: 12,
-  },
-  {
-    id: "collab-2",
-    tool: "Creative Brief Builder",
-    activeBriefs: 3,
-    completedBriefs: 24,
-    avgCompletionTime: "2 hours",
-  },
-  {
-    id: "collab-3",
-    tool: "Asset Request System",
-    pendingRequests: 5,
-    fulfilledToday: 8,
-    avgFulfillmentTime: "4 hours",
-  },
-];
 
 // Social media analytics export
 const analyticsExports = [
