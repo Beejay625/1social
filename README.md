@@ -79,8 +79,6 @@ Visit http://localhost:3000
 ### Team & Collaboration
 - **Team Collaboration Tools** - Review boards, creative briefs, and asset requests
 - **Content Collaboration Tools** - Streamline team workflows with review boards, creative briefs, and asset requests
-- **Real-time Collaboration** - Collaborate in real-time with team members on content creation with presence indicators and active session tracking
-- **Conflict Detection** - Automatically detect and resolve conflicts when multiple users edit the same content with resolution tracking
 - **Team Performance Metrics** - Track individual team member performance
 - **Team Performance Analytics** - Comprehensive team performance tracking with individual scores, engagement rates, response times, approval rates, and team goals with progress tracking
 - **Content Approval Workflows** - Multi-step approval processes with templates
@@ -197,7 +195,7 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 
 ## Key Capabilities
 
-- **110+ Feature Modules** - Comprehensive social media management suite
+- **120+ Feature Modules** - Comprehensive social media management suite
 - **Multi-channel Publishing** - Publish to 5+ platforms simultaneously
 - **AI-Powered Insights** - Machine learning for content optimization
 - **Real-time Analytics** - Live performance tracking and reporting
@@ -243,6 +241,14 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Scheduling Queue** - Advanced queue management with priority ordering and automatic retry
 - **Engagement Tools** - Automated engagement with auto-replies, mention tracking, and moderation
 - **Hashtag Research** - Hashtag analytics, trending tag discovery, and performance insights
+- **Content Comparison** - Compare performance metrics between different content versions to identify winners
+- **ROI Calculator** - Calculate return on investment for campaigns with detailed financial tracking
+- **Calendar Views** - Multiple calendar view options: week, month, agenda, and timeline
+- **Team Performance** - Track individual team member performance, goals, and productivity metrics
+- **Content Moderation** - Review and moderate flagged content with automated rules
+- **Brand Safety** - Monitor brand reputation, detect threats, and track brand safety scores
+- **Crisis Response** - Automated crisis detection, severity alerts, and response tracking
+- **Multi-Account Management** - Manage multiple social media accounts with unified dashboard
 
 ## Project Structure
 
