@@ -1441,6 +1441,9 @@ export default function Home() {
     initialPlannedPosts[0]?.id ?? "",
   );
   const [workflowNote, setWorkflowNote] = useState("");
+  const [selectedApprovalTemplateId, setSelectedApprovalTemplateId] = useState<string>(
+    approvalTemplates[0]?.id ?? "",
+  );
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>(
     automationTemplates[0]?.id ?? "",
   );
