@@ -1367,6 +1367,16 @@ export default function Home() {
     return grouped;
   }, []);
 
+  const activeDistributionLabels = useMemo(
+    () =>
+      ((Object.keys(distributionMatrix) as ChannelId[]).filter(
+        (key) => distributionMatrix[key],
+      ))
+        .map((key) => channelCatalog[key].label)
+        .sort((a, b) => a.localeCompare(b)),
+    [distributionMatrix],
+  );
+
   const analyticsSnapshot = useMemo(() => {
     const farcasterLive = posts.filter((post) =>
       post.channels.includes("farcaster"),
