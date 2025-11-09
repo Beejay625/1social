@@ -167,6 +167,12 @@ Visit http://localhost:3000
 - **Performance Insights** - AI-powered insights and recommendations to optimize content strategy with opportunity, strength, and warning insights
 - **Social Media Health** - Comprehensive health score tracking across all platforms and metrics with trend analysis and alerts
 - **Calendar Optimization** - AI-powered calendar optimization with optimal time slots, gap analysis, and posting schedule recommendations
+- **Advanced Scheduling Queue** - Manage and optimize content scheduling queue with AI-powered recommendations, priority management, and estimated performance metrics
+- **Brand Mentions Tracking** - Track brand mentions across all platforms with sentiment analysis, response tracking, and growth metrics
+- **Team Performance Analytics** - Track individual and team performance with goals, productivity metrics, content creation stats, and engagement generation
+- **Crisis Management Dashboard** - Monitor and respond to crises with automated detection, severity alerts, response tracking, and resolution metrics
+- **Approval Workflows** - Manage multi-step approval workflows with templates, progress tracking, step assignments, and bottleneck identification
+- **Social Listening Dashboard** - Monitor keywords, track trending topics, get real-time alerts, and analyze platform-specific mentions
 
 ## Tech Stack
 
