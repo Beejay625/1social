@@ -21424,6 +21424,283 @@ export default function Home() {
           </aside>
         </section>
 
+        {/* Content Performance Tracking */}
+        <section
+          id="content-performance-tracking"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content Performance Tracking</h2>
+              <p className="text-sm text-slate-100/75">
+                Track detailed performance metrics and identify top-performing content across all platforms.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {topPerformingContent.map((content) => (
+                <div
+                  key={content.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-white">{content.title}</h3>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className={`h-2 w-2 rounded-full ${channelCatalog[content.platform as ChannelId]?.dot || "bg-slate-400"}`} />
+                        <span className="text-xs text-slate-200/60 capitalize">{content.platform}</span>
+                        <span className="text-xs text-slate-200/60">·</span>
+                        <span className="text-xs text-slate-200/60">{formatRelativeTime(content.publishedAt)}</span>
+                      </div>
+                    </div>
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      content.performanceScore >= 90
+                        ? "bg-emerald-500/20 text-emerald-300"
+                        : content.performanceScore >= 80
+                        ? "bg-blue-500/20 text-blue-300"
+                        : "bg-amber-500/20 text-amber-300"
+                    }`}>
+                      Score: {content.performanceScore}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
+                    <div>
+                      <p className="text-xs text-slate-200/60">Reach</p>
+                      <p className="mt-1 text-sm font-semibold text-white">{(content.metrics.reach / 1000).toFixed(1)}k</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60">Engagement</p>
+                      <p className="mt-1 text-sm font-semibold text-white">{content.metrics.engagement.toLocaleString()}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60">Eng. Rate</p>
+                      <p className="mt-1 text-sm font-semibold text-emerald-300">{content.metrics.engagementRate}%</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60">Clicks</p>
+                      <p className="mt-1 text-sm font-semibold text-white">{content.metrics.clicks}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60">Conversions</p>
+                      <p className="mt-1 text-sm font-semibold text-emerald-300">{content.metrics.conversions}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Performance Metrics
+              </h3>
+              <div className="space-y-4">
+                {performanceMetrics.map((metric) => (
+                  <div key={metric.id} className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-xs text-slate-200/60">{metric.name}</p>
+                      <span className={`text-xs ${
+                        metric.trend === "up" ? "text-emerald-300" : metric.trend === "down" ? "text-red-300" : "text-slate-300"
+                      }`}>
+                        {metric.trend === "up" ? "↑" : metric.trend === "down" ? "↓" : "→"}
+                      </span>
+                    </div>
+                    <p className="text-xl font-semibold text-white">
+                      {metric.name.includes("Rate") ? `${metric.value}%` : metric.value.toLocaleString()}
+                    </p>
+                    <p className={`text-xs mt-1 ${
+                      metric.change > 0 ? "text-emerald-300" : metric.change < 0 ? "text-red-300" : "text-slate-300"
+                    }`}>
+                      {metric.change > 0 ? "+" : ""}{metric.change}% vs last {metric.period}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Audience Insights */}
+        <section
+          id="audience-insights"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Audience Insights</h2>
+              <p className="text-sm text-slate-100/75">
+                Deep dive into your audience segments, demographics, and behavior patterns.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {audienceSegments.map((segment) => (
+                <div
+                  key={segment.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{segment.name}</h3>
+                      <p className="text-xs text-slate-200/60 mt-1">{segment.size.toLocaleString()} members</p>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-xs px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-300">
+                        +{segment.growth}% growth
+                      </span>
+                      <p className="text-xs text-slate-200/60 mt-1">{segment.engagementRate}% engagement</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <p className="text-xs text-slate-200/60 mb-2">Top Interests</p>
+                      <div className="flex flex-wrap gap-1">
+                        {segment.demographics.interests.slice(0, 3).map((interest, idx) => (
+                          <span key={idx} className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300">
+                            {interest}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60 mb-2">Top Platforms</p>
+                      <div className="flex flex-wrap gap-1">
+                        {segment.topPlatforms.map((platform, idx) => (
+                          <span key={idx} className={`h-2 w-2 rounded-full ${channelCatalog[platform as ChannelId]?.dot || "bg-slate-400"}`} title={platform} />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Key Insights
+              </h3>
+              <div className="space-y-3">
+                {audienceInsights.map((insight) => (
+                  <div
+                    key={insight.id}
+                    className={`rounded-2xl border p-4 ${
+                      insight.impact === "high"
+                        ? "border-purple-400/50 bg-purple-400/10"
+                        : "border-white/10 bg-slate-950/40"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between mb-2">
+                      <span className={`text-xs px-2 py-1 rounded-full uppercase ${
+                        insight.impact === "high"
+                          ? "bg-purple-500/20 text-purple-300"
+                          : "bg-blue-500/20 text-blue-300"
+                      }`}>
+                        {insight.impact} impact
+                      </span>
+                      <span className="text-xs text-slate-200/60">{insight.confidence}% confidence</span>
+                    </div>
+                    <h4 className="text-sm font-semibold text-white mb-1">{insight.title}</h4>
+                    <p className="text-xs text-slate-200/70 mb-2">{insight.description}</p>
+                    <p className="text-xs text-emerald-300">💡 {insight.recommendation}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Competitor Analysis */}
+        <section
+          id="competitor-analysis"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(251,191,36,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Competitor Analysis</h2>
+              <p className="text-sm text-slate-100/75">
+                Track competitor performance and benchmark your metrics against the market.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {competitors.map((competitor) => (
+                <div
+                  key={competitor.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{competitor.name}</h3>
+                      <div className="flex items-center gap-2 mt-1">
+                        {competitor.platforms.map((platform, idx) => (
+                          <span key={idx} className={`h-2 w-2 rounded-full ${channelCatalog[platform as ChannelId]?.dot || "bg-slate-400"}`} title={platform} />
+                        ))}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-semibold text-white">{competitor.followers.toLocaleString()} followers</p>
+                      <p className="text-xs text-emerald-300">{competitor.engagementRate}% engagement</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <p className="text-xs text-slate-200/60">Strengths</p>
+                      <ul className="mt-1 space-y-1">
+                        {competitor.strengths.map((strength, idx) => (
+                          <li key={idx} className="text-xs text-emerald-300">✓ {strength}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60">Weaknesses</p>
+                      <ul className="mt-1 space-y-1">
+                        {competitor.weaknesses.map((weakness, idx) => (
+                          <li key={idx} className="text-xs text-red-300">✗ {weakness}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(251,191,36,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Market Position
+              </h3>
+              <div className="space-y-4">
+                {competitorComparisons.map((comparison, idx) => (
+                  <div key={idx} className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <p className="text-xs font-semibold text-white">{comparison.metric}</p>
+                      <span className="text-xs px-2 py-1 rounded-full bg-amber-500/20 text-amber-300">
+                        Rank #{comparison.yourRank} of {comparison.totalCompetitors}
+                      </span>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-slate-200/60">You</span>
+                        <span className="text-sm font-semibold text-white">{comparison.yourValue.toLocaleString()}</span>
+                      </div>
+                      {Object.entries(comparison.competitorValues).map(([name, value]) => (
+                        <div key={name} className="flex items-center justify-between">
+                          <span className="text-xs text-slate-200/60">{name}</span>
+                          <span className="text-xs text-slate-300">{value.toLocaleString()}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
       </main>
     </div>
   );
