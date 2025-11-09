@@ -178,6 +178,30 @@ import {
   recyclingStats,
 } from "@/data/recycling";
 import {
+  listeningAlerts,
+  listeningStats,
+  listeningTopics,
+} from "@/data/listening-dashboard";
+import {
+  teamGoals,
+  teamMembersPerformance,
+  teamPerformanceStats,
+} from "@/data/team-performance";
+import {
+  brandMentions,
+  brandMentionStats,
+  brandMentionTrends,
+} from "@/data/brand-mentions";
+import {
+  crisisAlerts,
+  crisisResponses,
+  crisisStats,
+} from "@/data/crisis-management";
+import {
+  workflowStats,
+  workflowTemplates,
+} from "@/data/workflow-builder";
+import {
   notificationChannels,
   notificationPreferences,
   recentNotifications,
