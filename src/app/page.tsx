@@ -22484,6 +22484,740 @@ export default function Home() {
           </aside>
         </section>
 
+        {/* Scheduling Automation */}
+        <section
+          id="scheduling-automation"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Scheduling Automation</h2>
+              <p className="text-sm text-slate-100/75">
+                Automate content scheduling, posting, and workflows with intelligent rules.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {automationRules.map((rule) => (
+                <div
+                  key={rule.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{rule.name}</h3>
+                      <p className="text-xs text-slate-200/60 mt-1">{rule.description}</p>
+                    </div>
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      rule.status === "active"
+                        ? "bg-emerald-500/20 text-emerald-300"
+                        : rule.status === "paused"
+                        ? "bg-amber-500/20 text-amber-300"
+                        : "bg-slate-500/20 text-slate-300"
+                    }`}>
+                      {rule.status}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <p className="text-xs text-slate-200/60 mb-2">Trigger</p>
+                      <span className="text-xs px-2 py-1 rounded-full bg-blue-500/20 text-blue-300 capitalize">
+                        {rule.trigger.replace("-", " ")}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60 mb-2">Success Rate</p>
+                      <span className="text-sm font-semibold text-emerald-300">{rule.successRate}%</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-xs text-slate-200/60">Conditions:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {rule.conditions.map((condition, idx) => (
+                        <span key={idx} className="text-xs px-2 py-1 rounded-full bg-slate-700/50 text-slate-300">
+                          {condition}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  {rule.lastRun && (
+                    <p className="text-xs text-slate-200/60 mt-3">
+                      Last run: {formatRelativeTime(rule.lastRun)} · Run {rule.runCount} times
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </article>
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Automation Stats
+              </h3>
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Rules</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{automationStats.totalRules}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active Rules</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{automationStats.activeRules}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Success Rate</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{automationStats.successRate}%</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Time Saved</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{automationStats.timeSaved}</p>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Scheduled Automations
+              </h3>
+              <div className="space-y-3">
+                {scheduledAutomations.map((scheduled) => (
+                  <div
+                    key={scheduled.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <p className="text-sm font-semibold text-white mb-1">{scheduled.ruleName}</p>
+                    <p className="text-xs text-slate-200/60">
+                      Scheduled: {formatRelativeTime(scheduled.scheduledFor)}
+                    </p>
+                    <span className={`text-xs px-2 py-1 rounded-full mt-2 inline-block ${
+                      scheduled.status === "completed"
+                        ? "bg-emerald-500/20 text-emerald-300"
+                        : scheduled.status === "running"
+                        ? "bg-blue-500/20 text-blue-300"
+                        : scheduled.status === "failed"
+                        ? "bg-red-500/20 text-red-300"
+                        : "bg-slate-500/20 text-slate-300"
+                    }`}>
+                      {scheduled.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Influencer Collaboration */}
+        <section
+          id="influencer-collaboration"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Influencer Collaboration</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage influencer partnerships and track campaign performance.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {influencerCampaigns.map((campaign) => (
+                <div
+                  key={campaign.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{campaign.name}</h3>
+                      <p className="text-xs text-slate-200/60 mt-1">with {campaign.influencerName}</p>
+                    </div>
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      campaign.status === "active"
+                        ? "bg-emerald-500/20 text-emerald-300"
+                        : campaign.status === "completed"
+                        ? "bg-blue-500/20 text-blue-300"
+                        : "bg-slate-500/20 text-slate-300"
+                    }`}>
+                      {campaign.status}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <p className="text-xs text-slate-200/60 mb-1">Budget</p>
+                      <p className="text-sm font-semibold text-white">${campaign.budget.toLocaleString()}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60 mb-1">ROI</p>
+                      <p className="text-sm font-semibold text-emerald-300">{campaign.metrics.roi}%</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div>
+                      <p className="text-xs text-slate-200/60 mb-1">Reach</p>
+                      <p className="text-sm font-semibold text-white">{campaign.metrics.reach.toLocaleString()}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60 mb-1">Engagement</p>
+                      <p className="text-sm font-semibold text-white">{campaign.metrics.engagement.toLocaleString()}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60 mb-1">Conversions</p>
+                      <p className="text-sm font-semibold text-emerald-300">{campaign.metrics.conversions}</p>
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-white/10">
+                    <p className="text-xs text-slate-200/60 mb-2">Deliverables:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {campaign.deliverables.map((deliverable, idx) => (
+                        <span key={idx} className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300">
+                          {deliverable}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Influencer Stats
+              </h3>
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Influencers</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{influencerStats.totalInfluencers}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active Campaigns</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{influencerStats.activeCollaborations}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg ROI</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{influencerStats.avgROI}%</p>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Top Influencers
+              </h3>
+              <div className="space-y-3">
+                {influencers.slice(0, 3).map((influencer) => (
+                  <div
+                    key={influencer.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <div>
+                        <p className="text-sm font-semibold text-white">{influencer.name}</p>
+                        <p className="text-xs text-slate-200/60">{influencer.username}</p>
+                      </div>
+                      <span className={`text-xs px-2 py-1 rounded-full ${
+                        influencer.status === "active"
+                          ? "bg-emerald-500/20 text-emerald-300"
+                          : "bg-slate-500/20 text-slate-300"
+                      }`}>
+                        {influencer.status}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div>
+                        <span className="text-slate-200/60">Followers: </span>
+                        <span className="text-white">{influencer.followers.toLocaleString()}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-200/60">Eng. Rate: </span>
+                        <span className="text-emerald-300">{influencer.engagementRate}%</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Social Compliance */}
+        <section
+          id="social-compliance"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(239,68,68,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Social Compliance</h2>
+              <p className="text-sm text-slate-100/75">
+                Ensure your content meets legal and platform compliance requirements.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {complianceChecks.map((check) => (
+                <div
+                  key={check.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{check.contentTitle}</h3>
+                      <p className="text-xs text-slate-200/60 mt-1 capitalize">
+                        {check.type} · {check.platform}
+                      </p>
+                    </div>
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      check.status === "passed"
+                        ? "bg-emerald-500/20 text-emerald-300"
+                        : check.status === "failed"
+                        ? "bg-red-500/20 text-red-300"
+                        : check.status === "warning"
+                        ? "bg-amber-500/20 text-amber-300"
+                        : "bg-slate-500/20 text-slate-300"
+                    }`}>
+                      {check.status}
+                    </span>
+                  </div>
+                  {check.issues && check.issues.length > 0 && (
+                    <div className="mb-3">
+                      <p className="text-xs text-red-300 mb-2">Issues:</p>
+                      <ul className="list-disc list-inside space-y-1">
+                        {check.issues.map((issue, idx) => (
+                          <li key={idx} className="text-xs text-slate-200/70">{issue}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {check.recommendations && check.recommendations.length > 0 && (
+                    <div>
+                      <p className="text-xs text-emerald-300 mb-2">Recommendations:</p>
+                      <ul className="list-disc list-inside space-y-1">
+                        {check.recommendations.map((rec, idx) => (
+                          <li key={idx} className="text-xs text-slate-200/70">{rec}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  <p className="text-xs text-slate-200/60 mt-3">
+                    Checked: {formatRelativeTime(check.checkedAt)}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </article>
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(239,68,68,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Compliance Stats
+              </h3>
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Compliance Score</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{complianceStats.complianceScore}%</p>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="rounded-xl border border-emerald-400/30 bg-emerald-400/10 p-3">
+                    <p className="text-xs text-emerald-300">Passed</p>
+                    <p className="mt-1 text-lg font-semibold text-white">{complianceStats.passedChecks}</p>
+                  </div>
+                  <div className="rounded-xl border border-red-400/30 bg-red-400/10 p-3">
+                    <p className="text-xs text-red-300">Failed</p>
+                    <p className="mt-1 text-lg font-semibold text-white">{complianceStats.failedChecks}</p>
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Warnings</p>
+                  <p className="mt-1 text-xl font-semibold text-amber-300">{complianceStats.warningChecks}</p>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(239,68,68,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Active Rules
+              </h3>
+              <div className="space-y-3">
+                {complianceRules.filter(r => r.enabled).map((rule) => (
+                  <div
+                    key={rule.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-sm font-semibold text-white">{rule.name}</p>
+                      <span className={`text-xs px-2 py-1 rounded-full capitalize ${
+                        rule.severity === "critical"
+                          ? "bg-red-500/20 text-red-300"
+                          : rule.severity === "high"
+                          ? "bg-amber-500/20 text-amber-300"
+                          : "bg-blue-500/20 text-blue-300"
+                      }`}>
+                        {rule.severity}
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-200/60">
+                      Matched {rule.matchCount} times
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Content Repurposing */}
+        <section
+          id="content-repurposing"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content Repurposing</h2>
+              <p className="text-sm text-slate-100/75">
+                Transform your content across different platforms and formats automatically.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {repurposingTasks.map((task) => (
+                <div
+                  key={task.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{task.sourceContent.title}</h3>
+                      <p className="text-xs text-slate-200/60 mt-1">
+                        {task.sourceContent.platform} → {task.targetPlatform} · {task.targetType}
+                      </p>
+                    </div>
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      task.status === "completed"
+                        ? "bg-emerald-500/20 text-emerald-300"
+                        : task.status === "processing"
+                        ? "bg-blue-500/20 text-blue-300"
+                        : task.status === "failed"
+                        ? "bg-red-500/20 text-red-300"
+                        : "bg-slate-500/20 text-slate-300"
+                    }`}>
+                      {task.status}
+                    </span>
+                  </div>
+                  {task.status === "processing" && (
+                    <div className="mb-4">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-200/60">Progress</span>
+                        <span className="text-xs text-white">{task.progress}%</span>
+                      </div>
+                      <div className="h-2 rounded-full bg-slate-700/50 overflow-hidden">
+                        <div
+                          className="h-full bg-blue-500 rounded-full transition-all"
+                          style={{ width: `${task.progress}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  {task.result && (
+                    <div className="rounded-xl border border-emerald-400/30 bg-emerald-400/10 p-3">
+                      <p className="text-xs text-emerald-300 mb-1">Performance: {task.result.performance}%</p>
+                      {task.result.url && (
+                        <a href={task.result.url} className="text-xs text-white hover:underline">
+                          View Result →
+                        </a>
+                      )}
+                    </div>
+                  )}
+                  <p className="text-xs text-slate-200/60 mt-3">
+                    Created: {formatRelativeTime(task.createdAt)}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </article>
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Repurposing Stats
+              </h3>
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Completed Tasks</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{repurposingStats.completedTasks}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg Performance Gain</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{repurposingStats.avgPerformanceGain}%</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Time Saved</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{repurposingStats.timeSaved}</p>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Popular Templates
+              </h3>
+              <div className="space-y-3">
+                {repurposingTemplates.map((template) => (
+                  <div
+                    key={template.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <p className="text-sm font-semibold text-white mb-1">{template.name}</p>
+                    <p className="text-xs text-slate-200/60 mb-2">{template.description}</p>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-200/60">Used {template.usageCount} times</span>
+                      <span className="text-emerald-300">{template.avgPerformance}% avg</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Notification Center */}
+        <section
+          id="notification-center"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Notification Center</h2>
+              <p className="text-sm text-slate-100/75">
+                Stay updated with all important events and activities across your social media accounts.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {notifications.map((notif) => (
+                <div
+                  key={notif.id}
+                  className={`rounded-3xl border p-6 ${
+                    !notif.read
+                      ? "border-blue-400/50 bg-blue-400/10"
+                      : "border-white/15 bg-white/5"
+                  }`}
+                >
+                  <div className="flex items-start gap-4">
+                    <div className={`h-10 w-10 rounded-xl flex items-center justify-center ${
+                      notif.type === "success"
+                        ? "bg-emerald-500/20"
+                        : notif.type === "error"
+                        ? "bg-red-500/20"
+                        : notif.type === "warning"
+                        ? "bg-amber-500/20"
+                        : notif.type === "mention"
+                        ? "bg-purple-500/20"
+                        : "bg-blue-500/20"
+                    }`}>
+                      <span className="text-xl">
+                        {notif.type === "success" ? "✓" : notif.type === "error" ? "✕" : notif.type === "warning" ? "⚠" : notif.type === "mention" ? "@" : "ℹ"}
+                      </span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-lg font-semibold text-white">{notif.title}</h3>
+                        {!notif.read && (
+                          <span className="h-2 w-2 rounded-full bg-blue-400" />
+                        )}
+                      </div>
+                      <p className="text-sm text-slate-200/70 mb-3">{notif.message}</p>
+                      <div className="flex items-center gap-3">
+                        <span className={`text-xs px-2 py-1 rounded-full capitalize ${
+                          notif.priority === "high"
+                            ? "bg-red-500/20 text-red-300"
+                            : notif.priority === "medium"
+                            ? "bg-amber-500/20 text-amber-300"
+                            : "bg-blue-500/20 text-blue-300"
+                        }`}>
+                          {notif.priority}
+                        </span>
+                        <span className="text-xs text-slate-200/60">{notif.category}</span>
+                        <span className="text-xs text-slate-200/60">·</span>
+                        <span className="text-xs text-slate-200/60">{formatRelativeTime(notif.timestamp)}</span>
+                      </div>
+                      {notif.actionUrl && (
+                        <a
+                          href={notif.actionUrl}
+                          className="text-xs text-blue-300 hover:underline mt-2 inline-block"
+                        >
+                          View Details →
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Notification Stats
+              </h3>
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Unread</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{notificationStats.unreadNotifications}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Today</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{notificationStats.notificationsToday}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg Response Time</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{notificationStats.avgResponseTime}</p>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Settings
+              </h3>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-white">Email Notifications</span>
+                  <span className={`text-xs px-2 py-1 rounded-full ${
+                    notificationSettings.email ? "bg-emerald-500/20 text-emerald-300" : "bg-slate-500/20 text-slate-300"
+                  }`}>
+                    {notificationSettings.email ? "On" : "Off"}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-white">Push Notifications</span>
+                  <span className={`text-xs px-2 py-1 rounded-full ${
+                    notificationSettings.push ? "bg-emerald-500/20 text-emerald-300" : "bg-slate-500/20 text-slate-300"
+                  }`}>
+                    {notificationSettings.push ? "On" : "Off"}
+                  </span>
+                </div>
+                {notificationSettings.quietHours.enabled && (
+                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                    <p className="text-xs text-slate-200/60 mb-1">Quiet Hours</p>
+                    <p className="text-sm text-white">
+                      {notificationSettings.quietHours.start} - {notificationSettings.quietHours.end}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* API Management */}
+        <section
+          id="api-management"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">API Management</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage API keys, monitor usage, and track performance of your API integrations.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {apiKeys.map((key) => (
+                <div
+                  key={key.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{key.name}</h3>
+                      <p className="text-xs text-slate-200/60 mt-1 font-mono">{key.keyPreview}</p>
+                    </div>
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      key.status === "active"
+                        ? "bg-emerald-500/20 text-emerald-300"
+                        : key.status === "revoked"
+                        ? "bg-red-500/20 text-red-300"
+                        : "bg-slate-500/20 text-slate-300"
+                    }`}>
+                      {key.status}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <p className="text-xs text-slate-200/60 mb-2">Permissions</p>
+                      <div className="flex flex-wrap gap-2">
+                        {key.permissions.map((perm, idx) => (
+                          <span key={idx} className="text-xs px-2 py-1 rounded-full bg-blue-500/20 text-blue-300 capitalize">
+                            {perm}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60 mb-2">Rate Limit</p>
+                      <p className="text-sm font-semibold text-white">
+                        {key.rateLimit.requests} / {key.rateLimit.period}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between text-xs text-slate-200/60">
+                    <span>Usage: {key.usageCount.toLocaleString()} requests</span>
+                    {key.lastUsed && (
+                      <span>Last used: {formatRelativeTime(key.lastUsed)}</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                API Stats
+              </h3>
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Keys</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{apiStats.totalKeys}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Requests Today</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{apiStats.requestsToday.toLocaleString()}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Success Rate</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{apiStats.successRate}%</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg Response Time</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{apiStats.avgResponseTime}ms</p>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Recent Usage
+              </h3>
+              <div className="space-y-3">
+                {recentAPIUsage.map((usage) => (
+                  <div
+                    key={usage.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className={`text-xs px-2 py-1 rounded-full font-mono ${
+                        usage.status === 200
+                          ? "bg-emerald-500/20 text-emerald-300"
+                          : usage.status >= 400
+                          ? "bg-red-500/20 text-red-300"
+                          : "bg-blue-500/20 text-blue-300"
+                      }`}>
+                        {usage.method} {usage.status}
+                      </span>
+                      <span className="text-xs text-slate-200/60">{usage.responseTime}ms</span>
+                    </div>
+                    <p className="text-xs text-white font-mono">{usage.endpoint}</p>
+                    <p className="text-xs text-slate-200/60 mt-1">{formatRelativeTime(usage.timestamp)}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
         {/* Content Analytics Dashboard */}
         <section
           id="content-analytics-dashboard"
