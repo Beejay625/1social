@@ -1551,6 +1551,7 @@ export default function Home() {
   const [selectedEventId, setSelectedEventId] = useState<string>(
     calendarEvents[0]?.id ?? "",
   );
+  const [selectedSegmentId, setSelectedSegmentId] = useState<string>("");
   const [listeningKeywordFilter, setListeningKeywordFilter] = useState<string>("all");
   const [listeningSentimentFilter, setListeningSentimentFilter] = useState<string>("all");
 
