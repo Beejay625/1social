@@ -1271,12 +1271,6 @@ export default function Home() {
                   strokeLinecap="round"
                   strokeWidth="3"
                 />
-                <defs>
-                  <linearGradient id={`spark-${card.id}`} x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="rgba(125,211,252,0.5)" />
-                    <stop offset="100%" stopColor="rgba(125,211,252,0)" />
-                  </linearGradient>
-                </defs>
               </svg>
             </article>
           ))}
