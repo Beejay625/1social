@@ -368,6 +368,40 @@ import {
   influencers,
 } from "@/data/influencer-management";
 import {
+  auditReport,
+  auditStats,
+} from "@/data/social-auditing";
+import {
+  recycledContent,
+  recyclingRules,
+  recyclingStats,
+} from "@/data/content-recycling";
+import {
+  brandingConfig,
+  whiteLabelFeatures,
+  whiteLabelStats,
+} from "@/data/white-label";
+import {
+  customReports,
+  reportStats,
+} from "@/data/custom-reports";
+import {
+  sentimentData,
+  sentimentStats,
+} from "@/data/sentiment-dashboard";
+import {
+  distributionPatterns,
+  distributionStats,
+} from "@/data/distribution-analytics";
+import {
+  engagementScores,
+  engagementScoreStats,
+} from "@/data/engagement-scoring";
+import {
+  insightStats,
+  performanceInsights,
+} from "@/data/performance-insights";
+import {
   performanceMetrics,
   topPerformingContent,
 } from "@/data/content-performance-tracking";
