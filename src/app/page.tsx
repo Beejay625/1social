@@ -391,6 +391,40 @@ const initialPlannedPosts: PlannedPost[] = [
       },
     ],
   },
+  {
+    id: "plan-4",
+    title: "Syndication rollout",
+    summary: "Mirror essay with X recap thread to follow.",
+    scheduledFor: new Date(Date.now() + 1000 * 60 * 60 * 12).toISOString(),
+    channels: ["mirror", "x"],
+    status: "queued",
+    owner: "You",
+    approvalSteps: [
+      {
+        id: "mirror-proof",
+        label: "Proofread essay",
+        approver: "Kai",
+        status: "pending",
+        due: new Date(Date.now() + 1000 * 60 * 60 * 4).toISOString(),
+      },
+      {
+        id: "thread-sync",
+        label: "Thread alignment",
+        approver: "Ameena",
+        status: "pending",
+        due: new Date(Date.now() + 1000 * 60 * 60 * 8).toISOString(),
+      },
+    ],
+    commentThread: [
+      {
+        id: "comment-plan-4-1",
+        author: "Ameena",
+        message: "Need to sync CTA copy with Lens drop.",
+        at: new Date(Date.now() - 1000 * 60 * 25).toISOString(),
+        tone: "mention",
+      },
+    ],
+  },
 ];
 
 const automationTemplates: AutomationTemplate[] = [
