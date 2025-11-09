@@ -156,6 +156,36 @@ import {
   automationRules,
   automationTemplates,
 } from "@/data/automation";
+import {
+  calendarEvents,
+  calendarViews,
+  timeSlots,
+} from "@/data/calendar";
+import {
+  listeningAlerts,
+  listeningKeywords,
+  recentMentions,
+} from "@/data/listening";
+import {
+  collaborationCampaigns,
+  influencerMetrics,
+  influencerProfiles,
+} from "@/data/influencer-mgmt";
+import {
+  crisisAlerts,
+  crisisResponseTemplates,
+  crisisStats,
+} from "@/data/crisis";
+import {
+  commerceStats,
+  productCatalog,
+  shoppingPosts,
+} from "@/data/commerce";
+import {
+  recycledContent,
+  recyclingRules,
+  recyclingStats,
+} from "@/data/recycling";
 import { truncateAddress, velocityBadge } from "@/utils/account";
 import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
 import { formatMetricDelta, formatMetricValue, metricDeltaTone } from "@/utils/metrics";
