@@ -202,6 +202,11 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Mobile App Management** - Full mobile app analytics and feature management
 - **Calendar AI Assistant** - AI-powered scheduling optimization and recommendations
 - **Custom Report Builder** - Create custom reports with your own metrics and formulas
+- **Social Listening Dashboard** - Real-time keyword monitoring, trending topics, and sentiment analysis
+- **Brand Mentions Tracking** - Comprehensive brand mention tracking with sentiment analysis and growth metrics
+- **Team Performance Analytics** - Individual and team performance tracking with goals and productivity metrics
+- **Crisis Management Dashboard** - Automated crisis detection, severity alerts, and response tracking
+- **Workflow Builder** - Custom workflow creation with multi-step processes and automation
 
 ## Project Structure
 
