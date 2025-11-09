@@ -2855,6 +2855,81 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+
+              <div className="grid gap-4 lg:grid-cols-2">
+                <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Live presence
+                  </h3>
+                  <p className="mt-2 text-xs text-slate-200/70">
+                    Who is currently touching this rollout.
+                  </p>
+                  <ul className="mt-4 space-y-3">
+                    {teamPresenceRoster.map((member) => {
+                      const token = presenceStatusTokens[member.status];
+                      return (
+                        <li
+                          key={member.id}
+                          className="flex items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                        >
+                          <span
+                            className={`mt-1 h-2.5 w-2.5 rounded-full ${token.dot}`}
+                          />
+                          <div className="space-y-1 text-sm text-slate-100/80">
+                            <div className="flex items-center justify-between gap-3">
+                              <p className="font-semibold text-white">{member.name}</p>
+                              <span
+                                className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${token.badge}`}
+                              >
+                                {token.label}
+                              </span>
+                            </div>
+                            <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                              {member.role}
+                            </p>
+                            <p className="text-xs text-slate-200/70">{member.focus}</p>
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+
+                <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Approval routing
+                  </h3>
+                  <p className="mt-2 text-xs text-slate-200/70">
+                    View who signs off each stage and how fallbacks trigger.
+                  </p>
+                  <ol className="mt-4 space-y-3">
+                    {approvalRoutes.map((route) => (
+                      <li
+                        key={route.id}
+                        className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <p className="text-sm font-semibold text-white">{route.stage}</p>
+                          <span className="text-xs text-slate-200/70">
+                            {route.owners.length} owner{route.owners.length === 1 ? "" : "s"}
+                          </span>
+                        </div>
+                        <div className="mt-3 flex flex-wrap gap-2 text-xs text-slate-200/80">
+                          {route.owners.map((owner) => (
+                            <span
+                              key={`${route.id}-${owner}`}
+                              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 uppercase tracking-[0.3em]"
+                            >
+                              {owner}
+                            </span>
+                          ))}
+                        </div>
+                        <p className="mt-3 text-xs text-slate-200/70">{route.fallback}</p>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
             ) : (
               <p className="rounded-3xl border border-dashed border-white/20 bg-white/5 p-6 text-center text-sm text-slate-200/70">
                 Add a schedule first to unlock workflow tracking.
