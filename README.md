@@ -262,7 +262,6 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Engagement Calculator** - Calculate engagement rates with detailed breakdowns by type
 - **Hashtag Research** - Research hashtags with volume, difficulty, growth metrics, and related suggestions
 - **Performance Heatmaps** - Visualize performance patterns by day and time with color-coded intensity maps
-- **Calendar Sync** - Seamless integration with Google Calendar, Outlook, Apple Calendar, and iCal
 - **Advanced Social Listening** - Comprehensive keyword monitoring, sentiment analysis, and mention tracking
 - **Approval Workflows** - Multi-step content approval with auto-approval and timeout conditions
 - **Analytics Dashboards** - Customizable analytics dashboards with widget-based layouts
