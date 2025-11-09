@@ -3033,6 +3033,16 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "calendar-integration", label: "Calendar Integration" },
   { id: "automation-rules", label: "Automation Rules" },
   { id: "performance-tracking", label: "Performance Tracking" },
+  { id: "performance-dashboard", label: "Performance Dashboard" },
+  { id: "collaboration-tools", label: "Collaboration Tools" },
+  { id: "analytics-export", label: "Analytics Export" },
+  { id: "approval-queue", label: "Approval Queue" },
+  { id: "post-templates", label: "Post Templates" },
+  { id: "performance-insights", label: "Performance Insights" },
+  { id: "engagement-tracking", label: "Engagement Tracking" },
+  { id: "calendar-views", label: "Calendar Views" },
+  { id: "hashtag-performance", label: "Hashtag Performance" },
+  { id: "repurposing-suggestions", label: "Repurposing Suggestions" },
 ];
 const chartColorTokens = {
   reach: "text-sky-300",
