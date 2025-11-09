@@ -28,3 +28,24 @@ export const scoreWidthClass = (score: number) => {
   return "w-[35%]";
 };
 
+const progressWidthTokens: { threshold: number; className: string }[] = [
+  { threshold: 0.05, className: "w-[5%]" },
+  { threshold: 0.15, className: "w-[15%]" },
+  { threshold: 0.25, className: "w-[25%]" },
+  { threshold: 0.35, className: "w-[35%]" },
+  { threshold: 0.45, className: "w-[45%]" },
+  { threshold: 0.55, className: "w-[55%]" },
+  { threshold: 0.65, className: "w-[65%]" },
+  { threshold: 0.75, className: "w-[75%]" },
+  { threshold: 0.85, className: "w-[85%]" },
+  { threshold: 0.95, className: "w-[95%]" },
+  { threshold: Number.POSITIVE_INFINITY, className: "w-full" },
+];
+
+export const pickProgressWidthClass = (value: number) => {
+  const token =
+    progressWidthTokens.find((entry) => value <= entry.threshold) ??
+    progressWidthTokens[progressWidthTokens.length - 1];
+  return token.className;
+};
+
