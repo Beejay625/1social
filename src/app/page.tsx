@@ -814,7 +814,23 @@ export default function Home() {
       velocityToken,
       metricDashboard,
     };
-  }, [plannedPosts, posts, sortedPlannedPosts, activeChannels]);
+  }, [activeChannels, plannedPosts, posts, sortedPlannedPosts]);
+
+  const metricCards = useMemo(() =>
+    analyticsSnapshot.metricDashboard.kpis.map((kpi) => {
+      const displayValue = formatMetricValue(kpi.value, kpi.unit);
+      const deltaLabel = formatMetricDelta(kpi.delta, kpi.unit);
+      const deltaTone = metricDeltaTone(kpi.delta);
+      const path = buildSparklinePath(kpi.trend, 160, 48);
+      return {
+        ...kpi,
+        displayValue,
+        deltaLabel,
+        deltaTone,
+        path,
+      };
+    }),
+  [analyticsSnapshot.metricDashboard.kpis]);
 
   const handleToggle = (channelId: ChannelId) => {
     setChannelState((prev) => ({
