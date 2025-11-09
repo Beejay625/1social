@@ -1235,6 +1235,53 @@ export default function Home() {
           </div>
         </header>
 
+        <section className="grid gap-4 rounded-4xl border border-white/15 bg-white/5 p-6 shadow-[0_14px_50px_rgba(76,29,149,0.25)] backdrop-blur-2xl sm:grid-cols-2 xl:grid-cols-3">
+          {metricCards.map((card) => (
+            <article
+              key={card.id}
+              className="relative flex flex-col justify-between gap-4 overflow-hidden rounded-3xl border border-white/10 bg-white/10 p-5 shadow-inner shadow-purple-900/20"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    {card.label}
+                  </p>
+                  <p className="mt-2 text-3xl font-semibold text-white">
+                    {card.displayValue}
+                  </p>
+                  <p className="mt-1 text-xs text-slate-200/70">{card.deltaLabel}</p>
+                </div>
+                <span
+                  className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${card.deltaTone.tone}`}
+                >
+                  <span>{card.deltaTone.icon}</span>
+                  {card.deltaLabel}
+                </span>
+              </div>
+              <svg
+                viewBox="0 0 160 48"
+                role="img"
+                aria-label={`${card.label} sparkline`}
+                className="h-16 w-full text-sky-300"
+              >
+                <path
+                  d={card.path}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="3"
+                />
+                <defs>
+                  <linearGradient id={`spark-${card.id}`} x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stopColor="rgba(125,211,252,0.5)" />
+                    <stop offset="100%" stopColor="rgba(125,211,252,0)" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </article>
+          ))}
+        </section>
+
         <section className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
           <article className="flex flex-col gap-6 rounded-4xl border border-white/20 bg-white/10 p-8 shadow-[0_18px_60px_rgba(91,33,182,0.35)] backdrop-blur-2xl">
             <header className="flex flex-col gap-3">
