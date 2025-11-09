@@ -3307,6 +3307,11 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "content-calendar-integration", label: "Content Calendar Integration" },
   { id: "social-automation-rules", label: "Social Automation Rules" },
   { id: "content-performance-tracking", label: "Content Performance Tracking" },
+  { id: "social-audit", label: "Social Media Audit" },
+  { id: "content-predictor", label: "Content Performance Predictor" },
+  { id: "industry-benchmarking", label: "Industry Benchmarking" },
+  { id: "calendar-ai-assistant", label: "Calendar AI Assistant" },
+  { id: "custom-report-builder", label: "Custom Report Builder" },
 ];
 const chartColorTokens = {
   reach: "text-sky-300",
