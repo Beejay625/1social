@@ -24,6 +24,31 @@ import {
   reachConversionTrend,
 } from "@/data/dashboard";
 import { aiActivityLog, aiDraftIdeas, aiPersonas, aiSmartReplies, aiToneOptions } from "@/data/ai";
+import {
+  abTests,
+  campaigns,
+  competitors,
+  contentTemplates,
+  notifications,
+  trendTopics,
+  webhooks,
+} from "@/data/features";
+import {
+  contentHashtags,
+  contentRecommendations,
+  intelligenceAnomalies,
+  intelligenceForecasts,
+} from "@/data/intelligence";
+import { integrationsAvailable } from "@/data/integrations";
+import {
+  reportingAlertFeed,
+  reportingAlertFilters,
+  reportingBenchmarkMatrix,
+  reportingExecMetrics,
+  reportingGoalProgress,
+  reportingVarianceBreakdowns,
+} from "@/data/reporting";
+import { teamActivityLog, teamMembers } from "@/data/team";
 import { truncateAddress, velocityBadge } from "@/utils/account";
 import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
 import { formatMetricDelta, formatMetricValue, metricDeltaTone } from "@/utils/metrics";
@@ -4401,13 +4426,7 @@ export default function Home() {
                             {completedSteps}/{totalSteps} steps completed
                           </p>
                         </div>
-                        <span className={`text-xs font-semibold uppercase tracking-wider ${
-                          playbook.metric === "conversion" 
-                            ? chartColorTokens.conversionRate 
-                            : playbook.metric === "growth"
-                            ? chartColorTokens.total
-                            : chartColorTokens[playbook.metric] ?? "text-slate-300"
-                        }`}>
+                        <span className={`text-xs font-semibold uppercase tracking-wider ${playbook.metric === "conversion" ? chartColorTokens.conversionRate : chartColorTokens[playbook.metric] ?? "text-slate-300"}`}>
                           {playbook.metric}
                         </span>
                       </div>
