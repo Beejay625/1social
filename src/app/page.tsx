@@ -17,6 +17,24 @@ type SocialPost = {
   createdAt: string;
 };
 
+type ApprovalStatus = "pending" | "approved" | "changes";
+
+type ApprovalStep = {
+  id: string;
+  label: string;
+  approver: string;
+  status: ApprovalStatus;
+  due: string;
+};
+
+type Comment = {
+  id: string;
+  author: string;
+  message: string;
+  at: string;
+  tone?: "note" | "mention";
+};
+
 type PlannedPost = {
   id: string;
   title: string;
@@ -25,7 +43,8 @@ type PlannedPost = {
   channels: ChannelId[];
   status: "queued" | "draft" | "approved";
   owner: string;
-  approver?: string;
+  approvalSteps: ApprovalStep[];
+  commentThread: Comment[];
 };
 
 const channelCatalog: Record<
@@ -96,7 +115,38 @@ const initialPlannedPosts: PlannedPost[] = [
     channels: ["farcaster", "instagram"],
     status: "approved",
     owner: "Ameena",
-    approver: "Kai",
+    approvalSteps: [
+      {
+        id: "strategy",
+        label: "Channel strategy",
+        approver: "Kai",
+        status: "approved",
+        due: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+      },
+      {
+        id: "creative",
+        label: "Creative polish",
+        approver: "Leo",
+        status: "approved",
+        due: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
+      },
+    ],
+    commentThread: [
+      {
+        id: "comment-plan-1-1",
+        author: "Kai",
+        message: "Carousel cover looks sharp. Added final copy tweaks.",
+        at: new Date(Date.now() - 1000 * 60 * 32).toISOString(),
+        tone: "note",
+      },
+      {
+        id: "comment-plan-1-2",
+        author: "Leo",
+        message: "Uploaded motion version to the asset locker.",
+        at: new Date(Date.now() - 1000 * 60 * 20).toISOString(),
+        tone: "mention",
+      },
+    ],
   },
   {
     id: "plan-2",
@@ -106,7 +156,31 @@ const initialPlannedPosts: PlannedPost[] = [
     channels: ["farcaster"],
     status: "queued",
     owner: "Kai",
-    approver: "Leo",
+    approvalSteps: [
+      {
+        id: "outline",
+        label: "Outline review",
+        approver: "Ameena",
+        status: "pending",
+        due: new Date(Date.now() + 1000 * 60 * 60 * 4).toISOString(),
+      },
+      {
+        id: "design",
+        label: "Design QA",
+        approver: "Leo",
+        status: "pending",
+        due: new Date(Date.now() + 1000 * 60 * 60 * 10).toISOString(),
+      },
+    ],
+    commentThread: [
+      {
+        id: "comment-plan-2-1",
+        author: "Ameena",
+        message: "Need designer sign-off before 6PM.",
+        at: new Date(Date.now() - 1000 * 60 * 75).toISOString(),
+        tone: "mention",
+      },
+    ],
   },
   {
     id: "plan-3",
@@ -116,41 +190,31 @@ const initialPlannedPosts: PlannedPost[] = [
     channels: ["instagram"],
     status: "draft",
     owner: "Leo",
-  },
-];
-
-type Comment = {
-  id: string;
-  postId: string;
-  author: string;
-  message: string;
-  createdAt: string;
-  tone?: "info" | "action";
-};
-
-const initialComments: Comment[] = [
-  {
-    id: "comment-1",
-    postId: "plan-1",
-    author: "Kai",
-    message: "Carousel cover looks sharp. Added final copy tweaks.",
-    createdAt: new Date(Date.now() - 1000 * 60 * 32).toISOString(),
-    tone: "info",
-  },
-  {
-    id: "comment-2",
-    postId: "plan-2",
-    author: "Ameena",
-    message: "Need designer sign-off before 6PM.",
-    createdAt: new Date(Date.now() - 1000 * 60 * 75).toISOString(),
-    tone: "action",
-  },
-  {
-    id: "comment-3",
-    postId: "plan-3",
-    author: "Leo",
-    message: "Pull new community shots for reel slots 2 and 3.",
-    createdAt: new Date(Date.now() - 1000 * 60 * 145).toISOString(),
+    approvalSteps: [
+      {
+        id: "story",
+        label: "Story arc",
+        approver: "Ameena",
+        status: "changes",
+        due: new Date(Date.now() + 1000 * 60 * 60 * 6).toISOString(),
+      },
+      {
+        id: "audio",
+        label: "Audio sync",
+        approver: "Kai",
+        status: "pending",
+        due: new Date(Date.now() + 1000 * 60 * 60 * 20).toISOString(),
+      },
+    ],
+    commentThread: [
+      {
+        id: "comment-plan-3-1",
+        author: "Leo",
+        message: "Pull new community shots for reel slots 2 and 3.",
+        at: new Date(Date.now() - 1000 * 60 * 145).toISOString(),
+        tone: "note",
+      },
+    ],
   },
 ];
 
