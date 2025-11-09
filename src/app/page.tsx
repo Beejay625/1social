@@ -201,6 +201,36 @@ import {
   experimentTemplates,
   experiments,
 } from "@/data/experiments";
+import {
+  hashtagPerformance,
+  hashtagSuggestions,
+  hashtagTrends,
+} from "@/data/hashtag-research";
+import {
+  influencerProfiles,
+  outreachCampaigns,
+  outreachStats,
+} from "@/data/influencer-outreach";
+import {
+  roiBreakdown,
+  roiMetrics,
+  roiProjections,
+} from "@/data/roi-calculator";
+import {
+  contentTemplates,
+  templateCategories,
+  templateStats,
+} from "@/data/content-templates";
+import {
+  growthInsights,
+  growthMetrics,
+  growthProjections,
+} from "@/data/audience-growth";
+import {
+  accountHealth,
+  accountStats,
+  socialAccounts,
+} from "@/data/multi-account";
 import { truncateAddress, velocityBadge } from "@/utils/account";
 import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
 import { formatMetricDelta, formatMetricValue, metricDeltaTone } from "@/utils/metrics";
