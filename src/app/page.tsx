@@ -2734,214 +2734,215 @@ export default function Home() {
                 <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
                   <div className="space-y-6">
                     <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
-                    <div className="flex items-center justify-between gap-3">
-                      <div>
-                        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                          Owner
-                        </p>
-                        <p className="mt-1 text-sm font-semibold text-white">
-                          {workflowContext.selectedPlan.owner}
-                        </p>
-                      </div>
-                      <span
-                        className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${scheduleStatusStyles[workflowContext.selectedPlan.status].badge}`}
-                      >
+                      <div className="flex items-center justify-between gap-3">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                            Owner
+                          </p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {workflowContext.selectedPlan.owner}
+                          </p>
+                        </div>
                         <span
-                          className={`h-1.5 w-1.5 rounded-full ${scheduleStatusStyles[workflowContext.selectedPlan.status].dot}`}
-                        />
-                        {scheduleStatusStyles[workflowContext.selectedPlan.status].label}
-                      </span>
-                    </div>
-                    <p className="mt-4 text-xs uppercase tracking-[0.35em] text-slate-200/60">
-                      Launch window
-                    </p>
-                    <p className="mt-1 text-sm text-slate-100/80">
-                      {formatScheduleLabel(workflowContext.selectedPlan.scheduledFor)} ·{" "}
-                      {formatTimeUntil(workflowContext.selectedPlan.scheduledFor)}
-                    </p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {workflowContext.selectedPlan.channels.map((channelId) => (
-                        <span
-                          key={`workflow-channel-${workflowContext.selectedPlan?.id}-${channelId}`}
-                          className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${channelCatalog[channelId].badge}`}
+                          className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${scheduleStatusStyles[workflowContext.selectedPlan.status].badge}`}
                         >
                           <span
-                            className={`h-1.5 w-1.5 rounded-full ${channelCatalog[channelId].dot}`}
+                            className={`h-1.5 w-1.5 rounded-full ${scheduleStatusStyles[workflowContext.selectedPlan.status].dot}`}
                           />
-                          {channelCatalog[channelId].label}
+                          {scheduleStatusStyles[workflowContext.selectedPlan.status].label}
                         </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                      Approval steps
-                    </h3>
-                    <ol className="space-y-3">
-                      {workflowContext.steps.map((step) => {
-                        const token = approvalStatusTokens[step.status];
-                        return (
-                          <li
-                            key={`workflow-step-${step.id}`}
-                            className="flex items-center justify-between gap-4 rounded-3xl border border-white/15 bg-white/5 p-4"
+                      </div>
+                      <p className="mt-4 text-xs uppercase tracking-[0.35em] text-slate-200/60">
+                        Launch window
+                      </p>
+                      <p className="mt-1 text-sm text-slate-100/80">
+                        {formatScheduleLabel(workflowContext.selectedPlan.scheduledFor)} ·{" "}
+                        {formatTimeUntil(workflowContext.selectedPlan.scheduledFor)}
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {workflowContext.selectedPlan.channels.map((channelId) => (
+                          <span
+                            key={`workflow-channel-${workflowContext.selectedPlan?.id}-${channelId}`}
+                            className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${channelCatalog[channelId].badge}`}
                           >
-                            <div className="flex items-center gap-3">
-                              <span
-                                className={`h-2.5 w-2.5 rounded-full ${token.dot}`}
-                              />
-                              <div>
-                                <p className="text-sm font-semibold text-white">
-                                  {step.label}
-                                </p>
-                                <p className="text-xs text-slate-200/70">
-                                  {step.approver} · {formatTimeUntil(step.due)}
-                                </p>
-                              </div>
-                            </div>
                             <span
-                              className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wide ${token.badge}`}
-                            >
-                              {token.label}
-                            </span>
-                          </li>
-                        );
-                      })}
-                    </ol>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                      Team comments
-                    </h3>
-                    <span className="text-xs text-slate-200/70">
-                      {workflowContext.comments.length} notes
-                    </span>
-                  </div>
-                  <div className="space-y-3 overflow-hidden rounded-3xl border border-white/15 bg-white/5 p-4">
-                    <div className="max-h-64 space-y-3 overflow-y-auto pr-2">
-                      {workflowContext.comments.map((comment) => (
-                        <article
-                          key={comment.id}
-                          className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
-                        >
-                          <div className="flex items-center justify-between gap-3">
-                            <p className="text-sm font-semibold text-white">
-                              {comment.author}
-                            </p>
-                            <span className="text-xs text-slate-300/70">
-                              {formatRelativeTime(comment.at)}
-                            </span>
-                          </div>
-                          <p className="mt-2 text-sm leading-relaxed text-slate-100/80">
-                            {comment.message}
-                          </p>
-                        </article>
-                      ))}
-                      {workflowContext.comments.length === 0 && (
-                        <p className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-4 text-center text-sm text-slate-200/70">
-                          No comments yet. Leave guidance for the team below.
-                        </p>
-                      )}
+                              className={`h-1.5 w-1.5 rounded-full ${channelCatalog[channelId].dot}`}
+                            />
+                            {channelCatalog[channelId].label}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                    <form
-                      onSubmit={handleWorkflowCommentSubmit}
-                      className="mt-2 flex flex-col gap-3"
-                    >
-                      <label className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                        Add a note
-                      </label>
-                      <textarea
-                        value={workflowNote}
-                        onChange={(event) => setWorkflowNote(event.target.value)}
-                        placeholder="Share updates or requests for this post..."
-                        className="min-h-[96px] rounded-2xl border border-white/20 bg-slate-950/60 px-4 py-3 text-sm text-white placeholder:text-slate-400 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/60"
-                      />
-                      <button
-                        type="submit"
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-purple-400 via-fuchsia-500 to-indigo-500 px-5 py-2 text-xs font-semibold uppercase tracking-wide text-white shadow-lg shadow-purple-600/40 transition hover:shadow-xl hover:shadow-purple-600/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                      >
-                        Post comment
-                      </button>
-                    </form>
+
+                    <div className="space-y-3">
+                      <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                        Approval steps
+                      </h3>
+                      <ol className="space-y-3">
+                        {workflowContext.steps.map((step) => {
+                          const token = approvalStatusTokens[step.status];
+                          return (
+                            <li
+                              key={`workflow-step-${step.id}`}
+                              className="flex items-center justify-between gap-4 rounded-3xl border border-white/15 bg-white/5 p-4"
+                            >
+                              <div className="flex items-center gap-3">
+                                <span
+                                  className={`h-2.5 w-2.5 rounded-full ${token.dot}`}
+                                />
+                                <div>
+                                  <p className="text-sm font-semibold text-white">
+                                    {step.label}
+                                  </p>
+                                  <p className="text-xs text-slate-200/70">
+                                    {step.approver} · {formatTimeUntil(step.due)}
+                                  </p>
+                                </div>
+                              </div>
+                              <span
+                                className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wide ${token.badge}`}
+                              >
+                                {token.label}
+                              </span>
+                            </li>
+                          );
+                        })}
+                      </ol>
+                    </div>
                   </div>
-                </div>
+
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                        Team comments
+                      </h3>
+                      <span className="text-xs text-slate-200/70">
+                        {workflowContext.comments.length} notes
+                      </span>
+                    </div>
+                    <div className="space-y-3 overflow-hidden rounded-3xl border border-white/15 bg-white/5 p-4">
+                      <div className="max-h-64 space-y-3 overflow-y-auto pr-2">
+                        {workflowContext.comments.map((comment) => (
+                          <article
+                            key={comment.id}
+                            className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                          >
+                            <div className="flex items-center justify-between gap-3">
+                              <p className="text-sm font-semibold text-white">
+                                {comment.author}
+                              </p>
+                              <span className="text-xs text-slate-300/70">
+                                {formatRelativeTime(comment.at)}
+                              </span>
+                            </div>
+                            <p className="mt-2 text-sm leading-relaxed text-slate-100/80">
+                              {comment.message}
+                            </p>
+                          </article>
+                        ))}
+                        {workflowContext.comments.length === 0 && (
+                          <p className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-4 text-center text-sm text-slate-200/70">
+                            No comments yet. Leave guidance for the team below.
+                          </p>
+                        )}
+                      </div>
+                      <form
+                        onSubmit={handleWorkflowCommentSubmit}
+                        className="mt-2 flex flex-col gap-3"
+                      >
+                        <label className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                          Add a note
+                        </label>
+                        <textarea
+                          value={workflowNote}
+                          onChange={(event) => setWorkflowNote(event.target.value)}
+                          placeholder="Share updates or requests for this post..."
+                          className="min-h-[96px] rounded-2xl border border-white/20 bg-slate-950/60 px-4 py-3 text-sm text-white placeholder:text-slate-400 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/60"
+                        />
+                        <button
+                          type="submit"
+                          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-purple-400 via-fuchsia-500 to-indigo-500 px-5 py-2 text-xs font-semibold uppercase tracking-wide text-white shadow-lg shadow-purple-600/40 transition hover:shadow-xl hover:shadow-purple-600/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                        >
+                          Post comment
+                        </button>
+                      </form>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="grid gap-4 lg:grid-cols-2">
                   <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                    Live presence
-                  </h3>
-                  <p className="mt-2 text-xs text-slate-200/70">
-                    Who is currently touching this rollout.
-                  </p>
-                  <ul className="mt-4 space-y-3">
-                    {teamPresenceRoster.map((member) => {
-                      const token = presenceStatusTokens[member.status];
-                      return (
-                        <li
-                          key={member.id}
-                          className="flex items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/40 p-4"
-                        >
-                          <span
-                            className={`mt-1 h-2.5 w-2.5 rounded-full ${token.dot}`}
-                          />
-                          <div className="space-y-1 text-sm text-slate-100/80">
-                            <div className="flex items-center justify-between gap-3">
-                              <p className="font-semibold text-white">{member.name}</p>
-                              <span
-                                className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${token.badge}`}
-                              >
-                                {token.label}
-                              </span>
-                            </div>
-                            <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
-                              {member.role}
-                            </p>
-                            <p className="text-xs text-slate-200/70">{member.focus}</p>
-                          </div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-
-                <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                    Approval routing
-                  </h3>
-                  <p className="mt-2 text-xs text-slate-200/70">
-                    View who signs off each stage and how fallbacks trigger.
-                  </p>
-                  <ol className="mt-4 space-y-3">
-                    {approvalRoutes.map((route) => (
-                      <li
-                        key={route.id}
-                        className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
-                      >
-                        <div className="flex items-center justify-between gap-3">
-                          <p className="text-sm font-semibold text-white">{route.stage}</p>
-                          <span className="text-xs text-slate-200/70">
-                            {route.owners.length} owner{route.owners.length === 1 ? "" : "s"}
-                          </span>
-                        </div>
-                        <div className="mt-3 flex flex-wrap gap-2 text-xs text-slate-200/80">
-                          {route.owners.map((owner) => (
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Live presence
+                    </h3>
+                    <p className="mt-2 text-xs text-slate-200/70">
+                      Who is currently touching this rollout.
+                    </p>
+                    <ul className="mt-4 space-y-3">
+                      {teamPresenceRoster.map((member) => {
+                        const token = presenceStatusTokens[member.status];
+                        return (
+                          <li
+                            key={member.id}
+                            className="flex items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                          >
                             <span
-                              key={`${route.id}-${owner}`}
-                              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 uppercase tracking-[0.3em]"
-                            >
-                              {owner}
+                              className={`mt-1 h-2.5 w-2.5 rounded-full ${token.dot}`}
+                            />
+                            <div className="space-y-1 text-sm text-slate-100/80">
+                              <div className="flex items-center justify-between gap-3">
+                                <p className="font-semibold text-white">{member.name}</p>
+                                <span
+                                  className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${token.badge}`}
+                                >
+                                  {token.label}
+                                </span>
+                              </div>
+                              <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                                {member.role}
+                              </p>
+                              <p className="text-xs text-slate-200/70">{member.focus}</p>
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+
+                  <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Approval routing
+                    </h3>
+                    <p className="mt-2 text-xs text-slate-200/70">
+                      View who signs off each stage and how fallbacks trigger.
+                    </p>
+                    <ol className="mt-4 space-y-3">
+                      {approvalRoutes.map((route) => (
+                        <li
+                          key={route.id}
+                          className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                        >
+                          <div className="flex items-center justify-between gap-3">
+                            <p className="text-sm font-semibold text-white">{route.stage}</p>
+                            <span className="text-xs text-slate-200/70">
+                              {route.owners.length} owner{route.owners.length === 1 ? "" : "s"}
                             </span>
-                          ))}
-                        </div>
-                        <p className="mt-3 text-xs text-slate-200/70">{route.fallback}</p>
-                      </li>
-                    ))}
-                  </ol>
+                          </div>
+                          <div className="mt-3 flex flex-wrap gap-2 text-xs text-slate-200/80">
+                            {route.owners.map((owner) => (
+                              <span
+                                key={`${route.id}-${owner}`}
+                                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 uppercase tracking-[0.3em]"
+                              >
+                                {owner}
+                              </span>
+                            ))}
+                          </div>
+                          <p className="mt-3 text-xs text-slate-200/70">{route.fallback}</p>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
                 </div>
               </div>
             ) : (
