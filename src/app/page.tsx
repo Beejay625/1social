@@ -250,6 +250,31 @@ import {
   shoppingPosts,
   commerceStats,
 } from "@/data/social-commerce";
+import {
+  brandMentions,
+  mentionStats,
+  mentionTrends,
+} from "@/data/brand-mentions";
+import {
+  budgetCategories,
+  budgetOverview,
+  budgetAlerts,
+} from "@/data/budget-tracker";
+import {
+  engagementMetrics as engagementCalculatorMetrics,
+  engagementBenchmarks,
+  engagementInsights,
+} from "@/data/engagement-calculator";
+import {
+  scheduledPosts,
+  queueStats,
+  queueFilters,
+} from "@/data/scheduling-queue";
+import {
+  crisisAlerts,
+  crisisStats,
+  crisisTemplates,
+} from "@/data/crisis-alerts";
 import { truncateAddress, velocityBadge } from "@/utils/account";
 import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
 import { formatMetricDelta, formatMetricValue, metricDeltaTone } from "@/utils/metrics";
