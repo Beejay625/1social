@@ -25,6 +25,7 @@ type PlannedPost = {
   channels: ChannelId[];
   status: "queued" | "draft" | "approved";
   owner: string;
+  approver?: string;
 };
 
 const channelCatalog: Record<
@@ -95,6 +96,7 @@ const initialPlannedPosts: PlannedPost[] = [
     channels: ["farcaster", "instagram"],
     status: "approved",
     owner: "Ameena",
+    approver: "Kai",
   },
   {
     id: "plan-2",
@@ -104,6 +106,7 @@ const initialPlannedPosts: PlannedPost[] = [
     channels: ["farcaster"],
     status: "queued",
     owner: "Kai",
+    approver: "Leo",
   },
   {
     id: "plan-3",
@@ -113,6 +116,41 @@ const initialPlannedPosts: PlannedPost[] = [
     channels: ["instagram"],
     status: "draft",
     owner: "Leo",
+  },
+];
+
+type Comment = {
+  id: string;
+  postId: string;
+  author: string;
+  message: string;
+  createdAt: string;
+  tone?: "info" | "action";
+};
+
+const initialComments: Comment[] = [
+  {
+    id: "comment-1",
+    postId: "plan-1",
+    author: "Kai",
+    message: "Carousel cover looks sharp. Added final copy tweaks.",
+    createdAt: new Date(Date.now() - 1000 * 60 * 32).toISOString(),
+    tone: "info",
+  },
+  {
+    id: "comment-2",
+    postId: "plan-2",
+    author: "Ameena",
+    message: "Need designer sign-off before 6PM.",
+    createdAt: new Date(Date.now() - 1000 * 60 * 75).toISOString(),
+    tone: "action",
+  },
+  {
+    id: "comment-3",
+    postId: "plan-3",
+    author: "Leo",
+    message: "Pull new community shots for reel slots 2 and 3.",
+    createdAt: new Date(Date.now() - 1000 * 60 * 145).toISOString(),
   },
 ];
 
