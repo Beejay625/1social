@@ -276,6 +276,49 @@ import {
   shoppingPosts,
   commerceStats,
 } from "@/data/social-commerce";
+import {
+  contentForecasts,
+  forecastAccuracy,
+  forecastTrends,
+  forecastRecommendations,
+} from "@/data/content-forecasting";
+import {
+  attributionMetrics,
+  topAttributedContent,
+  attributionModels,
+  attributionJourney,
+  attributionByChannel,
+} from "@/data/content-attribution";
+import {
+  auditReports,
+  auditIssues,
+  auditRecommendations,
+  auditMetrics,
+  auditTrends,
+} from "@/data/social-audit";
+import {
+  industryBenchmarks,
+  benchmarkComparison,
+  benchmarkByContentType,
+  benchmarkGoals,
+  benchmarkInsights,
+} from "@/data/content-benchmarking";
+import {
+  supportedLanguages,
+  multilingualContent,
+  languagePerformance,
+  translationStatus,
+  translationWorkflow,
+  localizationSettings,
+} from "@/data/multi-language";
+import {
+  performanceAttribution,
+  topPerformingContent,
+  attributionByPlatform,
+  attributionByContentType,
+  attributionFunnel,
+  attributionInsights,
+} from "@/data/content-performance-attribution";
 import { truncateAddress, velocityBadge } from "@/utils/account";
 import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
 import { formatMetricDelta, formatMetricValue, metricDeltaTone } from "@/utils/metrics";
