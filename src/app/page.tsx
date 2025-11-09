@@ -1400,6 +1400,163 @@ const calendarEvents = [
   },
 ];
 
+// Social listening / monitoring
+const socialListeningTopics = [
+  {
+    id: "topic-1",
+    keyword: "wallet integration",
+    mentions: 124,
+    sentiment: "positive",
+    trend: "up",
+    topChannels: ["farcaster", "x"] as ChannelId[],
+    recentMentions: [
+      { author: "User123", message: "Love the new wallet feature!", channel: "farcaster" as ChannelId },
+      { author: "CryptoFan", message: "Wallet integration is seamless", channel: "x" as ChannelId },
+    ],
+  },
+  {
+    id: "topic-2",
+    keyword: "product launch",
+    mentions: 89,
+    sentiment: "neutral",
+    trend: "stable",
+    topChannels: ["instagram", "farcaster"] as ChannelId[],
+    recentMentions: [
+      { author: "EarlyAdopter", message: "Excited for the launch", channel: "instagram" as ChannelId },
+    ],
+  },
+  {
+    id: "topic-3",
+    keyword: "community AMA",
+    mentions: 156,
+    sentiment: "positive",
+    trend: "up",
+    topChannels: ["farcaster", "lens"] as ChannelId[],
+    recentMentions: [
+      { author: "CommunityMember", message: "Great AMA session!", channel: "farcaster" as ChannelId },
+    ],
+  },
+];
+
+// Notification center
+const notifications = [
+  {
+    id: "notif-1",
+    type: "approval",
+    title: "Approval needed",
+    message: "Founder AMA teaser requires your sign-off",
+    timestamp: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+    read: false,
+    priority: "high",
+  },
+  {
+    id: "notif-2",
+    type: "performance",
+    title: "Post performing well",
+    message: "Creator highlight reel reached 15.6k views",
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+    read: false,
+    priority: "medium",
+  },
+  {
+    id: "notif-3",
+    type: "mention",
+    title: "You were mentioned",
+    message: "@You Need your sign-off on the wallet signature flow",
+    timestamp: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
+    read: true,
+    priority: "high",
+  },
+  {
+    id: "notif-4",
+    type: "alert",
+    title: "Sentiment alert",
+    message: "Negative sentiment increased 15% on Wednesday",
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+    read: false,
+    priority: "medium",
+  },
+];
+
+// Advanced analytics breakdown
+const analyticsBreakdown = [
+  {
+    id: "breakdown-1",
+    metric: "Reach",
+    total: 124000,
+    breakdown: [
+      { channel: "farcaster" as ChannelId, value: 68000, percent: 55 },
+      { channel: "instagram" as ChannelId, value: 42000, percent: 34 },
+      { channel: "x" as ChannelId, value: 14000, percent: 11 },
+    ],
+    trend: [110, 115, 118, 120, 122, 124],
+  },
+  {
+    id: "breakdown-2",
+    metric: "Engagement",
+    total: 8920,
+    breakdown: [
+      { channel: "farcaster" as ChannelId, value: 5120, percent: 57 },
+      { channel: "instagram" as ChannelId, value: 3120, percent: 35 },
+      { channel: "x" as ChannelId, value: 680, percent: 8 },
+    ],
+    trend: [8200, 8400, 8600, 8700, 8800, 8920],
+  },
+];
+
+// Content ideas generator
+const contentIdeas = [
+  {
+    id: "idea-1",
+    title: "Behind-the-scenes: Building wallet integration",
+    type: "BTS",
+    estimatedEngagement: 8.5,
+    channels: ["farcaster", "instagram"] as ChannelId[],
+    tags: ["product", "development"],
+  },
+  {
+    id: "idea-2",
+    title: "Community spotlight: Top contributors this month",
+    type: "Community",
+    estimatedEngagement: 9.2,
+    channels: ["farcaster", "lens"] as ChannelId[],
+    tags: ["community", "spotlight"],
+  },
+  {
+    id: "idea-3",
+    title: "Tutorial: How to connect your wallet",
+    type: "Educational",
+    estimatedEngagement: 7.8,
+    channels: ["instagram", "x"] as ChannelId[],
+    tags: ["tutorial", "onboarding"],
+  },
+];
+
+// Trend topics
+const trendTopics = [
+  {
+    id: "trend-1",
+    topic: "#Web3Social",
+    volume: 12500,
+    growth: 24.5,
+    relevance: "high",
+  },
+  {
+    id: "trend-2",
+    topic: "#WalletConnect",
+    volume: 8900,
+    growth: 18.2,
+    relevance: "medium",
+  },
+  {
+    id: "trend-3",
+    topic: "#DecentralizedSocial",
+    volume: 15600,
+    growth: 32.1,
+    relevance: "high",
+  },
+];
+
 const dashboardSections: { id: string; label: string }[] = [
   { id: "broadcast", label: "Compose" },
   { id: "plan", label: "Scheduling" },
