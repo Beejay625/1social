@@ -1,50 +1,106 @@
-export const brandMentions = [
+export interface BrandMention {
+  id: string;
+  platform: string;
+  author: string;
+  content: string;
+  sentiment: "positive" | "negative" | "neutral";
+  engagement: number;
+  timestamp: string;
+  url: string;
+}
+
+export interface BrandMentionTrend {
+  date: string;
+  mentions: number;
+  positive: number;
+  negative: number;
+  neutral: number;
+}
+
+export const brandMentions: BrandMention[] = [
   {
     id: "mention-1",
     platform: "farcaster",
-    author: "@cryptouser",
-    content: "Just tried @yourbrand and it's amazing!",
+    author: "@creator123",
+    content: "Just tried @yourbrand and it's amazing! The UI is so clean 🚀",
     sentiment: "positive",
-    engagement: 45,
+    engagement: 124,
     timestamp: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+    url: "#",
   },
   {
     id: "mention-2",
     platform: "x",
-    author: "@techlover",
-    content: "Anyone else using @yourbrand? Thoughts?",
-    sentiment: "neutral",
-    engagement: 23,
+    author: "@user456",
+    content: "Anyone else having issues with @yourbrand today?",
+    sentiment: "negative",
+    engagement: 45,
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+    url: "#",
   },
   {
     id: "mention-3",
     platform: "instagram",
-    author: "@creator123",
-    content: "Love the new features from @yourbrand!",
+    author: "@influencer789",
+    content: "Check out this cool feature from @yourbrand ✨",
     sentiment: "positive",
-    engagement: 89,
+    engagement: 890,
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(),
+    url: "#",
   },
 ];
 
-export const mentionStats = {
-  totalMentions: 1240,
-  positive: 856,
-  neutral: 312,
-  negative: 72,
-  avgEngagement: 34.5,
-  responseRate: 78.2,
-};
-
-export const mentionTrends = [
+export const brandMentionTrends: BrandMentionTrend[] = [
   {
-    id: "trend-1",
-    period: "Last 7 days",
-    mentions: 245,
-    change: 12.5,
-    sentiment: "positive",
+    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 6).toISOString(),
+    mentions: 120,
+    positive: 85,
+    negative: 15,
+    neutral: 20,
+  },
+  {
+    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(),
+    mentions: 145,
+    positive: 105,
+    negative: 20,
+    neutral: 20,
+  },
+  {
+    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 4).toISOString(),
+    mentions: 180,
+    positive: 130,
+    negative: 25,
+    neutral: 25,
+  },
+  {
+    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 3).toISOString(),
+    mentions: 165,
+    positive: 120,
+    negative: 20,
+    neutral: 25,
+  },
+  {
+    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
+    mentions: 200,
+    positive: 150,
+    negative: 30,
+    neutral: 20,
+  },
+  {
+    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 1).toISOString(),
+    mentions: 185,
+    positive: 140,
+    negative: 25,
+    neutral: 20,
   },
 ];
 
-
+export const brandMentionStats = {
+  totalMentions: 1240,
+  positiveMentions: 920,
+  negativeMentions: 180,
+  neutralMentions: 140,
+  sentimentScore: 0.74,
+  topPlatform: "farcaster",
+  growthRate: 12.5,
+};
