@@ -154,7 +154,7 @@ const initialPlannedPosts: PlannedPost[] = [
       {
         id: "strategy",
         label: "Channel strategy",
-        approver: "Kai",
+    approver: "Kai",
         status: "approved",
         due: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
       },
@@ -202,7 +202,7 @@ const initialPlannedPosts: PlannedPost[] = [
       {
         id: "design",
         label: "Design QA",
-        approver: "Leo",
+    approver: "Leo",
         status: "pending",
         due: new Date(Date.now() + 1000 * 60 * 60 * 10).toISOString(),
       },
@@ -1042,14 +1042,14 @@ export default function Home() {
 
       const newPlan: PlannedPost = {
         id: `plan-${stamp}`,
-        title: trimmedTitle,
-        summary:
-          scheduleSummary.trim() ||
-          "We will enrich this summary closer to launch.",
-        scheduledFor: isoTimestamp,
-        channels: scheduleActiveChannels,
-        status: "queued",
-        owner: "You",
+          title: trimmedTitle,
+          summary:
+            scheduleSummary.trim() ||
+            "We will enrich this summary closer to launch.",
+          scheduledFor: isoTimestamp,
+          channels: scheduleActiveChannels,
+          status: "queued",
+          owner: "You",
         approvalSteps: [
           {
             id: `strategy-${stamp}`,
@@ -1246,21 +1246,21 @@ export default function Home() {
               <span className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.4em] text-slate-100/90">
                 <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.6)]" />
                 1Social Platform
-              </span>
+            </span>
               <div className="space-y-4">
                 <h1 className="text-4xl font-semibold leading-tight text-white md:text-5xl lg:text-[52px]">
                   Align your voice across every channel.
-          </h1>
+            </h1>
                 <p className="text-lg leading-relaxed text-slate-100/80 md:text-xl">
                   Share once, syndicate instantly, and keep Reown wallet
                   signatures ready for Farcaster. This preview shows how your
                   launch team can stay in lockstep.
-                </p>
-              </div>
+            </p>
+          </div>
               <div className="grid gap-3 text-sm text-slate-100/80 sm:grid-cols-2">
                 <div className="flex items-start gap-3 rounded-3xl border border-white/15 bg-white/10 p-4">
                   <span className="mt-0.5 h-2.5 w-2.5 rounded-full bg-emerald-300" />
-                  <div>
+                <div>
                     <p className="font-semibold text-white">Multichannel Posting</p>
                     <p>Mirror every update to Farcaster and Instagram in seconds.</p>
                   </div>
@@ -1282,10 +1282,10 @@ export default function Home() {
                   <div className="flex items-start justify-between gap-4">
                     <div className="space-y-2">
                       <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-slate-200/80">
-                        Wallet Center
-                      </p>
+                    Wallet Center
+                  </p>
                       <h2 className="text-lg font-semibold text-white">
-                        {isConnected
+                    {isConnected
                           ? "Reown wallet connected."
                           : "Sign in with Reown wallet"}
                       </h2>
@@ -1293,23 +1293,23 @@ export default function Home() {
                         {isConnected
                           ? "You are ready to approve Farcaster signatures and publish."
                           : "Connect your Reown wallet to prep Farcaster signatures and sync drafts."}
-                      </p>
-                    </div>
-                    <span
+                  </p>
+                </div>
+                <span
                       className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold ${
-                        isConnected
+                    isConnected
                           ? "border-emerald-400/40 bg-emerald-400/15 text-emerald-100"
                           : "border-rose-400/40 bg-rose-400/20 text-rose-100"
-                      }`}
-                    >
-                      <span
-                        className={`h-2 w-2 rounded-full ${
-                          isConnected ? "bg-emerald-300" : "bg-rose-300"
-                        }`}
-                      />
-                      {isConnected ? "Live" : "Offline"}
-                    </span>
-                  </div>
+                  }`}
+                >
+                  <span
+                    className={`h-2 w-2 rounded-full ${
+                      isConnected ? "bg-emerald-300" : "bg-rose-300"
+                    }`}
+                  />
+                  {isConnected ? "Live" : "Offline"}
+                </span>
+              </div>
 
                   <div className="grid gap-3 rounded-3xl border border-white/15 bg-slate-950/70 p-4 text-sm text-slate-100/80">
                     <div className="flex items-center justify-between gap-3">
@@ -1321,12 +1321,12 @@ export default function Home() {
                       </span>
                     </div>
                     <p className="truncate text-base font-semibold text-white">
-                      {truncateAddress(address)}
-                    </p>
+                  {truncateAddress(address)}
+                </p>
                     <p className="text-xs uppercase tracking-[0.3em] text-slate-300/60">
-                      {activeNetwork?.name ?? "No network selected"}
-                    </p>
-                  </div>
+                  {activeNetwork?.name ?? "No network selected"}
+                </p>
+              </div>
 
                   <ul className="grid gap-3 text-sm text-slate-200/80 sm:grid-cols-2 sm:gap-4">
                     <li className="flex items-start gap-3">
@@ -1346,28 +1346,28 @@ export default function Home() {
                   </ul>
 
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <button
-                      type="button"
-                      onClick={handleOpenWallet}
+                <button
+                  type="button"
+                  onClick={handleOpenWallet}
                       className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-400 via-indigo-500 to-fuchsia-500 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-indigo-500/40 transition hover:shadow-xl hover:shadow-indigo-500/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                    >
-                      {isConnected ? "Manage wallet" : "Connect wallet"}
-                    </button>
-                    {isConnected && (
-                      <button
-                        type="button"
-                        onClick={handleDisconnectWallet}
+                >
+                  {isConnected ? "Manage wallet" : "Connect wallet"}
+                </button>
+                {isConnected && (
+                  <button
+                    type="button"
+                    onClick={handleDisconnectWallet}
                         className="inline-flex items-center justify-center rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/60 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                      >
-                        Disconnect
-                      </button>
-                    )}
-                  </div>
+                  >
+                    Disconnect
+                  </button>
+                )}
+              </div>
 
                   <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.3em] text-slate-300/70">
                     <span>Mock environment</span>
                     <span>No real posts sent</span>
-                  </div>
+            </div>
                 </div>
               </div>
               <p className="text-[11px] uppercase tracking-[0.3em] text-slate-200/60 text-center sm:text-left">
@@ -1485,7 +1485,7 @@ export default function Home() {
                         {channelCatalog[channelId].label}
                       </p>
                       <p>{channelCatalog[channelId].description}</p>
-        </div>
+                    </div>
                   </div>
                 ))}
                 {activeChannels.length === 0 && (
@@ -2133,6 +2133,294 @@ export default function Home() {
               </p>
             </header>
 
+            <div className="grid gap-4 lg:grid-cols-2">
+              <div className="rounded-3xl border border-white/15 bg-slate-950/40 p-5">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Reach vs conversion
+                    </p>
+                    <p className="mt-1 text-xs text-slate-200/60">
+                      Toggle lines to inspect how reach drives wallet conversions.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => toggleComparisonSeries("reach")}
+                      className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
+                        comparisonVisibility.reach
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                      aria-pressed={comparisonVisibility.reach}
+                    >
+                      Reach
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => toggleComparisonSeries("conversionRate")}
+                      className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
+                        comparisonVisibility.conversionRate
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                      aria-pressed={comparisonVisibility.conversionRate}
+                    >
+                      Conversion
+                    </button>
+                  </div>
+                </div>
+                <div className="mt-5 space-y-4">
+                  <div className="flex flex-wrap gap-4 text-sm text-white">
+                    <div>
+                      <p className="text-[11px] uppercase tracking-[0.25em] text-slate-200/60">
+                        Focus · {comparisonMetrics.label}
+                      </p>
+                    </div>
+                    {comparisonVisibility.reach && (
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                          Reach
+                        </p>
+                        <p className="text-lg font-semibold">
+                          {comparisonMetrics.reach}
+                        </p>
+                      </div>
+                    )}
+                    {comparisonVisibility.conversionRate && (
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                          Conversion rate
+                        </p>
+                        <p className="text-lg font-semibold">
+                          {comparisonMetrics.conversionRate}
+                        </p>
+                        <p className="text-xs text-slate-200/60">
+                          {comparisonMetrics.conversions} conversions
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  <svg
+                    viewBox="0 0 320 140"
+                    role="img"
+                    aria-label="Reach versus conversion chart"
+                    className="h-36 w-full text-white/40"
+                  >
+                    <line
+                      x1="0"
+                      y1="130"
+                      x2="320"
+                      y2="130"
+                      stroke="rgba(255,255,255,0.08)"
+                      strokeWidth="1"
+                    />
+                    {comparisonVisibility.reach && (
+                      <path
+                        d={comparisonChart.reachPath}
+                        className={`${chartColorTokens.reach}`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeWidth="3"
+                      />
+                    )}
+                    {comparisonVisibility.conversionRate && (
+                      <path
+                        d={comparisonChart.conversionPath}
+                        className={`${chartColorTokens.conversionRate}`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeWidth="3"
+                        strokeDasharray="6 4"
+                      />
+                    )}
+                  </svg>
+                  <div className="flex flex-wrap gap-2">
+                    {comparisonChart.points.map((point, index) => {
+                      const isActive = index === activeComparisonIndex;
+                      return (
+                        <button
+                          key={`comparison-${point.label}`}
+                          type="button"
+                          onMouseEnter={() => setActiveComparisonIndex(index)}
+                          onFocus={() => setActiveComparisonIndex(index)}
+                          className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
+                            isActive
+                              ? "border-white/80 bg-white text-slate-900 shadow-lg shadow-white/30"
+                              : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                          }`}
+                          aria-pressed={isActive}
+                        >
+                          {point.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-3xl border border-white/15 bg-slate-950/40 p-5">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Audience momentum
+                    </p>
+                    <p className="mt-1 text-xs text-slate-200/60">
+                      Focus on total growth or drill into each network.
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => toggleGrowthSeries("total")}
+                      className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
+                        growthVisibility.total
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                      aria-pressed={growthVisibility.total}
+                    >
+                      Total
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => toggleGrowthSeries("farcaster")}
+                      className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
+                        growthVisibility.farcaster
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/20 bg-white/5 text-slate-100 hover-border-white/40 hover:bg-white/10"
+                      }`}
+                      aria-pressed={growthVisibility.farcaster}
+                    >
+                      Farcaster
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => toggleGrowthSeries("instagram")}
+                      className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
+                        growthVisibility.instagram
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                      aria-pressed={growthVisibility.instagram}
+                    >
+                      Instagram
+                    </button>
+                  </div>
+                </div>
+                <div className="mt-5 space-y-4">
+                  <div className="flex flex-wrap gap-4 text-sm text-white">
+                    <div>
+                      <p className="text-[11px] uppercase tracking-[0.25em] text-slate-200/60">
+                        Focus · {growthMetrics.label}
+                      </p>
+                    </div>
+                    {growthVisibility.total && (
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                          Total network
+                        </p>
+                        <p className="text-lg font-semibold">
+                          {growthMetrics.total}
+                        </p>
+                      </div>
+                    )}
+                    {growthVisibility.farcaster && (
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                          Farcaster
+                        </p>
+                        <p className="text-lg font-semibold">
+                          {growthMetrics.farcaster}
+                        </p>
+                      </div>
+                    )}
+                    {growthVisibility.instagram && (
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                          Instagram
+                        </p>
+                        <p className="text-lg font-semibold">
+                          {growthMetrics.instagram}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  <svg
+                    viewBox="0 0 320 140"
+                    role="img"
+                    aria-label="Audience growth comparison chart"
+                    className="h-36 w-full text-white/40"
+                  >
+                    <line
+                      x1="0"
+                      y1="130"
+                      x2="320"
+                      y2="130"
+                      stroke="rgba(255,255,255,0.08)"
+                      strokeWidth="1"
+                    />
+                    {growthVisibility.total && (
+                      <path
+                        d={growthChart.totalPath}
+                        className={`${chartColorTokens.total}`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeWidth="3"
+                      />
+                    )}
+                    {growthVisibility.farcaster && (
+                      <path
+                        d={growthChart.farcasterPath}
+                        className={`${chartColorTokens.farcaster}`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeWidth="3"
+                        strokeDasharray="4 4"
+                      />
+                    )}
+                    {growthVisibility.instagram && (
+                      <path
+                        d={growthChart.instagramPath}
+                        className={`${chartColorTokens.instagram}`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeWidth="3"
+                        strokeDasharray="2 4"
+                      />
+                    )}
+                  </svg>
+                  <div className="flex flex-wrap gap-2">
+                    {growthChart.points.map((point, index) => {
+                      const isActive = index === activeGrowthIndex;
+                      return (
+                        <button
+                          key={`growth-${point.label}`}
+                          type="button"
+                          onMouseEnter={() => setActiveGrowthIndex(index)}
+                          onFocus={() => setActiveGrowthIndex(index)}
+                          className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
+                            isActive
+                              ? "border-white/80 bg-white text-slate-900 shadow-lg shadow-white/30"
+                              : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                          }`}
+                          aria-pressed={isActive}
+                        >
+                          {point.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="rounded-3xl border border-white/15 bg-white/5 p-4">
                 <div className="flex items-center justify-between">
@@ -2187,78 +2475,6 @@ export default function Home() {
                     strokeWidth="3"
                   />
                 </svg>
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                  Best time heatmap
-                </h3>
-                <span className="text-xs text-slate-200/70">
-                  Peak: {audienceInsights.topSlot.day} ·{" "}
-                  {audienceInsights.topSlot.slot}
-                </span>
-              </div>
-              <div className="mt-4 overflow-hidden rounded-3xl border border-white/15 bg-slate-950/40">
-                <table className="w-full border-collapse text-xs text-slate-100">
-                  <thead>
-                    <tr>
-                      <th className="px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400">
-                        Slot
-                      </th>
-                      {audienceDays.map((day) => (
-                        <th
-                          key={`day-${day}`}
-                          className="px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400"
-                        >
-                          {day}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {bestTimeGrid.map((row) => (
-                      <tr key={`slot-${row.slot}`}>
-                        <th className="px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400">
-                          {row.slot}
-                        </th>
-                        {row.values.map((value, index) => (
-                          <td key={`slot-${row.slot}-${index}`} className="px-3 py-2">
-                            <span
-                              className={`flex h-8 w-12 items-center justify-center rounded-xl text-[11px] font-semibold ${heatLevelClass(
-                                value,
-                              )}`}
-                            >
-                              {value}
-                            </span>
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Recommendations
-              </h3>
-              <div className="grid gap-3">
-                {insightRecommendations.map((item) => (
-                  <article
-                    key={item.id}
-                    className="rounded-3xl border border-white/15 bg-white/5 p-4 shadow-inner shadow-purple-900/20"
-                  >
-                    <p className="text-sm font-semibold text-white">
-                      {item.title}
-                    </p>
-                    <p className="mt-2 text-sm text-slate-100/80">
-                      {item.detail}
-                    </p>
-                  </article>
-                ))}
               </div>
             </div>
           </article>
