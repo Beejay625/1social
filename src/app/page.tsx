@@ -769,6 +769,9 @@ const approvalTemplates: ApprovalTemplate[] = [
 
 function getApprovalTemplate(templateId: string | undefined | null) {
   return approvalTemplates.find((template) => template.id === templateId) ?? null;
+      </main>
+    </div>
+  );
 }
 
 function instantiateApprovalSteps(
@@ -9976,6 +9979,392 @@ export default function Home() {
                     {performanceComparison.filter((c) => c.trend === "down").length}
                   </p>
                 </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="export-import"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Export & Import</h2>
+              <p className="text-sm text-slate-100/75">
+                Export your data in various formats or import from external sources.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Export Data
+                </h3>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <div className="mb-4">
+                    <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Select Format
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {exportFormats.map((format) => (
+                        <button
+                          key={format.id}
+                          type="button"
+                          className="rounded-xl border border-white/20 bg-white/5 p-3 text-left text-sm text-white hover:border-white/40 hover:bg-white/10"
+                        >
+                          <p className="font-semibold">{format.label}</p>
+                          <p className="mt-1 text-xs text-slate-200/70">{format.description}</p>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className="w-full rounded-2xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                  >
+                    Export Now
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Export History
+                </h3>
+                <div className="space-y-3">
+                  {exportHistory.map((exportItem) => (
+                    <div
+                      key={exportItem.id}
+                      className={`rounded-2xl border p-4 ${
+                        exportItem.status === "completed"
+                          ? "border-emerald-400/50 bg-emerald-400/10"
+                          : "border-amber-400/50 bg-amber-400/10"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-white">{exportItem.name}</p>
+                          <div className="mt-2 flex items-center gap-4 text-xs text-slate-200/70">
+                            <span className="uppercase">{exportItem.format}</span>
+                            {exportItem.size && <span>· {exportItem.size}</span>}
+                            <span>· {formatRelativeTime(exportItem.createdAt)}</span>
+                          </div>
+                        </div>
+                        <span
+                          className={`text-[10px] uppercase tracking-wider ${
+                            exportItem.status === "completed" ? "text-emerald-300" : "text-amber-300"
+                          }`}
+                        >
+                          {exportItem.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Import Sources
+              </h3>
+              <div className="mt-4 space-y-3">
+                {importSources.map((source) => (
+                  <div
+                    key={source.id}
+                    className={`rounded-2xl border p-4 ${
+                      source.connected
+                        ? "border-emerald-400/50 bg-emerald-400/10"
+                        : "border-white/10 bg-slate-950/40"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{source.icon}</span>
+                        <div>
+                          <p className="text-sm font-semibold text-white">{source.name}</p>
+                          <p className="text-xs text-slate-200/70">{source.description}</p>
+                        </div>
+                      </div>
+                      <span
+                        className={`text-[10px] uppercase tracking-wider ${
+                          source.connected ? "text-emerald-300" : "text-slate-300"
+                        }`}
+                      >
+                        {source.connected ? "Connected" : "Connect"}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="security"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(239,68,68,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Security</h2>
+              <p className="text-sm text-slate-100/75">
+                Monitor security logs, manage sessions, and configure security settings.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Security Logs
+                </h3>
+                <div className="space-y-3">
+                  {securityLogs.map((log) => (
+                    <div
+                      key={log.id}
+                      className={`rounded-2xl border p-4 ${
+                        log.status === "success"
+                          ? "border-emerald-400/50 bg-emerald-400/10"
+                          : "border-rose-400/50 bg-rose-400/10"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-white">{log.type}</p>
+                          <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-slate-200/70">
+                            <span>{log.user}</span>
+                            <span>·</span>
+                            <span>{log.ip}</span>
+                            <span>·</span>
+                            <span>{log.location}</span>
+                            <span>·</span>
+                            <span>{formatRelativeTime(log.timestamp)}</span>
+                          </div>
+                        </div>
+                        <span
+                          className={`text-[10px] uppercase tracking-wider ${
+                            log.status === "success" ? "text-emerald-300" : "text-rose-300"
+                          }`}
+                        >
+                          {log.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Security Settings
+                </h3>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-200/70">Two-Factor Auth</span>
+                      <span className={securitySettings.twoFactorEnabled ? "text-emerald-300" : "text-slate-300"}>
+                        {securitySettings.twoFactorEnabled ? "Enabled" : "Disabled"}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-200/70">Password Expiry</span>
+                      <span className="text-white">{securitySettings.passwordExpiry} days</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-200/70">Session Timeout</span>
+                      <span className="text-white">{securitySettings.sessionTimeout} minutes</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-200/70">Require MFA</span>
+                      <span className={securitySettings.requireMfa ? "text-emerald-300" : "text-slate-300"}>
+                        {securitySettings.requireMfa ? "Yes" : "No"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(239,68,68,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Active Sessions
+              </h3>
+              <div className="mt-4 space-y-3">
+                {activeSessions.map((session) => (
+                  <div
+                    key={session.id}
+                    className={`rounded-2xl border p-4 ${
+                      session.current
+                        ? "border-emerald-400/50 bg-emerald-400/10"
+                        : "border-white/10 bg-slate-950/40"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">{session.device}</p>
+                        <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-slate-200/70">
+                          <span>{session.browser}</span>
+                          <span>·</span>
+                          <span>{session.ip}</span>
+                          <span>·</span>
+                          <span>{session.location}</span>
+                        </div>
+                        <p className="mt-2 text-xs text-slate-200/70">
+                          Last active: {formatRelativeTime(session.lastActive)}
+                        </p>
+                      </div>
+                      {session.current && (
+                        <span className="text-[10px] uppercase tracking-wider text-emerald-300">
+                          Current
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="billing"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Billing & Usage</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage your subscription, view usage, and access invoices.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Current Plan
+                </h3>
+                <div className="grid gap-3">
+                  {billingPlans.map((plan) => (
+                    <div
+                      key={plan.id}
+                      className={`rounded-2xl border p-4 ${
+                        plan.current
+                          ? "border-purple-400/50 bg-purple-400/10"
+                          : "border-white/10 bg-slate-950/40"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3">
+                            <p className="text-lg font-semibold text-white">{plan.name}</p>
+                            {plan.current && (
+                              <span className="text-[10px] uppercase tracking-wider text-purple-300">
+                                Current
+                              </span>
+                            )}
+                          </div>
+                          <p className="mt-1 text-2xl font-bold text-white">
+                            ${plan.price}
+                            <span className="ml-1 text-sm font-normal text-slate-200/70">/{plan.interval}</span>
+                          </p>
+                          <ul className="mt-3 space-y-1 text-xs text-slate-200/70">
+                            {plan.features.map((feature, idx) => (
+                              <li key={idx} className="flex items-center gap-2">
+                                <span>✓</span>
+                                <span>{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Usage
+                </h3>
+                <div className="space-y-3">
+                  <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-200/70">Posts</span>
+                      <span className="text-sm font-semibold text-white">
+                        {usageMetrics.postsUsed.toLocaleString()} / {usageMetrics.postsLimit.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+                      <div
+                        className="h-full bg-emerald-400"
+                        style={{ width: `${(usageMetrics.postsUsed / usageMetrics.postsLimit) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-200/70">Accounts</span>
+                      <span className="text-sm font-semibold text-white">
+                        {usageMetrics.accountsUsed} / {usageMetrics.accountsLimit}
+                      </span>
+                    </div>
+                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+                      <div
+                        className="h-full bg-blue-400"
+                        style={{ width: `${(usageMetrics.accountsUsed / usageMetrics.accountsLimit) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-200/70">Storage</span>
+                      <span className="text-sm font-semibold text-white">
+                        {usageMetrics.storageUsed} GB / {usageMetrics.storageLimit} GB
+                      </span>
+                    </div>
+                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+                      <div
+                        className="h-full bg-purple-400"
+                        style={{ width: `${(usageMetrics.storageUsed / usageMetrics.storageLimit) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Invoice History
+              </h3>
+              <div className="mt-4 space-y-3">
+                {invoiceHistory.map((invoice) => (
+                  <div
+                    key={invoice.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">
+                          ${invoice.amount} - {new Date(invoice.date).toLocaleDateString()}
+                        </p>
+                        <p className="mt-1 text-xs text-slate-200/70">
+                          {formatRelativeTime(invoice.date)}
+                        </p>
+                      </div>
+                      <span className="text-[10px] uppercase tracking-wider text-emerald-300">
+                        {invoice.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </aside>
