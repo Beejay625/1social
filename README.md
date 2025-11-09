@@ -220,12 +220,27 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Performance Insights** - AI-powered actionable insights with opportunity, strength, and warning categories
 - **Social Media Health** - Overall health score tracking with trend analysis and metric breakdowns
 - **Calendar Optimization** - AI-powered calendar optimization with optimal time slots and gap analysis
-- **Advanced Scheduling Queue** - Queue management with priority levels, estimated performance, and optimization recommendations
-- **Brand Mentions Tracking** - Comprehensive brand mention tracking with sentiment analysis, response tracking, and growth metrics
-- **Team Performance Analytics** - Individual and team performance tracking with goals, productivity metrics, and scorecards
-- **Crisis Management Dashboard** - Automated crisis detection, severity alerts, response tracking, and resolution metrics
-- **Approval Workflows** - Multi-step approval workflows with templates, progress tracking, and bottleneck identification
-- **Social Listening Dashboard** - Real-time keyword monitoring, trending topics, sentiment analysis, and platform breakdowns
+- **Social Listening Dashboard** - Real-time keyword monitoring, trending topics, and sentiment analysis
+- **Brand Mentions Tracking** - Comprehensive brand mention tracking with sentiment analysis and growth metrics
+- **Team Performance Analytics** - Individual and team performance tracking with goals and productivity metrics
+- **Crisis Management Dashboard** - Automated crisis detection, severity alerts, and response tracking
+- **Workflow Builder** - Custom workflow creation with multi-step processes and automation
+- **Real-time Collaboration** - Live editing sessions with presence indicators and co-editing capabilities
+- **Conflict Detection** - Automatic detection of scheduling conflicts with resolution suggestions
+- **Bulk Operations** - Efficient bulk editing, scheduling, and tagging with operation templates
+- **Account Health Monitoring** - Comprehensive account health tracking with issue detection and trends
+- **AI Content Suggestions** - Intelligent content recommendations based on trends and audience insights
+- **Content Version History** - Complete version control with change tracking and comparison tools
+- **Smart Notifications** - Priority-based notification system with intelligent filtering
+- **Performance Alerts** - Real-time alerts for content performance anomalies with actionable insights
+- **Calendar Sync** - Seamless integration with Google Calendar, Outlook, Apple Calendar, and iCal
+- **Advanced Social Listening** - Comprehensive keyword monitoring, sentiment analysis, and mention tracking
+- **Approval Workflows** - Multi-step content approval with auto-approval and timeout conditions
+- **Analytics Dashboards** - Customizable analytics dashboards with widget-based layouts
+- **Template Library** - Pre-built content templates with variable support and usage tracking
+- **Scheduling Queue** - Advanced queue management with priority ordering and automatic retry
+- **Engagement Tools** - Automated engagement with auto-replies, mention tracking, and moderation
+- **Hashtag Research** - Hashtag analytics, trending tag discovery, and performance insights
 
 ## Project Structure
 
