@@ -49,6 +49,24 @@ import {
   reportingVarianceBreakdowns,
 } from "@/data/reporting";
 import { teamActivityLog, teamMembers } from "@/data/team";
+import {
+  audienceSegments,
+  channelPerformance,
+  sentimentHistory,
+  topPerformers,
+} from "@/data/analytics";
+import {
+  collaborationChecklists,
+  collaborationHandoffs,
+  collaborationMentions,
+  realTimeActivity,
+} from "@/data/collaboration";
+import {
+  contentLibrary,
+  contentPerformanceData,
+  contentVersions,
+  workflowAutomationRules,
+} from "@/data/content";
 import { truncateAddress, velocityBadge } from "@/utils/account";
 import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
 import { formatMetricDelta, formatMetricValue, metricDeltaTone } from "@/utils/metrics";
