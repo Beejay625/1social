@@ -14,6 +14,7 @@ import {
 } from "@/constants/statusTokens";
 import {
   audienceDays,
+  audienceTrendSeries,
   bestTimeGrid,
   conversionStages,
   growthMomentumTrend,
