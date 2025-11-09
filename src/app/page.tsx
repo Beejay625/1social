@@ -216,8 +216,7 @@ export default function Home() {
                   <button
                     key={channelId}
                     type="button"
-                    role="switch"
-                    aria-checked={active}
+                    aria-label={`Toggle ${channel.label}`}
                     onClick={() => handleToggle(channelId)}
                     className={`group flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
                       active
@@ -335,8 +334,8 @@ export default function Home() {
                         </p>
                         <p className="text-xs uppercase tracking-wider text-slate-300/60">
                           {formatRelativeTime(post.createdAt)}
-                        </p>
-                      </div>
+          </p>
+        </div>
                     </div>
                     {post.highlight && (
                       <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-slate-100/80">
@@ -362,7 +361,7 @@ export default function Home() {
                   </div>
                 </article>
               ))}
-            </div>
+        </div>
           </aside>
         </section>
       </main>
