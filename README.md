@@ -1,6 +1,6 @@
 # 1Social Dashboard
 
-A comprehensive social media management platform built with Next.js. Compose once and share to multiple platforms (Farcaster, Instagram, X, Lens, Mirror) with advanced analytics, automation, and AI-powered features.
+A comprehensive social media management dashboard built with Next.js. Compose once and share to multiple platforms (Farcaster, Instagram, X, Lens, Mirror) with advanced analytics, automation, and collaboration features.
 
 ## Quick Start
 
@@ -13,145 +13,149 @@ Visit http://localhost:3000
 
 ## Features
 
-### Core Publishing
-- **Multi-platform Publishing** - Publish to Farcaster, Instagram, X, Lens, and Mirror simultaneously
-- **Content Scheduling** - Advanced calendar with best-time optimization and time slot recommendations
-- **Content Library** - Organize and manage media assets, templates, and reusable content
-- **Content Recycling** - Automatically repost top-performing content to maximize reach
-- **Video Management** - Upload, manage, and analyze video content across platforms
+### Core Features
+- **Multi-platform Content Publishing** - Compose once and publish to Farcaster, Instagram, X, Lens, and Mirror
+- **Content Scheduling** - Schedule posts across multiple platforms with advanced calendar views
+- **Workflow Automation** - Streamline content approval workflows with customizable templates
+- **Distribution Management** - Manage content distribution across channels with performance tracking
 
-### Analytics & Insights
-- **Performance Analytics** - Track engagement, reach, conversions, and impressions
-- **Advanced Analytics** - Custom metrics, detailed reports, and data exports
-- **Smart Insights** - AI-powered recommendations, opportunities, and actionable insights
-- **Audience Analytics** - Segment analysis, growth tracking, and demographic insights
-- **Performance Comparison** - Compare metrics against previous periods
+### AI & Content Creation
+- **AI Studio** - AI-powered content generation with tone and persona customization
+- **Content Templates** - Pre-built templates for quick content creation
+- **Automated Content Suggestions** - AI-powered suggestions to improve content strategy
+- **Content Performance Predictions** - Predict post performance before publishing
+- **Content Repurposing Tools** - Transform existing content across formats and channels
+- **Repurposing Suggestions** - AI-powered suggestions to repurpose content for maximum reach
+
+### Analytics & Reporting
+- **Analytics Dashboards** - Comprehensive performance dashboards with real-time metrics
+- **Content Performance Analytics** - Track post performance, identify top performers
+- **Performance Comparison** - Compare current metrics against previous periods
 - **Performance Tracking** - Detailed tracking for individual posts and content pieces
-- **Engagement Analytics** - Track likes, comments, shares, and saves
+- **Performance Heatmaps** - Visualize performance patterns by day and time
+- **Performance Benchmarking** - Compare performance against industry averages
+- **Performance Insights** - AI-powered insights and recommendations
+- **Analytics Reports** - Generate comprehensive reports with customizable metrics
+- **Analytics Export** - Export analytics data in multiple formats (PDF, CSV, Excel)
+- **Post Analytics Deep Dive** - Detailed analytics for individual posts
 
-### AI & Automation
-- **AI Content Generation** - Generate posts with AI assistance
-- **AI Assistant** - Get help with content creation, analytics, and optimization
-- **Automation Rules** - Create automated workflows for social media
-- **Workflow Automation** - Multi-step approval workflows and automated publishing
-- **Engagement Tools** - Auto-reply, mention tracking, and comment moderation
+### Engagement & Social
+- **Engagement Inbox** - Centralized inbox for managing all social interactions
+- **Engagement Analytics** - Track detailed engagement metrics (likes, comments, shares, saves)
+- **Engagement Tracking** - Track mentions, DMs, comments across channels
+- **Engagement Rate Analysis** - Deep dive into engagement metrics and benchmarks
+- **Social Listening** - Monitor keywords, track mentions, understand audience sentiment
+- **Social Media Listening Insights** - Track conversations, sentiment, and trends
+- **Social Media Monitoring Dashboard** - Real-time alerts for mentions and activity
+- **Hashtag Analytics** - Track hashtag performance, growth trends, and engagement
+- **Hashtag Performance** - Detailed hashtag performance metrics
 
-### Collaboration & Team
-- **Team Management** - Role-based permissions and collaboration
-- **Approval Workflows** - Multi-step content approval process
-- **Real-time Collaboration** - Live updates, mentions, and activity logs
-- **Activity Logs** - Track team actions and changes
+### Campaign & Influencer Management
+- **Campaign Management** - Track campaign status, budget, reach, engagement, and conversion
+- **Influencer Tracking** - Monitor influencer performance, collaboration status, and reach
+- **Influencer Campaigns** - Track influencer campaign performance and ROI
+- **Influencer Outreach Management** - Manage outreach campaigns and response rates
+- **Budget Management** - Track budget allocation, spending, and remaining budget
+- **ROI Calculator** - Calculate return on investment for campaigns
 
-### Advanced Features
-- **A/B Testing & Experiments** - Run experiments to optimize content strategy
-- **Social Listening** - Monitor mentions, keywords, and brand conversations
-- **Trend Tracking** - Track trending topics and hashtags
-- **Influencer Management** - Manage influencer relationships and collaboration campaigns
-- **Crisis Management** - Real-time crisis detection and response templates
-- **Competitor Analysis** - Track competitor performance and benchmark metrics
+### Team & Collaboration
+- **Team Collaboration Tools** - Review boards, creative briefs, and asset requests
+- **Team Performance Metrics** - Track individual team member performance
+- **Content Approval Workflows** - Multi-step approval processes with templates
+- **Approval Queue** - Review and approve content submissions
+- **User Management & Permissions** - Manage team members, roles, and access
+
+### Content Management
+- **Content Library** - Manage media assets, templates, and reusable content
+- **Content Calendar** - Advanced calendar with multiple views (week, month, list)
+- **Content Calendar Templates** - Pre-built templates for content planning
+- **Content Calendar Sync** - Sync with external calendar platforms
+- **Content Calendar Integration** - Integrate with Google Calendar, Outlook, Apple Calendar
+- **Content Calendar Views** - Switch between different calendar views
+- **Content Tagging & Organization** - Organize content with tags for discoverability
+- **Content Moderation** - Review and manage flagged content
+- **Content Templates Library** - Reusable templates by category with usage tracking
+
+### Automation & Workflows
+- **Automation Rules** - Create trigger-based automation rules
+- **Automated Response System** - Set up automated responses for common interactions
+- **Content Creation Workflows** - Predefined workflows for different content types
 - **Scheduling Optimization** - AI-powered recommendations for optimal posting times
 
-### Commerce & Monetization
-- **Social Commerce** - Sell products directly through social media posts
-- **Product Catalog** - Manage products and track sales performance
-- **Shopping Posts** - Track clicks, conversions, and revenue from social posts
+### Intelligence & Insights
+- **Intelligence Forecasts** - Predictive analytics for content performance
+- **Intelligence Anomalies** - Detect unusual patterns and anomalies
+- **Audience Insights** - Deep audience analytics and segmentation
+- **Audience Segmentation Cards** - Cohort segmentation dashboards
+- **Audience Growth Tracking** - Monitor follower growth and trends
+- **Competitor Tracking** - Analyze competitor metrics and compare performance
+- **Competitor Analysis** - Track competitor performance and benchmark strategy
+- **Trend Analysis** - Track trending topics, hashtags, and conversations
+- **Social Media Trend Analysis** - Monitor trends relevant to your brand
+
+### Testing & Optimization
+- **A/B Testing Dashboard** - Manage active and completed tests
+- **A/B Testing Results** - Analyze test results to optimize performance
+- **Content A/B Testing Results** - Detailed A/B test analysis
+
+### Compliance & Safety
+- **Content Moderation** - Review flagged content, spam, and inappropriate posts
+- **Brand Safety** - Monitor brand reputation and detect threats
+- **Social Media Compliance & Legal** - Ensure content meets legal requirements
+- **Social Media Crisis Response** - Monitor and respond to crises with automated workflows
 
 ### Integrations & API
-- **API Management** - Manage API keys, endpoints, and rate limits
-- **Webhooks** - Real-time event notifications
-- **Custom Integrations** - Build your own integrations with templates
-- **Calendar Integration** - Sync with external calendar platforms
-- **Export/Import** - Export data in CSV, Excel, PDF, and JSON formats
+- **Webhook Integrations** - Configure webhooks for various events
+- **API Management** - Manage API keys, monitor usage, and control access
+- **Integrations** - Connect with external tools and platforms
 
-### Security & Compliance
-- **Security Monitoring** - Track security logs, active sessions, and system alerts
-- **Compliance** - GDPR, CCPA, and SOC 2 compliance tools
-- **Audit Logs** - Complete audit trail for all actions
-- **Backup & Restore** - Automated backups, schedules, and restore points
-- **Data Retention** - Configure data retention policies
-
-### Reporting & Documentation
-- **Custom Reporting** - Create and schedule custom reports
-- **Report Templates** - Pre-built report templates for common use cases
-- **Help Center** - Documentation, tutorials, and support tickets
-- **Changelog** - Release notes and upcoming features
-- **Developer Tools** - API documentation, SDKs, and code examples
-
-### Platform Features
-- **Mobile Apps** - iOS and Android applications with push notifications
-- **Brand Guidelines** - Brand asset management and usage tracking
-- **White Label** - Customize the platform with your brand identity
-- **Settings** - Workspace configuration, notifications, and preferences
-- **Billing** - Subscription management, usage tracking, and invoice history
-- **Search** - Advanced search with filters, saved searches, and suggestions
-- **Notifications** - Multi-channel notification system (email, push, SMS, Slack)
-
-### Performance & Monitoring
-- **Performance Monitoring** - System health metrics, uptime statistics, and alerts
-- **Content Moderation** - Automated content filtering and moderation rules
-- **Moderation Queue** - Review flagged content and manage moderation workflows
+### Advanced Features
+- **Advanced Search** - Search across content, posts, and analytics
+- **Export & Backup** - Export data in multiple formats and track backup history
+- **Revenue Tracking** - Track revenue from sponsored posts and affiliate links
+- **Multi-language Support** - Manage content across multiple languages
+- **Notification Center** - Centralize notifications for approvals, mentions, and alerts
 
 ## Tech Stack
 
-- **Next.js** (App Router) - React framework with server-side rendering
+- **Next.js** (App Router) - React framework for production
 - **Tailwind CSS** - Utility-first CSS framework
-- **TypeScript** - Type-safe JavaScript
 - **Reown AppKit** + **Wagmi** + **Viem** - Wallet connection and Web3 integration
-- **@tanstack/react-query** - Data fetching and caching
+- **TypeScript** - Type-safe JavaScript
 
 ## Environment Setup
 
 Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown.com).
 
+## Supported Platforms
+
+- **Farcaster** - Decentralized social network
+- **Instagram** - Photo and video sharing
+- **X (Twitter)** - Microblogging platform
+- **Lens Protocol** - Decentralized social graph
+- **Mirror** - Web3 publishing platform
+
+## Key Capabilities
+
+- **50+ Feature Modules** - Comprehensive social media management suite
+- **Multi-channel Publishing** - Publish to 5+ platforms simultaneously
+- **AI-Powered Insights** - Machine learning for content optimization
+- **Real-time Analytics** - Live performance tracking and reporting
+- **Team Collaboration** - Built-in tools for team workflows
+- **Automation** - Reduce manual work with intelligent automation
+- **Compliance** - Ensure brand safety and legal compliance
+
 ## Project Structure
 
 ```
 src/
-├── app/              # Next.js app router pages
-│   └── page.tsx      # Main dashboard component
-├── data/             # Mock data modules
-│   ├── dashboard.ts  # Core dashboard data
-│   ├── ai.ts         # AI-related data
-│   ├── analytics.ts  # Analytics data
-│   ├── api.ts        # API management data
-│   ├── automation.ts # Automation data
-│   └── ...           # More data modules
-├── types/            # TypeScript type definitions
-│   └── publishing.ts # Shared types
-├── utils/            # Utility functions
-│   ├── account.ts    # Account utilities
-│   ├── charts.ts     # Chart utilities
-│   ├── metrics.ts    # Metric formatting
-│   ├── progress.ts   # Progress calculations
-│   └── time.ts       # Time formatting
-└── constants/        # Constants and configuration
-    ├── channelCatalog.ts # Channel definitions
-    └── statusTokens.ts   # Status styling tokens
+  app/
+    page.tsx          # Main dashboard component with all features
 ```
 
-## Development
+## Contributing
 
-```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Run linter
-npm run lint
-```
-
-## Key Capabilities
-
-- **30+ Feature Sections** covering all aspects of social media management
-- **Modular Architecture** with separated data, types, utilities, and constants
-- **Type-Safe** with comprehensive TypeScript definitions
-- **Responsive Design** with Tailwind CSS
-- **Web3 Ready** with wallet integration via Reown AppKit
+This is a comprehensive social media management platform with extensive features for content creation, scheduling, analytics, team collaboration, and automation.
 
 ## License
 
