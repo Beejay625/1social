@@ -21788,6 +21788,620 @@ export default function Home() {
           </aside>
         </section>
 
+        {/* A/B Testing */}
+        <section
+          id="ab-testing"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">A/B Testing</h2>
+              <p className="text-sm text-slate-100/75">
+                Test different content variations to optimize performance and conversion rates.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {abTests.map((test) => (
+                <div
+                  key={test.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{test.name}</h3>
+                      <p className="text-xs text-slate-200/60 mt-1">{test.description}</p>
+                    </div>
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      test.status === "running"
+                        ? "bg-emerald-500/20 text-emerald-300"
+                        : test.status === "completed"
+                        ? "bg-blue-500/20 text-blue-300"
+                        : "bg-slate-500/20 text-slate-300"
+                    }`}>
+                      {test.status}
+                    </span>
+                  </div>
+                  <div className="space-y-3">
+                    {test.variants.map((variant) => (
+                      <div
+                        key={variant.id}
+                        className={`rounded-2xl border p-4 ${
+                          test.metrics.winner === variant.id
+                            ? "border-emerald-400/50 bg-emerald-400/10"
+                            : "border-white/10 bg-slate-950/40"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <h4 className="text-sm font-semibold text-white">{variant.name}</h4>
+                            {test.metrics.winner === variant.id && (
+                              <span className="text-xs px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-300">
+                                Winner
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-xs text-slate-200/60">Performance: {variant.performance}</span>
+                        </div>
+                        <p className="text-xs text-slate-200/70 mb-3">{variant.content}</p>
+                        <div className="grid grid-cols-4 gap-2 text-xs">
+                          <div>
+                            <p className="text-slate-200/60">Impressions</p>
+                            <p className="text-white font-semibold">{variant.metrics.impressions.toLocaleString()}</p>
+                          </div>
+                          <div>
+                            <p className="text-slate-200/60">Clicks</p>
+                            <p className="text-white font-semibold">{variant.metrics.clicks}</p>
+                          </div>
+                          <div>
+                            <p className="text-slate-200/60">Conversions</p>
+                            <p className="text-white font-semibold">{variant.metrics.conversions}</p>
+                          </div>
+                          <div>
+                            <p className="text-slate-200/60">Conv. Rate</p>
+                            <p className="text-emerald-300 font-semibold">{variant.metrics.conversionRate}%</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  {test.metrics.confidenceLevel && (
+                    <div className="mt-3 text-xs text-slate-200/60">
+                      Confidence Level: {test.metrics.confidenceLevel}%
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Testing Stats
+              </h3>
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Tests</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{abTestingStats.totalTests}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="rounded-xl border border-emerald-400/30 bg-emerald-400/10 p-3">
+                    <p className="text-xs text-emerald-300">Active</p>
+                    <p className="mt-1 text-lg font-semibold text-white">{abTestingStats.activeTests}</p>
+                  </div>
+                  <div className="rounded-xl border border-blue-400/30 bg-blue-400/10 p-3">
+                    <p className="text-xs text-blue-300">Completed</p>
+                    <p className="mt-1 text-lg font-semibold text-white">{abTestingStats.completedTests}</p>
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg Improvement</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{abTestingStats.avgImprovement}%</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Content Library */}
+        <section
+          id="content-library"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content Library</h2>
+              <p className="text-sm text-slate-100/75">
+                Organize and manage all your content assets in one central library.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {contentAssets.map((asset) => (
+                <div
+                  key={asset.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="h-16 w-16 rounded-xl bg-slate-700/50 flex items-center justify-center">
+                      <span className="text-2xl">
+                        {asset.type === "image" ? "🖼️" : asset.type === "video" ? "🎥" : asset.type === "document" ? "📄" : asset.type === "template" ? "📋" : "🎵"}
+                      </span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-lg font-semibold text-white">{asset.name}</h3>
+                        <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300 uppercase">
+                          {asset.format}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-4 text-xs text-slate-200/60 mb-3">
+                        <span>{(asset.size / 1000000).toFixed(2)} MB</span>
+                        <span>·</span>
+                        <span>Used {asset.usageCount} times</span>
+                        {asset.lastUsed && (
+                          <>
+                            <span>·</span>
+                            <span>Last used: {formatRelativeTime(asset.lastUsed)}</span>
+                          </>
+                        )}
+                      </div>
+                      <div className="flex flex-wrap gap-1">
+                        {asset.tags.map((tag, idx) => (
+                          <span key={idx} className="text-xs px-2 py-1 rounded-full bg-slate-700/50 text-slate-300">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Library Stats
+              </h3>
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Assets</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{contentLibraryStats.totalAssets}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Size</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{contentLibraryStats.totalSizeFormatted}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Recent Uploads</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{contentLibraryStats.recentUploads}</p>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Folders
+              </h3>
+              <div className="space-y-3">
+                {contentFolders.map((folder) => (
+                  <div
+                    key={folder.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="h-8 w-8 rounded-lg"
+                        style={{ backgroundColor: folder.color }}
+                      />
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">{folder.name}</p>
+                        <p className="text-xs text-slate-200/60">{folder.assetCount} assets</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Social Commerce */}
+        <section
+          id="social-commerce"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Social Commerce</h2>
+              <p className="text-sm text-slate-100/75">
+                Track product performance and sales across social media platforms.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {commerceProducts.map((product) => (
+                <div
+                  key={product.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="h-16 w-16 rounded-xl bg-slate-700/50 flex items-center justify-center">
+                      <span className="text-2xl">🛍️</span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-lg font-semibold text-white">{product.name}</h3>
+                        <span className={`text-xs px-2 py-1 rounded-full ${
+                          product.status === "active"
+                            ? "bg-emerald-500/20 text-emerald-300"
+                            : "bg-slate-500/20 text-slate-300"
+                        }`}>
+                          {product.status}
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-200/60 mb-3">{product.description}</p>
+                      <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Price</p>
+                          <p className="mt-1 text-sm font-semibold text-white">${product.price}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Views</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{product.metrics.views.toLocaleString()}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Clicks</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{product.metrics.clicks}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Purchases</p>
+                          <p className="mt-1 text-sm font-semibold text-emerald-300">{product.metrics.purchases}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Revenue</p>
+                          <p className="mt-1 text-sm font-semibold text-emerald-300">${product.metrics.revenue.toFixed(2)}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Commerce Analytics
+              </h3>
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Revenue</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">${commerceAnalytics.totalRevenue.toFixed(2)}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="rounded-xl border border-emerald-400/30 bg-emerald-400/10 p-3">
+                    <p className="text-xs text-emerald-300">Orders</p>
+                    <p className="mt-1 text-lg font-semibold text-white">{commerceAnalytics.totalOrders}</p>
+                  </div>
+                  <div className="rounded-xl border border-blue-400/30 bg-blue-400/10 p-3">
+                    <p className="text-xs text-blue-300">Avg Order</p>
+                    <p className="mt-1 text-lg font-semibold text-white">${commerceAnalytics.avgOrderValue.toFixed(2)}</p>
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Conversion Rate</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{commerceAnalytics.conversionRate}%</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Video Analytics */}
+        <section
+          id="video-analytics"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(251,191,36,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Video Analytics</h2>
+              <p className="text-sm text-slate-100/75">
+                Track video performance metrics and get insights to optimize your video content.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {videoPerformances.map((video) => (
+                <div
+                  key={video.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="h-20 w-20 rounded-xl bg-slate-700/50 flex items-center justify-center">
+                      <span className="text-3xl">🎥</span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-lg font-semibold text-white">{video.title}</h3>
+                        <span className={`text-xs px-2 py-1 rounded-full ${
+                          video.performanceScore >= 90
+                            ? "bg-emerald-500/20 text-emerald-300"
+                            : video.performanceScore >= 80
+                            ? "bg-blue-500/20 text-blue-300"
+                            : "bg-amber-500/20 text-amber-300"
+                        }`}>
+                          Score: {video.performanceScore}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-slate-200/60 mb-3">
+                        <span className={`h-2 w-2 rounded-full ${channelCatalog[video.platform as ChannelId]?.dot || "bg-slate-400"}`} />
+                        <span className="capitalize">{video.platform}</span>
+                        <span>·</span>
+                        <span>{video.durationFormatted}</span>
+                        <span>·</span>
+                        <span>{formatRelativeTime(video.publishedAt)}</span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Views</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{video.metrics.views.toLocaleString()}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Watch Time</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{video.metrics.watchTimeFormatted}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Avg Watch %</p>
+                          <p className="mt-1 text-sm font-semibold text-emerald-300">{video.metrics.avgWatchPercentage}%</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Eng. Rate</p>
+                          <p className="mt-1 text-sm font-semibold text-emerald-300">{video.metrics.engagementRate}%</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(251,191,36,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Video Stats
+              </h3>
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Videos</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{videoAnalyticsStats.totalVideos}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Views</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{videoAnalyticsStats.totalViews.toLocaleString()}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Watch Time</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{videoAnalyticsStats.totalWatchTimeFormatted}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg Engagement</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{videoAnalyticsStats.avgEngagementRate}%</p>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(251,191,36,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Insights
+              </h3>
+              <div className="space-y-3">
+                {videoInsights.slice(0, 2).map((insight) => (
+                  <div
+                    key={insight.id}
+                    className={`rounded-2xl border p-4 ${
+                      insight.impact === "high"
+                        ? "border-amber-400/50 bg-amber-400/10"
+                        : "border-white/10 bg-slate-950/40"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between mb-2">
+                      <span className={`text-xs px-2 py-1 rounded-full uppercase ${
+                        insight.impact === "high"
+                          ? "bg-amber-500/20 text-amber-300"
+                          : "bg-blue-500/20 text-blue-300"
+                      }`}>
+                        {insight.impact}
+                      </span>
+                    </div>
+                    <h4 className="text-sm font-semibold text-white mb-1">{insight.title}</h4>
+                    <p className="text-xs text-slate-200/70 mb-2">{insight.description}</p>
+                    <p className="text-xs text-emerald-300">💡 {insight.recommendation}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Analytics Export */}
+        <section
+          id="analytics-export"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Analytics Export</h2>
+              <p className="text-sm text-slate-100/75">
+                Export your analytics data and reports in various formats for analysis and sharing.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {exportJobs.map((job) => (
+                <div
+                  key={job.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{job.name}</h3>
+                      <p className="text-xs text-slate-200/60 mt-1">
+                        {job.type} · {job.format.toUpperCase()}
+                      </p>
+                    </div>
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      job.status === "completed"
+                        ? "bg-emerald-500/20 text-emerald-300"
+                        : job.status === "processing"
+                        ? "bg-blue-500/20 text-blue-300"
+                        : job.status === "failed"
+                        ? "bg-red-500/20 text-red-300"
+                        : "bg-slate-500/20 text-slate-300"
+                    }`}>
+                      {job.status}
+                    </span>
+                  </div>
+                  {job.status === "completed" && job.downloadUrl && (
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-xs text-slate-200/60">
+                        <span>{job.sizeFormatted}</span>
+                        <span>·</span>
+                        <span>Completed {formatRelativeTime(job.completedAt!)}</span>
+                      </div>
+                      <button className="text-xs px-3 py-1.5 rounded-full bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 border border-pink-500/30">
+                        Download
+                      </button>
+                    </div>
+                  )}
+                  {job.status === "processing" && (
+                    <div className="text-xs text-blue-300">Processing...</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Export Stats
+              </h3>
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Exports</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{exportStats.totalExports}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">This Month</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{exportStats.exportsThisMonth}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg Size</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{exportStats.avgExportSizeFormatted}</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* White-Label Branding */}
+        <section
+          id="white-label"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">White-Label Branding</h2>
+              <p className="text-sm text-slate-100/75">
+                Customize branding, colors, and domain to match your brand identity.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {brandingSettings.map((branding) => (
+                <div
+                  key={branding.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{branding.name}</h3>
+                      {branding.customDomain && (
+                        <p className="text-xs text-slate-200/60 mt-1">{branding.customDomain}</p>
+                      )}
+                    </div>
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      branding.status === "active"
+                        ? "bg-emerald-500/20 text-emerald-300"
+                        : "bg-slate-500/20 text-slate-300"
+                    }`}>
+                      {branding.status}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-xs text-slate-200/60 mb-2">Colors</p>
+                      <div className="flex gap-2">
+                        <div
+                          className="h-8 w-8 rounded-lg border border-white/20"
+                          style={{ backgroundColor: branding.colors.primary }}
+                          title="Primary"
+                        />
+                        <div
+                          className="h-8 w-8 rounded-lg border border-white/20"
+                          style={{ backgroundColor: branding.colors.secondary }}
+                          title="Secondary"
+                        />
+                        <div
+                          className="h-8 w-8 rounded-lg border border-white/20"
+                          style={{ backgroundColor: branding.colors.accent }}
+                          title="Accent"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-200/60 mb-2">Typography</p>
+                      <p className="text-sm font-semibold text-white">{branding.typography.fontFamily}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Features
+              </h3>
+              <div className="space-y-3">
+                {whiteLabelFeatures.map((feature) => (
+                  <div
+                    key={feature.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="text-sm font-semibold text-white">{feature.name}</h4>
+                      <span className={`text-xs px-2 py-1 rounded-full ${
+                        feature.enabled
+                          ? "bg-emerald-500/20 text-emerald-300"
+                          : "bg-slate-500/20 text-slate-300"
+                      }`}>
+                        {feature.enabled ? "Enabled" : "Disabled"}
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-200/60">{feature.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
       </main>
     </div>
   );
