@@ -49,24 +49,6 @@ import {
   reportingVarianceBreakdowns,
 } from "@/data/reporting";
 import { teamActivityLog, teamMembers } from "@/data/team";
-import {
-  audienceSegments,
-  channelPerformance,
-  sentimentHistory,
-  topPerformers,
-} from "@/data/analytics";
-import {
-  collaborationChecklists,
-  collaborationHandoffs,
-  collaborationMentions,
-  realTimeActivity,
-} from "@/data/collaboration";
-import {
-  contentLibrary,
-  contentPerformanceData,
-  contentVersions,
-  workflowAutomationRules,
-} from "@/data/content";
 import { truncateAddress, velocityBadge } from "@/utils/account";
 import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
 import { formatMetricDelta, formatMetricValue, metricDeltaTone } from "@/utils/metrics";
@@ -981,7 +963,139 @@ const syndicationHistory: SyndicationEntry[] = [
   },
 ];
 
-// Using imported versions from data modules
+// Collaboration features data
+const collaborationMentions = [
+  {
+    id: "mention-1",
+    planId: "plan-1",
+    mentionedBy: "Leo",
+    mentionedTo: "You",
+    message: "@You Need your sign-off on the wallet signature flow",
+    at: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
+    resolved: false,
+  },
+  {
+    id: "mention-2",
+    planId: "plan-2",
+    mentionedBy: "Ameena",
+    mentionedTo: "Kai",
+    message: "@Kai Can you review the design drops recap copy?",
+    at: new Date(Date.now() - 1000 * 60 * 90).toISOString(),
+    resolved: true,
+  },
+  {
+    id: "mention-3",
+    planId: "plan-3",
+    mentionedBy: "Kai",
+    mentionedTo: "Leo",
+    message: "@Leo Pull new community shots for reel slots 2 and 3",
+    at: new Date(Date.now() - 1000 * 60 * 145).toISOString(),
+    resolved: false,
+  },
+];
+
+const collaborationChecklists = [
+  {
+    id: "checklist-1",
+    planId: "plan-1",
+    title: "Pre-launch checklist",
+    items: [
+      { id: "item-1", label: "Final copy review", checked: true, assignedTo: "Kai" },
+      { id: "item-2", label: "Asset upload", checked: true, assignedTo: "Leo" },
+      { id: "item-3", label: "Wallet signature prep", checked: false, assignedTo: "You" },
+    ],
+  },
+  {
+    id: "checklist-2",
+    planId: "plan-2",
+    title: "Design QA checklist",
+    items: [
+      { id: "item-4", label: "Typography check", checked: false, assignedTo: "Leo" },
+      { id: "item-5", label: "Color contrast", checked: false, assignedTo: "Leo" },
+      { id: "item-6", label: "Mobile preview", checked: false, assignedTo: "Ameena" },
+    ],
+  },
+];
+
+const collaborationHandoffs = [
+  {
+    id: "handoff-1",
+    planId: "plan-1",
+    from: "Kai",
+    to: "You",
+    action: "Request wallet signature",
+    status: "pending",
+    at: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+  },
+  {
+    id: "handoff-2",
+    planId: "plan-3",
+    from: "Leo",
+    to: "Ameena",
+    action: "Request asset upload",
+    status: "completed",
+    at: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
+  },
+];
+
+// Audience segmentation data
+const audienceSegments = [
+  {
+    id: "segment-1",
+    label: "Power users",
+    channel: "farcaster" as ChannelId,
+    size: 12400,
+    growth: 18.2,
+    engagement: 8.4,
+    coverage: 85,
+    benchmark: 72,
+    trend: [85, 87, 84, 86, 88, 85, 87],
+  },
+  {
+    id: "segment-2",
+    label: "New followers",
+    channel: "instagram" as ChannelId,
+    size: 8900,
+    growth: 24.5,
+    engagement: 6.2,
+    coverage: 62,
+    benchmark: 68,
+    trend: [58, 60, 62, 61, 63, 62, 62],
+  },
+  {
+    id: "segment-3",
+    label: "Creator cohort",
+    channel: "farcaster" as ChannelId,
+    size: 3200,
+    growth: 12.8,
+    engagement: 9.1,
+    coverage: 78,
+    benchmark: 75,
+    trend: [75, 76, 77, 78, 77, 78, 78],
+  },
+  {
+    id: "segment-4",
+    label: "Lurkers",
+    channel: "instagram" as ChannelId,
+    size: 15600,
+    growth: 5.3,
+    engagement: 2.1,
+    coverage: 45,
+    benchmark: 55,
+    trend: [42, 43, 44, 45, 44, 45, 45],
+  },
+];
+
+// Enhanced sentiment tracking data
+const sentimentHistory = [
+  { date: "Mon", positive: 68, neutral: 22, negative: 10 },
+  { date: "Tue", positive: 72, neutral: 20, negative: 8 },
+  { date: "Wed", positive: 65, neutral: 25, negative: 10 },
+  { date: "Thu", positive: 70, neutral: 23, negative: 7 },
+  { date: "Fri", positive: 74, neutral: 19, negative: 7 },
+  { date: "Sat", positive: 71, neutral: 21, negative: 8 },
+  { date: "Sun", positive: 69, neutral: 24, negative: 7 },
+];
 
 const sentimentAlerts = [
   {
@@ -1063,9 +1177,68 @@ const recommendationPlaybooks = [
   },
 ];
 
-// Using imported versions from data/content.ts
-const contentPerformancePosts = contentPerformanceData;
-const workflowAutomations = workflowAutomationRules;
+const contentPerformancePosts = [
+  {
+    id: "perf-1",
+    title: "Founder AMA teaser",
+    channel: "farcaster" as ChannelId,
+    publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 6).toISOString(),
+    metrics: {
+      reach: 12400,
+      engagement: 3420,
+      saves: 890,
+      shares: 234,
+      clicks: 567,
+    },
+    performance: "excellent",
+    trend: [45, 52, 68, 74, 82, 88, 92],
+  },
+  {
+    id: "perf-2",
+    title: "Design drops recap",
+    channel: "instagram" as ChannelId,
+    publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 18).toISOString(),
+    metrics: {
+      reach: 8900,
+      engagement: 2100,
+      saves: 567,
+      shares: 123,
+      clicks: 234,
+    },
+    performance: "good",
+    trend: [32, 38, 45, 52, 58, 62, 65],
+  },
+];
+
+const workflowAutomations = [
+  {
+    id: "auto-1",
+    name: "Auto-approve low-risk posts",
+    trigger: "Post scheduled",
+    condition: "Engagement score < 50",
+    action: "Auto-approve and publish",
+    status: "active",
+    runs: 12,
+  },
+  {
+    id: "auto-2",
+    name: "Escalate overdue approvals",
+    trigger: "Approval overdue",
+    condition: "Overdue by > 2 hours",
+    action: "Notify fallback approver",
+    status: "active",
+    runs: 3,
+  },
+  {
+    id: "auto-3",
+    name: "Cross-post viral content",
+    trigger: "Post engagement spike",
+    condition: "Engagement > 500% baseline",
+    action: "Auto-syndicate to all channels",
+    status: "inactive",
+    runs: 0,
+  },
+];
 
 const competitorAnalysis = [
   {
@@ -1102,248 +1275,6 @@ const competitorAnalysis = [
   },
 ];
 
-const socialListeningMentions = [
-  {
-    id: "listen-1",
-    keyword: "1Social",
-    source: "farcaster" as ChannelId,
-    author: "@crypto_builder",
-    content: "Just tried 1Social for the first time—game changer for cross-posting!",
-    sentiment: "positive",
-    engagement: 24,
-    timestamp: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
-  },
-  {
-    id: "listen-2",
-    keyword: "1Social",
-    source: "x" as ChannelId,
-    author: "@web3_marketer",
-    content: "Anyone else having issues with 1Social's scheduling feature?",
-    sentiment: "negative",
-    engagement: 8,
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
-  },
-  {
-    id: "listen-3",
-    keyword: "social media tool",
-    source: "lens" as ChannelId,
-    author: "@creator_dao",
-    content: "Looking for a tool that supports Farcaster and Instagram simultaneously",
-    sentiment: "neutral",
-    engagement: 12,
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(),
-  },
-];
-
-const influencerProfiles = [
-  {
-    id: "inf-1",
-    name: "Crypto Creator",
-    handle: "@crypto_creator",
-    channel: "farcaster" as ChannelId,
-    followers: 45600,
-    engagementRate: 8.4,
-    avgReach: 12400,
-    category: "Web3",
-    collaborationStatus: "active",
-    lastPost: "2 hours ago",
-  },
-  {
-    id: "inf-2",
-    name: "Design Studio",
-    handle: "@design_studio",
-    channel: "instagram" as ChannelId,
-    followers: 23400,
-    engagementRate: 6.8,
-    avgReach: 8900,
-    category: "Design",
-    collaborationStatus: "pending",
-    lastPost: "5 hours ago",
-  },
-];
-
-const crisisAlerts = [
-  {
-    id: "crisis-1",
-    severity: "high",
-    type: "Negative sentiment spike",
-    channel: "farcaster" as ChannelId,
-    description: "Negative mentions increased 45% in the last 2 hours",
-    affectedPosts: 3,
-    detectedAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
-    status: "active",
-  },
-  {
-    id: "crisis-2",
-    severity: "medium",
-    type: "Engagement drop",
-    channel: "instagram" as ChannelId,
-    description: "Engagement rate dropped below baseline by 28%",
-    affectedPosts: 5,
-    detectedAt: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
-    status: "monitoring",
-  },
-];
-
-const socialCommerceProducts = [
-  {
-    id: "product-1",
-    name: "1Social Pro Plan",
-    price: "$99/month",
-    status: "active",
-    sales: 124,
-    revenue: "$12,276",
-    conversionRate: 3.2,
-    channels: ["farcaster", "instagram"] as ChannelId[],
-  },
-  {
-    id: "product-2",
-    name: "Creator Toolkit",
-    price: "$49/month",
-    status: "active",
-    sales: 89,
-    revenue: "$4,361",
-    conversionRate: 2.8,
-    channels: ["instagram"] as ChannelId[],
-  },
-];
-
-const calendarEvents = [
-  {
-    id: "event-1",
-    title: "Product launch",
-    date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3).toISOString(),
-    channels: ["farcaster", "instagram", "x"] as ChannelId[],
-    type: "campaign",
-    status: "scheduled",
-  },
-  {
-    id: "event-2",
-    title: "Community AMA",
-    date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7).toISOString(),
-    channels: ["farcaster"] as ChannelId[],
-    type: "event",
-    status: "planned",
-  },
-];
-
-// Social listening / monitoring
-const socialListeningTopics = [
-  {
-    id: "topic-1",
-    keyword: "wallet integration",
-    mentions: 124,
-    sentiment: "positive",
-    trend: "up",
-    topChannels: ["farcaster", "x"] as ChannelId[],
-    recentMentions: [
-      { author: "User123", message: "Love the new wallet feature!", channel: "farcaster" as ChannelId },
-      { author: "CryptoFan", message: "Wallet integration is seamless", channel: "x" as ChannelId },
-    ],
-  },
-  {
-    id: "topic-2",
-    keyword: "product launch",
-    mentions: 89,
-    sentiment: "neutral",
-    trend: "stable",
-    topChannels: ["instagram", "farcaster"] as ChannelId[],
-    recentMentions: [
-      { author: "EarlyAdopter", message: "Excited for the launch", channel: "instagram" as ChannelId },
-    ],
-  },
-  {
-    id: "topic-3",
-    keyword: "community AMA",
-    mentions: 156,
-    sentiment: "positive",
-    trend: "up",
-    topChannels: ["farcaster", "lens"] as ChannelId[],
-    recentMentions: [
-      { author: "CommunityMember", message: "Great AMA session!", channel: "farcaster" as ChannelId },
-    ],
-  },
-];
-
-// Advanced analytics breakdown
-const analyticsBreakdown = [
-  {
-    id: "breakdown-1",
-    metric: "Reach",
-    total: 124000,
-    breakdown: [
-      { channel: "farcaster" as ChannelId, value: 68000, percent: 55 },
-      { channel: "instagram" as ChannelId, value: 42000, percent: 34 },
-      { channel: "x" as ChannelId, value: 14000, percent: 11 },
-    ],
-    trend: [110, 115, 118, 120, 122, 124],
-  },
-  {
-    id: "breakdown-2",
-    metric: "Engagement",
-    total: 8920,
-    breakdown: [
-      { channel: "farcaster" as ChannelId, value: 5120, percent: 57 },
-      { channel: "instagram" as ChannelId, value: 3120, percent: 35 },
-      { channel: "x" as ChannelId, value: 680, percent: 8 },
-    ],
-    trend: [8200, 8400, 8600, 8700, 8800, 8920],
-  },
-];
-
-// Content ideas generator
-const contentIdeas = [
-  {
-    id: "idea-1",
-    title: "Behind-the-scenes: Building wallet integration",
-    type: "BTS",
-    estimatedEngagement: 8.5,
-    channels: ["farcaster", "instagram"] as ChannelId[],
-    tags: ["product", "development"],
-  },
-  {
-    id: "idea-2",
-    title: "Community spotlight: Top contributors this month",
-    type: "Community",
-    estimatedEngagement: 9.2,
-    channels: ["farcaster", "lens"] as ChannelId[],
-    tags: ["community", "spotlight"],
-  },
-  {
-    id: "idea-3",
-    title: "Tutorial: How to connect your wallet",
-    type: "Educational",
-    estimatedEngagement: 7.8,
-    channels: ["instagram", "x"] as ChannelId[],
-    tags: ["tutorial", "onboarding"],
-  },
-];
-
-// Trend topics
-const trendTopics = [
-  {
-    id: "trend-1",
-    topic: "#Web3Social",
-    volume: 12500,
-    growth: 24.5,
-    relevance: "high",
-  },
-  {
-    id: "trend-2",
-    topic: "#WalletConnect",
-    volume: 8900,
-    growth: 18.2,
-    relevance: "medium",
-  },
-  {
-    id: "trend-3",
-    topic: "#DecentralizedSocial",
-    volume: 15600,
-    growth: 32.1,
-    relevance: "high",
-  },
-];
-
 const dashboardSections: { id: string; label: string }[] = [
   { id: "broadcast", label: "Compose" },
   { id: "plan", label: "Scheduling" },
@@ -1366,11 +1297,6 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "notifications", label: "Notifications" },
   { id: "competitors", label: "Competitors" },
   { id: "trends", label: "Trends" },
-  { id: "listening", label: "Social Listening" },
-  { id: "influencers", label: "Influencers" },
-  { id: "crisis", label: "Crisis Management" },
-  { id: "commerce", label: "Social Commerce" },
-  { id: "calendar-advanced", label: "Advanced Calendar" },
 ];
 const chartColorTokens = {
   reach: "text-sky-300",
@@ -1496,24 +1422,6 @@ export default function Home() {
     workflowAutomations?.[0]?.id ?? "",
   );
   const [selectedNotificationId, setSelectedNotificationId] = useState<string>("");
-  const [selectedMentionId, setSelectedMentionId] = useState<string>(
-    socialListeningMentions[0]?.id ?? "",
-  );
-  const [selectedInfluencerId, setSelectedInfluencerId] = useState<string>(
-    influencerProfiles[0]?.id ?? "",
-  );
-  const [selectedCrisisId, setSelectedCrisisId] = useState<string>(
-    crisisAlerts[0]?.id ?? "",
-  );
-  const [selectedProductId, setSelectedProductId] = useState<string>(
-    socialCommerceProducts[0]?.id ?? "",
-  );
-  const [selectedEventId, setSelectedEventId] = useState<string>(
-    calendarEvents[0]?.id ?? "",
-  );
-  const [selectedSegmentId, setSelectedSegmentId] = useState<string>("");
-  const [listeningKeywordFilter, setListeningKeywordFilter] = useState<string>("all");
-  const [listeningSentimentFilter, setListeningSentimentFilter] = useState<string>("all");
 
   const activeNetwork = useMemo(
     () => networks.find((network) => network.id === chainId),
@@ -2401,68 +2309,6 @@ export default function Home() {
   const unreadNotifications = useMemo(
     () => notifications.filter((n) => !n.read),
     [],
-  );
-
-  const handleMentionSelect = (mentionId: string) => {
-    setSelectedMentionId(mentionId);
-  };
-
-  const handleInfluencerSelect = (influencerId: string) => {
-    setSelectedInfluencerId(influencerId);
-  };
-
-  const handleCrisisSelect = (crisisId: string) => {
-    setSelectedCrisisId(crisisId);
-  };
-
-  const handleProductSelect = (productId: string) => {
-    setSelectedProductId(productId);
-  };
-
-  const handleEventSelect = (eventId: string) => {
-    setSelectedEventId(eventId);
-  };
-
-  const filteredMentions = useMemo(
-    () =>
-      socialListeningMentions.filter((mention) => {
-        const keywordMatches =
-          listeningKeywordFilter === "all" || mention.keyword === listeningKeywordFilter;
-        const sentimentMatches =
-          listeningSentimentFilter === "all" || mention.sentiment === listeningSentimentFilter;
-        return keywordMatches && sentimentMatches;
-      }),
-    [listeningKeywordFilter, listeningSentimentFilter],
-  );
-
-  const selectedMention = useMemo(
-    () =>
-      socialListeningMentions.find((m) => m.id === selectedMentionId) ??
-      socialListeningMentions[0],
-    [selectedMentionId],
-  );
-
-  const selectedInfluencer = useMemo(
-    () =>
-      influencerProfiles.find((i) => i.id === selectedInfluencerId) ?? influencerProfiles[0],
-    [selectedInfluencerId],
-  );
-
-  const selectedCrisis = useMemo(
-    () => crisisAlerts.find((c) => c.id === selectedCrisisId) ?? crisisAlerts[0],
-    [selectedCrisisId],
-  );
-
-  const selectedProduct = useMemo(
-    () =>
-      socialCommerceProducts.find((p) => p.id === selectedProductId) ??
-      socialCommerceProducts[0],
-    [selectedProductId],
-  );
-
-  const selectedEvent = useMemo(
-    () => calendarEvents.find((e) => e.id === selectedEventId) ?? calendarEvents[0],
-    [selectedEventId],
   );
 
   const selectedForecast = useMemo(
@@ -4345,7 +4191,7 @@ export default function Home() {
                             {completedSteps}/{totalSteps} steps completed
                           </p>
                         </div>
-                        <span className={`text-xs font-semibold uppercase tracking-wider ${playbook.metric === "conversion" ? chartColorTokens.conversionRate : playbook.metric === "reach" ? chartColorTokens.reach : playbook.metric === "growth" ? "text-emerald-300" : "text-slate-300"}`}>
+                        <span className={`text-xs font-semibold uppercase tracking-wider ${playbook.metric === "conversion" ? chartColorTokens.conversionRate : chartColorTokens[playbook.metric] ?? "text-slate-300"}`}>
                           {playbook.metric}
                         </span>
                       </div>
@@ -5567,8 +5413,8 @@ export default function Home() {
                       <div className="flex items-center gap-3">
                         <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[post.channel].dot}`} />
                         <h3 className="text-sm font-semibold text-white">{post.title}</h3>
-                        <span className={`text-xs font-semibold ${post.performance === "excellent" ? "text-emerald-300" : "text-amber-300"}`}>
-                          {post.performance === "excellent" ? "↑" : "↓"}
+                        <span className={`text-xs font-semibold ${post.trend === "up" ? "text-emerald-300" : "text-amber-300"}`}>
+                          {post.trend === "up" ? "↑" : "↓"}
                         </span>
                       </div>
                       <p className="mt-2 text-xs text-slate-200/70">
@@ -5616,28 +5462,24 @@ export default function Home() {
                     className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
                   >
                     <div className="flex items-center justify-between">
-                      <h4 className="text-sm font-semibold text-white">{test.title}</h4>
+                      <h4 className="text-sm font-semibold text-white">{test.name}</h4>
                       <span className={`text-[10px] uppercase tracking-wider ${test.status === "running" ? "text-emerald-300" : "text-slate-300"}`}>
                         {test.status}
                       </span>
                     </div>
                     <div className="mt-3 grid grid-cols-2 gap-3">
-                      {test.variants.map((variant, idx) => {
-                        const isWinner = variant.winner === true;
-                        return (
-                          <div
-                            key={variant.id}
-                            className={`rounded-xl border p-3 ${isWinner ? "border-emerald-400/50 bg-emerald-400/10" : "border-white/10 bg-white/5"}`}
-                          >
-                            <p className="text-xs text-slate-200/70">{variant.label}</p>
-                            <p className="mt-1 text-sm font-semibold text-white">{variant.performance}%</p>
-                          </div>
-                        );
-                      })}
+                      <div className={`rounded-xl border p-3 ${test.winner === "A" ? "border-emerald-400/50 bg-emerald-400/10" : "border-white/10 bg-white/5"}`}>
+                        <p className="text-xs text-slate-200/70">{test.variantA.label}</p>
+                        <p className="mt-1 text-sm font-semibold text-white">{test.variantA.conversion}%</p>
+                      </div>
+                      <div className={`rounded-xl border p-3 ${test.winner === "B" ? "border-emerald-400/50 bg-emerald-400/10" : "border-white/10 bg-white/5"}`}>
+                        <p className="text-xs text-slate-200/70">{test.variantB.label}</p>
+                        <p className="mt-1 text-sm font-semibold text-white">{test.variantB.conversion}%</p>
+                      </div>
                     </div>
-                    {test.variants.find((v) => v.winner) && (
+                    {test.winner && (
                       <p className="mt-3 text-xs text-slate-200/70">
-                        Winner: {test.variants.find((v) => v.winner)?.label}
+                        Winner: Variant {test.winner} ({test.confidence}% confidence)
                       </p>
                     )}
                   </div>
@@ -6545,899 +6387,6 @@ export default function Home() {
                 {integrationsAvailable.filter((i) => i.status === "connected").length} connected,{" "}
                 {integrationsAvailable.filter((i) => i.status === "available").length} available to
                 connect.
-              </p>
-            </div>
-          </aside>
-        </section>
-
-        <section
-          id="content-library"
-          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)]"
-        >
-          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
-            <header className="flex flex-col gap-3">
-              <h2 className="text-2xl font-semibold text-white">Content library</h2>
-              <p className="text-sm text-slate-100/75">
-                Manage assets, track versions, and organize your content collection.
-              </p>
-            </header>
-
-            <div className="space-y-4">
-              {contentLibrary.map((asset) => (
-                <div
-                  key={asset.id}
-                  className="rounded-3xl border border-white/15 bg-white/5 p-5 transition hover:border-white/30"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={`h-10 w-10 rounded-xl bg-gradient-to-br ${asset.accent} flex items-center justify-center text-xs font-bold text-white`}
-                        >
-                          {asset.type === "image" ? "IMG" : asset.type === "video" ? "VID" : "DOC"}
-                        </div>
-                        <div>
-                          <h3 className="text-sm font-semibold text-white">{asset.title}</h3>
-                          <p className="mt-1 text-xs text-slate-200/70">
-                            {asset.owner} · {formatRelativeTime(asset.updatedAt)}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
-                    >
-                      View
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </article>
-
-          <aside className="flex flex-col gap-6">
-            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Version history
-              </h3>
-              <div className="mt-4 space-y-3">
-                {contentVersions.map((version) => (
-                  <div
-                    key={version.id}
-                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-semibold text-white">{version.author}</p>
-                        <p className="mt-1 text-xs text-slate-200/70">{version.summary}</p>
-                      </div>
-                      <span
-                        className={`text-[10px] uppercase tracking-wider ${
-                          version.status === "live"
-                            ? "text-emerald-300"
-                            : version.status === "queued"
-                              ? "text-amber-300"
-                              : "text-slate-300"
-                        }`}
-                      >
-                        {version.status}
-                      </span>
-                    </div>
-                    <p className="mt-2 text-xs text-slate-200/60">
-                      {formatRelativeTime(version.timestamp)}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Top performers
-              </h3>
-              <div className="mt-4 space-y-3">
-                {topPerformers.map((post) => (
-                  <div
-                    key={post.id}
-                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <p className="text-sm font-semibold text-white">{post.title}</p>
-                        <div className="mt-2 flex items-center gap-2">
-                          <span
-                            className={`h-1.5 w-1.5 rounded-full ${channelCatalog[post.channel].dot}`}
-                          />
-                          <span className="text-xs text-slate-200/70">
-                            {channelCatalog[post.channel].label}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-lg font-semibold text-white">{post.performance}</p>
-                        <p className="text-xs text-slate-200/70">Score</p>
-                      </div>
-                    </div>
-                    <div className="mt-3 grid grid-cols-2 gap-3 text-xs">
-                      <div>
-                        <p className="text-slate-200/60">Reach</p>
-                        <p className="mt-1 text-sm font-semibold text-white">
-                          {(post.reach / 1000).toFixed(1)}k
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-slate-200/60">Engagement</p>
-                        <p className="mt-1 text-sm font-semibold text-white">{post.engagement}%</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </aside>
-        </section>
-
-        <section
-          id="audience-analytics"
-          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
-        >
-          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(14,116,144,0.25)] backdrop-blur-2xl">
-            <header className="flex flex-col gap-3">
-              <h2 className="text-2xl font-semibold text-white">Audience segmentation</h2>
-              <p className="text-sm text-slate-100/75">
-                Analyze audience segments, track growth, and optimize targeting.
-              </p>
-            </header>
-
-            <div className="space-y-4">
-              {audienceSegments.map((segment) => {
-                const isSelected = segment.id === selectedSegmentId;
-                return (
-                  <div
-                    key={segment.id}
-                    className={`rounded-3xl border p-5 transition ${
-                      isSelected
-                        ? "border-white/30 bg-white/10"
-                        : "border-white/15 bg-white/5 hover:border-white/25"
-                    }`}
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3">
-                          <span
-                            className={`h-2.5 w-2.5 rounded-full ${channelCatalog[segment.channel].dot}`}
-                          />
-                          <h3 className="text-sm font-semibold text-white">{segment.label}</h3>
-                        </div>
-                        <div className="mt-3 grid grid-cols-3 gap-4 text-xs">
-                          <div>
-                            <p className="text-slate-200/60">Size</p>
-                            <p className="mt-1 text-sm font-semibold text-white">
-                              {(segment.size / 1000).toFixed(1)}k
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-slate-200/60">Growth</p>
-                            <p className="mt-1 text-sm font-semibold text-emerald-300">
-                              +{segment.growth}%
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-slate-200/60">Engagement</p>
-                            <p className="mt-1 text-sm font-semibold text-white">
-                              {segment.engagement}%
-                            </p>
-                          </div>
-                        </div>
-                        <div className="mt-4">
-                          <div className="flex items-center justify-between text-xs text-slate-200/70">
-                            <span>Coverage</span>
-                            <span>
-                              {segment.coverage}% vs {segment.benchmark}% benchmark
-                            </span>
-                          </div>
-                          <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
-                            <div
-                              className={`h-full bg-gradient-to-r ${channelCatalog[segment.channel].accent}`}
-                              style={{ width: `${segment.coverage}%` }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </article>
-
-          <aside className="flex flex-col gap-6">
-            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(14,116,144,0.2)] backdrop-blur-2xl">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Sentiment history
-              </h3>
-              <div className="mt-4 space-y-2">
-                {sentimentHistory.map((day) => (
-                  <div key={day.date} className="flex items-center gap-3">
-                    <span className="w-12 text-xs text-slate-200/70">{day.date}</span>
-                    <div className="flex-1 flex items-center gap-1 h-6 rounded-full overflow-hidden bg-white/10">
-                      <div
-                        className="h-full bg-emerald-400"
-                        style={{ width: `${day.positive}%` }}
-                      />
-                      <div
-                        className="h-full bg-slate-400"
-                        style={{ width: `${day.neutral}%` }}
-                      />
-                      <div
-                        className="h-full bg-rose-400"
-                        style={{ width: `${day.negative}%` }}
-                      />
-                    </div>
-                    <div className="flex gap-2 text-xs">
-                      <span className="text-emerald-300">{day.positive}%</span>
-                      <span className="text-slate-300">{day.neutral}%</span>
-                      <span className="text-rose-300">{day.negative}%</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(14,116,144,0.2)] backdrop-blur-2xl">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Channel performance
-              </h3>
-              <div className="mt-4 space-y-4">
-                {channelPerformance.map((channel) => (
-                  <div
-                    key={channel.channel}
-                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span
-                        className={`h-2 w-2 rounded-full ${channelCatalog[channel.channel].dot}`}
-                      />
-                      <h4 className="text-sm font-semibold text-white">
-                        {channelCatalog[channel.channel].label}
-                      </h4>
-                    </div>
-                    <div className="mt-3 grid grid-cols-3 gap-3 text-xs">
-                      <div>
-                        <p className="text-slate-200/60">Reach</p>
-                        <p className="mt-1 text-sm font-semibold text-white">
-                          {(channel.reach / 1000).toFixed(0)}k
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-slate-200/60">Engagement</p>
-                        <p className="mt-1 text-sm font-semibold text-white">
-                          {channel.engagement}%
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-slate-200/60">Growth</p>
-                        <p className="mt-1 text-sm font-semibold text-emerald-300">
-                          +{channel.growth}%
-                        </p>
-                      </div>
-                    </div>
-                    <p className="mt-3 text-xs text-slate-200/70">Top: {channel.topPost}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </aside>
-        </section>
-
-        <section
-          id="collaboration-tools"
-          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
-        >
-          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.25)] backdrop-blur-2xl">
-            <header className="flex flex-col gap-3">
-              <h2 className="text-2xl font-semibold text-white">Collaboration</h2>
-              <p className="text-sm text-slate-100/75">
-                Mentions, checklists, handoffs, and real-time activity.
-              </p>
-            </header>
-
-            <div className="space-y-6">
-              <div>
-                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                  Mentions
-                </h3>
-                <div className="space-y-3">
-                  {collaborationMentions.map((mention) => (
-                    <div
-                      key={mention.id}
-                      className={`rounded-2xl border p-4 ${
-                        mention.resolved
-                          ? "border-white/10 bg-slate-950/40 opacity-60"
-                          : "border-white/15 bg-white/5"
-                      }`}
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <p className="text-sm text-white">
-                            <span className="font-semibold">{mention.mentionedBy}</span> mentioned{" "}
-                            <span className="font-semibold">{mention.mentionedTo}</span>
-                          </p>
-                          <p className="mt-1 text-xs text-slate-200/70">{mention.message}</p>
-                          <p className="mt-2 text-xs text-slate-200/60">
-                            {formatRelativeTime(mention.at)}
-                          </p>
-                        </div>
-                        {mention.resolved && (
-                          <span className="text-[10px] uppercase tracking-wider text-emerald-300">
-                            Resolved
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                  Checklists
-                </h3>
-                <div className="space-y-4">
-                  {collaborationChecklists.map((checklist) => (
-                    <div
-                      key={checklist.id}
-                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
-                    >
-                      <h4 className="text-sm font-semibold text-white">{checklist.title}</h4>
-                      <div className="mt-3 space-y-2">
-                        {checklist.items.map((item) => (
-                          <div
-                            key={item.id}
-                            className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-2"
-                          >
-                            <div className="flex items-center gap-2">
-                              <input
-                                type="checkbox"
-                                id={`checkbox-${item.id}`}
-                                checked={item.checked}
-                                readOnly
-                                aria-label={item.label}
-                                className="h-4 w-4 rounded border-white/20 bg-white/10 text-purple-500"
-                              />
-                              <label
-                                htmlFor={`checkbox-${item.id}`}
-                                className={`text-xs cursor-pointer ${
-                                  item.checked ? "text-slate-400 line-through" : "text-white"
-                                }`}
-                              >
-                                {item.label}
-                              </label>
-                            </div>
-                            <span className="text-xs text-slate-200/70">{item.assignedTo}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                  Handoffs
-                </h3>
-                <div className="space-y-3">
-                  {collaborationHandoffs.map((handoff) => (
-                    <div
-                      key={handoff.id}
-                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-sm text-white">
-                            <span className="font-semibold">{handoff.from}</span> →{" "}
-                            <span className="font-semibold">{handoff.to}</span>
-                          </p>
-                          <p className="mt-1 text-xs text-slate-200/70">{handoff.action}</p>
-                          <p className="mt-2 text-xs text-slate-200/60">
-                            {formatRelativeTime(handoff.at)}
-                          </p>
-                        </div>
-                        <span
-                          className={`text-[10px] uppercase tracking-wider ${
-                            handoff.status === "completed"
-                              ? "text-emerald-300"
-                              : "text-amber-300"
-                          }`}
-                        >
-                          {handoff.status}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <aside className="flex flex-col gap-6">
-            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Real-time activity
-              </h3>
-              <div className="mt-4 space-y-3">
-                {realTimeActivity.map((activity) => (
-                  <div
-                    key={activity.id}
-                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="h-8 w-8 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center text-xs font-bold text-white">
-                        {activity.user.charAt(0)}
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm text-white">
-                          <span className="font-semibold">{activity.user}</span> {activity.action}{" "}
-                          <span className="text-slate-200/70">{activity.target}</span>
-                        </p>
-                        <p className="mt-1 text-xs text-slate-200/60">
-                          {formatRelativeTime(activity.timestamp)} · {activity.type}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </aside>
-        </section>
-
-        <section
-          id="listening"
-          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
-        >
-          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.35)] backdrop-blur-2xl">
-            <header className="flex flex-col gap-3">
-              <h2 className="text-2xl font-semibold text-white">Social listening</h2>
-              <p className="text-sm text-slate-100/75">
-                Monitor brand mentions, track keywords, and respond to conversations across all
-                channels in real-time.
-              </p>
-            </header>
-
-            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                  Brand mentions
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setListeningKeywordFilter("all")}
-                    className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
-                      listeningKeywordFilter === "all"
-                        ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
-                        : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
-                    }`}
-                  >
-                    All keywords
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setListeningSentimentFilter("all")}
-                    className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
-                      listeningSentimentFilter === "all"
-                        ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
-                        : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
-                    }`}
-                  >
-                    All sentiment
-                  </button>
-                </div>
-              </div>
-              <ul className="mt-4 space-y-3">
-                {filteredMentions.map((mention) => {
-                  const active = mention.id === selectedMentionId;
-                  return (
-                    <li key={mention.id}>
-                      <button
-                        type="button"
-                        onClick={() => handleMentionSelect(mention.id)}
-                        className={`w-full rounded-2xl border px-4 py-4 text-left text-sm transition ${
-                          active
-                            ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
-                            : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
-                        }`}
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2">
-                              <span className="text-xs font-semibold text-white">
-                                {mention.author}
-                              </span>
-                              <span
-                                className={`text-xs uppercase tracking-[0.3em] ${
-                                  mention.sentiment === "positive"
-                                    ? "text-emerald-300"
-                                    : mention.sentiment === "negative"
-                                      ? "text-rose-300"
-                                      : "text-slate-300"
-                                }`}
-                              >
-                                {mention.sentiment}
-                              </span>
-                            </div>
-                            <p className="mt-2 text-sm text-slate-100/85">{mention.content}</p>
-                            <div className="mt-2 flex items-center gap-3 text-xs text-slate-200/70">
-                              <span>{channelCatalog[mention.source].label}</span>
-                              <span>•</span>
-                              <span>{mention.engagement} engagements</span>
-                              <span>•</span>
-                              <span>{formatRelativeTime(mention.timestamp)}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </article>
-
-          <aside className="flex flex-col gap-6">
-            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Mention details
-              </h3>
-              <p className="mt-2 text-sm text-slate-100/85">{selectedMention.content}</p>
-              <p className="mt-3 text-xs text-slate-200/70">
-                Keyword: {selectedMention.keyword} • Sentiment: {selectedMention.sentiment}
-              </p>
-            </div>
-          </aside>
-        </section>
-
-        <section
-          id="influencers"
-          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
-        >
-          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.35)] backdrop-blur-2xl">
-            <header className="flex flex-col gap-3">
-              <h2 className="text-2xl font-semibold text-white">Influencer management</h2>
-              <p className="text-sm text-slate-100/75">
-                Discover, track, and collaborate with influencers to amplify your brand reach.
-              </p>
-            </header>
-
-            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                  Influencer profiles
-                </h3>
-                <span className="text-xs text-slate-200/70">
-                  {influencerProfiles.length} tracked
-                </span>
-              </div>
-              <div className="mt-4 grid gap-3">
-                {influencerProfiles.map((influencer) => {
-                  const active = influencer.id === selectedInfluencerId;
-                  return (
-                    <button
-                      key={influencer.id}
-                      type="button"
-                      onClick={() => handleInfluencerSelect(influencer.id)}
-                      className={`rounded-2xl border px-4 py-4 text-left text-sm transition ${
-                        active
-                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
-                          : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="font-semibold">{influencer.name}</p>
-                          <p className="mt-1 text-xs text-slate-200/70">{influencer.handle}</p>
-                        </div>
-                        <span
-                          className={`text-xs uppercase tracking-[0.3em] ${
-                            influencer.collaborationStatus === "active"
-                              ? "text-emerald-300"
-                              : "text-amber-300"
-                          }`}
-                        >
-                          {influencer.collaborationStatus}
-                        </span>
-                      </div>
-                      <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
-                        <div>
-                          <p className="text-slate-200/60">Followers</p>
-                          <p className="mt-1 font-semibold text-white">
-                            {(influencer.followers / 1000).toFixed(1)}k
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-slate-200/60">Engagement</p>
-                          <p className="mt-1 font-semibold text-white">
-                            {influencer.engagementRate}%
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-slate-200/60">Avg reach</p>
-                          <p className="mt-1 font-semibold text-white">
-                            {(influencer.avgReach / 1000).toFixed(1)}k
-                          </p>
-                        </div>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </article>
-
-          <aside className="flex flex-col gap-6">
-            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Influencer insights
-              </h3>
-              <p className="mt-2 text-sm text-slate-100/85">
-                {selectedInfluencer.name} has {selectedInfluencer.followers.toLocaleString()}{" "}
-                followers with {selectedInfluencer.engagementRate}% engagement rate. Category:{" "}
-                {selectedInfluencer.category}.
-              </p>
-            </div>
-          </aside>
-        </section>
-
-        <section
-          id="crisis"
-          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
-        >
-          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(239,68,68,0.35)] backdrop-blur-2xl">
-            <header className="flex flex-col gap-3">
-              <h2 className="text-2xl font-semibold text-white">Crisis management</h2>
-              <p className="text-sm text-slate-100/75">
-                Detect and respond to potential crises before they escalate. Monitor sentiment
-                spikes and engagement anomalies.
-              </p>
-            </header>
-
-            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                  Active alerts
-                </h3>
-                <span className="text-xs text-slate-200/70">
-                  {crisisAlerts.filter((a) => a.status === "active").length} active
-                </span>
-              </div>
-              <ul className="mt-4 space-y-3">
-                {crisisAlerts.map((alert) => {
-                  const active = alert.id === selectedCrisisId;
-                  return (
-                    <li key={alert.id}>
-                      <button
-                        type="button"
-                        onClick={() => handleCrisisSelect(alert.id)}
-                        className={`w-full rounded-2xl border px-4 py-4 text-left text-sm transition ${
-                          active
-                            ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
-                            : alert.severity === "high"
-                              ? "border-rose-400/50 bg-rose-400/10 text-slate-100"
-                              : "border-amber-400/50 bg-amber-400/10 text-slate-100 hover:border-amber-400/70 hover:bg-amber-400/20"
-                        }`}
-                      >
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <p className="font-semibold">{alert.type}</p>
-                            <p className="mt-1 text-xs text-slate-200/70">{alert.description}</p>
-                          </div>
-                          <span
-                            className={`text-xs uppercase tracking-[0.3em] ${
-                              alert.severity === "high"
-                                ? "text-rose-300"
-                                : "text-amber-300"
-                            }`}
-                          >
-                            {alert.severity}
-                          </span>
-                        </div>
-                        <div className="mt-3 flex items-center gap-3 text-xs text-slate-200/70">
-                          <span>{channelCatalog[alert.channel].label}</span>
-                          <span>•</span>
-                          <span>{alert.affectedPosts} posts affected</span>
-                          <span>•</span>
-                          <span>{formatRelativeTime(alert.detectedAt)}</span>
-                        </div>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </article>
-
-          <aside className="flex flex-col gap-6">
-            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Crisis response
-              </h3>
-              <p className="mt-2 text-sm text-slate-100/85">
-                {selectedCrisis.type}: {selectedCrisis.description}. Status:{" "}
-                {selectedCrisis.status}.
-              </p>
-            </div>
-          </aside>
-        </section>
-
-        <section
-          id="commerce"
-          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
-        >
-          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.35)] backdrop-blur-2xl">
-            <header className="flex flex-col gap-3">
-              <h2 className="text-2xl font-semibold text-white">Social commerce</h2>
-              <p className="text-sm text-slate-100/75">
-                Track product sales, conversion rates, and revenue generated directly from social
-                media posts.
-              </p>
-            </header>
-
-            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                  Product catalog
-                </h3>
-                <span className="text-xs text-slate-200/70">
-                  {socialCommerceProducts.length} products
-                </span>
-              </div>
-              <div className="mt-4 grid gap-3">
-                {socialCommerceProducts.map((product) => {
-                  const active = product.id === selectedProductId;
-                  return (
-                    <button
-                      key={product.id}
-                      type="button"
-                      onClick={() => handleProductSelect(product.id)}
-                      className={`rounded-2xl border px-4 py-4 text-left text-sm transition ${
-                        active
-                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
-                          : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="font-semibold">{product.name}</p>
-                          <p className="mt-1 text-xs text-slate-200/70">{product.price}</p>
-                        </div>
-                        <span
-                          className={`text-xs uppercase tracking-[0.3em] ${
-                            product.status === "active"
-                              ? "text-emerald-300"
-                              : "text-slate-300"
-                          }`}
-                        >
-                          {product.status}
-                        </span>
-                      </div>
-                      <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
-                        <div>
-                          <p className="text-slate-200/60">Sales</p>
-                          <p className="mt-1 font-semibold text-white">{product.sales}</p>
-                        </div>
-                        <div>
-                          <p className="text-slate-200/60">Revenue</p>
-                          <p className="mt-1 font-semibold text-white">{product.revenue}</p>
-                        </div>
-                        <div>
-                          <p className="text-slate-200/60">Conversion</p>
-                          <p className="mt-1 font-semibold text-white">
-                            {product.conversionRate}%
-                          </p>
-                        </div>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </article>
-
-          <aside className="flex flex-col gap-6">
-            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Product performance
-              </h3>
-              <p className="mt-2 text-sm text-slate-100/85">
-                {selectedProduct.name}: {selectedProduct.sales} sales, {selectedProduct.revenue}{" "}
-                revenue, {selectedProduct.conversionRate}% conversion rate.
-              </p>
-            </div>
-          </aside>
-        </section>
-
-        <section
-          id="calendar-advanced"
-          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
-        >
-          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(14,165,233,0.35)] backdrop-blur-2xl">
-            <header className="flex flex-col gap-3">
-              <h2 className="text-2xl font-semibold text-white">Advanced calendar</h2>
-              <p className="text-sm text-slate-100/75">
-                Visualize campaigns, events, and content schedules across all channels in a
-                unified calendar view.
-              </p>
-            </header>
-
-            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                  Upcoming events
-                </h3>
-                <span className="text-xs text-slate-200/70">{calendarEvents.length} scheduled</span>
-              </div>
-              <div className="mt-4 space-y-3">
-                {calendarEvents.map((event) => {
-                  const active = event.id === selectedEventId;
-                  return (
-                    <button
-                      key={event.id}
-                      type="button"
-                      onClick={() => handleEventSelect(event.id)}
-                      className={`w-full rounded-2xl border px-4 py-4 text-left text-sm transition ${
-                        active
-                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
-                          : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="font-semibold">{event.title}</p>
-                          <p className="mt-1 text-xs text-slate-200/70">
-                            {formatScheduleLabel(event.date)} • {event.type}
-                          </p>
-                        </div>
-                        <span
-                          className={`text-xs uppercase tracking-[0.3em] ${
-                            event.status === "scheduled"
-                              ? "text-emerald-300"
-                              : "text-amber-300"
-                          }`}
-                        >
-                          {event.status}
-                        </span>
-                      </div>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {event.channels.map((channelId) => (
-                          <span
-                            key={`${event.id}-${channelId}`}
-                            className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${channelCatalog[channelId].badge}`}
-                          >
-                            <span
-                              className={`h-1.5 w-1.5 rounded-full ${channelCatalog[channelId].dot}`}
-                            />
-                            {channelCatalog[channelId].label}
-                          </span>
-                        ))}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </article>
-
-          <aside className="flex flex-col gap-6">
-            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                Event details
-              </h3>
-              <p className="mt-2 text-sm text-slate-100/85">
-                {selectedEvent.title} scheduled for {formatScheduleLabel(selectedEvent.date)} on{" "}
-                {selectedEvent.channels.map((c) => channelCatalog[c].label).join(", ")}.
               </p>
             </div>
           </aside>
