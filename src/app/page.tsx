@@ -12,6 +12,7 @@ import {
   sequenceStatusTokens,
   warmupHealthTokens,
 } from "@/constants/statusTokens";
+import { truncateAddress, velocityBadge } from "@/utils/account";
 import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
 import { formatMetricDelta, formatMetricValue, metricDeltaTone } from "@/utils/metrics";
 import { percentWidthClass, scoreWidthClass } from "@/utils/progress";
@@ -1082,18 +1083,6 @@ const insightRecommendations = [
     detail: "Shared Farcaster + Instagram drops outperform single-channel by 34%.",
   },
 ];
-
-const truncateAddress = (value?: string) => {
-  if (!value) return "Not connected";
-  return `${value.slice(0, 6)}…${value.slice(-4)}`;
-};
-
-const velocityBadge = (value: number) => {
-  if (value > 90) return { label: "Blazing", tone: "bg-emerald-400/25 text-emerald-100" };
-  if (value > 70) return { label: "Pacing", tone: "bg-cyan-400/25 text-cyan-100" };
-  if (value > 50) return { label: "Steady", tone: "bg-amber-400/25 text-amber-100" };
-  return { label: "Warming up", tone: "bg-rose-400/25 text-rose-100" };
-};
 
 const chartColorTokens = {
   reach: "text-sky-300",
