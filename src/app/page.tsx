@@ -263,8 +263,10 @@ import {
   recentMentions,
 } from "@/data/advanced-listening";
 import {
-  approvalWorkflows,
-  workflowInstances,
+  activeWorkflows,
+  approvalTemplates,
+  pendingApprovals,
+  workflowStats,
 } from "@/data/approval-workflows";
 import {
   analyticsDashboards,
