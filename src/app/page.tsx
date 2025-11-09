@@ -218,6 +218,42 @@ const initialPlannedPosts: PlannedPost[] = [
   },
 ];
 
+const audienceTrendData = [
+  { day: "Mon", farcaster: 12, instagram: 24 },
+  { day: "Tue", farcaster: 18, instagram: 28 },
+  { day: "Wed", farcaster: 26, instagram: 32 },
+  { day: "Thu", farcaster: 28, instagram: 36 },
+  { day: "Fri", farcaster: 34, instagram: 44 },
+  { day: "Sat", farcaster: 30, instagram: 40 },
+  { day: "Sun", farcaster: 22, instagram: 37 },
+];
+
+const audienceDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+const bestTimeGrid = [
+  { slot: "Morning", values: [3, 4, 4, 5, 5, 3, 2] },
+  { slot: "Midday", values: [4, 5, 5, 5, 4, 4, 3] },
+  { slot: "Evening", values: [5, 5, 4, 3, 3, 5, 5] },
+];
+
+const insightRecommendations = [
+  {
+    id: "rec-1",
+    title: "Leverage reels on Friday evenings",
+    detail: "Engagement index peaks at 92 for Instagram around 6-8pm UTC.",
+  },
+  {
+    id: "rec-2",
+    title: "Double down on Farcaster threads midweek",
+    detail: "Follower velocity up 18% on Wednesdays after lunchtime posts.",
+  },
+  {
+    id: "rec-3",
+    title: "Sync creator shout-outs",
+    detail: "Shared Farcaster + Instagram drops outperform single-channel by 34%.",
+  },
+];
+
 const formatRelativeTime = (isoString: string) => {
   const elapsed = Date.now() - new Date(isoString).getTime();
   const minute = 60 * 1000;
