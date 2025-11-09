@@ -8785,13 +8785,6 @@ export default function Home() {
             </div>
           </aside>
         </section>
-      </main>
-    </div>
-  );
-      </main>
-    </div>
-  );
-}
 
         <section
           id="api-management"
