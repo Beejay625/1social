@@ -2874,30 +2874,6 @@ const engagementTracking = [
   },
 ];
 
-// Content calendar views
-const calendarViews = [
-  {
-    id: "view-1",
-    view: "Week View",
-    posts: 24,
-    scheduled: 18,
-    published: 6,
-  },
-  {
-    id: "view-2",
-    view: "Month View",
-    posts: 98,
-    scheduled: 72,
-    published: 26,
-  },
-  {
-    id: "view-3",
-    view: "List View",
-    posts: 156,
-    scheduled: 124,
-    published: 32,
-  },
-];
 
 // Social media hashtag performance
 const hashtagPerformance = [
