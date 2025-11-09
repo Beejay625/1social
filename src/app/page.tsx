@@ -612,7 +612,7 @@ export default function Home() {
           new Date(a.scheduledFor).getTime() -
           new Date(b.scheduledFor).getTime(),
       ),
-    [plannedPosts],
+    [activeChannels, plannedPosts],
   );
 
   useEffect(() => {
