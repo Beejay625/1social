@@ -2,91 +2,107 @@ export interface TeamMemberPerformance {
   id: string;
   name: string;
   role: string;
-  postsCreated: number;
-  engagementRate: number;
-  avgResponseTime: string;
-  contentApproved: number;
-  contentRejected: number;
-  score: number;
+  avatar: string;
+  metrics: {
+    postsCreated: number;
+    engagementGenerated: number;
+    avgEngagementRate: number;
+    responseTime: number;
+    goalsMet: number;
+  };
+  goals: {
+    target: number;
+    current: number;
+    completionRate: number;
+  };
+  trends: {
+    postsCreated: "up" | "down" | "stable";
+    engagement: "up" | "down" | "stable";
+  };
 }
 
 export interface TeamGoal {
   id: string;
-  goal: string;
+  name: string;
   target: number;
   current: number;
   deadline: string;
-  status: "on-track" | "at-risk" | "completed";
+  assignedTo: string[];
+  progress: number;
 }
 
-export const teamMembersPerformance: TeamMemberPerformance[] = [
+export const teamMemberPerformance: TeamMemberPerformance[] = [
   {
     id: "member-1",
-    name: "Alex Chen",
-    role: "Content Creator",
-    postsCreated: 45,
-    engagementRate: 5.2,
-    avgResponseTime: "1.5h",
-    contentApproved: 42,
-    contentRejected: 3,
-    score: 92,
+    name: "Sarah Chen",
+    role: "Content Manager",
+    avatar: "SC",
+    metrics: {
+      postsCreated: 45,
+      engagementGenerated: 12500,
+      avgEngagementRate: 8.5,
+      responseTime: 2.3,
+      goalsMet: 4,
+    },
+    goals: {
+      target: 50,
+      current: 45,
+      completionRate: 90,
+    },
+    trends: {
+      postsCreated: "up",
+      engagement: "up",
+    },
   },
   {
     id: "member-2",
-    name: "Sarah Johnson",
+    name: "Mike Johnson",
     role: "Social Media Manager",
-    postsCreated: 38,
-    engagementRate: 6.8,
-    avgResponseTime: "0.8h",
-    contentApproved: 36,
-    contentRejected: 2,
-    score: 95,
-  },
-  {
-    id: "member-3",
-    name: "Mike Rodriguez",
-    role: "Content Strategist",
-    postsCreated: 32,
-    engagementRate: 4.9,
-    avgResponseTime: "2.1h",
-    contentApproved: 30,
-    contentRejected: 2,
-    score: 88,
+    avatar: "MJ",
+    metrics: {
+      postsCreated: 38,
+      engagementGenerated: 9800,
+      avgEngagementRate: 7.2,
+      responseTime: 3.1,
+      goalsMet: 3,
+    },
+    goals: {
+      target: 40,
+      current: 38,
+      completionRate: 95,
+    },
+    trends: {
+      postsCreated: "stable",
+      engagement: "up",
+    },
   },
 ];
 
 export const teamGoals: TeamGoal[] = [
   {
     id: "goal-1",
-    goal: "Increase engagement rate by 20%",
-    target: 20,
-    current: 15,
-    deadline: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString(),
-    status: "on-track",
+    name: "Q1 Content Creation",
+    target: 200,
+    current: 156,
+    deadline: new Date(Date.now() + 86400000 * 30).toISOString(),
+    assignedTo: ["Sarah Chen", "Mike Johnson"],
+    progress: 78,
   },
   {
     id: "goal-2",
-    goal: "Publish 100 posts this month",
-    target: 100,
-    current: 78,
-    deadline: new Date(Date.now() + 1000 * 60 * 60 * 24 * 10).toISOString(),
-    status: "on-track",
-  },
-  {
-    id: "goal-3",
-    goal: "Reduce response time to under 1 hour",
-    target: 1,
-    current: 1.2,
-    deadline: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14).toISOString(),
-    status: "at-risk",
+    name: "Engagement Target",
+    target: 50000,
+    current: 38900,
+    deadline: new Date(Date.now() + 86400000 * 45).toISOString(),
+    assignedTo: ["Sarah Chen", "Mike Johnson", "Emma Wilson"],
+    progress: 77.8,
   },
 ];
 
 export const teamPerformanceStats = {
-  avgEngagementRate: 5.6,
-  totalPosts: 115,
-  avgResponseTime: "1.5h",
-  approvalRate: 94,
-  topPerformer: "Sarah Johnson",
+  totalMembers: 5,
+  activeMembers: 4,
+  avgEngagementRate: 7.8,
+  totalPostsCreated: 156,
+  totalEngagement: 38900,
 };
-
