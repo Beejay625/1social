@@ -2545,39 +2545,6 @@ const contentComparisons = [
   },
 ];
 
-// Social media competitor analysis
-const competitorAnalysis = [
-  {
-    id: "comp-1",
-    competitor: "@competitor1",
-    followers: 125000,
-    avgEngagement: 8.5,
-    postsPerWeek: 12,
-    growthRate: 5.2,
-    yourFollowers: 98000,
-    yourAvgEngagement: 9.2,
-  },
-  {
-    id: "comp-2",
-    competitor: "@competitor2",
-    followers: 89000,
-    avgEngagement: 7.8,
-    postsPerWeek: 8,
-    growthRate: 3.5,
-    yourFollowers: 98000,
-    yourAvgEngagement: 9.2,
-  },
-  {
-    id: "comp-3",
-    competitor: "@competitor3",
-    followers: 156000,
-    avgEngagement: 6.9,
-    postsPerWeek: 15,
-    growthRate: 4.8,
-    yourFollowers: 98000,
-    yourAvgEngagement: 9.2,
-  },
-];
 
 // Content scheduling optimization
 const schedulingOptimizations = [
