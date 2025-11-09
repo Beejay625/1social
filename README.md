@@ -149,11 +149,13 @@ Visit http://localhost:3000
 - **Multi-language Support** - Manage content across multiple languages
 - **Notification Center** - Centralize notifications for approvals, mentions, and alerts
 - **Social Media Audit Tools** - Run comprehensive audits to identify issues and get recommendations
+- **Social Media Audit** - Comprehensive audit of your social media presence with category-based scoring, issue identification (critical/warning/info), actionable recommendations, and audit history tracking
 - **Content Forecasting** - AI-powered predictions for content performance before publishing with confidence scores and key factors
 - **Content Attribution** - Track which content drives conversions and revenue across the customer journey with multiple attribution models
 - **Content Benchmarking** - Compare your performance against industry benchmarks and top performers with percentile rankings
 - **Multi-language Management** - Comprehensive translation workflows with AI translation, human review, and localization settings
 - **Performance Attribution** - Deep dive into content performance and attribution across the customer journey with first-touch, last-touch, and assisted conversions
+- **Mobile App Management** - Manage mobile app versions, features, and user analytics across iOS and Android with download tracking, ratings, and device statistics
 
 ## Tech Stack
 
