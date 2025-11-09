@@ -6939,17 +6939,20 @@ export default function Home() {
                             <div className="flex items-center gap-2">
                               <input
                                 type="checkbox"
+                                id={`checkbox-${item.id}`}
                                 checked={item.checked}
                                 readOnly
+                                aria-label={item.label}
                                 className="h-4 w-4 rounded border-white/20 bg-white/10 text-purple-500"
                               />
-                              <span
-                                className={`text-xs ${
+                              <label
+                                htmlFor={`checkbox-${item.id}`}
+                                className={`text-xs cursor-pointer ${
                                   item.checked ? "text-slate-400 line-through" : "text-white"
                                 }`}
                               >
                                 {item.label}
-                              </span>
+                              </label>
                             </div>
                             <span className="text-xs text-slate-200/70">{item.assignedTo}</span>
                           </div>
