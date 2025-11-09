@@ -2229,6 +2229,26 @@ export default function Home() {
     setCalendarFocus(day);
   };
 
+  const handleForecastSelect = (forecastId: string) => {
+    setSelectedForecastId(forecastId);
+  };
+
+  const handleRecommendationSelect = (recId: string) => {
+    setSelectedRecommendationId(recId);
+  };
+
+  const selectedForecast = useMemo(
+    () => intelligenceForecasts.find((f) => f.id === selectedForecastId) ?? intelligenceForecasts[0],
+    [selectedForecastId],
+  );
+
+  const selectedRecommendation = useMemo(
+    () =>
+      contentRecommendations.find((r) => r.id === selectedRecommendationId) ??
+      contentRecommendations[0],
+    [selectedRecommendationId],
+  );
+
   const comparisonMetrics = useMemo(() => {
     if (!activeComparisonPoint) {
       return {
