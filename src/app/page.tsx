@@ -82,6 +82,30 @@ import {
   invoiceHistory,
   usageMetrics,
 } from "@/data/billing";
+import {
+  helpCategories,
+  popularArticles,
+  supportTickets,
+} from "@/data/help";
+import {
+  releases,
+  upcomingFeatures,
+} from "@/data/changelog";
+import {
+  mobileApps,
+  mobileFeatures,
+  deviceStats,
+} from "@/data/mobile";
+import {
+  brandAssets,
+  brandGuidelines,
+  brandUsage,
+} from "@/data/brand";
+import {
+  backupHistory,
+  backupSchedules,
+  restorePoints,
+} from "@/data/backup";
 import { truncateAddress, velocityBadge } from "@/utils/account";
 import { buildSparklinePath, heatLevelClass } from "@/utils/charts";
 import { formatMetricDelta, formatMetricValue, metricDeltaTone } from "@/utils/metrics";
