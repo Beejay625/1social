@@ -136,6 +136,10 @@ Visit http://localhost:3000
 - **Integrations** - Connect with external tools and platforms
 
 ### Advanced Features
+- **Social Commerce** - Sell products directly through social media posts
+- **Product Management** - Manage products, track sales, and monitor conversion rates
+- **Shopping Posts** - Track performance of posts with product links
+- **Commerce Statistics** - Monitor total revenue, orders, conversion rates, and average order value
 - **Advanced Search** - Search across content, posts, and analytics
 - **Export & Backup** - Export data in multiple formats and track backup history
 - **Revenue Tracking** - Track revenue from sponsored posts and affiliate links
