@@ -202,6 +202,44 @@ import {
   workflowTemplates,
 } from "@/data/workflow-builder";
 import {
+  analyticsStats,
+  analyticsTrends,
+  contentAnalytics,
+} from "@/data/content-analytics";
+import {
+  audienceInsights,
+  audienceSegments,
+  audienceStats,
+} from "@/data/audience-insights";
+import {
+  queueStats,
+  schedulingQueue,
+} from "@/data/scheduling-queue";
+import {
+  moderationItems,
+  moderationRules,
+  moderationStats,
+} from "@/data/moderation-tools";
+import {
+  calendarConnections,
+  calendarEvents,
+  syncStats,
+} from "@/data/calendar-sync";
+import {
+  calculatorStats,
+  engagementBreakdown,
+  engagementMetrics,
+} from "@/data/engagement-calculator";
+import {
+  hashtagResearch,
+  hashtagTrends,
+  researchStats,
+} from "@/data/hashtag-research";
+import {
+  heatmapStats,
+  performanceHeatmaps,
+} from "@/data/performance-heatmaps";
+import {
   notificationChannels,
   notificationPreferences,
   recentNotifications,
