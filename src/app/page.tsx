@@ -23430,10 +23430,23 @@ export default function Home() {
                   >
                     <p className="text-sm font-semibold text-white mb-1">{template.name}</p>
                     <p className="text-xs text-slate-200/60 mb-2">{template.description}</p>
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      {template.includes.map((item, idx) => (
+                        <span key={idx} className="text-xs px-2 py-1 rounded-full bg-white/10 text-slate-200">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
                     <div className="flex items-center gap-4 text-xs text-slate-200/60">
                       <span>{template.format.toUpperCase()}</span>
                       <span>·</span>
                       <span>Used {template.usageCount} times</span>
+                      {template.lastUsed && (
+                        <>
+                          <span>·</span>
+                          <span>Last: {new Date(template.lastUsed).toLocaleDateString()}</span>
+                        </>
+                      )}
                     </div>
                   </div>
                 ))}
