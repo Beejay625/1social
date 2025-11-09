@@ -1012,6 +1012,50 @@ const scoreWidthClass = (score: number) => {
   return "w-[40%]";
 };
 
+const presenceStatusTokens: Record<
+  PresenceStatus,
+  { label: string; badge: string; dot: string }
+> = {
+  drafting: {
+    label: "Drafting",
+    badge: "bg-purple-400/20 text-purple-100 border border-purple-300/40",
+    dot: "bg-purple-300",
+  },
+  reviewing: {
+    label: "Reviewing",
+    badge: "bg-sky-400/20 text-sky-100 border border-sky-300/40",
+    dot: "bg-sky-300",
+  },
+  approving: {
+    label: "Approving",
+    badge: "bg-emerald-400/20 text-emerald-100 border border-emerald-300/40",
+    dot: "bg-emerald-300",
+  },
+  observing: {
+    label: "Observing",
+    badge: "bg-white/15 text-white border border-white/20",
+    dot: "bg-white",
+  },
+};
+
+const repostStatusTokens: Record<
+  RepostEvent["status"],
+  { label: string; badge: string }
+> = {
+  mirroring: {
+    label: "Mirroring now",
+    badge: "bg-emerald-400/20 text-emerald-100 border border-emerald-300/40",
+  },
+  queued: {
+    label: "Queued",
+    badge: "bg-amber-400/20 text-amber-100 border border-amber-300/40",
+  },
+  complete: {
+    label: "Complete",
+    badge: "bg-white/15 text-white border border-white/20",
+  },
+};
+
 const metricKpiSeed: MetricKpi[] = [
   {
     id: "reach",
