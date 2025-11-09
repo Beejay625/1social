@@ -5,217 +5,34 @@ import { appKitModal } from "@/context";
 import { formatRelativeTime, formatScheduleLabel, formatTimeUntil } from "@/utils/time";
 import { useEffect, useMemo, useState } from "react";
 import { useAccount, useChainId, useDisconnect } from "wagmi";
-
-type ChannelId = "farcaster" | "instagram" | "x" | "lens" | "mirror";
-
-type SocialPost = {
-  id: string;
-  author: string;
-  avatarGradient: string;
-  content: string;
-  highlight?: string;
-  channels: ChannelId[];
-  createdAt: string;
-};
-
-type ApprovalStatus = "pending" | "approved" | "changes";
-
-type StepEscalation = {
-  notifyAfterHours: number;
-  routeTo: string;
-  fallback: string;
-  triggeredAt?: string;
-};
-
-type ApprovalStep = {
-  id: string;
-  label: string;
-  approver: string;
-  status: ApprovalStatus;
-  due: string;
-  escalation?: StepEscalation;
-};
-
-type Comment = {
-  id: string;
-  author: string;
-  message: string;
-  at: string;
-  tone?: "note" | "mention";
-};
-
-type PlannedPost = {
-  id: string;
-  title: string;
-  summary: string;
-  scheduledFor: string;
-  channels: ChannelId[];
-  status: "queued" | "draft" | "approved";
-  owner: string;
-  approvalSteps: ApprovalStep[];
-  commentThread: Comment[];
-  approvalTemplateId?: string;
-};
-
-type MetricUnit = "k" | "%" | "score";
-
-type MetricKpiId = "reach" | "conversion" | "growth";
-
-type MetricKpi = {
-  id: MetricKpiId;
-  label: string;
-  value: number;
-  unit: MetricUnit;
-  delta: number;
-  deltaLabel: string;
-  trend: number[];
-};
-
-type ReachConversionPoint = {
-  label: string;
-  reach: number;
-  conversionRate: number;
-  conversions: number;
-};
-
-type GrowthPoint = {
-  label: string;
-  farcaster: number;
-  instagram: number;
-  total: number;
-};
-
-type ConversionStage = {
-  id: string;
-  label: string;
-  value: number;
-  delta: number;
-};
-
-type PresenceStatus = "drafting" | "reviewing" | "approving" | "observing";
-
-type PresenceMember = {
-  id: string;
-  name: string;
-  role: string;
-  status: PresenceStatus;
-  focus: string;
-};
-
-type ApprovalRoute = {
-  id: string;
-  stage: string;
-  owners: string[];
-  fallback: string;
-};
-
-type ApprovalTemplateStep = {
-  id: string;
-  label: string;
-  approver: string;
-  dueOffsetHours: number;
-  escalation?: Omit<StepEscalation, "triggeredAt">;
-};
-
-type ApprovalTemplate = {
-  id: string;
-  name: string;
-  description: string;
-  summary: string;
-  steps: ApprovalTemplateStep[];
-};
-
-type RepostEvent = {
-  id: string;
-  source: ChannelId;
-  targets: ChannelId[];
-  scheduledFor: string;
-  status: "mirroring" | "queued" | "complete";
-};
-
-type SyndicationEntry = {
-  id: string;
-  title: string;
-  timestamp: string;
-  networks: ChannelId[];
-  effect: string;
-};
-
-type AutomationTemplate = {
-  id: string;
-  name: string;
-  description: string;
-  channels: ChannelId[];
-  cadence: string;
-  duration: string;
-};
-
-type WarmupProgram = {
-  id: string;
-  title: string;
-  health: "excellent" | "steady" | "watch";
-  score: number;
-  nextAction: string;
-};
-
-type SequencePlay = {
-  id: string;
-  label: string;
-  steps: number;
-  window: string;
-  status: "active" | "paused" | "draft";
-};
-
-type BenchmarkMetric = {
-  id: string;
-  label: string;
-  farcaster: number;
-  instagram: number;
-  cohort: number;
-};
-
-type SentimentSample = {
-  id: string;
-  segment: string;
-  positive: number;
-  neutral: number;
-  negative: number;
-  highlight: string;
-};
-
-type RetentionStage = {
-  id: string;
-  stage: string;
-  rate: number;
-  note: string;
-};
-
-type AssetItem = {
-  id: string;
-  title: string;
-  type: "image" | "video" | "doc";
-  owner: string;
-  updatedAt: string;
-  accent: string;
-};
-
-type VersionEntry = {
-  id: string;
-  author: string;
-  summary: string;
-  timestamp: string;
-  status: "live" | "queued" | "archived";
-};
-
-type CalendarSlot = {
-  id: string;
-  label: string;
-  day: string;
-  time: string;
-  owner: string;
-  channels: ChannelId[];
-  impact: "spotlight" | "boost" | "check-in";
-};
+import type {
+  ApprovalRoute,
+  ApprovalStatus,
+  ApprovalStep,
+  ApprovalTemplate,
+  AssetItem,
+  AutomationTemplate,
+  BenchmarkMetric,
+  CalendarSlot,
+  ChannelId,
+  Comment,
+  ConversionStage,
+  GrowthPoint,
+  MetricKpi,
+  MetricUnit,
+  PlannedPost,
+  PresenceMember,
+  PresenceStatus,
+  ReachConversionPoint,
+  RepostEvent,
+  RetentionStage,
+  SequencePlay,
+  SentimentSample,
+  SocialPost,
+  SyndicationEntry,
+  VersionEntry,
+  WarmupProgram,
+} from "@/types/publishing";
 
 const channelCatalog: Record<
   ChannelId,
