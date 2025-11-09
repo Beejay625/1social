@@ -247,3 +247,36 @@ export type AudienceTrendPoint = {
   instagram: number;
 };
 
+export type AiToneOption = {
+  id: string;
+  label: string;
+  description: string;
+};
+
+export type AiPersona = {
+  id: string;
+  label: string;
+  summary: string;
+};
+
+export type AiDraftIdea = {
+  id: string;
+  headline: string;
+  snippet: string;
+};
+
+export type AiSmartReply = {
+  id: string;
+  channel: ChannelId;
+  author: string;
+  message: string;
+  suggestion: string;
+};
+
+export type AiActivityEntry = {
+  id: string;
+  action: string;
+  detail: string;
+  timestamp: string;
+};
+
