@@ -1661,18 +1661,12 @@ export default function Home() {
   const [selectedRecommendationId, setSelectedRecommendationId] = useState<string>(
     contentRecommendations[0]?.id ?? "",
   );
-    const [selectedPerformancePostId, setSelectedPerformancePostId] = useState<string>(
-      contentPerformanceData?.[0]?.id ?? "",
-    );
-    const [selectedAutomationId, setSelectedAutomationId] = useState<string>(
-      workflowAutomationRules?.[0]?.id ?? "",
-    );
-    const [selectedSegmentId, setSelectedSegmentId] = useState<string>(
-      audienceSegments?.[0]?.id ?? "",
-    );
-    const [selectedAssetId, setSelectedAssetId] = useState<string>(
-      contentLibrary?.[0]?.id ?? "",
-    );
+  const [selectedPerformancePostId, setSelectedPerformancePostId] = useState<string>(
+    contentPerformancePosts?.[0]?.id ?? "",
+  );
+  const [selectedAutomationId, setSelectedAutomationId] = useState<string>(
+    workflowAutomations?.[0]?.id ?? "",
+  );
   const [selectedNotificationId, setSelectedNotificationId] = useState<string>("");
   const [selectedMentionId, setSelectedMentionId] = useState<string>(
     socialListeningMentions[0]?.id ?? "",
@@ -2578,6 +2572,68 @@ export default function Home() {
   const unreadNotifications = useMemo(
     () => notifications.filter((n) => !n.read),
     [],
+  );
+
+  const handleMentionSelect = (mentionId: string) => {
+    setSelectedMentionId(mentionId);
+  };
+
+  const handleInfluencerSelect = (influencerId: string) => {
+    setSelectedInfluencerId(influencerId);
+  };
+
+  const handleCrisisSelect = (crisisId: string) => {
+    setSelectedCrisisId(crisisId);
+  };
+
+  const handleProductSelect = (productId: string) => {
+    setSelectedProductId(productId);
+  };
+
+  const handleEventSelect = (eventId: string) => {
+    setSelectedEventId(eventId);
+  };
+
+  const filteredMentions = useMemo(
+    () =>
+      socialListeningMentions.filter((mention) => {
+        const keywordMatches =
+          listeningKeywordFilter === "all" || mention.keyword === listeningKeywordFilter;
+        const sentimentMatches =
+          listeningSentimentFilter === "all" || mention.sentiment === listeningSentimentFilter;
+        return keywordMatches && sentimentMatches;
+      }),
+    [listeningKeywordFilter, listeningSentimentFilter],
+  );
+
+  const selectedMention = useMemo(
+    () =>
+      socialListeningMentions.find((m) => m.id === selectedMentionId) ??
+      socialListeningMentions[0],
+    [selectedMentionId],
+  );
+
+  const selectedInfluencer = useMemo(
+    () =>
+      influencerProfiles.find((i) => i.id === selectedInfluencerId) ?? influencerProfiles[0],
+    [selectedInfluencerId],
+  );
+
+  const selectedCrisis = useMemo(
+    () => crisisAlerts.find((c) => c.id === selectedCrisisId) ?? crisisAlerts[0],
+    [selectedCrisisId],
+  );
+
+  const selectedProduct = useMemo(
+    () =>
+      socialCommerceProducts.find((p) => p.id === selectedProductId) ??
+      socialCommerceProducts[0],
+    [selectedProductId],
+  );
+
+  const selectedEvent = useMemo(
+    () => calendarEvents.find((e) => e.id === selectedEventId) ?? calendarEvents[0],
+    [selectedEventId],
   );
 
   const selectedForecast = useMemo(
