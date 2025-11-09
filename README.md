@@ -208,6 +208,12 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Mobile App Management** - Full mobile app analytics and feature management
 - **Calendar AI Assistant** - AI-powered scheduling optimization and recommendations
 - **Custom Report Builder** - Create custom reports with your own metrics and formulas
+- **Sentiment Analysis** - Real-time sentiment tracking with platform-specific insights and alerts
+- **Distribution Analytics** - Track content distribution patterns and viral coefficient across platforms
+- **Engagement Scoring** - Weighted engagement scoring system with quality and quantity metrics
+- **Performance Insights** - AI-powered actionable insights with opportunity, strength, and warning categories
+- **Social Media Health** - Overall health score tracking with trend analysis and metric breakdowns
+- **Calendar Optimization** - AI-powered calendar optimization with optimal time slots and gap analysis
 - **Social Listening Dashboard** - Real-time keyword monitoring, trending topics, and sentiment analysis
 - **Brand Mentions Tracking** - Comprehensive brand mention tracking with sentiment analysis and growth metrics
 - **Team Performance Analytics** - Individual and team performance tracking with goals and productivity metrics
