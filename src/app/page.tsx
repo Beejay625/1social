@@ -4137,120 +4137,378 @@ export default function Home() {
               </p>
             </header>
 
-            <div className="grid gap-4 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)]">
-              <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                  Deck library
-                </h3>
-                <ul className="space-y-2">
-                  {reportingDecks.map((deck) => {
-                    const active = deck.id === selectedDeckId;
-                    return (
-                      <li key={deck.id}>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { id: "overview", label: "Executive overview" },
+                { id: "exports", label: "Decks & exports" },
+                { id: "deep-dive", label: "Variance deep-dive" },
+              ].map((view) => {
+                const active = reportingView === view.id;
+                return (
+                  <button
+                    key={view.id}
+                    type="button"
+                    onClick={() =>
+                      handleReportingViewChange(view.id as "overview" | "exports" | "deep-dive")
+                    }
+                    className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold uppercase tracking-wide transition ${
+                      active
+                        ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                        : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                    }`}
+                  >
+                    {view.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            {reportingView === "overview" && (
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Executive dashboard
+                  </h3>
+                  <div className="mt-3 grid gap-3 md:grid-cols-3">
+                    {reportingExecMetrics.map((metric) => {
+                      const active = metric.id === selectedExecMetricId;
+                      return (
                         <button
+                          key={metric.id}
                           type="button"
-                          onClick={() => handleDeckSelect(deck.id)}
-                          className={`flex w-full items-center justify-between gap-3 rounded-2xl border px-3 py-3 text-left text-sm transition ${
+                          onClick={() => handleExecMetricSelect(metric.id)}
+                          className={`flex h-full flex-col justify-between rounded-3xl border p-5 text-left transition ${
+                            active
+                              ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                              : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                          }`}
+                        >
+                          <div className="space-y-3">
+                            <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                              {metric.label}
+                            </p>
+                            <div
+                              className={`inline-flex items-center gap-2 rounded-full border border-white/10 bg-gradient-to-r ${metric.gradient} px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white`}
+                            >
+                              {metric.primary}
+                            </div>
+                            <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                              {metric.delta}
+                            </p>
+                          </div>
+                          <p className="text-xs text-slate-200/80">{metric.summary}</p>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-4 rounded-3xl border border-white/15 bg-slate-950/40 p-5 text-sm text-slate-100/85">
+                    <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      Spotlight insight
+                    </p>
+                    <p className="mt-2 text-base font-semibold text-white">
+                      {selectedExecMetric.summary}
+                    </p>
+                    <p className="mt-2 text-xs text-slate-200/70">
+                      Calibrate next week's briefing with this data point—auto-attach to Monday's KPI
+                      deck.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                        Goal runway
+                      </h3>
+                      <p className="mt-2 text-xs text-slate-200/70">
+                        Track mission-critical KPIs with owner visibility.
+                      </p>
+                    </div>
+                    <span className="text-xs text-slate-200/70">
+                      {goalProgressWithPercent.filter((goal) => goal.percentage >= 1).length} goals
+                      completed
+                    </span>
+                  </div>
+                  <ul className="mt-4 space-y-3">
+                    {goalProgressWithPercent.map((goal) => (
+                      <li
+                        key={goal.id}
+                        className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85"
+                      >
+                        <div className="flex items-center justify-between">
+                          <p className="font-semibold text-white">{goal.title}</p>
+                          <span className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                            {goal.due}
+                          </span>
+                        </div>
+                        <p className="mt-1 text-xs text-slate-200/70">Owner: {goal.owner}</p>
+                        <div className="mt-3 h-2 rounded-full bg-white/10">
+                          <div
+                            className="h-full rounded-full bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400"
+                            style={{ width: `${goal.percentage * 100}%` }}
+                          />
+                        </div>
+                        <p className="mt-2 text-xs text-slate-200/70">
+                          {goal.current.toLocaleString()} / {goal.target.toLocaleString()}{" "}
+                          ({Math.round(goal.percentage * 100)}%)
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            {reportingView === "exports" && (
+              <>
+                <div className="grid gap-4 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)]">
+                  <div className="space-y-3">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Deck library
+                    </h3>
+                    <ul className="space-y-2">
+                      {reportingDecks.map((deck) => {
+                        const active = deck.id === selectedDeckId;
+                        return (
+                          <li key={deck.id}>
+                            <button
+                              type="button"
+                              onClick={() => handleDeckSelect(deck.id)}
+                              className={`flex w-full items-center justify-between gap-3 rounded-2xl border px-3 py-3 text-left text-sm transition ${
+                                active
+                                  ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                                  : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                              }`}
+                            >
+                              <div>
+                                <p className="font-semibold">{deck.title}</p>
+                                <p className="text-xs text-slate-200/70">{deck.timeframe}</p>
+                              </div>
+                              <span className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                                {deck.status}
+                              </span>
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                  <div className="rounded-3xl border border-white/15 bg-slate-950/40 p-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Deck preview
+                    </p>
+                      <div
+                        className={`mt-4 flex h-48 flex-col justify-between rounded-3xl border border-white/10 bg-gradient-to-br ${selectedDeck.accent} p-6 text-white`}
+                      >
+                        <div>
+                          <p className="text-xs uppercase tracking-[0.3em] text-white/70">
+                            {selectedDeck.timeframe}
+                          </p>
+                          <h4 className="mt-3 text-xl font-semibold">{selectedDeck.title}</h4>
+                        </div>
+                        <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em]">
+                          <span>{selectedDeck.size}</span>
+                          <span>{selectedDeck.status}</span>
+                        </div>
+                      </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                      >
+                        Download PDF
+                      </button>
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                      >
+                        Share link
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Export automations
+                    </h3>
+                    <span className="text-xs text-slate-200/70">{reportingExports.length} jobs</span>
+                  </div>
+                  <div className="mt-4 grid gap-3 lg:grid-cols-3">
+                    {reportingExports.map((exportJob) => {
+                      const active = exportJob.id === selectedExportId;
+                      return (
+                        <button
+                          key={exportJob.id}
+                          type="button"
+                          onClick={() => handleExportSelect(exportJob.id)}
+                          className={`flex h-full flex-col justify-between rounded-2xl border px-4 py-4 text-left text-sm transition ${
                             active
                               ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
                               : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
                           }`}
                         >
                           <div>
-                            <p className="font-semibold">{deck.title}</p>
-                            <p className="text-xs text-slate-200/70">{deck.timeframe}</p>
+                            <p className="font-semibold">{exportJob.label}</p>
+                            <p className="mt-2 text-xs text-slate-200/70">
+                              {exportJob.description}
+                            </p>
                           </div>
-                          <span className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
-                            {deck.status}
-                          </span>
+                          <div className="mt-4 space-y-1 text-[11px] uppercase tracking-[0.3em] text-slate-200/60">
+                            <p>{exportJob.lastRun}</p>
+                            <p>{exportJob.destination}</p>
+                          </div>
                         </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-              <div className="rounded-3xl border border-white/15 bg-slate-950/40 p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                  Deck preview
-                </p>
-                <div
-                  className={`mt-4 flex h-48 flex-col justify-between rounded-3xl border border-white/10 bg-gradient-to-br ${selectedDeck.accent} p-6 text-white`}
-                >
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.3em] text-white/70">
-                      {selectedDeck.timeframe}
+                      );
+                    })}
+                  </div>
+                  <div className="mt-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85">
+                    <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      <span>Active export</span>
+                      <span>{selectedExport.lastRun}</span>
+                    </div>
+                    <p className="mt-2 font-semibold text-white">{selectedExport.label}</p>
+                    <p className="mt-1 text-xs text-slate-200/70">{selectedExport.description}</p>
+                    <p className="mt-3 text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      Destination: {selectedExport.destination}
                     </p>
-                    <h4 className="mt-3 text-xl font-semibold">{selectedDeck.title}</h4>
-                  </div>
-                  <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em]">
-                    <span>{selectedDeck.size}</span>
-                    <span>{selectedDeck.status}</span>
                   </div>
                 </div>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
-                  >
-                    Download PDF
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
-                  >
-                    Share link
-                  </button>
-                </div>
-              </div>
-            </div>
+              </>
+            )}
 
-            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
-                  Export automations
-                </h3>
-                <span className="text-xs text-slate-200/70">{reportingExports.length} jobs</span>
-              </div>
-              <div className="mt-4 grid gap-3 lg:grid-cols-3">
-                {reportingExports.map((exportJob) => {
-                  const active = exportJob.id === selectedExportId;
-                  return (
-                    <button
-                      key={exportJob.id}
-                      type="button"
-                      onClick={() => handleExportSelect(exportJob.id)}
-                      className={`flex h-full flex-col justify-between rounded-2xl border px-4 py-4 text-left text-sm transition ${
-                        active
-                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
-                          : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
-                      }`}
-                    >
-                      <div>
-                        <p className="font-semibold">{exportJob.label}</p>
+            {reportingView === "deep-dive" && (
+              <div className="space-y-6">
+                <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                        Variance explorer
+                      </h3>
+                      <p className="mt-2 text-xs text-slate-200/70">
+                        Diagnose where performance diverged from targets.
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {reportingVarianceBreakdowns.map((set) => {
+                        const active = set.id === selectedVarianceId;
+                        return (
+                          <button
+                            key={set.id}
+                            type="button"
+                            onClick={() => handleVarianceSelect(set.id)}
+                            className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                              active
+                                ? "border-emerald-400/60 bg-emerald-400/20 text-emerald-100"
+                                : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                            }`}
+                          >
+                            {set.dimension}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <p className="mt-3 text-xs text-slate-200/70">
+                    Comparing {selectedVariance.range}
+                  </p>
+                  <ul className="mt-4 space-y-3">
+                    {selectedVariance.items.map((item) => (
+                      <li
+                        key={item.label}
+                        className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85"
+                      >
+                        <div className="flex items-center justify-between">
+                          <p className="font-semibold text-white">{item.label}</p>
+                          <span className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                            {item.variance}
+                          </span>
+                        </div>
+                        <div className="mt-3 h-2 rounded-full bg-white/10">
+                          <div
+                            className="h-full rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-purple-500"
+                            style={{ width: `${Math.min(item.contribution * 100, 100)}%` }}
+                          />
+                        </div>
                         <p className="mt-2 text-xs text-slate-200/70">
-                          {exportJob.description}
+                          Contribution to delta: {(item.contribution * 100).toFixed(0)}%
                         </p>
-                      </div>
-                      <div className="mt-4 space-y-1 text-[11px] uppercase tracking-[0.3em] text-slate-200/60">
-                        <p>{exportJob.lastRun}</p>
-                        <p>{exportJob.destination}</p>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-              <div className="mt-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85">
-                <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-slate-200/60">
-                  <span>Active export</span>
-                  <span>{selectedExport.lastRun}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <p className="mt-2 font-semibold text-white">{selectedExport.label}</p>
-                <p className="mt-1 text-xs text-slate-200/70">{selectedExport.description}</p>
-                <p className="mt-3 text-xs uppercase tracking-[0.3em] text-slate-200/60">
-                  Destination: {selectedExport.destination}
-                </p>
+
+                <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Benchmark matrix
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {reportingBenchmarkMatrix.map((row) => {
+                        const active = row.channel === selectedBenchmarkChannel;
+                        return (
+                          <button
+                            key={row.channel}
+                            type="button"
+                            onClick={() => handleBenchmarkSelect(row.channel)}
+                            className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                              active
+                                ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                                : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                            }`}
+                          >
+                            {channelCatalog[row.channel].label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div className="mt-4 overflow-hidden rounded-2xl border border-white/10">
+                    <table className="min-w-full divide-y divide-white/10 text-sm text-slate-100/85">
+                      <thead className="bg-white/5 text-xs uppercase tracking-[0.35em] text-slate-200/70">
+                        <tr>
+                          <th className="px-4 py-3 text-left">Channel</th>
+                          <th className="px-4 py-3 text-left">Your score</th>
+                          <th className="px-4 py-3 text-left">Cohort</th>
+                          <th className="px-4 py-3 text-left">Percentile</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-white/10 bg-slate-950/30">
+                        {reportingBenchmarkMatrix.map((row) => {
+                          const active = row.channel === selectedBenchmarkChannel;
+                          return (
+                            <tr
+                              key={row.channel}
+                              className={active ? "bg-white/10" : ""}
+                            >
+                              <td className="px-4 py-3 uppercase tracking-[0.3em]">
+                                {channelCatalog[row.channel].label}
+                              </td>
+                              <td className="px-4 py-3">{row.yourScore}</td>
+                              <td className="px-4 py-3 text-slate-200/70">{row.cohort}</td>
+                              <td className="px-4 py-3 text-slate-200/70">{row.percentile}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="mt-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85">
+                    <p className="text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      {channelCatalog[benchmarkDetails.channel].label} focus
+                    </p>
+                    <p className="mt-2 text-base font-semibold text-white">
+                      {benchmarkDetails.percentile} percentile vs cohort score {benchmarkDetails.cohort}.
+                    </p>
+                    <p className="mt-2 text-xs text-slate-200/70">
+                      Share this with the team to double down on what's working and triage the laggards.
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </article>
 
           <aside className="flex flex-col gap-6">
@@ -4277,6 +4535,57 @@ export default function Home() {
                   </div>
                 ))}
               </div>
+            </div>
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(14,165,233,0.2)] backdrop-blur-2xl">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Alert center
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {reportingAlertFilters.map((filter) => {
+                    const active = selectedAlertFilter === filter.id;
+                    return (
+                      <button
+                        key={filter.id}
+                        type="button"
+                        onClick={() => handleAlertFilterChange(filter.id)}
+                        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                          active
+                            ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                            : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                        }`}
+                      >
+                        {filter.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <ul className="mt-4 space-y-3">
+                {filteredAlerts.map((alert) => (
+                  <li
+                    key={alert.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100/85"
+                  >
+                    <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                      <span>{alert.title}</span>
+                      <span>{alert.timestamp}</span>
+                    </div>
+                    <p className="mt-2 text-xs text-slate-200/75">{alert.detail}</p>
+                    <button
+                      type="button"
+                      className="mt-3 inline-flex items-center gap-2 rounded-full border border-emerald-400/50 bg-emerald-400/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-emerald-100 hover:border-emerald-300/70 hover:bg-emerald-400/30"
+                    >
+                      {alert.action}
+                    </button>
+                  </li>
+                ))}
+                {filteredAlerts.length === 0 && (
+                  <li className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-6 text-center text-xs uppercase tracking-[0.3em] text-slate-200/60">
+                    No alerts for this filter.
+                  </li>
+                )}
+              </ul>
             </div>
           </aside>
         </section>
