@@ -272,6 +272,14 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Social Commerce** - Sell products directly through social media with sales tracking
 - **Video Analytics** - Track video performance with watch time, completion rate, and insights
 - **Influencer Management** - Manage influencer relationships and track collaboration performance
+- **Social Auditing** - Comprehensive audit of social media presence with actionable recommendations
+- **Content Recycling** - Automatically repost top-performing content with customizable rules
+- **White-Label Branding** - Customize platform with brand identity, logos, colors, and custom domains
+- **Custom Reports** - Create custom reports with your own metrics, formulas, and scheduled generation
+- **Sentiment Dashboard** - Monitor sentiment across platforms with real-time analysis and trends
+- **Distribution Analytics** - Track content distribution patterns, viral coefficient, and reach multipliers
+- **Engagement Scoring** - Comprehensive scoring system evaluating quality and quantity of interactions
+- **Performance Insights** - AI-powered insights and recommendations to optimize content strategy
 - **Scheduling Automation** - Intelligent automation rules for content scheduling, posting, and workflows with time-based, event-based, and content-based triggers
 - **Influencer Collaboration** - Comprehensive influencer partnership management with campaign tracking, ROI analysis, and performance metrics
 - **Social Compliance** - Automated compliance checking for copyright, trademark, privacy, accessibility, and advertising requirements with issue detection and recommendations
