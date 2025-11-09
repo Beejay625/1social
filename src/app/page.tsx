@@ -373,27 +373,6 @@ const heatLevelClass = (score: number) => {
   return "bg-white/10 text-slate-200";
 };
 
-const approvalStatusTokens: Record<
-  ApprovalStatus,
-  { label: string; badge: string; dot: string }
-> = {
-  approved: {
-    label: "Approved",
-    badge: "bg-emerald-400/20 text-emerald-100 border border-emerald-300/40",
-    dot: "bg-emerald-300",
-  },
-  pending: {
-    label: "Pending",
-    badge: "bg-cyan-400/20 text-cyan-50 border border-cyan-300/40",
-    dot: "bg-cyan-300",
-  },
-  changes: {
-    label: "Needs edits",
-    badge: "bg-amber-400/25 text-amber-100 border border-amber-300/40",
-    dot: "bg-amber-300",
-  },
-};
-
 export default function Home() {
   const { address, isConnected } = useAccount();
   const chainId = useChainId();
@@ -802,63 +781,105 @@ export default function Home() {
               </div>
             </div>
             <div className="w-full max-w-md place-self-center space-y-5">
-              <div className="rounded-4xl border border-white/20 bg-white/10 p-6 shadow-lg backdrop-blur-2xl">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-200/70">
-                    Wallet Center
-                  </p>
-                  <p className="mt-2 text-sm text-slate-100/75">
-                    {isConnected
-                      ? "Wallet connected via Reown AppKit."
-                      : "Connect to prep Farcaster signatures."}
-                  </p>
+              <div className="relative overflow-hidden rounded-4xl border border-white/15 bg-slate-950/60 p-7 shadow-2xl shadow-purple-600/20 backdrop-blur-3xl">
+                <div className="absolute -top-10 right-[-30%] h-40 w-40 rounded-full bg-gradient-to-br from-sky-400/30 via-fuchsia-500/20 to-emerald-400/20 blur-2xl" />
+                <div className="absolute bottom-[-24%] left-[-10%] h-36 w-36 rounded-full bg-gradient-to-br from-indigo-500/25 via-purple-500/20 to-transparent blur-2xl" />
+                <div className="relative flex flex-col gap-6">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="space-y-2">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-slate-200/80">
+                        Wallet Center
+                      </p>
+                      <h2 className="text-lg font-semibold text-white">
+                        {isConnected
+                          ? "Reown wallet connected."
+                          : "Sign in with Reown wallet"}
+                      </h2>
+                      <p className="text-sm leading-relaxed text-slate-200/75">
+                        {isConnected
+                          ? "You are ready to approve Farcaster signatures and publish."
+                          : "Connect your Reown wallet to prep Farcaster signatures and sync drafts."}
+                      </p>
+                    </div>
+                    <span
+                      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold ${
+                        isConnected
+                          ? "border-emerald-400/40 bg-emerald-400/15 text-emerald-100"
+                          : "border-rose-400/40 bg-rose-400/20 text-rose-100"
+                      }`}
+                    >
+                      <span
+                        className={`h-2 w-2 rounded-full ${
+                          isConnected ? "bg-emerald-300" : "bg-rose-300"
+                        }`}
+                      />
+                      {isConnected ? "Live" : "Offline"}
+                    </span>
+                  </div>
+
+                  <div className="grid gap-3 rounded-3xl border border-white/15 bg-slate-950/70 p-4 text-sm text-slate-100/80">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-xs uppercase tracking-[0.35em] text-slate-300/70">
+                        Address
+                      </span>
+                      <span className="rounded-full bg-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.3em] text-slate-200/70">
+                        {isConnected ? "Connected" : "Offline"}
+                      </span>
+                    </div>
+                    <p className="truncate text-base font-semibold text-white">
+                      {truncateAddress(address)}
+                    </p>
+                    <p className="text-xs uppercase tracking-[0.3em] text-slate-300/60">
+                      {activeNetwork?.name ?? "No network selected"}
+                    </p>
+                  </div>
+
+                  <ul className="grid gap-3 text-sm text-slate-200/80">
+                    <li className="flex items-start gap-3">
+                      <span className="mt-1 h-2.5 w-2.5 rounded-full bg-emerald-300" />
+                      <div>
+                        <p className="font-semibold text-white">Farcaster-ready signing</p>
+                        <p>Approve casts straight from the dashboard without tab-hopping.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="mt-1 h-2.5 w-2.5 rounded-full bg-sky-300" />
+                      <div>
+                        <p className="font-semibold text-white">Secure sync</p>
+                        <p>Reown AppKit keeps your session fresh across every channel.</p>
+                      </div>
+                    </li>
+                  </ul>
+
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <button
+                      type="button"
+                      onClick={handleOpenWallet}
+                      className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-400 via-indigo-500 to-fuchsia-500 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-indigo-500/40 transition hover:shadow-xl hover:shadow-indigo-500/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                    >
+                      {isConnected ? "Manage wallet" : "Connect wallet"}
+                    </button>
+                    {isConnected && (
+                      <button
+                        type="button"
+                        onClick={handleDisconnectWallet}
+                        className="inline-flex items-center justify-center rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/60 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                      >
+                        Disconnect
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.3em] text-slate-300/70">
+                    <span>Mock environment</span>
+                    <span>No real posts sent</span>
+                  </div>
                 </div>
-                <span
-                  className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${
-                    isConnected
-                      ? "bg-emerald-400/20 text-emerald-50"
-                      : "bg-rose-400/25 text-rose-50"
-                  }`}
-                >
-                  <span
-                    className={`h-2 w-2 rounded-full ${
-                      isConnected ? "bg-emerald-300" : "bg-rose-300"
-                    }`}
-                  />
-                  {isConnected ? "Live" : "Offline"}
-                </span>
               </div>
-              <div className="mt-5 rounded-3xl border border-white/15 bg-slate-950/40 px-4 py-3 text-sm text-slate-100/80">
-                <p className="font-semibold text-white">
-                  {truncateAddress(address)}
-                </p>
-                <p className="mt-1 text-xs uppercase tracking-[0.28em] text-slate-300/60">
-                  {activeNetwork?.name ?? "No network selected"}
-                </p>
-              </div>
-              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                <button
-                  type="button"
-                  onClick={handleOpenWallet}
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-400 via-indigo-500 to-fuchsia-500 px-5 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-indigo-500/40 transition hover:shadow-xl hover:shadow-indigo-500/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  {isConnected ? "Manage wallet" : "Connect wallet"}
-                </button>
-                {isConnected && (
-                  <button
-                    type="button"
-                    onClick={handleDisconnectWallet}
-                    className="inline-flex items-center justify-center rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/60 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                  >
-                    Disconnect
-                  </button>
-                )}
-              </div>
+              <p className="text-[11px] uppercase tracking-[0.3em] text-slate-200/60">
+                Need help? Ping the team in #wallet-ops.
+              </p>
             </div>
-            <p className="text-xs uppercase tracking-[0.2em] text-slate-200/60">
-              Mock environment • No real posts sent
-            </p>
           </div>
         </header>
 
