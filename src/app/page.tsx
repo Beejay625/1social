@@ -216,7 +216,8 @@ export default function Home() {
                   <button
                     key={channelId}
                     type="button"
-                    aria-pressed={active ? "true" : "false"}
+                    role="switch"
+                    aria-checked={active}
                     onClick={() => handleToggle(channelId)}
                     className={`group flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
                       active
