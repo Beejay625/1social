@@ -1391,6 +1391,12 @@ export default function Home() {
   );
   const [calendarView, setCalendarView] = useState<"week" | "month">("week");
   const [calendarFocus, setCalendarFocus] = useState<string>("Thu");
+  const [selectedForecastId, setSelectedForecastId] = useState<string>(
+    intelligenceForecasts[0]?.id ?? "",
+  );
+  const [selectedRecommendationId, setSelectedRecommendationId] = useState<string>(
+    contentRecommendations[0]?.id ?? "",
+  );
 
   const activeNetwork = useMemo(
     () => networks.find((network) => network.id === chainId),
