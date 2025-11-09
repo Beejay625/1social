@@ -3360,6 +3360,8 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "industry-benchmarking", label: "Industry Benchmarking" },
   { id: "calendar-ai-assistant", label: "Calendar AI Assistant" },
   { id: "custom-report-builder", label: "Custom Report Builder" },
+  { id: "content-recycling", label: "Content Recycling" },
+  { id: "mobile-management", label: "Mobile App Management" },
   { id: "content-forecasting", label: "Content Forecasting" },
   { id: "content-attribution", label: "Content Attribution" },
   { id: "content-benchmarking", label: "Content Benchmarking" },
