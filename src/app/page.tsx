@@ -610,23 +610,50 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-900 to-sky-600 text-white">
       <main className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 py-16 lg:px-12">
-        <header className="flex flex-col gap-10 rounded-4xl bg-white/10 p-8 backdrop-blur-xl shadow-[0_20px_70px_rgba(59,7,100,0.35)] lg:flex-row lg:items-center lg:justify-between">
-          <div className="max-w-2xl space-y-4">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-medium uppercase tracking-wide text-slate-100">
-              <span className="h-2 w-2 rounded-full bg-emerald-300" />
-              1Social • Unified voice for every channel
-            </span>
-            <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
-              Post once. Shine twice.
-            </h1>
-            <p className="text-lg text-slate-100/80">
-              Draft a story, pick your destinations, and we mirror it across
-              Farcaster and Instagram instantly. This mock dashboard previews
-              how the unified publishing flow will feel.
-            </p>
+        <header className="relative isolate overflow-hidden rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_20px_70px_rgba(59,7,100,0.35)] backdrop-blur-2xl lg:px-12 lg:py-12">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 overflow-hidden"
+          >
+            <div className="absolute -left-32 top-10 h-64 w-64 rounded-full bg-gradient-to-br from-fuchsia-500/40 via-sky-400/30 to-indigo-500/40 blur-3xl" />
+            <div className="absolute bottom-[-6rem] right-[-3rem] h-72 w-72 rounded-full bg-gradient-to-br from-sky-400/30 via-purple-500/25 to-rose-500/30 blur-3xl" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.08)_0%,_transparent_55%)]" />
           </div>
-          <div className="w-full max-w-md space-y-5">
-            <div className="rounded-4xl border border-white/20 bg-white/10 p-6 shadow-lg backdrop-blur-2xl">
+          <div className="relative grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+            <div className="max-w-2xl space-y-6">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.4em] text-slate-100/90">
+                <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.6)]" />
+                1Social Platform
+              </span>
+              <div className="space-y-4">
+                <h1 className="text-4xl font-semibold leading-tight text-white md:text-5xl lg:text-[52px]">
+                  Align your voice across every channel.
+                </h1>
+                <p className="text-lg leading-relaxed text-slate-100/80 md:text-xl">
+                  Share once, syndicate instantly, and keep Reown wallet
+                  signatures ready for Farcaster. This preview shows how your
+                  launch team can stay in lockstep.
+                </p>
+              </div>
+              <div className="grid gap-3 text-sm text-slate-100/80 sm:grid-cols-2">
+                <div className="flex items-start gap-3 rounded-3xl border border-white/15 bg-white/10 p-4">
+                  <span className="mt-0.5 h-2.5 w-2.5 rounded-full bg-emerald-300" />
+                  <div>
+                    <p className="font-semibold text-white">Multichannel Posting</p>
+                    <p>Mirror every update to Farcaster and Instagram in seconds.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 rounded-3xl border border-white/15 bg-white/10 p-4">
+                  <span className="mt-0.5 h-2.5 w-2.5 rounded-full bg-sky-300" />
+                  <div>
+                    <p className="font-semibold text-white">Wallet-Ready Flows</p>
+                    <p>Stay connected with Reown AppKit to approve content fast.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="w-full max-w-md place-self-center space-y-5">
+              <div className="rounded-4xl border border-white/20 bg-white/10 p-6 shadow-lg backdrop-blur-2xl">
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-200/70">
