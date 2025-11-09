@@ -384,9 +384,9 @@ import {
   abTestingStats,
 } from "@/data/ab-testing";
 import {
-  contentAssets,
-  contentFolders,
-  contentLibraryStats,
+  contentLibrary,
+  contentCategories,
+  libraryStats,
 } from "@/data/content-library";
 import {
   commerceAnalytics,
