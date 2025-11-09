@@ -317,7 +317,7 @@ const scheduleStatusStyles: Record<
     dot: "bg-cyan-300",
   },
   draft: {
-    label: "Draft",
+    label: "Needs edits",
     badge: "bg-amber-400/20 text-amber-50 border border-amber-300/40",
     dot: "bg-amber-300",
   },
