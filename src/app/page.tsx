@@ -10056,4 +10056,2604 @@ export default function Home() {
                   const active = rule.id === selectedEngagementRuleId;
                   return (
                     <button
-      
+                      key={rule.id}
+                      type="button"
+                      onClick={() => handleEngagementRuleSelect(rule.id)}
+                      className={`w-full rounded-2xl border px-4 py-4 text-left text-sm transition ${
+                        active
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-semibold">{rule.name}</p>
+                          <p className="mt-1 text-xs text-slate-200/70">
+                            {rule.trigger} → {rule.action}
+                          </p>
+                        </div>
+                        <span
+                          className={`text-xs uppercase tracking-[0.3em] ${
+                            rule.status === "active"
+                              ? "text-emerald-300"
+                              : "text-slate-300"
+                          }`}
+                        >
+                          {rule.status}
+                        </span>
+                      </div>
+                      <div className="mt-3 flex items-center justify-between text-xs text-slate-200/70">
+                        <span>{rule.executions} executions</span>
+                        <span>Last run: {rule.lastRun}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Rule performance
+              </h3>
+              <p className="mt-2 text-sm text-slate-100/85">
+                {selectedEngagementRule.name}: {selectedEngagementRule.executions} executions
+                completed. Status: {selectedEngagementRule.status}.
+              </p>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="moderation"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(239,68,68,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content moderation</h2>
+              <p className="text-sm text-slate-100/75">
+                Review and manage flagged content, spam, and inappropriate posts across all channels.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {moderationQueue.map((item) => (
+                <div
+                  key={item.id}
+                  className={`rounded-3xl border p-6 ${item.severity === "high" ? "border-red-400/50 bg-red-400/10" : item.severity === "medium" ? "border-amber-400/50 bg-amber-400/10" : "border-white/15 bg-white/5"}`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[item.channel].dot}`} />
+                        <span className="text-sm font-semibold text-white">{item.author}</span>
+                        <span className={`text-[10px] uppercase tracking-wider ${item.severity === "high" ? "text-red-300" : item.severity === "medium" ? "text-amber-300" : "text-slate-300"}`}>
+                          {item.severity}
+                        </span>
+                        <span className={`text-[10px] uppercase tracking-wider ${item.status === "pending" ? "text-amber-300" : "text-emerald-300"}`}>
+                          {item.status}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm text-slate-100/85">{item.content}</p>
+                      <div className="mt-4 flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>Flagged: {item.flaggedReason}</span>
+                        <span>·</span>
+                        <span>{formatRelativeTime(item.reportedAt)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(239,68,68,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Moderation stats
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Pending reviews</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {moderationQueue.filter((m) => m.status === "pending").length}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">High severity</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {moderationQueue.filter((m) => m.severity === "high").length}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Reviewed today</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {moderationQueue.filter((m) => m.status === "reviewed").length}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="brand-safety"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Brand safety</h2>
+              <p className="text-sm text-slate-100/75">
+                Monitor brand reputation, detect threats, and protect your brand identity across platforms.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {brandSafetyAlerts.map((alert) => (
+                <div
+                  key={alert.id}
+                  className={`rounded-3xl border p-6 ${alert.severity === "high" && !alert.resolved ? "border-red-400/50 bg-red-400/10" : alert.severity === "medium" && !alert.resolved ? "border-amber-400/50 bg-amber-400/10" : "border-white/15 bg-white/5"}`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[alert.channel].dot}`} />
+                        <h3 className="text-lg font-semibold text-white">{alert.message}</h3>
+                        <span className={`text-[10px] uppercase tracking-wider ${alert.severity === "high" ? "text-red-300" : "text-amber-300"}`}>
+                          {alert.severity}
+                        </span>
+                        {alert.resolved && (
+                          <span className="text-[10px] uppercase tracking-wider text-emerald-300">
+                            resolved
+                          </span>
+                        )}
+                      </div>
+                      <p className="mt-2 text-xs text-slate-200/70 capitalize">
+                        {alert.type.replace("_", " ")} · {alert.mentions} mentions
+                      </p>
+                      <div className="mt-4 flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>{formatRelativeTime(alert.at)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Safety overview
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active alerts</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {brandSafetyAlerts.filter((a) => !a.resolved).length}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">High severity</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {brandSafetyAlerts.filter((a) => a.severity === "high" && !a.resolved).length}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Resolved</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {brandSafetyAlerts.filter((a) => a.resolved).length}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="api-management"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">API management</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage API keys, monitor usage, and control access to your social media management platform.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {apiKeys.map((apiKey) => (
+                <div
+                  key={apiKey.id}
+                  className={`rounded-3xl border p-6 ${apiKey.status === "active" ? "border-emerald-400/50 bg-emerald-400/10" : "border-white/15 bg-white/5"}`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{apiKey.name}</h3>
+                        <span className={`text-[10px] uppercase tracking-wider ${apiKey.status === "active" ? "text-emerald-300" : "text-slate-300"}`}>
+                          {apiKey.status}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-xs text-slate-200/70 font-mono">{apiKey.key}</p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {apiKey.permissions.map((perm) => (
+                          <span
+                            key={`${apiKey.id}-${perm}`}
+                            className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-slate-200/70"
+                          >
+                            {perm}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 text-xs">
+                        <div>
+                          <p className="text-slate-200/60">Total requests</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {apiKey.requests.toLocaleString()}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-slate-200/60">Last used</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {formatRelativeTime(apiKey.lastUsed)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  API stats
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active keys</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {apiKeys.filter((k) => k.status === "active").length}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total requests</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {apiKeys.reduce((acc, k) => acc + k.requests, 0).toLocaleString()}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg per key</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {Math.round(apiKeys.reduce((acc, k) => acc + k.requests, 0) / apiKeys.length).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="hashtag-analytics"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Hashtag analytics</h2>
+              <p className="text-sm text-slate-100/75">
+                Track hashtag performance, growth trends, and engagement metrics across your campaigns.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {hashtagAnalytics.map((hashtag) => (
+                <div
+                  key={hashtag.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{hashtag.hashtag}</h3>
+                        <span className={`text-[10px] uppercase tracking-wider ${hashtag.trend === "up" ? "text-emerald-300" : "text-red-300"}`}>
+                          {hashtag.trend}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Posts</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {hashtag.posts.toLocaleString()}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Reach</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(hashtag.reach / 1000).toFixed(0)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Engagement</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(hashtag.engagement / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Growth</p>
+                          <p className={`mt-1 text-sm font-semibold ${hashtag.growth > 0 ? "text-emerald-300" : "text-red-300"}`}>
+                            {hashtag.growth > 0 ? "+" : ""}{hashtag.growth}%
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Hashtag summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total hashtags</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{hashtagAnalytics.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total posts</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {hashtagAnalytics.reduce((acc, h) => acc + h.posts, 0).toLocaleString()}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Combined reach</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {(hashtagAnalytics.reduce((acc, h) => acc + h.reach, 0) / 1000).toFixed(0)}k
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="performance-comparison"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Performance comparison</h2>
+              <p className="text-sm text-slate-100/75">
+                Compare current performance metrics against previous periods to track growth and identify trends.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {performanceComparison.map((comp) => (
+                <div
+                  key={comp.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{comp.metric}</h3>
+                        <span className={`text-[10px] uppercase tracking-wider ${comp.trend === "up" ? "text-emerald-300" : "text-red-300"}`}>
+                          {comp.trend}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-3 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Current</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {typeof comp.current === "number" && comp.current > 1000
+                              ? (comp.current / 1000).toFixed(1) + "k"
+                              : comp.current}
+                            {comp.metric === "Engagement Rate" && "%"}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Previous</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {typeof comp.previous === "number" && comp.previous > 1000
+                              ? (comp.previous / 1000).toFixed(1) + "k"
+                              : comp.previous}
+                            {comp.metric === "Engagement Rate" && "%"}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Change</p>
+                          <p className={`mt-1 text-sm font-semibold ${comp.change > 0 ? "text-emerald-300" : "text-red-300"}`}>
+                            {comp.change > 0 ? "+" : ""}{comp.change}%
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Comparison summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Metrics tracked</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{performanceComparison.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Improving</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {performanceComparison.filter((c) => c.trend === "up").length}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Declining</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {performanceComparison.filter((c) => c.trend === "down").length}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="export-import"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Export & Import</h2>
+              <p className="text-sm text-slate-100/75">
+                Export your data in various formats or import from external sources.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Export Data
+                </h3>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <div className="mb-4">
+                    <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Select Format
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {exportFormats.map((format) => (
+                        <button
+                          key={format.id}
+                          type="button"
+                          className="rounded-xl border border-white/20 bg-white/5 p-3 text-left text-sm text-white hover:border-white/40 hover:bg-white/10"
+                        >
+                          <p className="font-semibold">{format.label}</p>
+                          <p className="mt-1 text-xs text-slate-200/70">{format.description}</p>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className="w-full rounded-2xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                  >
+                    Export Now
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Export History
+                </h3>
+                <div className="space-y-3">
+                  {exportHistory.map((exportItem) => (
+                    <div
+                      key={exportItem.id}
+                      className={`rounded-2xl border p-4 ${
+                        exportItem.status === "completed"
+                          ? "border-emerald-400/50 bg-emerald-400/10"
+                          : "border-amber-400/50 bg-amber-400/10"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-white">{exportItem.name}</p>
+                          <div className="mt-2 flex items-center gap-4 text-xs text-slate-200/70">
+                            <span className="uppercase">{exportItem.format}</span>
+                            {exportItem.size && <span>· {exportItem.size}</span>}
+                            <span>· {formatRelativeTime(exportItem.createdAt)}</span>
+                          </div>
+                        </div>
+                        <span
+                          className={`text-[10px] uppercase tracking-wider ${
+                            exportItem.status === "completed" ? "text-emerald-300" : "text-amber-300"
+                          }`}
+                        >
+                          {exportItem.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Import Sources
+              </h3>
+              <div className="mt-4 space-y-3">
+                {importSources.map((source) => (
+                  <div
+                    key={source.id}
+                    className={`rounded-2xl border p-4 ${
+                      source.connected
+                        ? "border-emerald-400/50 bg-emerald-400/10"
+                        : "border-white/10 bg-slate-950/40"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{source.icon}</span>
+                        <div>
+                          <p className="text-sm font-semibold text-white">{source.name}</p>
+                          <p className="text-xs text-slate-200/70">{source.description}</p>
+                        </div>
+                      </div>
+                      <span
+                        className={`text-[10px] uppercase tracking-wider ${
+                          source.connected ? "text-emerald-300" : "text-slate-300"
+                        }`}
+                      >
+                        {source.connected ? "Connected" : "Connect"}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="security"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(239,68,68,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Security</h2>
+              <p className="text-sm text-slate-100/75">
+                Monitor security logs, manage sessions, and configure security settings.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Security Logs
+                </h3>
+                <div className="space-y-3">
+                  {securityLogs.map((log) => (
+                    <div
+                      key={log.id}
+                      className={`rounded-2xl border p-4 ${
+                        log.status === "success"
+                          ? "border-emerald-400/50 bg-emerald-400/10"
+                          : "border-rose-400/50 bg-rose-400/10"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-white">{log.type}</p>
+                          <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-slate-200/70">
+                            <span>{log.user}</span>
+                            <span>·</span>
+                            <span>{log.ip}</span>
+                            <span>·</span>
+                            <span>{log.location}</span>
+                            <span>·</span>
+                            <span>{formatRelativeTime(log.timestamp)}</span>
+                          </div>
+                        </div>
+                        <span
+                          className={`text-[10px] uppercase tracking-wider ${
+                            log.status === "success" ? "text-emerald-300" : "text-rose-300"
+                          }`}
+                        >
+                          {log.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Security Settings
+                </h3>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-200/70">Two-Factor Auth</span>
+                      <span className={securitySettings.twoFactorEnabled ? "text-emerald-300" : "text-slate-300"}>
+                        {securitySettings.twoFactorEnabled ? "Enabled" : "Disabled"}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-200/70">Password Expiry</span>
+                      <span className="text-white">{securitySettings.passwordExpiry} days</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-200/70">Session Timeout</span>
+                      <span className="text-white">{securitySettings.sessionTimeout} minutes</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-200/70">Require MFA</span>
+                      <span className={securitySettings.requireMfa ? "text-emerald-300" : "text-slate-300"}>
+                        {securitySettings.requireMfa ? "Yes" : "No"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(239,68,68,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Active Sessions
+              </h3>
+              <div className="mt-4 space-y-3">
+                {activeSessions.map((session) => (
+                  <div
+                    key={session.id}
+                    className={`rounded-2xl border p-4 ${
+                      session.current
+                        ? "border-emerald-400/50 bg-emerald-400/10"
+                        : "border-white/10 bg-slate-950/40"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">{session.device}</p>
+                        <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-slate-200/70">
+                          <span>{session.browser}</span>
+                          <span>·</span>
+                          <span>{session.ip}</span>
+                          <span>·</span>
+                          <span>{session.location}</span>
+                        </div>
+                        <p className="mt-2 text-xs text-slate-200/70">
+                          Last active: {formatRelativeTime(session.lastActive)}
+                        </p>
+                      </div>
+                      {session.current && (
+                        <span className="text-[10px] uppercase tracking-wider text-emerald-300">
+                          Current
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="billing"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Billing & Usage</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage your subscription, view usage, and access invoices.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Current Plan
+                </h3>
+                <div className="grid gap-3">
+                  {billingPlans.map((plan) => (
+                    <div
+                      key={plan.id}
+                      className={`rounded-2xl border p-4 ${
+                        plan.current
+                          ? "border-purple-400/50 bg-purple-400/10"
+                          : "border-white/10 bg-slate-950/40"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3">
+                            <p className="text-lg font-semibold text-white">{plan.name}</p>
+                            {plan.current && (
+                              <span className="text-[10px] uppercase tracking-wider text-purple-300">
+                                Current
+                              </span>
+                            )}
+                          </div>
+                          <p className="mt-1 text-2xl font-bold text-white">
+                            ${plan.price}
+                            <span className="ml-1 text-sm font-normal text-slate-200/70">/{plan.interval}</span>
+                          </p>
+                          <ul className="mt-3 space-y-1 text-xs text-slate-200/70">
+                            {plan.features.map((feature, idx) => (
+                              <li key={idx} className="flex items-center gap-2">
+                                <span>✓</span>
+                                <span>{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Usage
+                </h3>
+                <div className="space-y-3">
+                  <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-200/70">Posts</span>
+                      <span className="text-sm font-semibold text-white">
+                        {usageMetrics.postsUsed.toLocaleString()} / {usageMetrics.postsLimit.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+                      <div
+                        className="h-full bg-emerald-400"
+                        style={{ width: `${(usageMetrics.postsUsed / usageMetrics.postsLimit) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-200/70">Accounts</span>
+                      <span className="text-sm font-semibold text-white">
+                        {usageMetrics.accountsUsed} / {usageMetrics.accountsLimit}
+                      </span>
+                    </div>
+                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+                      <div
+                        className="h-full bg-blue-400"
+                        style={{ width: `${(usageMetrics.accountsUsed / usageMetrics.accountsLimit) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-200/70">Storage</span>
+                      <span className="text-sm font-semibold text-white">
+                        {usageMetrics.storageUsed} GB / {usageMetrics.storageLimit} GB
+                      </span>
+                    </div>
+                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+                      <div
+                        className="h-full bg-purple-400"
+                        style={{ width: `${(usageMetrics.storageUsed / usageMetrics.storageLimit) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Invoice History
+              </h3>
+              <div className="mt-4 space-y-3">
+                {invoiceHistory.map((invoice) => (
+                  <div
+                    key={invoice.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">
+                          ${invoice.amount} - {new Date(invoice.date).toLocaleDateString()}
+                        </p>
+                        <p className="mt-1 text-xs text-slate-200/70">
+                          {formatRelativeTime(invoice.date)}
+                        </p>
+                      </div>
+                      <span className="text-[10px] uppercase tracking-wider text-emerald-300">
+                        {invoice.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="content-library"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(99,102,241,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content library</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage your media assets, templates, and reusable content across all channels.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {contentLibraryItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{item.title}</h3>
+                        <span className="text-xs uppercase tracking-wider text-slate-300">
+                          {item.type}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Size</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{item.size}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Usage</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{item.usage} times</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Uploaded</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {formatRelativeTime(item.uploadedAt)}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Channels</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{item.channels.length}</p>
+                        </div>
+                      </div>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {item.tags.map((tag) => (
+                          <span
+                            key={`${item.id}-${tag}`}
+                            className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-slate-200/70"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(99,102,241,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Library stats
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total assets</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{contentLibraryItems.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total usage</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {contentLibraryItems.reduce((acc, item) => acc + item.usage, 0)}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Storage used</p>
+                  <p className="mt-1 text-xl font-semibold text-white">~50 MB</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="advanced-search"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Advanced search</h2>
+              <p className="text-sm text-slate-100/75">
+                Search across all content, posts, and analytics with powerful filters and queries.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {searchHistory.map((search) => (
+                <div
+                  key={search.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{search.query}</h3>
+                        <span className="text-xs text-slate-200/70">{search.results} results</span>
+                      </div>
+                      <div className="mt-4 flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>{formatRelativeTime(search.searchedAt)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Search stats
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Recent searches</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{searchHistory.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total results</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {searchHistory.reduce((acc, s) => acc + s.results, 0)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="user-management"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">User management & permissions</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage team members, roles, and access permissions across your organization.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {userRoles.map((role) => (
+                <div
+                  key={role.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{role.name}</h3>
+                        <span className="text-xs text-slate-200/70">{role.users} users</span>
+                      </div>
+                      <p className="mt-2 text-sm text-slate-200/70">{role.description}</p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {role.permissions.map((perm) => (
+                          <span
+                            key={`${role.id}-${perm}`}
+                            className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-slate-200/70"
+                          >
+                            {perm}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Role summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total roles</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{userRoles.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total users</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {userRoles.reduce((acc, r) => acc + r.users, 0)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="export-backup"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(251,146,60,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Export & backup</h2>
+              <p className="text-sm text-slate-100/75">
+                Export your data, create backups, and manage data retention policies.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {exportHistoryItems.map((exportItem) => (
+                <div
+                  key={exportItem.id}
+                  className={`rounded-3xl border p-6 ${exportItem.status === "completed" ? "border-emerald-400/50 bg-emerald-400/10" : "border-amber-400/50 bg-amber-400/10"}`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{exportItem.name}</h3>
+                        <span className="text-xs uppercase tracking-wider text-slate-300">
+                          {exportItem.type}
+                        </span>
+                        <span className={`text-[10px] uppercase tracking-wider ${exportItem.status === "completed" ? "text-emerald-300" : "text-amber-300"}`}>
+                          {exportItem.status}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Size</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{exportItem.size}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Exported</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {formatRelativeTime(exportItem.exportedAt)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(251,146,60,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Export summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total exports</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{exportHistoryItems.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Completed</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {exportHistoryItems.filter((e) => e.status === "completed").length}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="revenue-tracking"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Revenue tracking</h2>
+              <p className="text-sm text-slate-100/75">
+                Track revenue from sponsored posts, affiliate links, and product sales across all channels.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {revenueData.map((revenue) => (
+                <div
+                  key={revenue.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{revenue.source}</h3>
+                        <span className={`text-[10px] uppercase tracking-wider ${revenue.trend === "up" ? "text-emerald-300" : "text-red-300"}`}>
+                          {revenue.trend}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-xs text-slate-200/70">{revenue.period}</p>
+                      <div className="mt-4 grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Amount</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            ${(revenue.amount / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Growth</p>
+                          <p className={`mt-1 text-sm font-semibold ${revenue.growth > 0 ? "text-emerald-300" : "text-red-300"}`}>
+                            {revenue.growth > 0 ? "+" : ""}{revenue.growth}%
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Revenue summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total revenue</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    ${(revenueData.reduce((acc, r) => acc + r.amount, 0) / 1000).toFixed(1)}k
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Revenue sources</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{revenueData.length}</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="multi-language"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Multi-language support</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage content across multiple languages and track performance by language.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {languageSettings.map((lang) => (
+                <div
+                  key={lang.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{lang.language}</h3>
+                        <span className="text-xs uppercase tracking-wider text-slate-300">
+                          {lang.code}
+                        </span>
+                        <span className={`text-[10px] uppercase tracking-wider ${lang.status === "active" ? "text-emerald-300" : "text-slate-300"}`}>
+                          {lang.status}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Posts</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{lang.posts}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Engagement</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{lang.engagement}%</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Language stats
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active languages</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {languageSettings.filter((l) => l.status === "active").length}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total posts</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {languageSettings.reduce((acc, l) => acc + l.posts, 0)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="post-analytics"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Post analytics deep dive</h2>
+              <p className="text-sm text-slate-100/75">
+                Detailed analytics for individual posts including impressions, engagement, clicks, and saves.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {postAnalytics.map((analytics) => (
+                <div
+                  key={analytics.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{analytics.title}</h3>
+                        <span className="text-xs text-slate-200/70">
+                          {formatRelativeTime(analytics.publishedAt)}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Impressions</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(analytics.impressions / 1000).toFixed(0)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Reach</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(analytics.reach / 1000).toFixed(0)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Engagement</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(analytics.engagement / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Engagement Rate</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {analytics.engagementRate}%
+                          </p>
+                        </div>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Clicks</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{analytics.clicks}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Saves</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{analytics.saves}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Shares</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{analytics.shares}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Analytics summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Posts tracked</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{postAnalytics.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg engagement rate</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {(postAnalytics.reduce((acc, a) => acc + a.engagementRate, 0) / postAnalytics.length).toFixed(1)}%
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total impressions</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {(postAnalytics.reduce((acc, a) => acc + a.impressions, 0) / 1000).toFixed(0)}k
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="help"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Help Center</h2>
+              <p className="text-sm text-slate-100/75">
+                Find answers, tutorials, and get support for your questions.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Categories
+                </h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {helpCategories.map((category) => {
+                    const isSelected = category.id === selectedHelpCategory;
+                    return (
+                      <button
+                        key={category.id}
+                        type="button"
+                        onClick={() => setSelectedHelpCategory(category.id)}
+                        className={`rounded-2xl border p-4 text-left transition ${
+                          isSelected
+                            ? "border-white/30 bg-white/10"
+                            : "border-white/10 bg-slate-950/40 hover:border-white/20"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl">{category.icon}</span>
+                          <div className="flex-1">
+                            <p className="text-sm font-semibold text-white">{category.name}</p>
+                            <p className="mt-1 text-xs text-slate-200/70">{category.articles} articles</p>
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Popular Articles
+                </h3>
+                <div className="space-y-3">
+                  {popularArticles.map((article) => (
+                    <div
+                      key={article.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <p className="text-sm font-semibold text-white">{article.title}</p>
+                      <div className="mt-2 flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>{article.views} views</span>
+                        <span>·</span>
+                        <span>{article.helpful}% helpful</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Support Tickets
+              </h3>
+              <div className="mt-4 space-y-3">
+                {supportTickets.map((ticket) => (
+                  <div
+                    key={ticket.id}
+                    className={`rounded-2xl border p-4 ${
+                      ticket.status === "open"
+                        ? "border-rose-400/50 bg-rose-400/10"
+                        : ticket.status === "in-progress"
+                          ? "border-amber-400/50 bg-amber-400/10"
+                          : "border-white/10 bg-slate-950/40"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">{ticket.subject}</p>
+                        <div className="mt-2 flex items-center gap-3 text-xs text-slate-200/70">
+                          <span className="uppercase">{ticket.status}</span>
+                          <span>·</span>
+                          <span className="uppercase">{ticket.priority}</span>
+                          <span>·</span>
+                          <span>{formatRelativeTime(ticket.lastReply)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="changelog"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Changelog</h2>
+              <p className="text-sm text-slate-100/75">
+                Stay updated with the latest releases and upcoming features.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              {releases.map((release) => (
+                <div
+                  key={release.id}
+                  className={`rounded-2xl border p-4 ${
+                    release.type === "major"
+                      ? "border-purple-400/50 bg-purple-400/10"
+                      : "border-white/10 bg-slate-950/40"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <p className="text-lg font-semibold text-white">v{release.version}</p>
+                        <span className="text-[10px] uppercase tracking-wider text-slate-200/70">
+                          {release.type}
+                        </span>
+                      </div>
+                      <p className="mt-1 text-xs text-slate-200/70">
+                        {formatRelativeTime(release.date)}
+                      </p>
+                      {release.features.length > 0 && (
+                        <div className="mt-3">
+                          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                            New Features
+                          </p>
+                          <ul className="space-y-1 text-xs text-slate-200/70">
+                            {release.features.map((feature, idx) => (
+                              <li key={idx} className="flex items-center gap-2">
+                                <span className="text-emerald-300">+</span>
+                                <span>{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {release.improvements.length > 0 && (
+                        <div className="mt-3">
+                          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                            Improvements
+                          </p>
+                          <ul className="space-y-1 text-xs text-slate-200/70">
+                            {release.improvements.map((improvement, idx) => (
+                              <li key={idx} className="flex items-center gap-2">
+                                <span className="text-blue-300">~</span>
+                                <span>{improvement}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {release.fixes.length > 0 && (
+                        <div className="mt-3">
+                          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                            Fixes
+                          </p>
+                          <ul className="space-y-1 text-xs text-slate-200/70">
+                            {release.fixes.map((fix, idx) => (
+                              <li key={idx} className="flex items-center gap-2">
+                                <span className="text-rose-300">×</span>
+                                <span>{fix}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Upcoming Features
+              </h3>
+              <div className="mt-4 space-y-3">
+                {upcomingFeatures.map((feature) => (
+                  <div
+                    key={feature.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <p className="text-sm font-semibold text-white">{feature.title}</p>
+                    <p className="mt-1 text-xs text-slate-200/70">{feature.description}</p>
+                    <div className="mt-3 flex items-center gap-3 text-xs text-slate-200/70">
+                      <span className="uppercase">{feature.status}</span>
+                      <span>·</span>
+                      <span>{feature.estimatedRelease}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="mobile"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Mobile Apps</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage your social media on the go with our mobile applications.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Available Apps
+                </h3>
+                <div className="space-y-3">
+                  {mobileApps.map((app) => (
+                    <div
+                      key={app.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <p className="text-lg font-semibold text-white">{app.platform}</p>
+                          <p className="mt-1 text-xs text-slate-200/70">v{app.version}</p>
+                          <div className="mt-3 flex items-center gap-4 text-xs text-slate-200/70">
+                            <span>{app.downloads.toLocaleString()} downloads</span>
+                            <span>·</span>
+                            <span>⭐ {app.rating}</span>
+                            <span>·</span>
+                            <span>{app.reviews} reviews</span>
+                          </div>
+                        </div>
+                        <span
+                          className={`text-[10px] uppercase tracking-wider ${
+                            app.status === "active" ? "text-emerald-300" : "text-slate-300"
+                          }`}
+                        >
+                          {app.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Features
+                </h3>
+                <div className="space-y-3">
+                  {mobileFeatures.map((feature) => (
+                    <div
+                      key={feature.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-white">{feature.name}</p>
+                          <p className="mt-1 text-xs text-slate-200/70">{feature.description}</p>
+                        </div>
+                        <span
+                          className={`text-[10px] uppercase tracking-wider ${
+                            feature.enabled ? "text-emerald-300" : "text-slate-300"
+                          }`}
+                        >
+                          {feature.enabled ? "Enabled" : "Disabled"}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Device Usage
+              </h3>
+              <div className="mt-4 space-y-3">
+                {deviceStats.map((stat) => (
+                  <div key={stat.device} className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-white">{stat.device}</span>
+                      <span className="text-sm font-semibold text-white">{stat.percentage}%</span>
+                    </div>
+                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+                      <div
+                        className="h-full bg-blue-400"
+                        style={{ width: `${stat.percentage}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="brand"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Brand Guidelines</h2>
+              <p className="text-sm text-slate-100/75">
+                Access brand assets, guidelines, and usage information.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Brand Assets
+                </h3>
+                <div className="space-y-3">
+                  {brandAssets.map((asset) => (
+                    <div
+                      key={asset.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-white">{asset.name}</p>
+                          <div className="mt-2 flex items-center gap-3 text-xs text-slate-200/70">
+                            <span className="uppercase">{asset.type}</span>
+                            <span>·</span>
+                            <span className="uppercase">{asset.format}</span>
+                            <span>·</span>
+                            <span>{asset.size}</span>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                        >
+                          Download
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Brand Colors
+                </h3>
+                <div className="grid grid-cols-4 gap-3">
+                  {Object.entries(brandGuidelines.colors).map(([name, color]) => (
+                    <div key={name} className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                      <div
+                        className="mb-2 h-12 w-full rounded-lg"
+                        style={{ backgroundColor: color }}
+                      />
+                      <p className="text-xs font-semibold text-white capitalize">{name}</p>
+                      <p className="mt-1 font-mono text-xs text-slate-200/70">{color}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Usage Statistics
+              </h3>
+              <div className="mt-4 space-y-3">
+                {brandUsage.map((usage) => (
+                  <div
+                    key={usage.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">{usage.platform}</p>
+                        <div className="mt-2 flex items-center gap-3 text-xs text-slate-200/70">
+                          <span>{usage.instances} instances</span>
+                          <span>·</span>
+                          <span>Last used {formatRelativeTime(usage.lastUsed)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="backup"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Backup & Restore</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage automated backups and restore points for your data.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Backup Schedules
+                </h3>
+                <div className="space-y-3">
+                  {backupSchedules.map((schedule) => (
+                    <div
+                      key={schedule.id}
+                      className={`rounded-2xl border p-4 ${
+                        schedule.status === "active"
+                          ? "border-emerald-400/50 bg-emerald-400/10"
+                          : "border-white/10 bg-slate-950/40"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-white">{schedule.name}</p>
+                          <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-slate-200/70">
+                            <span className="uppercase">{schedule.frequency}</span>
+                            <span>·</span>
+                            <span>{schedule.time}</span>
+                            <span>·</span>
+                            <span>{schedule.size}</span>
+                          </div>
+                          <div className="mt-3 flex items-center gap-4 text-xs text-slate-200/70">
+                            <span>Last: {formatRelativeTime(schedule.lastRun)}</span>
+                            <span>·</span>
+                            <span>Next: {formatRelativeTime(schedule.nextRun)}</span>
+                          </div>
+                        </div>
+                        <span
+                          className={`text-[10px] uppercase tracking-wider ${
+                            schedule.status === "active" ? "text-emerald-300" : "text-slate-300"
+                          }`}
+                        >
+                          {schedule.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Backup History
+                </h3>
+                <div className="space-y-3">
+                  {backupHistory.map((backup) => (
+                    <div
+                      key={backup.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-white">
+                            {backup.type === "automatic" ? "Automatic Backup" : "Manual Backup"}
+                          </p>
+                          <div className="mt-2 flex items-center gap-3 text-xs text-slate-200/70">
+                            <span>{backup.size}</span>
+                            <span>·</span>
+                            <span>{formatRelativeTime(backup.date)}</span>
+                          </div>
+                        </div>
+                        <span
+                          className={`text-[10px] uppercase tracking-wider ${
+                            backup.status === "completed" ? "text-emerald-300" : "text-amber-300"
+                          }`}
+                        >
+                          {backup.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Restore Points
+              </h3>
+              <div className="mt-4 space-y-3">
+                {restorePoints.map((point) => (
+                  <div
+                    key={point.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">{point.name}</p>
+                        <div className="mt-2 flex items-center gap-3 text-xs text-slate-200/70">
+                          <span>{point.size}</span>
+                          <span>·</span>
+                          <span>{formatRelativeTime(point.date)}</span>
+                        </div>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {point.items.map((item) => (
+                            <span
+                              key={item}
+                              className="rounded-full bg-white/10 px-2 py-1 text-[10px] text-slate-200/70"
+                            >
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white hover:border-white/40 hover:bg-white/15"
+                      >
+                        Restore
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="calendar-views"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(99,102,241,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content calendar views</h2>
+              <p className="text-sm text-slate-100/75">
+                Switch between different calendar views to manage your content schedule effectively.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {calendarViews.map((view) => (
+                <div
+                  key={view.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{view.name}</h3>
+                        <span className="text-xs text-slate-200/70">{view.dateRange}</span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-3 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Total posts</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{view.posts}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Scheduled</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{view.scheduled}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Drafts</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{view.draft}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(99,102,241,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  View summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Available views</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{calendarViews.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total posts</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {calendarViews.reduce((acc, v) => acc + v.posts, 0)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="team-collaboration"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Team collaboration tools</h2>
+              <p className="text-sm text-slate-100/75">
+                Streamline team workflows with review boards, creative briefs, and asset requests.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {collaborationTools.map((tool) => (
+                <div
+                  key={tool.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{tool.name}</h3>
+                        <span className="text-xs uppercase tracking-wider text-slate-300">
+                          {tool.type}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-3 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Active members</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{tool.activeMembers}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Pending reviews</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{tool.pendingReviews}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Completed today</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{tool.completedToday}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Collaboration summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active tools</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{collaborationTools.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total pending</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {collaborationTools.reduce((acc, t) => acc + t.pendingReviews, 0)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="performance-predictions"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content performance predictions</h2>
+              <p className="text-sm text-slate-100/75">
+                AI-powered predictions for post performance to optimize your content strategy.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {performancePredictions.map((prediction) => (
+                <div
+                  key={prediction.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{prediction.postTitle}</h3>
+                        <span className="text-xs text-slate-200/70">{prediction.confidence}% confidence</span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Predicted reach</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(prediction.predictedReach / 1000).toFixed(0)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Predicted engagement</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(prediction.predictedEngagement / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Best time</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{prediction.bestTime}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Best day</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{prediction.bestDay}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Predictions summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active predictions</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{performancePredictions.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg confidence</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {Math.round(performancePredictions.reduce((acc, p) => acc + p.confidence, 0) / performancePredictions.length)}%
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="automated-suggestions"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(251,146,60,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Automated content suggestions</h2>
+              <p className="text-sm text-slate-100/75">
+                AI-powered suggestions to improve your content strategy and engagement.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {automatedSuggestions.map((suggestion) => (
+                <div
+                  key={suggestion.id}
+                  className={`rounded-3xl border p-6 ${suggestion.priority === "high" ? "border-red-400/50 bg-red-400/10" : suggestion.priority === "medium" ? "border-amber-400/50 bg-amber-400/10" : "border-white/15 bg-white/5"}`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{suggestion.title}</h3>
+                        <span className={`text-[10px] uppercase tracking-wider ${suggestion.priority === "high" ? "text-red-300" : suggestion.priority === "medium" ? "text-amber-300" : "text-slate-300"}`}>
+                          {suggestion.priority}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm text-slate-200/70">{suggestion.reason}</p>
+                      <div className="mt-4 flex items-center gap-4 text-xs">
+                        <div>
+                          <p className="text-slate-200/60">Estimated engagement</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {suggestion.estimatedEngagement}%
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(251,146,60,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Suggestions summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active suggestions</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{automatedSuggestions.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">High priority</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {automatedSuggestions.filter((s) => s.priority === "high").length}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="monitoring-dashboard"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Social media monitoring</h2>
+              <p className="text-sm text-slate-100/75">
+                Real-time alerts for mentions, hashtags, and competitor activity across platforms.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {monitoringAlerts.map((alert) => (
+                <div
+                  key={alert.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[alert.source as ChannelId].dot}`} />
+                        <h3 className="text-lg font-semibold text-white">{alert.message}</h3>
+                        <span className={`text-[10px] uppercase tracking-wider ${alert.sentiment === "positive" ? "text-emerald-300" : alert.sentiment === "negative" ? "text-red-300" : "text-slate-300"}`}>
+                          {alert.sentiment}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-xs text-slate-200/70 capitalize">{alert.type}</p>
+                      <div className="mt-4 flex items-center gap-4 text-xs">
+                        <div>
+                          <p className="text-slate-200/60">Reach</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(alert.reach / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-slate-200/60">Time</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {formatRelativeTime(alert.at)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Monitoring summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active alerts</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{monitoringAlerts.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Positive sentiment</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {monitoringAlerts.filter((a) => a.sentiment === "positive").length}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="scheduling-optimization"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Scheduling optimization</h2>
+              <p className="text-sm text-slate-100/75">
+                AI-powered recommendations for optimal posting times to maximize engagement.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {schedulingOptimization.map((opt) => (
+                <div
+                  key={opt.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[opt.channel].dot}`} />
+                        <h3 className="text-lg font-semibold text-white">
+                          {channelCatalog[opt.channel].label}
+                        </h3>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Optimal time</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{opt.optimalTime}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Optimal day</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{opt.optimalDay}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Expected engagement</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{opt.expectedEngagement}%</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Improvement</p>
+                          <p className="mt-1 text-sm font-semibold text-emerald-300">
+                            +{opt.improvement.toFixed(1)}%
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Optimization summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Channels optimized</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{schedulingOptimization.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg improvement</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    +{Math.round(schedulingOptimization.reduce((acc, o) => acc + o.improvement, 0) / schedulingOptimization.length)}%
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="audience-growth"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Audience growth tracking</h2>
+              <p className="text-sm text-slate-100/75">
+                Monitor follower growth, growth rates, and trends across all your channels.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {audienceGrowth.map((growth) => (
+                <div
+                  key={growth.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[growth.channel].dot}`} />
+                        <h3 className="text-lg font-semibold text-white">
+                          {channelCatalog[growth.channel].label}
+                        </h3>
+                        <span className={`text-[10px] uppercase tracking-wider ${growth.trend === "up" ? "text-emerald-300" : "text-red-300"}`}>
+                          {growth.trend}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Current followers</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(growth.currentFollowers / 1000).toFixed(0)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Growth this week</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            +{(growth.growthThisWeek / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Growth rate</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{growth.growthRate}%</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Growth summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total followers</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {(audienceGrowth.reduce((acc, g) => acc + g.currentFollowers, 0) / 1000).toFixed(0)}k
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Weekly growth</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    +{(audienceGrowth.reduce((acc, g) => acc + g.growthThisWeek, 0) / 1000).toFixed(1)}k
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="engagement-analysis"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Engagement rate analysis</h2>
+              <p className="text-sm text-slate-100/75">
+                Deep dive into engagement metrics and compare against industry benchmarks.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {engagementRateAnalysis.map((analysis) => (
+                <div
+                  key={analysis.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{analysis.metric}</h3>
+                        <span className={`text-[10px] uppercase tracking-wider ${analysis.performance === "above_average" ? "text-emerald-300" : "text-red-300"}`}>
+                          {analysis.performance.replace("_", " ")}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-3 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Your value</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{analysis.value}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Benchmark</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{analysis.benchmark}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Change</p>
+                          <p className={`mt-1 text-sm font-semibold ${analysis.change > 0 ? "text-emerald-300" : "text-red-300"}`}>
+                            {analysis.change > 0 ? "+" : ""}{analysis.change}%
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Analysis summary
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Metrics tracked</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{engagementRateAnalysis.length}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Above benchmark</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {engagementRateAnalysis.filter((a) => a.performance === "above_average").length}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="white-label"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">White Label Settings</h2>
+              <p className="text-sm text-slate-100/75">
+                Customize the platform with your brand identity.
+              </p>
+            </header>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Customization Options
+                </h3>
+                <div className="space-y-3">
+                  {customizationOptions.map((option) => (
+                    <div
+                      key={option.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-white">{option.name}</p>
+                          <p className="mt-1 text-xs text-slate-200/70">
+                            {option.type === "color" ? (
+                              <span className="flex items-center gap-2">
+                                <span
+                                  className="inline-block h-4 w-4 rounded"
+                                  style={{ backgroundColor: option.value }}
+                                />
+                                {option.value}
+                              </span>
+                            ) : (
+                              option.value
+                            )}
+                          </p>
+                        </div>
+                        <span className="text-[10px] uppercase tracking-wider text-slate-300">
+                          {option.editable ? "Editable" : "Locked"}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Domain Settings
+              </h3>
+              <div className="mt-4 space-y-3">
+                {domainSettings.map((domain) => (
+                  <div
+                    key={domain.id}
+                    className={`rounded-2xl border p-4 ${
+                      domain.status === "active"
+                        ? "border-emerald-400/50 bg-emerald-400/10"
+                        : "border-amber-400/50 bg-amber-400/10"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">{domain.domain}</p>
+                        <div className="mt-2 flex items-center gap-3 text-xs text-slate-200/70">
+                          <span>SSL: {domain.ssl ? "✓" : "✗"}</span>
+                          {domain.lastVerified && (
+                            <>
+                              <span>·</span>
+                              <span>Verified {formatRelativeTime(domain.lastVerified)}</span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                      <span
+                        className={`text-[10px] uppercase tracking-wider ${
+                          domain.status === "active" ? "text-emerald-300" : "text-amber-300"
+                        }`}
+                      >
+                        {domain.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="advanced-analytics"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl borde
