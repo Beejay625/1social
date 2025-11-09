@@ -1256,10 +1256,21 @@ export default function Home() {
                     channelCatalog[plan.channels[0]]?.accent ??
                     "from-slate-200 to-slate-400";
                   const statusBadge = scheduleStatusStyles[plan.status];
+                  const isSelected =
+                    workflowContext.selectedPlan?.id === plan.id;
+                  const canApprove = plan.approvalSteps.some(
+                    (step) =>
+                      step.status === "pending" || step.status === "changes",
+                  );
+
                   return (
                     <li
                       key={plan.id}
-                      className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-5 shadow-lg shadow-sky-900/20"
+                      className={`relative overflow-hidden rounded-3xl border bg-white/5 p-5 shadow-lg shadow-sky-900/20 transition ${
+                        isSelected
+                          ? "border-white/60 ring-2 ring-white/30"
+                          : "border-white/10 hover:border-white/30"
+                      }`}
                     >
                       <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-transparent via-white/40 to-transparent" />
                       <div className="flex flex-col gap-4">
@@ -1304,6 +1315,50 @@ export default function Home() {
                               {channelCatalog[channelId].label}
                             </span>
                           ))}
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {plan.approvalSteps.map((step) => {
+                            const token = approvalStatusTokens[step.status];
+                            return (
+                              <span
+                                key={`${plan.id}-${step.id}`}
+                                className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wide ${token.badge}`}
+                              >
+                                <span
+                                  className={`h-1.5 w-1.5 rounded-full ${token.dot}`}
+                                />
+                                {step.label}
+                                <span className="text-[10px] uppercase tracking-wider text-white/70">
+                                  {formatTimeUntil(step.due)}
+                                </span>
+                              </span>
+                            );
+                          })}
+                        </div>
+                        <div className="flex flex-wrap gap-3">
+                          <button
+                            type="button"
+                            onClick={() => handleApprovalAction(plan.id, "approve")}
+                            disabled={!canApprove}
+                            className="inline-flex items-center gap-2 rounded-full border border-white/30 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-white transition hover:border-white/60 hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            Approve step
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleApprovalAction(plan.id, "changes")}
+                            className="inline-flex items-center gap-2 rounded-full border border-amber-400/60 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-amber-100 transition hover:bg-amber-400/20"
+                          >
+                            Request edits
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleWorkflowSelect(plan.id)}
+                            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-white transition hover:border-white/40 hover:bg-white/10"
+                            aria-pressed={isSelected}
+                          >
+                            Review workflow
+                          </button>
                         </div>
                       </div>
                     </li>
