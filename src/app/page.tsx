@@ -2408,6 +2408,16 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "scheduling-optimization", label: "Scheduling Optimization" },
   { id: "audience-growth", label: "Audience Growth" },
   { id: "engagement-analysis", label: "Engagement Analysis" },
+  { id: "performance-benchmarks", label: "Performance Benchmarks" },
+  { id: "content-repurposing", label: "Content Repurposing" },
+  { id: "roi-calculator", label: "ROI Calculator" },
+  { id: "approval-workflows", label: "Approval Workflows" },
+  { id: "compliance-legal", label: "Compliance & Legal" },
+  { id: "calendar-templates", label: "Calendar Templates" },
+  { id: "influencer-outreach", label: "Influencer Outreach" },
+  { id: "crisis-response", label: "Crisis Response" },
+  { id: "ab-test-results", label: "A/B Test Results" },
+  { id: "listening-insights", label: "Listening Insights" },
 ];
 const chartColorTokens = {
   reach: "text-sky-300",
