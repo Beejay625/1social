@@ -3355,6 +3355,11 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "industry-benchmarking", label: "Industry Benchmarking" },
   { id: "calendar-ai-assistant", label: "Calendar AI Assistant" },
   { id: "custom-report-builder", label: "Custom Report Builder" },
+  { id: "content-forecasting", label: "Content Forecasting" },
+  { id: "content-attribution", label: "Content Attribution" },
+  { id: "content-benchmarking", label: "Content Benchmarking" },
+  { id: "multi-language-management", label: "Multi-language Management" },
+  { id: "performance-attribution", label: "Performance Attribution" },
 ];
 const chartColorTokens = {
   reach: "text-sky-300",
