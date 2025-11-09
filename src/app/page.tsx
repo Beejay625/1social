@@ -18750,6 +18750,249 @@ export default function Home() {
           </aside>
         </section>
 
+        {/* Content Recycling */}
+        <section
+          id="content-recycling"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content Recycling</h2>
+              <p className="text-sm text-slate-100/75">
+                Automatically repost top-performing content to maximize reach and engagement.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {recycledContent.map((content) => (
+                <div
+                  key={content.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-white">{content.originalPost}</h3>
+                      <div className="mt-4 grid grid-cols-3 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Times Reposted</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{content.reposted}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Total Engagement</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {content.engagement.toLocaleString()}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Last Repost</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {formatRelativeTime(content.lastRepost)}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="mt-4 rounded-xl border border-emerald-400/30 bg-emerald-400/10 p-3">
+                        <p className="text-xs text-slate-200/60">Next Scheduled</p>
+                        <p className="mt-1 text-sm font-semibold text-emerald-300">
+                          {formatRelativeTime(content.nextScheduled)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6">
+              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Recycling Rules
+              </h3>
+              <div className="space-y-3">
+                {recyclingRules.map((rule) => (
+                  <div
+                    key={rule.id}
+                    className={`rounded-2xl border p-4 ${
+                      rule.enabled
+                        ? "border-emerald-400/50 bg-emerald-400/10"
+                        : "border-white/10 bg-slate-950/40"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">{rule.name}</p>
+                        <div className="mt-2 flex items-center gap-4 text-xs text-slate-200/70">
+                          <span>Threshold: {rule.threshold}+ engagement</span>
+                          <span>·</span>
+                          <span>Frequency: {rule.frequency}</span>
+                          <span>·</span>
+                          <span>{rule.executions} executions</span>
+                        </div>
+                      </div>
+                      <span
+                        className={`text-[10px] uppercase tracking-wider ${
+                          rule.enabled ? "text-emerald-300" : "text-slate-300"
+                        }`}
+                      >
+                        {rule.enabled ? "Active" : "Inactive"}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Recycling Stats
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Recycled</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{recyclingStats.totalRecycled}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg Engagement Increase</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">
+                    +{recyclingStats.avgEngagementIncrease}%
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Time Saved</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{recyclingStats.timeSaved}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Top Performer</p>
+                  <p className="mt-1 text-sm font-semibold text-white">{recyclingStats.topPerformer}</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Mobile App Management */}
+        <section
+          id="mobile-management"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Mobile App Management</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage mobile app versions, features, and user analytics across iOS and Android.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {mobileApps.map((app) => (
+                <div
+                  key={app.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{app.platform}</h3>
+                        <span className="rounded-full bg-blue-400/20 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-blue-300">
+                          v{app.version}
+                        </span>
+                        <span
+                          className={`text-[10px] uppercase tracking-wider ${
+                            app.status === "active" ? "text-emerald-300" : "text-slate-300"
+                          }`}
+                        >
+                          {app.status}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-3 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Downloads</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(app.downloads / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Rating</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            ⭐ {app.rating} ({app.reviews} reviews)
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Last Updated</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {formatRelativeTime(app.lastUpdated)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6">
+              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Mobile Features
+              </h3>
+              <div className="grid grid-cols-2 gap-3">
+                {mobileFeatures.map((feature) => (
+                  <div
+                    key={feature.id}
+                    className={`rounded-2xl border p-4 ${
+                      feature.enabled
+                        ? "border-emerald-400/50 bg-emerald-400/10"
+                        : "border-white/10 bg-slate-950/40"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">{feature.name}</p>
+                        <p className="mt-1 text-xs text-slate-200/70">{feature.description}</p>
+                      </div>
+                      <span
+                        className={`text-[10px] uppercase tracking-wider ${
+                          feature.enabled ? "text-emerald-300" : "text-slate-300"
+                        }`}
+                      >
+                        {feature.enabled ? "ON" : "OFF"}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Device Statistics
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                {deviceStats.map((stat, idx) => (
+                  <div key={idx} className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm font-semibold text-white">{stat.device}</p>
+                      <p className="text-sm font-semibold text-white">{stat.percentage}%</p>
+                    </div>
+                    <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-slate-800">
+                      <div
+                        className="h-full bg-gradient-to-r from-blue-400 to-purple-400"
+                        style={{ width: `${stat.percentage}%` }}
+                      />
+                    </div>
+                    <p className="mt-1 text-xs text-slate-200/60">{stat.users} users</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
       </main>
     </div>
   );
