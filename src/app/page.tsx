@@ -17763,6 +17763,487 @@ export default function Home() {
           </aside>
         </section>
 
+        {/* Social Media Audit */}
+        <section
+          id="social-audit"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Social Media Audit</h2>
+              <p className="text-sm text-slate-100/75">
+                Comprehensive audit of your social media presence with actionable insights and recommendations.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {auditCategories.map((category) => (
+                <div
+                  key={category.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{category.name}</h3>
+                        <span className="text-xs text-slate-200/70">
+                          Score: {category.score}/{category.maxScore}
+                        </span>
+                      </div>
+                      <div className="mt-4 space-y-2">
+                        {category.issues.map((issue) => (
+                          <div
+                            key={issue.id}
+                            className={`rounded-xl border p-3 ${
+                              issue.severity === "critical"
+                                ? "border-rose-400/50 bg-rose-400/10"
+                                : issue.severity === "warning"
+                                  ? "border-amber-400/50 bg-amber-400/10"
+                                  : "border-blue-400/50 bg-blue-400/10"
+                            }`}
+                          >
+                            <div className="flex items-start justify-between">
+                              <div className="flex-1">
+                                <p className="text-sm font-semibold text-white">{issue.title}</p>
+                                <p className="mt-1 text-xs text-slate-200/70">{issue.description}</p>
+                                <p className="mt-1 text-xs text-slate-200/60">Impact: {issue.impact}</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      {category.recommendations.length > 0 && (
+                        <div className="mt-4">
+                          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                            Recommendations
+                          </p>
+                          <ul className="space-y-1">
+                            {category.recommendations.map((rec, idx) => (
+                              <li key={idx} className="text-xs text-slate-200/70">
+                                • {rec}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Audit Score
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Overall Score</p>
+                  <p className="mt-1 text-3xl font-semibold text-white">{auditScore.overall}</p>
+                  <p className="mt-1 text-xs text-emerald-300">
+                    {auditScore.trend === "up" ? "↑" : "↓"} {Math.abs(auditScore.overall - auditScore.previous)} from last audit
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Last Run</p>
+                  <p className="mt-1 text-sm font-semibold text-white">
+                    {formatRelativeTime(auditScore.lastRun)}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Next Scheduled</p>
+                  <p className="mt-1 text-sm font-semibold text-white">
+                    {formatRelativeTime(auditScore.nextScheduled)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Content Performance Predictor */}
+        <section
+          id="content-predictor"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Content Performance Predictor</h2>
+              <p className="text-sm text-slate-100/75">
+                AI-powered predictions for content performance before publishing.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {contentPredictions.map((prediction) => (
+                <div
+                  key={prediction.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <p className="text-sm text-slate-200/80 line-clamp-2">{prediction.content}</p>
+                      <div className="mt-4 grid grid-cols-3 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Predicted Engagement</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {prediction.predictedEngagement.toLocaleString()}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Predicted Reach</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(prediction.predictedReach / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Confidence</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{prediction.confidence}%</p>
+                        </div>
+                      </div>
+                      <div className="mt-4">
+                        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                          Recommendations
+                        </p>
+                        <ul className="space-y-1">
+                          {prediction.recommendations.map((rec, idx) => (
+                            <li key={idx} className="text-xs text-slate-200/70">
+                              • {rec}
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="mt-3 flex items-center gap-2 text-xs text-slate-200/70">
+                          <span>Best time: {prediction.bestTimeToPost}</span>
+                          <span>·</span>
+                          <span>Channels: {prediction.bestChannels.join(", ")}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Prediction Accuracy
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Engagement</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{predictionAccuracy.engagement}%</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Reach</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{predictionAccuracy.reach}%</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Overall Accuracy</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">{predictionAccuracy.overall}%</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Industry Benchmarking */}
+        <section
+          id="industry-benchmarking"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Industry Benchmarking</h2>
+              <p className="text-sm text-slate-100/75">
+                Compare your performance against industry standards and identify opportunities.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {benchmarkComparisons.map((benchmark, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{benchmark.metric}</h3>
+                        <span
+                          className={`text-xs ${
+                            benchmark.status === "above"
+                              ? "text-emerald-300"
+                              : benchmark.status === "below"
+                                ? "text-rose-300"
+                                : "text-slate-300"
+                          }`}
+                        >
+                          {benchmark.percentile}th percentile
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Your Value</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {benchmark.yourValue.toLocaleString()}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Industry Average</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {benchmark.industryAvg.toLocaleString()}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 space-y-3">
+              <h3 className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Insights
+              </h3>
+              {benchmarkInsights.map((insight) => (
+                <div
+                  key={insight.id}
+                  className={`rounded-2xl border p-4 ${
+                    insight.type === "strength"
+                      ? "border-emerald-400/50 bg-emerald-400/10"
+                      : "border-amber-400/50 bg-amber-400/10"
+                  }`}
+                >
+                  <p className="text-sm font-semibold text-white">{insight.title}</p>
+                  <p className="mt-1 text-xs text-slate-200/70">{insight.description}</p>
+                  <p className="mt-2 text-xs text-slate-200/60">→ {insight.recommendation}</p>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Industry Benchmarks
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                {industryBenchmarks.map((benchmark, idx) => (
+                  <div key={idx} className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                    <p className="text-sm font-semibold text-white">{benchmark.industry}</p>
+                    <div className="mt-2 space-y-1 text-xs text-slate-200/70">
+                      <p>Engagement: {benchmark.avgEngagementRate}%</p>
+                      <p>Avg Reach: {(benchmark.avgReach / 1000).toFixed(1)}k</p>
+                      <p>Posting: {benchmark.avgPostingFrequency}/week</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Calendar AI Assistant */}
+        <section
+          id="calendar-ai-assistant"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Calendar AI Assistant</h2>
+              <p className="text-sm text-slate-100/75">
+                AI-powered suggestions for optimal posting times and content scheduling.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {calendarAISuggestions.map((suggestion) => (
+                <div
+                  key={suggestion.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <span
+                          className={`rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-wider ${
+                            suggestion.priority === "high"
+                              ? "bg-rose-400/20 text-rose-300"
+                              : suggestion.priority === "medium"
+                                ? "bg-amber-400/20 text-amber-300"
+                                : "bg-blue-400/20 text-blue-300"
+                          }`}
+                        >
+                          {suggestion.type}
+                        </span>
+                        <h3 className="text-lg font-semibold text-white">{suggestion.title}</h3>
+                      </div>
+                      <p className="mt-2 text-sm text-slate-200/70">{suggestion.description}</p>
+                      <div className="mt-4 flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>
+                          {new Date(suggestion.suggestedDate).toLocaleDateString()} at {suggestion.suggestedTime}
+                        </span>
+                        <span>·</span>
+                        <span>{suggestion.channels.join(", ")}</span>
+                      </div>
+                      <div className="mt-3 rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                        <p className="text-xs text-slate-200/60">Reasoning</p>
+                        <p className="mt-1 text-xs text-slate-200/80">{suggestion.reasoning}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  AI Stats
+                </h3>
+              </div>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Suggestions Accepted</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{calendarAIStats.suggestionsAccepted}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg Improvement</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">
+                    +{calendarAIStats.avgImprovement}%
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Time Saved</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{calendarAIStats.timeSaved}</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Custom Report Builder */}
+        <section
+          id="custom-report-builder"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Custom Report Builder</h2>
+              <p className="text-sm text-slate-100/75">
+                Create custom reports with your own metrics and automated scheduling.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {reportTemplates.map((template) => (
+                <div
+                  key={template.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{template.name}</h3>
+                        <span className="rounded-full bg-purple-400/20 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-purple-300">
+                          {template.category}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm text-slate-200/70">{template.description}</p>
+                      <div className="mt-4">
+                        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                          Metrics
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {template.metrics.map((metric, idx) => (
+                            <span
+                              key={idx}
+                              className="rounded-full bg-white/10 px-3 py-1 text-xs text-slate-200/80"
+                            >
+                              {metric}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="mt-4 flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>Frequency: {template.frequency}</span>
+                        <span>·</span>
+                        <span>{template.recipients.length} recipients</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {reportCustomMetrics.length > 0 && (
+              <div className="mt-6">
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Custom Metrics
+                </h3>
+                <div className="space-y-3">
+                  {reportCustomMetrics.map((metric) => (
+                    <div
+                      key={metric.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <p className="text-sm font-semibold text-white">{metric.name}</p>
+                      <p className="mt-1 text-xs text-slate-200/70">{metric.description}</p>
+                      <code className="mt-2 block rounded-lg bg-slate-900/50 p-2 text-xs text-emerald-300">
+                        {metric.formula}
+                      </code>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Report History
+                </h3>
+              </div>
+              <div className="mt-4 space-y-3">
+                {reportHistory.map((report) => (
+                  <div
+                    key={report.id}
+                    className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <p className="text-xs text-slate-200/60">
+                      {formatRelativeTime(report.generatedAt)}
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-white">
+                      {reportTemplates.find((t) => t.id === report.templateId)?.name}
+                    </p>
+                    <div className="mt-2 flex items-center gap-2 text-xs text-slate-200/70">
+                      <span className={`${report.status === "sent" ? "text-emerald-300" : "text-slate-300"}`}>
+                        {report.status}
+                      </span>
+                      <span>·</span>
+                      <span>{report.recipients} recipients</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </section>
+
       </main>
     </div>
   );
