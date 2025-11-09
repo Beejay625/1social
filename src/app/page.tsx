@@ -1703,7 +1703,7 @@ export default function Home() {
               <div className="space-y-4">
                 <h1 className="text-4xl font-semibold leading-tight text-white md:text-5xl lg:text-[52px]">
                   Align your voice across every channel.
-            </h1>
+          </h1>
                 <p className="text-lg leading-relaxed text-slate-100/80 md:text-xl">
                   Share once, syndicate instantly, and keep Reown wallet
                   signatures ready for Farcaster. This preview shows how your
@@ -1790,8 +1790,8 @@ export default function Home() {
                 </p>
                     <p className="text-xs uppercase tracking-[0.3em] text-slate-300/60">
                   {activeNetwork?.name ?? "No network selected"}
-                </p>
-              </div>
+          </p>
+        </div>
 
                   <ul className="grid gap-3 text-sm text-slate-200/80 sm:grid-cols-2 sm:gap-4">
                     <li className="flex items-start gap-3">
@@ -1921,7 +1921,7 @@ export default function Home() {
                   </button>
                 );
               })}
-            </div>
+        </div>
 
             <form
               onSubmit={handleSubmit}
@@ -2942,6 +2942,173 @@ export default function Home() {
                     strokeWidth="3"
                   />
                 </svg>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Best time heatmap
+                </h3>
+                <span className="text-xs text-slate-200/70">
+                  Peak slot · {audienceInsights.topSlot.day} · {audienceInsights.topSlot.slot}
+                </span>
+              </div>
+              <div className="mt-4 overflow-hidden rounded-3xl border border-white/10 bg-slate-950/40">
+                <table className="w-full border-collapse text-xs text-slate-100">
+                  <thead>
+                    <tr>
+                      <th className="px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400">
+                        Slot
+                      </th>
+                      {audienceDays.map((day) => (
+                        <th
+                          key={`heatmap-day-${day}`}
+                          className="px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400"
+                        >
+                          {day}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bestTimeGrid.map((row) => (
+                      <tr key={`heatmap-${row.slot}`}>
+                        <th className="px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400">
+                          {row.slot}
+                        </th>
+                        {row.values.map((value, index) => (
+                          <td key={`heatmap-${row.slot}-${index}`} className="px-3 py-2">
+                            <span
+                              className={`flex h-8 w-12 items-center justify-center rounded-xl text-[11px] font-semibold ${heatLevelClass(
+                                value,
+                              )}`}
+                            >
+                              {value}
+                            </span>
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                    Channel benchmarking
+                  </h3>
+                  <span className="text-xs text-slate-200/70">Cohort median</span>
+                </div>
+                <div className="mt-4 space-y-4">
+                  {benchmarkMetrics.map((metric) => (
+                    <div key={metric.id} className="space-y-3">
+                      <div className="flex items-center justify-between text-sm text-white">
+                        <span>{metric.label}</span>
+                        <span className="text-xs text-slate-200/70">
+                          Cohort {metric.cohort}%
+                        </span>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between text-xs text-slate-200/70">
+                          <span>Farcaster</span>
+                          <span>{metric.farcaster}%</span>
+                        </div>
+                        <div className="h-2 rounded-full bg-white/10">
+                          <div
+                            className={`h-full rounded-full bg-gradient-to-r from-purple-400 via-fuchsia-500 to-orange-300 ${percentWidthClass(
+                              metric.farcaster,
+                            )}`}
+                          />
+                        </div>
+                        <div className="flex items-center justify-between text-xs text-slate-200/70">
+                          <span>Instagram</span>
+                          <span>{metric.instagram}%</span>
+                        </div>
+                        <div className="h-2 rounded-full bg-white/10">
+                          <div
+                            className={`h-full rounded-full bg-gradient-to-r from-amber-400 via-pink-500 to-red-400 ${percentWidthClass(
+                              metric.instagram,
+                            )}`}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Community sentiment
+                </h3>
+                <div className="mt-4 space-y-3">
+                  {sentimentSamples.map((sample) => (
+                    <div
+                      key={sample.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <p className="text-sm font-semibold text-white">{sample.segment}</p>
+                        <span className="text-xs text-emerald-200">
+                          +{sample.positive - sample.negative} net
+                        </span>
+                      </div>
+                      <div className="mt-3 grid grid-cols-3 gap-2 text-[11px] text-slate-200/70">
+                        <span>Pos {sample.positive}%</span>
+                        <span>Neu {sample.neutral}%</span>
+                        <span>Neg {sample.negative}%</span>
+                      </div>
+                      <p className="mt-3 text-xs text-slate-100/75">{sample.highlight}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Retention funnel
+                </h3>
+                <span className="text-xs text-slate-200/70">Last 30 days</span>
+              </div>
+              <div className="mt-4 space-y-3">
+                {retentionStages.map((stage) => (
+                  <div key={stage.id} className="space-y-2">
+                    <div className="flex items-center justify-between text-sm text-white">
+                      <span>{stage.stage}</span>
+                      <span>{stage.rate}%</span>
+                    </div>
+                    <div className="h-2 rounded-full bg-white/10">
+                      <div
+                        className={`h-full rounded-full bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400 ${percentWidthClass(
+                          stage.rate,
+                        )}`}
+                      />
+                    </div>
+                    <p className="text-xs text-slate-200/70">{stage.note}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Recommendations
+              </h3>
+              <div className="grid gap-3">
+                {insightRecommendations.map((item) => (
+                  <article
+                    key={item.id}
+                    className="rounded-3xl border border-white/15 bg-white/5 p-4 shadow-inner shadow-purple-900/20"
+                  >
+                    <p className="text-sm font-semibold text-white">{item.title}</p>
+                    <p className="mt-2 text-sm text-slate-100/80">{item.detail}</p>
+                  </article>
+                ))}
               </div>
             </div>
           </article>
