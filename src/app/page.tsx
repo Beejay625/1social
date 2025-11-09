@@ -373,6 +373,27 @@ const heatLevelClass = (score: number) => {
   return "bg-white/10 text-slate-200";
 };
 
+const approvalStatusTokens: Record<
+  ApprovalStatus,
+  { label: string; badge: string; dot: string }
+> = {
+  approved: {
+    label: "Approved",
+    badge: "bg-emerald-400/20 text-emerald-100 border border-emerald-300/40",
+    dot: "bg-emerald-300",
+  },
+  pending: {
+    label: "Pending",
+    badge: "bg-cyan-400/20 text-cyan-100 border border-cyan-300/40",
+    dot: "bg-cyan-300",
+  },
+  changes: {
+    label: "Needs edits",
+    badge: "bg-amber-400/25 text-amber-100 border border-amber-300/40",
+    dot: "bg-amber-300",
+  },
+};
+
 export default function Home() {
   const { address, isConnected } = useAccount();
   const chainId = useChainId();
