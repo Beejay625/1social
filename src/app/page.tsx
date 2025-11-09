@@ -840,6 +840,106 @@ export default function Home() {
     }),
   [analyticsSnapshot.metricDashboard.kpis]);
 
+  const reachConversionSeries =
+    analyticsSnapshot.metricDashboard.chartSeries.reachConversion;
+  const growthMomentumSeries =
+    analyticsSnapshot.metricDashboard.chartSeries.growthMomentum;
+
+  const [comparisonVisibility, setComparisonVisibility] = useState({
+    reach: true,
+    conversionRate: true,
+  });
+  const [activeComparisonIndex, setActiveComparisonIndex] = useState(() =>
+    Math.max(0, reachConversionSeries.length - 1),
+  );
+
+  useEffect(() => {
+    setComparisonVisibility({ reach: true, conversionRate: true });
+    setActiveComparisonIndex(Math.max(0, reachConversionSeries.length - 1));
+  }, [reachConversionSeries]);
+
+  const comparisonChart = useMemo(() => {
+    const reachValues = reachConversionSeries.map((point) => point.reach);
+    const conversionValues = reachConversionSeries.map(
+      (point) => point.conversionRate,
+    );
+    return {
+      points: reachConversionSeries,
+      reachPath: buildSparklinePath(reachValues, 320, 140),
+      conversionPath: buildSparklinePath(conversionValues, 320, 140),
+    };
+  }, [reachConversionSeries]);
+
+  const [growthVisibility, setGrowthVisibility] = useState({
+    total: true,
+    farcaster: true,
+    instagram: true,
+  });
+  const [activeGrowthIndex, setActiveGrowthIndex] = useState(() =>
+    Math.max(0, growthMomentumSeries.length - 1),
+  );
+
+  useEffect(() => {
+    setGrowthVisibility({ total: true, farcaster: true, instagram: true });
+    setActiveGrowthIndex(Math.max(0, growthMomentumSeries.length - 1));
+  }, [growthMomentumSeries]);
+
+  const growthChart = useMemo(() => {
+    const totalPath = buildSparklinePath(
+      growthMomentumSeries.map((point) => point.total),
+      320,
+      140,
+    );
+    const farcasterPath = buildSparklinePath(
+      growthMomentumSeries.map((point) => point.farcaster),
+      320,
+      140,
+    );
+    const instagramPath = buildSparklinePath(
+      growthMomentumSeries.map((point) => point.instagram),
+      320,
+      140,
+    );
+    return {
+      points: growthMomentumSeries,
+      totalPath,
+      farcasterPath,
+      instagramPath,
+    };
+  }, [growthMomentumSeries]);
+
+  const activeComparisonPoint =
+    comparisonChart.points[
+      Math.min(activeComparisonIndex, comparisonChart.points.length - 1)
+    ] ?? comparisonChart.points[comparisonChart.points.length - 1];
+
+  const activeGrowthPoint =
+    growthChart.points[
+      Math.min(activeGrowthIndex, growthChart.points.length - 1)
+    ] ?? growthChart.points[growthChart.points.length - 1];
+
+  const toggleComparisonSeries = (key: "reach" | "conversionRate") => {
+    setComparisonVisibility((prev) => {
+      const next = { ...prev, [key]: !prev[key] };
+      if (!next.reach && !next.conversionRate) {
+        return prev;
+      }
+      return next;
+    });
+  };
+
+  const toggleGrowthSeries = (
+    key: "total" | "farcaster" | "instagram",
+  ) => {
+    setGrowthVisibility((prev) => {
+      const next = { ...prev, [key]: !prev[key] };
+      if (!next.total && !next.farcaster && !next.instagram) {
+        return prev;
+      }
+      return next;
+    });
+  };
+
   const handleToggle = (channelId: ChannelId) => {
     setChannelState((prev) => ({
       ...prev,
