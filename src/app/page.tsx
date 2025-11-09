@@ -6375,6 +6375,393 @@ export default function Home() {
             </div>
           </aside>
         </section>
+
+        {/* A/B Testing Section */}
+        <section id="ab-testing" className="relative isolate overflow-hidden rounded-4xl border border-white/15 bg-gradient-to-br from-slate-950 via-purple-950/30 to-slate-950 p-8 sm:p-10 shadow-[0_20px_70px_rgba(147,51,234,0.25)] backdrop-blur-2xl lg:px-12 lg:py-12">
+          <article className="relative z-10 space-y-6">
+            <header>
+              <h2 className="text-2xl font-semibold text-white">A/B Testing</h2>
+              <p className="mt-2 text-sm text-slate-200/70">Compare variants and optimize performance</p>
+            </header>
+            <div className="grid gap-4 lg:grid-cols-2">
+              {abTests.map((test) => {
+                const active = test.id === selectedAbTestId;
+                return (
+                  <button
+                    key={test.id}
+                    type="button"
+                    onClick={() => setSelectedAbTestId(test.id)}
+                    className={`rounded-3xl border p-5 text-left transition ${
+                      active
+                        ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                        : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold">{test.title}</h3>
+                      <span className={`text-xs uppercase tracking-wider ${
+                        test.status === "running" ? "text-emerald-400" : test.status === "completed" ? "text-sky-400" : "text-slate-400"
+                      }`}>
+                        {test.status}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-xs text-slate-200/70">Metric: {test.metric}</p>
+                    <div className="mt-4 space-y-2">
+                      {test.variants.map((variant) => (
+                        <div key={variant.id} className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-3">
+                          <div>
+                            <p className="text-sm font-semibold">{variant.label}</p>
+                            <p className="text-xs text-slate-200/70">{variant.description}</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-sm font-semibold">{variant.performance}%</p>
+                            {variant.winner && (
+                              <span className="text-xs text-emerald-400">Winner</span>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </article>
+        </section>
+
+        {/* Campaigns Section */}
+        <section id="campaigns" className="relative isolate overflow-hidden rounded-4xl border border-white/15 bg-gradient-to-br from-slate-950 via-blue-950/30 to-slate-950 p-8 sm:p-10 shadow-[0_20px_70px_rgba(59,130,246,0.25)] backdrop-blur-2xl lg:px-12 lg:py-12">
+          <article className="relative z-10 space-y-6">
+            <header>
+              <h2 className="text-2xl font-semibold text-white">Campaigns</h2>
+              <p className="mt-2 text-sm text-slate-200/70">Track performance across multi-channel campaigns</p>
+            </header>
+            <div className="grid gap-4 lg:grid-cols-2">
+              {campaigns.map((campaign) => {
+                const active = campaign.id === selectedCampaignId;
+                const budgetUsed = campaign.budget && campaign.spent ? (campaign.spent / campaign.budget) * 100 : 0;
+                return (
+                  <button
+                    key={campaign.id}
+                    type="button"
+                    onClick={() => setSelectedCampaignId(campaign.id)}
+                    className={`rounded-3xl border p-5 text-left transition ${
+                      active
+                        ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                        : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold">{campaign.name}</h3>
+                      <span className={`text-xs uppercase tracking-wider ${
+                        campaign.status === "active" ? "text-emerald-400" : campaign.status === "completed" ? "text-sky-400" : "text-amber-400"
+                      }`}>
+                        {campaign.status}
+                      </span>
+                    </div>
+                    <div className="mt-4 grid grid-cols-3 gap-3">
+                      <div>
+                        <p className="text-xs text-slate-200/70">Reach</p>
+                        <p className="text-lg font-semibold">{campaign.reach.toLocaleString()}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-200/70">Engagement</p>
+                        <p className="text-lg font-semibold">{campaign.engagement}%</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-200/70">Conversions</p>
+                        <p className="text-lg font-semibold">{campaign.conversions}</p>
+                      </div>
+                    </div>
+                    {campaign.budget && (
+                      <div className="mt-4">
+                        <div className="flex items-center justify-between text-xs text-slate-200/70 mb-1">
+                          <span>Budget</span>
+                          <span>{Math.round(budgetUsed)}% used</span>
+                        </div>
+                        <div className="h-2 rounded-full bg-white/10">
+                          <div
+                            className={`h-full rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 ${pickProgressWidthClass(budgetUsed / 100)}`}
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </article>
+        </section>
+
+        {/* Content Templates Section */}
+        <section id="templates" className="relative isolate overflow-hidden rounded-4xl border border-white/15 bg-gradient-to-br from-slate-950 via-pink-950/30 to-slate-950 p-8 sm:p-10 shadow-[0_20px_70px_rgba(236,72,153,0.25)] backdrop-blur-2xl lg:px-12 lg:py-12">
+          <article className="relative z-10 space-y-6">
+            <header>
+              <h2 className="text-2xl font-semibold text-white">Content Templates</h2>
+              <p className="mt-2 text-sm text-slate-200/70">Reusable templates for consistent content</p>
+            </header>
+            <div className="grid gap-4 lg:grid-cols-3">
+              {contentTemplates.map((template) => {
+                const active = template.id === selectedContentTemplateId;
+                return (
+                  <button
+                    key={template.id}
+                    type="button"
+                    onClick={() => setSelectedContentTemplateId(template.id)}
+                    className={`rounded-3xl border p-5 text-left transition ${
+                      active
+                        ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                        : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs uppercase tracking-wider text-slate-200/70">{template.category}</span>
+                      <span className="text-xs text-slate-200/70">{template.usage} uses</span>
+                    </div>
+                    <h3 className="font-semibold">{template.name}</h3>
+                    <p className="mt-2 text-xs text-slate-200/70">{template.description}</p>
+                    <p className="mt-3 text-sm italic text-slate-200/80">"{template.preview}"</p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {template.channels.map((channelId) => (
+                        <span
+                          key={channelId}
+                          className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-wider ${channelCatalog[channelId].badge}`}
+                        >
+                          {channelCatalog[channelId].label}
+                        </span>
+                      ))}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </article>
+        </section>
+
+        {/* Webhooks Section */}
+        <section id="webhooks" className="relative isolate overflow-hidden rounded-4xl border border-white/15 bg-gradient-to-br from-slate-950 via-emerald-950/30 to-slate-950 p-8 sm:p-10 shadow-[0_20px_70px_rgba(16,185,129,0.25)] backdrop-blur-2xl lg:px-12 lg:py-12">
+          <article className="relative z-10 space-y-6">
+            <header>
+              <h2 className="text-2xl font-semibold text-white">Webhooks</h2>
+              <p className="mt-2 text-sm text-slate-200/70">Configure real-time event notifications</p>
+            </header>
+            <div className="space-y-4">
+              {webhooks.map((webhook) => {
+                const active = webhook.id === selectedWebhookId;
+                return (
+                  <button
+                    key={webhook.id}
+                    type="button"
+                    onClick={() => setSelectedWebhookId(webhook.id)}
+                    className={`w-full rounded-3xl border p-5 text-left transition ${
+                      active
+                        ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                        : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold">{webhook.name}</h3>
+                      <span className={`text-xs uppercase tracking-wider ${
+                        webhook.status === "active" ? "text-emerald-400" : "text-slate-400"
+                      }`}>
+                        {webhook.status}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-xs text-slate-200/70 font-mono">{webhook.url}</p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {webhook.events.map((event) => (
+                        <span
+                          key={event}
+                          className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/5 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-200/70"
+                        >
+                          {event}
+                        </span>
+                      ))}
+                    </div>
+                    {webhook.lastTriggered && (
+                      <p className="mt-3 text-xs text-slate-200/70">Last triggered: {webhook.lastTriggered}</p>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </article>
+        </section>
+
+        {/* Notifications Section */}
+        <section id="notifications" className="relative isolate overflow-hidden rounded-4xl border border-white/15 bg-gradient-to-br from-slate-950 via-amber-950/30 to-slate-950 p-8 sm:p-10 shadow-[0_20px_70px_rgba(245,158,11,0.25)] backdrop-blur-2xl lg:px-12 lg:py-12">
+          <article className="relative z-10 space-y-6">
+            <header className="flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-semibold text-white">Notifications</h2>
+                <p className="mt-2 text-sm text-slate-200/70">Stay updated on important events</p>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setNotificationFilter("all")}
+                  className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wider transition ${
+                    notificationFilter === "all"
+                      ? "border-white/70 bg-white text-slate-900"
+                      : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40"
+                  }`}
+                >
+                  All
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setNotificationFilter("unread")}
+                  className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wider transition ${
+                    notificationFilter === "unread"
+                      ? "border-white/70 bg-white text-slate-900"
+                      : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40"
+                  }`}
+                >
+                  Unread
+                </button>
+              </div>
+            </header>
+            <div className="space-y-3">
+              {notifications
+                .filter((n) => notificationFilter === "all" || !n.read)
+                .map((notification) => (
+                  <div
+                    key={notification.id}
+                    className={`rounded-2xl border p-4 transition ${
+                      notification.read
+                        ? "border-white/10 bg-white/5"
+                        : "border-white/20 bg-white/10"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className={`h-2 w-2 rounded-full ${
+                            notification.type === "success" ? "bg-emerald-400" :
+                            notification.type === "warning" ? "bg-amber-400" :
+                            notification.type === "error" ? "bg-rose-400" :
+                            "bg-sky-400"
+                          }`} />
+                          <h3 className="font-semibold text-white">{notification.title}</h3>
+                        </div>
+                        <p className="mt-1 text-sm text-slate-200/80">{notification.message}</p>
+                        <p className="mt-2 text-xs text-slate-200/60">{notification.timestamp}</p>
+                      </div>
+                      {!notification.read && (
+                        <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                      )}
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </article>
+        </section>
+
+        {/* Competitors Section */}
+        <section id="competitors" className="relative isolate overflow-hidden rounded-4xl border border-white/15 bg-gradient-to-br from-slate-950 via-red-950/30 to-slate-950 p-8 sm:p-10 shadow-[0_20px_70px_rgba(239,68,68,0.25)] backdrop-blur-2xl lg:px-12 lg:py-12">
+          <article className="relative z-10 space-y-6">
+            <header>
+              <h2 className="text-2xl font-semibold text-white">Competitor Analysis</h2>
+              <p className="mt-2 text-sm text-slate-200/70">Benchmark against industry leaders</p>
+            </header>
+            <div className="grid gap-4 lg:grid-cols-3">
+              {competitors.map((competitor) => {
+                const active = competitor.id === selectedCompetitorId;
+                return (
+                  <button
+                    key={competitor.id}
+                    type="button"
+                    onClick={() => setSelectedCompetitorId(competitor.id)}
+                    className={`rounded-3xl border p-5 text-left transition ${
+                      active
+                        ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                        : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                    }`}
+                  >
+                    <h3 className="font-semibold">{competitor.name}</h3>
+                    <p className="mt-1 text-xs text-slate-200/70">{competitor.handle}</p>
+                    <div className="mt-4 grid grid-cols-2 gap-3">
+                      <div>
+                        <p className="text-xs text-slate-200/70">Followers</p>
+                        <p className="text-lg font-semibold">{competitor.followers.toLocaleString()}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-200/70">Growth</p>
+                        <p className="text-lg font-semibold text-emerald-400">+{competitor.growth}%</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-200/70">Engagement</p>
+                        <p className="text-lg font-semibold">{competitor.engagement}%</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-200/70">Channels</p>
+                        <p className="text-lg font-semibold">{competitor.channels.length}</p>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </article>
+        </section>
+
+        {/* Trends Section */}
+        <section id="trends" className="relative isolate overflow-hidden rounded-4xl border border-white/15 bg-gradient-to-br from-slate-950 via-indigo-950/30 to-slate-950 p-8 sm:p-10 shadow-[0_20px_70px_rgba(99,102,241,0.25)] backdrop-blur-2xl lg:px-12 lg:py-12">
+          <article className="relative z-10 space-y-6">
+            <header>
+              <h2 className="text-2xl font-semibold text-white">Trend Tracking</h2>
+              <p className="mt-2 text-sm text-slate-200/70">Monitor emerging topics and conversations</p>
+            </header>
+            <div className="grid gap-4 lg:grid-cols-3">
+              {trendTopics.map((trend) => {
+                const active = trend.id === selectedTrendId;
+                return (
+                  <button
+                    key={trend.id}
+                    type="button"
+                    onClick={() => setSelectedTrendId(trend.id)}
+                    className={`rounded-3xl border p-5 text-left transition ${
+                      active
+                        ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                        : "border-white/15 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                    }`}
+                  >
+                    <h3 className="font-semibold">{trend.topic}</h3>
+                    <div className="mt-4 flex items-center justify-between">
+                      <div>
+                        <p className="text-xs text-slate-200/70">Volume</p>
+                        <p className="text-lg font-semibold">{trend.volume.toLocaleString()}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xs text-slate-200/70">Growth</p>
+                        <p className="text-lg font-semibold text-emerald-400">+{trend.growth}%</p>
+                      </div>
+                    </div>
+                    <div className="mt-4 flex items-center gap-2">
+                      <span className={`text-xs uppercase tracking-wider ${
+                        trend.sentiment === "positive" ? "text-emerald-400" :
+                        trend.sentiment === "negative" ? "text-rose-400" :
+                        "text-slate-400"
+                      }`}>
+                        {trend.sentiment}
+                      </span>
+                    </div>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {trend.relatedChannels.map((channelId) => (
+                        <span
+                          key={channelId}
+                          className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-wider ${channelCatalog[channelId].badge}`}
+                        >
+                          {channelCatalog[channelId].label}
+                        </span>
+                      ))}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </article>
+        </section>
       </main>
     </div>
   );
