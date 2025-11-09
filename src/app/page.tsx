@@ -1001,37 +1001,42 @@ export default function Home() {
               </p>
               <div className="mt-5 space-y-5">
                 {analyticsSnapshot.channelBreakdown.map(
-                  ({ channelId, live, scheduled, livePercent, total }) => (
-                    <div
-                      key={channelId}
-                      className="space-y-3 rounded-3xl border border-white/10 bg-white/5 p-4"
-                    >
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-2">
-                          <span
-                            className={`h-2.5 w-2.5 rounded-full ${channelCatalog[channelId].dot}`}
-                          />
-                          <p className="text-sm font-semibold text-white">
-                            {channelCatalog[channelId].label}
-                          </p>
+                  ({ channelId, live, scheduled, livePercent, total }) => {
+                    const widthClass = percentWidthClass(
+                      total ? livePercent : 0,
+                    );
+                    const queuePercent = total
+                      ? Math.max(0, 100 - livePercent)
+                      : 100;
+                    return (
+                      <div
+                        key={channelId}
+                        className="space-y-3 rounded-3xl border border-white/10 bg-white/5 p-4"
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`h-2.5 w-2.5 rounded-full ${channelCatalog[channelId].dot}`}
+                            />
+                            <p className="text-sm font-semibold text-white">
+                              {channelCatalog[channelId].label}
+                            </p>
+                          </div>
+                          <span className="text-xs text-slate-200/70">
+                            {live} live · {scheduled} scheduled
+                          </span>
                         </div>
-                        <span className="text-xs text-slate-200/70">
-                          {live} live · {scheduled} scheduled
-                        </span>
+                        <div className="h-2 rounded-full bg-white/10">
+                          <div
+                            className={`h-full rounded-full bg-gradient-to-r ${channelCatalog[channelId].accent} ${widthClass}`}
+                          />
+                        </div>
+                        <p className="text-xs text-slate-200/70">
+                          Live {livePercent}% • Queue {queuePercent}%
+                        </p>
                       </div>
-                      <div className="h-2 rounded-full bg-white/10">
-                        <div
-                          className={`h-full rounded-full bg-gradient-to-r ${channelCatalog[channelId].accent}`}
-                          style={{
-                            width: `${total ? Math.max(12, livePercent) : 12}%`,
-                          }}
-                        />
-                      </div>
-                      <p className="text-xs text-slate-200/70">
-                        Live {livePercent}% • Queue {total ? 100 - livePercent : 100}%
-                      </p>
-                    </div>
-                  ),
+                    );
+                  },
                 )}
               </div>
             </div>
