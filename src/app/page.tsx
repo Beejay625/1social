@@ -306,151 +306,185 @@ const initialPosts: SocialPost[] = [
   },
 ];
 
-const initialPlannedPosts: PlannedPost[] = [
-  {
-    id: "plan-1",
-    title: "Founder AMA teaser",
-    summary: "Carousel introducing tomorrow's community AMA.",
-    scheduledFor: new Date(Date.now() + 1000 * 60 * 60 * 5).toISOString(),
-    channels: ["farcaster", "instagram"],
-    status: "approved",
-    owner: "Ameena",
-    approvalSteps: [
-      {
-        id: "strategy",
-        label: "Channel strategy",
-    approver: "Kai",
-        status: "approved",
-        due: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
-      },
-      {
-        id: "creative",
-        label: "Creative polish",
-        approver: "Leo",
-        status: "approved",
-        due: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
-      },
-    ],
-    commentThread: [
-      {
-        id: "comment-plan-1-1",
-        author: "Kai",
-        message: "Carousel cover looks sharp. Added final copy tweaks.",
-        at: new Date(Date.now() - 1000 * 60 * 32).toISOString(),
-        tone: "note",
-      },
-      {
-        id: "comment-plan-1-2",
-        author: "Leo",
-        message: "Uploaded motion version to the asset locker.",
-        at: new Date(Date.now() - 1000 * 60 * 20).toISOString(),
-        tone: "mention",
-      },
-    ],
-  },
-  {
-    id: "plan-2",
-    title: "Design drops recap",
-    summary: "Thread covering the remix design sprint learnings.",
-    scheduledFor: new Date(Date.now() + 1000 * 60 * 60 * 28).toISOString(),
-    channels: ["farcaster"],
-    status: "queued",
-    owner: "Kai",
-    approvalSteps: [
-      {
-        id: "outline",
-        label: "Outline review",
-        approver: "Ameena",
-        status: "pending",
-        due: new Date(Date.now() + 1000 * 60 * 60 * 4).toISOString(),
-      },
-      {
-        id: "design",
-        label: "Design QA",
-    approver: "Leo",
-        status: "pending",
-        due: new Date(Date.now() + 1000 * 60 * 60 * 10).toISOString(),
-      },
-    ],
-    commentThread: [
-      {
-        id: "comment-plan-2-1",
-        author: "Ameena",
-        message: "Need designer sign-off before 6PM.",
-        at: new Date(Date.now() - 1000 * 60 * 75).toISOString(),
-        tone: "mention",
-      },
-    ],
-  },
-  {
-    id: "plan-3",
-    title: "Creator highlight reel",
-    summary: "Vertical reel featuring three community wins.",
-    scheduledFor: new Date(Date.now() + 1000 * 60 * 60 * 48).toISOString(),
-    channels: ["instagram"],
-    status: "draft",
-    owner: "Leo",
-    approvalSteps: [
-      {
-        id: "story",
-        label: "Story arc",
-        approver: "Ameena",
-        status: "changes",
-        due: new Date(Date.now() + 1000 * 60 * 60 * 6).toISOString(),
-      },
-      {
-        id: "audio",
-        label: "Audio sync",
-        approver: "Kai",
-        status: "pending",
-        due: new Date(Date.now() + 1000 * 60 * 60 * 20).toISOString(),
-      },
-    ],
-    commentThread: [
-      {
-        id: "comment-plan-3-1",
-        author: "Leo",
-        message: "Pull new community shots for reel slots 2 and 3.",
-        at: new Date(Date.now() - 1000 * 60 * 145).toISOString(),
-        tone: "note",
-      },
-    ],
-  },
-  {
-    id: "plan-4",
-    title: "Syndication rollout",
-    summary: "Mirror essay with X recap thread to follow.",
-    scheduledFor: new Date(Date.now() + 1000 * 60 * 60 * 12).toISOString(),
-    channels: ["mirror", "x"],
-    status: "queued",
-    owner: "You",
-    approvalSteps: [
-      {
-        id: "mirror-proof",
-        label: "Proofread essay",
-        approver: "Kai",
-        status: "pending",
-        due: new Date(Date.now() + 1000 * 60 * 60 * 4).toISOString(),
-      },
-      {
-        id: "thread-sync",
-        label: "Thread alignment",
-        approver: "Ameena",
-        status: "pending",
-        due: new Date(Date.now() + 1000 * 60 * 60 * 8).toISOString(),
-      },
-    ],
-    commentThread: [
-      {
-        id: "comment-plan-4-1",
-        author: "Ameena",
-        message: "Need to sync CTA copy with Lens drop.",
-        at: new Date(Date.now() - 1000 * 60 * 25).toISOString(),
-        tone: "mention",
-      },
-    ],
-  },
-];
+const initialPlannedPosts: PlannedPost[] = (() => {
+  const plan1ScheduledFor = new Date(Date.now() + 1000 * 60 * 60 * 5).toISOString();
+  const plan1Template = getApprovalTemplate("multi-channel-launch");
+  const plan1Steps = plan1Template
+    ? instantiateApprovalSteps(plan1Template, plan1ScheduledFor, "plan-1")
+    : [
+        {
+          id: "strategy-plan-1",
+          label: "Channel strategy",
+          approver: "Kai",
+          status: "approved" as ApprovalStatus,
+          due: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+        },
+        {
+          id: "creative-plan-1",
+          label: "Creative polish",
+          approver: "Leo",
+          status: "approved" as ApprovalStatus,
+          due: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
+        },
+      ];
+
+  const plan2ScheduledFor = new Date(Date.now() + 1000 * 60 * 60 * 28).toISOString();
+  const plan2Template = getApprovalTemplate("creative-spotlight");
+  const plan2Steps = plan2Template
+    ? instantiateApprovalSteps(plan2Template, plan2ScheduledFor, "plan-2")
+    : [
+        {
+          id: "outline-plan-2",
+          label: "Outline review",
+          approver: "Ameena",
+          status: "pending" as ApprovalStatus,
+          due: new Date(Date.now() + 1000 * 60 * 60 * 4).toISOString(),
+        },
+        {
+          id: "design-plan-2",
+          label: "Design QA",
+          approver: "Leo",
+          status: "pending" as ApprovalStatus,
+          due: new Date(Date.now() + 1000 * 60 * 60 * 10).toISOString(),
+        },
+      ];
+
+  const plan3ScheduledFor = new Date(Date.now() + 1000 * 60 * 60 * 48).toISOString();
+  const plan3Template = getApprovalTemplate("creative-spotlight");
+  const plan3Steps = plan3Template
+    ? instantiateApprovalSteps(plan3Template, plan3ScheduledFor, "plan-3")
+    : [
+        {
+          id: "story-plan-3",
+          label: "Story arc",
+          approver: "Ameena",
+          status: "changes" as ApprovalStatus,
+          due: new Date(Date.now() + 1000 * 60 * 60 * 6).toISOString(),
+        },
+        {
+          id: "audio-plan-3",
+          label: "Audio sync",
+          approver: "Kai",
+          status: "pending" as ApprovalStatus,
+          due: new Date(Date.now() + 1000 * 60 * 60 * 20).toISOString(),
+        },
+      ];
+
+  const plan4ScheduledFor = new Date(Date.now() + 1000 * 60 * 60 * 12).toISOString();
+  const plan4Template = getApprovalTemplate("post-launch-measure");
+  const plan4Steps = plan4Template
+    ? instantiateApprovalSteps(plan4Template, plan4ScheduledFor, "plan-4")
+    : [
+        {
+          id: "mirror-proof-plan-4",
+          label: "Proofread essay",
+          approver: "Kai",
+          status: "pending" as ApprovalStatus,
+          due: new Date(Date.now() + 1000 * 60 * 60 * 4).toISOString(),
+        },
+        {
+          id: "thread-sync-plan-4",
+          label: "Thread alignment",
+          approver: "Ameena",
+          status: "pending" as ApprovalStatus,
+          due: new Date(Date.now() + 1000 * 60 * 60 * 8).toISOString(),
+        },
+      ];
+
+  return [
+    {
+      id: "plan-1",
+      title: "Founder AMA teaser",
+      summary: "Carousel introducing tomorrow's community AMA.",
+      scheduledFor: plan1ScheduledFor,
+      channels: ["farcaster", "instagram"],
+      status: "approved",
+      owner: "Ameena",
+      approvalSteps: plan1Steps,
+      approvalTemplateId: plan1Template?.id,
+      commentThread: [
+        {
+          id: "comment-plan-1-1",
+          author: "Kai",
+          message: "Carousel cover looks sharp. Added final copy tweaks.",
+          at: new Date(Date.now() - 1000 * 60 * 32).toISOString(),
+          tone: "note",
+        },
+        {
+          id: "comment-plan-1-2",
+          author: "Leo",
+          message: "Uploaded motion version to the asset locker.",
+          at: new Date(Date.now() - 1000 * 60 * 20).toISOString(),
+          tone: "mention",
+        },
+      ],
+    },
+    {
+      id: "plan-2",
+      title: "Design drops recap",
+      summary: "Thread covering the remix design sprint learnings.",
+      scheduledFor: plan2ScheduledFor,
+      channels: ["farcaster"],
+      status: "queued",
+      owner: "Kai",
+      approvalSteps: plan2Steps,
+      approvalTemplateId: plan2Template?.id,
+      commentThread: [
+        {
+          id: "comment-plan-2-1",
+          author: "Ameena",
+          message: "Need designer sign-off before 6PM.",
+          at: new Date(Date.now() - 1000 * 60 * 75).toISOString(),
+          tone: "mention",
+        },
+      ],
+    },
+    {
+      id: "plan-3",
+      title: "Creator highlight reel",
+      summary: "Vertical reel featuring three community wins.",
+      scheduledFor: plan3ScheduledFor,
+      channels: ["instagram"],
+      status: "draft",
+      owner: "Leo",
+      approvalSteps: plan3Steps.map((step, index) =>
+        index === 0
+          ? { ...step, status: "changes" as ApprovalStatus }
+          : step,
+      ),
+      approvalTemplateId: plan3Template?.id,
+      commentThread: [
+        {
+          id: "comment-plan-3-1",
+          author: "Leo",
+          message: "Pull new community shots for reel slots 2 and 3.",
+          at: new Date(Date.now() - 1000 * 60 * 145).toISOString(),
+          tone: "note",
+        },
+      ],
+    },
+    {
+      id: "plan-4",
+      title: "Syndication rollout",
+      summary: "Mirror essay with X recap thread to follow.",
+      scheduledFor: plan4ScheduledFor,
+      channels: ["mirror", "x"],
+      status: "queued",
+      owner: "You",
+      approvalSteps: plan4Steps,
+      approvalTemplateId: plan4Template?.id,
+      commentThread: [
+        {
+          id: "comment-plan-4-1",
+          author: "Ameena",
+          message: "Need to sync CTA copy with Lens drop.",
+          at: new Date(Date.now() - 1000 * 60 * 25).toISOString(),
+          tone: "mention",
+        },
+      ],
+    },
+  ];
+})();
 
 const automationTemplates: AutomationTemplate[] = [
   {
