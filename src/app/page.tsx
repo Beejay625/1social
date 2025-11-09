@@ -394,9 +394,9 @@ import {
   recentOrders,
 } from "@/data/social-commerce";
 import {
-  videoAnalyticsStats,
+  videoStats,
   videoInsights,
-  videoPerformances,
+  videoPerformance,
 } from "@/data/video-analytics";
 import {
   exportJobs,
