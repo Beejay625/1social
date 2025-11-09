@@ -712,17 +712,85 @@ export default function Home() {
   ) => {
     event.preventDefault();
     const trimmed = workflowNote.trim();
-    if (!trimmed || !workflowTimeline.selectedPost) return;
+    if (!trimmed || !workflowContext.selectedPlan) return;
     const newComment: Comment = {
       id: `comment-${Date.now()}`,
-      postId: workflowTimeline.selectedPost.id,
       author: "You",
       message: trimmed,
-      createdAt: new Date().toISOString(),
-      tone: "info",
+      at: new Date().toISOString(),
+      tone: "note",
     };
-    setComments((prev) => [newComment, ...prev]);
+    setPlannedPosts((prev) =>
+      prev.map((plan) =>
+        plan.id === workflowContext.selectedPlan?.id
+          ? { ...plan, commentThread: [newComment, ...plan.commentThread] }
+          : plan,
+      ),
+    );
     setWorkflowNote("");
+  };
+
+  const handleApprovalAction = (
+    planId: string,
+    action: "approve" | "changes",
+  ) => {
+    setPlannedPosts((prev) =>
+      prev.map((plan) => {
+        if (plan.id !== planId || !plan.approvalSteps.length) return plan;
+
+        const updatedSteps = plan.approvalSteps.map((step) => ({ ...step }));
+        const updatedComments = [...plan.commentThread];
+        const timestamp = new Date().toISOString();
+
+        if (action === "approve") {
+          const pendingIndex = updatedSteps.findIndex(
+            (step) => step.status === "pending" || step.status === "changes",
+          );
+          if (pendingIndex === -1) return plan;
+          const targetStep = updatedSteps[pendingIndex];
+          updatedSteps[pendingIndex] = { ...targetStep, status: "approved" };
+          updatedComments.unshift({
+            id: `comment-${Date.now()}-approve`,
+            author: "You",
+            message: `Approved ${targetStep.label}.`,
+            at: timestamp,
+            tone: "note",
+          });
+          const allApproved = updatedSteps.every(
+            (step) => step.status === "approved",
+          );
+          const nextStatus = allApproved ? "approved" : "queued";
+          return {
+            ...plan,
+            approvalSteps: updatedSteps,
+            status: nextStatus,
+            commentThread: updatedComments,
+          };
+        }
+
+        const pendingIndex = updatedSteps.findIndex(
+          (step) => step.status === "pending",
+        );
+        const targetIndex =
+          pendingIndex !== -1 ? pendingIndex : updatedSteps.length - 1;
+        const targetStep = updatedSteps[targetIndex];
+        updatedSteps[targetIndex] = { ...targetStep, status: "changes" };
+        updatedComments.unshift({
+          id: `comment-${Date.now()}-changes`,
+          author: "You",
+          message: `Requested edits on ${targetStep.label}.`,
+          at: timestamp,
+          tone: "mention",
+        });
+
+        return {
+          ...plan,
+          approvalSteps: updatedSteps,
+          status: "draft",
+          commentThread: updatedComments,
+        };
+      }),
+    );
   };
 
   return (
