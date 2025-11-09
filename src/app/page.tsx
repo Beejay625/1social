@@ -134,6 +134,48 @@ const formatRelativeTime = (isoString: string) => {
   return `${days} day${days === 1 ? "" : "s"} ago`;
 };
 
+const formatScheduleLabel = (isoString: string) => {
+  const date = new Date(isoString);
+  return Intl.DateTimeFormat("en", {
+    weekday: "short",
+    hour: "numeric",
+    minute: "numeric",
+  }).format(date);
+};
+
+const scheduleStatusStyles: Record<
+  PlannedPost["status"],
+  { label: string; badge: string; dot: string }
+> = {
+  approved: {
+    label: "Approved",
+    badge: "bg-emerald-400/20 text-emerald-50 border border-emerald-300/40",
+    dot: "bg-emerald-300",
+  },
+  queued: {
+    label: "Queued",
+    badge: "bg-cyan-400/20 text-cyan-50 border border-cyan-300/40",
+    dot: "bg-cyan-300",
+  },
+  draft: {
+    label: "Draft",
+    badge: "bg-amber-400/20 text-amber-50 border border-amber-300/40",
+    dot: "bg-amber-300",
+  },
+};
+
+const truncateAddress = (value?: string) => {
+  if (!value) return "Not connected";
+  return `${value.slice(0, 6)}…${value.slice(-4)}`;
+};
+
+const velocityBadge = (value: number) => {
+  if (value > 90) return { label: "Blazing", tone: "bg-emerald-400/25 text-emerald-100" };
+  if (value > 70) return { label: "Pacing", tone: "bg-cyan-400/25 text-cyan-100" };
+  if (value > 50) return { label: "Steady", tone: "bg-amber-400/25 text-amber-100" };
+  return { label: "Warming up", tone: "bg-rose-400/25 text-rose-100" };
+};
+
 export default function Home() {
   const [draft, setDraft] = useState("");
   const [isPosting, setIsPosting] = useState(false);
