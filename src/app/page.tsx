@@ -269,6 +269,16 @@ const initialPosts: SocialPost[] = [
     channels: ["instagram"],
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 7).toISOString(),
   },
+  {
+    id: "growth-4",
+    author: "You",
+    avatarGradient: "from-slate-400 via-slate-600 to-slate-800",
+    highlight: "Cross-network sync",
+    content:
+      "Testing the new Lens + X syndication path. Warm-up health looks strong so far.",
+    channels: ["x", "lens"],
+    createdAt: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+  },
 ];
 
 const initialPlannedPosts: PlannedPost[] = [
