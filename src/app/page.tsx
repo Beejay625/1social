@@ -19873,6 +19873,576 @@ export default function Home() {
           </aside>
         </section>
 
+        <section
+          id="scheduling-queue-advanced"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(34,197,94,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Advanced Scheduling Queue</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage and optimize your content scheduling queue with AI-powered recommendations.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {queueItems.map((item) => (
+                <div
+                  key={item.id}
+                  className={`rounded-3xl border p-6 ${
+                    item.status === "scheduled"
+                      ? "border-emerald-400/50 bg-emerald-400/10"
+                      : "border-blue-400/50 bg-blue-400/10"
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-lg font-semibold text-white">{item.content}</h3>
+                        <span className={`text-xs px-2 py-1 rounded-full uppercase ${
+                          item.priority === "high"
+                            ? "bg-red-500/20 text-red-300"
+                            : "bg-blue-500/20 text-blue-300"
+                        }`}>
+                          {item.priority}
+                        </span>
+                        <span className={`text-xs px-2 py-1 rounded-full ${
+                          item.status === "scheduled"
+                            ? "bg-emerald-500/20 text-emerald-300"
+                            : "bg-blue-500/20 text-blue-300"
+                        }`}>
+                          {item.status}
+                        </span>
+                      </div>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {item.platforms.map((platform, idx) => (
+                          <span
+                            key={idx}
+                            className={`h-2 w-2 rounded-full ${channelCatalog[platform as ChannelId]?.dot || "bg-slate-400"}`}
+                            title={platform}
+                          />
+                        ))}
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Scheduled For</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {formatRelativeTime(item.scheduledFor)}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Est. Reach</p>
+                          <p className="mt-1 text-sm font-semibold text-white">
+                            {(item.estimatedReach / 1000).toFixed(1)}k
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Est. Engagement</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{item.estimatedEngagement}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(34,197,94,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Queue Summary
+              </h3>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Queued</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {queueStats.totalQueued}
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                    <p className="text-xs text-slate-200/60">Scheduled</p>
+                    <p className="mt-1 text-lg font-semibold text-emerald-300">{queueStats.scheduled}</p>
+                  </div>
+                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                    <p className="text-xs text-slate-200/60">Pending</p>
+                    <p className="mt-1 text-lg font-semibold text-blue-300">{queueStats.pending}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="brand-mentions-tracking"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(139,92,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Brand Mentions Tracking</h2>
+              <p className="text-sm text-slate-100/75">
+                Track brand mentions across all platforms with sentiment analysis and growth metrics.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {recentMentions.map((mention) => (
+                <div
+                  key={mention.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className={`h-2.5 w-2.5 rounded-full ${channelCatalog[mention.platform as ChannelId]?.dot || "bg-slate-400"}`} />
+                        <span className="text-sm font-semibold text-white">{mention.author}</span>
+                        <span className={`text-xs px-2 py-1 rounded-full ${
+                          mention.sentiment === "positive"
+                            ? "bg-emerald-500/20 text-emerald-300"
+                            : mention.sentiment === "neutral"
+                            ? "bg-blue-500/20 text-blue-300"
+                            : "bg-red-500/20 text-red-300"
+                        }`}>
+                          {mention.sentiment}
+                        </span>
+                        {mention.responded && (
+                          <span className="text-xs text-emerald-300">✓ Responded</span>
+                        )}
+                      </div>
+                      <p className="text-sm text-slate-200/80 mb-3">{mention.content}</p>
+                      <div className="flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>{mention.engagement} engagements</span>
+                        <span>·</span>
+                        <span>{formatRelativeTime(mention.timestamp)}</span>
+                        {mention.responseTime && (
+                          <>
+                            <span>·</span>
+                            <span className="text-emerald-300">Response: {mention.responseTime}</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(139,92,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Mentions Summary
+              </h3>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Mentions</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {brandMentionsStats.totalMentions.toLocaleString()}
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                    <p className="text-xs text-slate-200/60">Positive</p>
+                    <p className="mt-1 text-lg font-semibold text-emerald-300">{brandMentionsStats.positive}</p>
+                  </div>
+                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
+                    <p className="text-xs text-slate-200/60">Response Rate</p>
+                    <p className="mt-1 text-lg font-semibold text-blue-300">{brandMentionsStats.responseRate}%</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="team-performance-analytics"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Team Performance Analytics</h2>
+              <p className="text-sm text-slate-100/75">
+                Track individual and team performance with goals, productivity metrics, and insights.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {teamMembers.map((member) => (
+                <div
+                  key={member.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-lg font-semibold text-white">{member.name}</h3>
+                        <span className="text-xs text-slate-200/70">{member.role}</span>
+                        <span className={`text-xs px-2 py-1 rounded-full ${
+                          member.score >= 90
+                            ? "bg-emerald-500/20 text-emerald-300"
+                            : member.score >= 80
+                            ? "bg-blue-500/20 text-blue-300"
+                            : "bg-amber-500/20 text-amber-300"
+                        }`}>
+                          Score: {member.score}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Content Created</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{member.contentCreated}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Engagement</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{member.engagementGenerated.toLocaleString()}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Response Rate</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{member.responseRate}%</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Goals</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{member.goalsMet}/{member.goalsTotal}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Team Overview
+              </h3>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Overall Score</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {teamPerformance.overallScore}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Goals Met</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {teamPerformance.goalsMet} / {teamPerformance.goalsTotal}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="crisis-management-dashboard"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(251,191,36,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Crisis Management Dashboard</h2>
+              <p className="text-sm text-slate-100/75">
+                Monitor and respond to crises with automated detection, severity alerts, and response tracking.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {activeCrises.map((crisis) => (
+                <div
+                  key={crisis.id}
+                  className={`rounded-3xl border p-6 ${
+                    crisis.severity === "high"
+                      ? "border-red-400/50 bg-red-400/10"
+                      : "border-amber-400/50 bg-amber-400/10"
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-lg font-semibold text-white">{crisis.title}</h3>
+                        <span className={`text-xs px-2 py-1 rounded-full uppercase ${
+                          crisis.severity === "high"
+                            ? "bg-red-500/20 text-red-300"
+                            : "bg-amber-500/20 text-amber-300"
+                        }`}>
+                          {crisis.severity}
+                        </span>
+                        <span className={`text-xs px-2 py-1 rounded-full ${
+                          crisis.status === "active"
+                            ? "bg-red-500/20 text-red-300"
+                            : "bg-blue-500/20 text-blue-300"
+                        }`}>
+                          {crisis.status}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div>
+                          <p className="text-xs text-slate-200/60">Platform</p>
+                          <p className="mt-1 text-sm font-semibold text-white capitalize">{crisis.platform}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Mentions</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{crisis.mentions}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Sentiment</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{crisis.sentiment}%</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-200/60">Actions</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{crisis.responseActions}</p>
+                        </div>
+                      </div>
+                      <div className="mt-3 text-xs text-slate-200/70">
+                        Detected {formatRelativeTime(crisis.detectedAt)}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(251,191,36,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Crisis Status
+              </h3>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active Crises</p>
+                  <p className="mt-1 text-2xl font-semibold text-red-300">
+                    {crisisStatus.activeCrises}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg Resolution</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {crisisStatus.avgResolutionTime}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Response Rate</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">
+                    {crisisStatus.responseRate}%
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="approval-workflows"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(236,72,153,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Approval Workflows</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage multi-step approval workflows with templates, progress tracking, and bottleneck identification.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              {activeWorkflows.map((workflow) => (
+                <div
+                  key={workflow.id}
+                  className="rounded-3xl border border-white/15 bg-white/5 p-6"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-lg font-semibold text-white">{workflow.name}</h3>
+                        <span className={`text-xs px-2 py-1 rounded-full ${
+                          workflow.status === "pending"
+                            ? "bg-blue-500/20 text-blue-300"
+                            : "bg-purple-500/20 text-purple-300"
+                        }`}>
+                          {workflow.status}
+                        </span>
+                      </div>
+                      <p className="text-sm text-slate-200/70 mb-3">Current Step: {workflow.currentStep}</p>
+                      <div className="space-y-2">
+                        {workflow.steps.map((step, idx) => (
+                          <div
+                            key={idx}
+                            className={`flex items-center gap-2 text-xs ${
+                              step.status === "completed"
+                                ? "text-emerald-300"
+                                : step.status === "in_progress"
+                                ? "text-blue-300"
+                                : "text-slate-400"
+                            }`}
+                          >
+                            <span>{step.status === "completed" ? "✓" : step.status === "in_progress" ? "→" : "○"}</span>
+                            <span>{step.name}</span>
+                            {step.assignedTo && <span className="text-slate-500">({step.assignedTo})</span>}
+                          </div>
+                        ))}
+                      </div>
+                      <div className="mt-4 flex items-center gap-4 text-xs text-slate-200/70">
+                        <span>Progress: {workflow.progress}%</span>
+                        <span>·</span>
+                        <span>Assigned: {workflow.assignedTo}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Workflow Stats
+              </h3>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active Workflows</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {workflowStats.activeWorkflows}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Pending Approvals</p>
+                  <p className="mt-1 text-xl font-semibold text-amber-300">
+                    {workflowStats.pendingApprovals}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Approval Rate</p>
+                  <p className="mt-1 text-xl font-semibold text-emerald-300">
+                    {workflowStats.approvalRate}%
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="social-listening-dashboard"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Social Listening Dashboard</h2>
+              <p className="text-sm text-slate-100/75">
+                Monitor keywords, track trending topics, and get real-time alerts across all platforms.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              <div>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Monitored Keywords
+                </h3>
+                <div className="space-y-3">
+                  {monitoredKeywords.map((keyword) => (
+                    <div
+                      key={keyword.id}
+                      className="rounded-2xl border border-white/15 bg-white/5 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-semibold text-white">#{keyword.keyword}</span>
+                            <span className={`text-xs px-2 py-1 rounded-full ${
+                              keyword.trend === "up"
+                                ? "bg-emerald-500/20 text-emerald-300"
+                                : "bg-slate-500/20 text-slate-300"
+                            }`}>
+                              {keyword.trend === "up" ? "↑" : "→"} {keyword.growth}%
+                            </span>
+                          </div>
+                          <div className="mt-2 flex items-center gap-4 text-xs text-slate-200/70">
+                            <span>{keyword.mentions} mentions</span>
+                            <span>·</span>
+                            <span>Sentiment: {keyword.sentiment}%</span>
+                            {keyword.alerts > 0 && (
+                              <>
+                                <span>·</span>
+                                <span className="text-amber-300">{keyword.alerts} alerts</span>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Trending Topics
+                </h3>
+                <div className="space-y-3">
+                  {trendingTopics.slice(0, 3).map((topic) => (
+                    <div
+                      key={topic.id}
+                      className="rounded-2xl border border-white/15 bg-white/5 p-4"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <h4 className="text-sm font-semibold text-white">{topic.topic}</h4>
+                          <div className="mt-2 flex items-center gap-4 text-xs text-slate-200/70">
+                            <span>{topic.mentions} mentions</span>
+                            <span>·</span>
+                            <span className="text-emerald-300">↑ {topic.growth}% growth</span>
+                            <span>·</span>
+                            <span className={`capitalize ${
+                              topic.relevance === "high"
+                                ? "text-emerald-300"
+                                : "text-blue-300"
+                            }`}>
+                              {topic.relevance} relevance
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Listening Summary
+              </h3>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Keywords Monitored</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">
+                    {listeningStats.keywordsMonitored}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Total Mentions</p>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {listeningStats.totalMentions.toLocaleString()}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Alerts Triggered</p>
+                  <p className="mt-1 text-xl font-semibold text-amber-300">
+                    {listeningStats.alertsTriggered}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
       </main>
     </div>
   );
