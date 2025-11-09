@@ -147,6 +147,32 @@ import {
   dataExports,
 } from "@/data/advanced-analytics";
 import {
+  auditCategories,
+  auditHistory,
+  auditScore,
+} from "@/data/social-audit";
+import {
+  contentPredictions,
+  predictionAccuracy,
+  predictionHistory,
+} from "@/data/content-predictor";
+import {
+  benchmarkComparisons,
+  benchmarkInsights,
+  industryBenchmarks,
+} from "@/data/benchmarking";
+import {
+  calendarAIAnalysis,
+  calendarAISuggestions,
+  calendarAIStats,
+} from "@/data/calendar-ai";
+import {
+  customMetrics as reportCustomMetrics,
+  reportHistory,
+  reportSchedules,
+  reportTemplates,
+} from "@/data/report-builder";
+import {
   notificationChannels,
   notificationPreferences,
   recentNotifications,
