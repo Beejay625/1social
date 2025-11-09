@@ -1637,6 +1637,11 @@ const dashboardSections: { id: string; label: string }[] = [
   { id: "crisis", label: "Crisis Management" },
   { id: "commerce", label: "Social Commerce" },
   { id: "calendar-advanced", label: "Advanced Calendar" },
+  { id: "moderation", label: "Content Moderation" },
+  { id: "brand-safety", label: "Brand Safety" },
+  { id: "api-management", label: "API Management" },
+  { id: "hashtag-analytics", label: "Hashtag Analytics" },
+  { id: "performance-comparison", label: "Performance Comparison" },
 ];
 const chartColorTokens = {
   reach: "text-sky-300",
