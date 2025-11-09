@@ -449,6 +449,44 @@ src/
 - Branded email templates
 - White-label support portal options
 
+### Automation & Workflow Management
+- **Scheduling Automation** - Create intelligent automation rules with time-based, event-based, and content-based triggers. Automate content reposting, responses, and report generation with high success rates and time savings
+- **Automation Rules** - Configure custom automation rules with conditions and actions. Track success rates, run counts, and scheduled executions
+- **Scheduled Automations** - Monitor pending, running, and completed automation tasks with status tracking
+
+### Influencer & Partnership Management
+- **Influencer Collaboration** - Manage influencer partnerships with comprehensive campaign tracking, budget management, and ROI analysis
+- **Campaign Performance** - Track reach, engagement, conversions, and ROI for influencer campaigns
+- **Influencer Database** - Maintain a database of influencers with follower counts, engagement rates, and collaboration history
+- **Deliverable Tracking** - Monitor campaign deliverables and ensure completion
+
+### Compliance & Legal Management
+- **Social Compliance** - Automated compliance checking for copyright, trademark, privacy, accessibility, and advertising requirements
+- **Compliance Rules** - Configure active compliance rules with severity levels (critical, high, medium, low) and match tracking
+- **Issue Detection** - Automatically detect compliance issues and provide actionable recommendations
+- **Compliance Scoring** - Track overall compliance score with passed, failed, and warning check counts
+
+### Content Transformation
+- **Content Repurposing** - Automatically transform content across different platforms and formats (blog to Instagram carousel, video to shorts, thread to article)
+- **Repurposing Templates** - Use popular templates with proven performance metrics and usage statistics
+- **Performance Tracking** - Monitor repurposing task progress and track performance gains
+- **Time Savings** - Quantify time saved through automated repurposing workflows
+
+### Notification & Communication
+- **Notification Center** - Centralized notification system with priority levels (high, medium, low) and category filtering
+- **Multi-channel Delivery** - Configure email, push, and SMS notification preferences
+- **Quiet Hours** - Set quiet hours to prevent notifications during specific times
+- **Notification Settings** - Customize notification preferences by category (publishing, engagement, workflow, analytics, reports)
+- **Response Tracking** - Monitor average response times and notification statistics
+
+### API & Integration Management
+- **API Management** - Complete API key management with creation, revocation, and expiration tracking
+- **Usage Monitoring** - Track API usage counts, last used timestamps, and request patterns
+- **Rate Limiting** - Configure and monitor rate limits per API key (requests per hour)
+- **Permissions Management** - Set granular permissions (read, write, publish) for each API key
+- **Performance Tracking** - Monitor API response times, success rates, and endpoint usage
+- **Recent Usage Logs** - View recent API calls with status codes, response times, and endpoint details
+
 ## Contributing
 
 This is a comprehensive social media management platform with extensive features for content creation, scheduling, analytics, team collaboration, and automation.
