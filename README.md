@@ -345,6 +345,65 @@ src/
 - Gap analysis and posting schedule recommendations
 - Optimization score tracking and improvement metrics
 
+### Calendar & Scheduling Management
+- Calendar sync with Google Calendar, Outlook, Apple Calendar, and iCal
+- Bidirectional calendar synchronization
+- Real-time and scheduled sync options
+- Multiple calendar support with color coding
+- Scheduling queue with priority ordering
+- Automatic retry for failed posts
+- Conflict resolution strategies
+- Queue statistics and monitoring
+
+### Advanced Social Listening & Monitoring
+- Keyword monitoring across all platforms
+- Real-time mention tracking
+- Sentiment analysis (positive, neutral, negative)
+- Listening query management
+- Trending topic discovery
+- Mention dashboard with statistics
+- Platform-specific mention tracking
+
+### Content Templates & Workflows
+- Template library with categorized templates
+- Variable-based templates for dynamic content
+- Template usage tracking and analytics
+- Multi-step approval workflows
+- Auto-approval with timeout conditions
+- Workflow instance tracking
+- Step-by-step approval status
+- Custom workflow creation and management
+
+### Analytics & Dashboards
+- Custom analytics dashboards
+- Widget-based dashboard layouts
+- Key metrics tracking
+- Performance trend visualization
+- Dashboard sharing and collaboration
+- Default and custom dashboard views
+- Real-time metric updates
+- Dashboard view statistics
+
+### Engagement Automation & Tools
+- Auto-reply rules with trigger conditions
+- Mention tracking across platforms
+- Comment moderation tools
+- DM management automation
+- Engagement campaign tracking
+- Campaign progress monitoring
+- Success rate analytics
+- Engagement tool statistics
+
+### Hashtag Research & Analytics
+- Hashtag research and discovery
+- Volume and growth tracking
+- Engagement rate analysis
+- Difficulty assessment
+- Trending hashtag identification
+- Performance tracking for used hashtags
+- Best time to post recommendations
+- Audience overlap analysis
+
 ## Contributing
 
 This is a comprehensive social media management platform with extensive features for content creation, scheduling, analytics, team collaboration, and automation.
