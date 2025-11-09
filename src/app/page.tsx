@@ -1703,7 +1703,7 @@ export default function Home() {
               <div className="space-y-4">
                 <h1 className="text-4xl font-semibold leading-tight text-white md:text-5xl lg:text-[52px]">
                   Align your voice across every channel.
-            </h1>
+          </h1>
                 <p className="text-lg leading-relaxed text-slate-100/80 md:text-xl">
                   Share once, syndicate instantly, and keep Reown wallet
                   signatures ready for Farcaster. This preview shows how your
@@ -1790,8 +1790,8 @@ export default function Home() {
                 </p>
                     <p className="text-xs uppercase tracking-[0.3em] text-slate-300/60">
                   {activeNetwork?.name ?? "No network selected"}
-                </p>
-              </div>
+          </p>
+        </div>
 
                   <ul className="grid gap-3 text-sm text-slate-200/80 sm:grid-cols-2 sm:gap-4">
                     <li className="flex items-start gap-3">
@@ -1921,7 +1921,7 @@ export default function Home() {
                   </button>
                 );
               })}
-            </div>
+        </div>
 
             <form
               onSubmit={handleSubmit}
@@ -3279,6 +3279,415 @@ export default function Home() {
               </svg>
             </div>
           </div>
+        </section>
+
+        <section
+          id="automation"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(14,116,144,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Campaign automation</h2>
+              <p className="text-sm text-slate-100/75">
+                Launch best-practice playbooks, coordinate recurring drops, and ensure every
+                warm-up sequence stays on pace.
+              </p>
+            </header>
+
+            <div className="flex flex-wrap gap-3">
+              {automationTemplates.map((template) => {
+                const isActive = selectedTemplate?.id === template.id;
+                return (
+                  <button
+                    key={template.id}
+                    type="button"
+                    onClick={() => handleTemplateSelect(template.id)}
+                    className={`inline-flex items-center gap-3 rounded-3xl border px-4 py-3 text-sm font-semibold uppercase tracking-wide transition ${
+                      isActive
+                        ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                        : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                    }`}
+                  >
+                    <span className="text-[11px] font-medium text-slate-400">
+                      {template.cadence}
+                    </span>
+                    {template.name}
+                  </button>
+                );
+              })}
+            </div>
+
+            {selectedTemplate && (
+              <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+                <div className="rounded-3xl border border-white/15 bg-white/5 p-6">
+                  <h3 className="text-sm font-semibold text-white">
+                    {selectedTemplate.name}
+                  </h3>
+                  <p className="mt-2 text-sm text-slate-100/80">
+                    {selectedTemplate.description}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {selectedTemplate.channels.map((channelId) => (
+                      <span
+                        key={`${selectedTemplate.id}-${channelId}`}
+                        className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${channelCatalog[channelId].badge}`}
+                      >
+                        <span
+                          className={`h-1.5 w-1.5 rounded-full ${channelCatalog[channelId].dot}`}
+                        />
+                        {channelCatalog[channelId].label}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-4 grid gap-3 text-xs uppercase tracking-[0.35em] text-slate-200/70 sm:grid-cols-2">
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
+                      <p>Cadence</p>
+                      <p className="mt-1 text-sm font-semibold tracking-normal text-white">
+                        {selectedTemplate.cadence}
+                      </p>
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
+                      <p>Duration</p>
+                      <p className="mt-1 text-sm font-semibold tracking-normal text-white">
+                        {selectedTemplate.duration}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4 rounded-3xl border border-white/15 bg-white/5 p-6">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Recurring schedule
+                    </h3>
+                    <span className="text-xs text-slate-200/70">Mocked timeline</span>
+                  </div>
+                  <div className="space-y-2 text-sm text-white">
+                    <p>Drop window</p>
+                    <div className="grid gap-2 sm:grid-cols-2">
+                      <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                          Start
+                        </p>
+                        <p>Next Monday · 09:00 UTC</p>
+                      </div>
+                      <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
+                        <p className="text-xs uppercase tracking-[0.3em] text-slate-200/70">
+                          Repeat
+                        </p>
+                        <p>Every 2 weeks</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                      Upcoming drops
+                    </p>
+                    <ul className="space-y-2 text-sm text-slate-100/80">
+                      <li className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                        <span>Week 1 · Tease cast</span>
+                        <span>Mon · 09:00</span>
+                      </li>
+                      <li className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                        <span>Week 1 · IG stories</span>
+                        <span>Tue · 12:00</span>
+                      </li>
+                      <li className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                        <span>Week 2 · Launch reel</span>
+                        <span>Thu · 14:00</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,7,100,0.2)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Warm-up programs
+                </h3>
+                <span className="text-xs text-slate-200/70">Health scores</span>
+              </div>
+              <div className="mt-4 space-y-3">
+                {warmupPrograms.map((program) => {
+                  const token = warmupHealthTokens[program.health];
+                  return (
+                    <div
+                      key={program.id}
+                      className="rounded-3xl border border-white/10 bg-white/5 p-4"
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="text-sm font-semibold text-white">{program.title}</p>
+                        <span
+                          className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${token.badge}`}
+                        >
+                          <span className={`h-1.5 w-1.5 rounded-full ${token.dot}`} />
+                          {token.label}
+                        </span>
+                      </div>
+                      <div className="mt-3">
+                        <div className="flex items-center justify-between text-xs text-slate-200/70">
+                          <span>Score</span>
+                          <span>{program.score}</span>
+                        </div>
+                        <div className="h-2 rounded-full bg-white/10">
+                          <div
+                            className={`h-full rounded-full bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400 ${scoreWidthClass(
+                              program.score,
+                            )}`}
+                          />
+                        </div>
+                      </div>
+                      <p className="mt-3 text-xs text-slate-200/70">{program.nextAction}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(168,85,247,0.25)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Sequence board
+                </h3>
+                <span className="text-xs text-slate-200/70">{sequencePlays.length} programs</span>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {sequencePlays.map((sequence) => {
+                  const isActive = selectedSequence?.id === sequence.id;
+                  return (
+                    <button
+                      key={sequence.id}
+                      type="button"
+                      onClick={() => handleSequenceSelect(sequence.id)}
+                      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider transition ${
+                        isActive
+                          ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                          : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                      }`}
+                    >
+                      {sequence.label}
+                    </button>
+                  );
+                })}
+              </div>
+              {selectedSequence && (
+                <div className="mt-4 space-y-3 rounded-3xl border border-white/10 bg-white/5 p-4">
+                  <div className="flex items-center justify-between text-sm text-white">
+                    <span>{selectedSequence.label}</span>
+                    <span className="text-xs text-slate-200/70">
+                      {selectedSequence.steps} steps · {selectedSequence.window}
+                    </span>
+                  </div>
+                  <span
+                    className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${sequenceStatusTokens[selectedSequence.status].badge}`}
+                  >
+                    {sequenceStatusTokens[selectedSequence.status].label}
+                  </span>
+                  <ul className="space-y-2 text-sm text-slate-100/80">
+                    <li className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                      Step 1 · Kickoff DM
+                    </li>
+                    <li className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                      Step 2 · Warm audience thread
+                    </li>
+                    <li className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                      Step 3 · Reel + highlights
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          </aside>
+        </section>
+
+        <section
+          id="ops"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.85fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,7,100,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">Publishing ops</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage creative assets, compare revisions, and align your content calendar in
+                one streamlined mock view.
+              </p>
+            </header>
+
+            <div className="grid gap-4 lg:grid-cols-2">
+              {assetLibrary.map((asset) => (
+                <div
+                  key={asset.id}
+                  className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-5 shadow-inner shadow-purple-900/15"
+                >
+                  <div className="absolute inset-0 opacity-20 blur-2xl transition duration-500 group-hover:opacity-30">
+                    <div
+                      className={`absolute inset-4 rounded-3xl bg-gradient-to-br ${asset.accent}`}
+                    />
+                  </div>
+                  <div className="relative space-y-3">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white/80">
+                      {asset.type}
+                    </span>
+                    <h3 className="text-sm font-semibold text-white">{asset.title}</h3>
+                    <div className="flex items-center justify-between text-xs text-slate-200/70">
+                      <span>{asset.owner}</span>
+                      <span>{asset.updatedAt}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Version history
+              </h3>
+              <ol className="mt-4 space-y-3">
+                {versionHistory.map((entry) => (
+                  <li
+                    key={entry.id}
+                    className="flex items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                  >
+                    <span className="mt-1 h-2 w-2 rounded-full bg-white/40" />
+                    <div className="space-y-1 text-sm text-slate-100/80">
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="font-semibold text-white">{entry.author}</p>
+                        <span className="text-xs text-slate-200/70">{entry.timestamp}</span>
+                      </div>
+                      <p>{entry.summary}</p>
+                      <span
+                        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${
+                          entry.status === "live"
+                            ? "border-emerald-400/50 bg-emerald-400/20 text-emerald-100"
+                            : entry.status === "queued"
+                            ? "border-sky-400/50 bg-sky-400/20 text-sky-100"
+                            : "border-white/20 bg-white/10 text-slate-100"
+                        }`}
+                      >
+                        {entry.status}
+                      </span>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(14,116,144,0.25)] backdrop-blur-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Content calendar
+                </h3>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleCalendarViewToggle("week")}
+                    className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                      calendarView === "week"
+                        ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                        : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                    }`}
+                  >
+                    Week
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleCalendarViewToggle("month")}
+                    className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                      calendarView === "month"
+                        ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                        : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                    }`}
+                  >
+                    Month
+                  </button>
+                </div>
+              </div>
+              <p className="mt-3 text-xs text-slate-200/70">
+                {calendarView === "week"
+                  ? "Review the coming week's cross-channel cadence."
+                  : "Month view coming soon — using weekly mock data."}
+              </p>
+              <div className="mt-4 grid gap-3">
+                <div className="flex flex-wrap gap-2">
+                  {audienceDays.map((day) => {
+                    const isFocus = calendarFocus === day;
+                    return (
+                      <button
+                        key={`calendar-day-${day}`}
+                        type="button"
+                        onClick={() => handleCalendarFocusChange(day)}
+                        className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition ${
+                          isFocus
+                            ? "border-white/70 bg-white text-slate-900 shadow-lg shadow-white/30"
+                            : "border-white/20 bg-white/5 text-slate-100 hover:border-white/40 hover:bg-white/10"
+                        }`}
+                      >
+                        {day}
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
+                  <div className="grid gap-3">
+                    {calendarByDay.map(({ day, slots }) => {
+                      const isFocus = calendarFocus === day;
+                      return (
+                        <div key={`calendar-column-${day}`} className="space-y-2">
+                          <p
+                            className={`text-xs font-semibold uppercase tracking-[0.35em] ${
+                              isFocus ? "text-white" : "text-slate-200/70"
+                            }`}
+                          >
+                            {day}
+                          </p>
+                          {slots.length === 0 && (
+                            <p className="rounded-2xl border border-dashed border-white/15 bg-white/5 px-3 py-2 text-xs text-slate-200/60">
+                              Open slot
+                            </p>
+                          )}
+                          {slots.map((slot) => (
+                            <div
+                              key={slot.id}
+                              className={`space-y-2 rounded-2xl border border-white/10 bg-slate-950/40 px-3 py-2 ${
+                                isFocus ? "ring-1 ring-white/30" : ""
+                              }`}
+                            >
+                              <div className="flex items-center justify-between text-xs text-slate-200/80">
+                                <span>{slot.time}</span>
+                                <span>{slot.owner}</span>
+                              </div>
+                              <p className="text-sm font-semibold text-white">{slot.label}</p>
+                              <div className="flex flex-wrap items-center gap-2">
+                                <span
+                                  className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${impactTokens[slot.impact].badge}`}
+                                >
+                                  {impactTokens[slot.impact].label}
+                                </span>
+                                {slot.channels.map((channelId) => (
+                                  <span
+                                    key={`${slot.id}-${channelId}`}
+                                    className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${channelCatalog[channelId].badge}`}
+                                  >
+                                    {channelCatalog[channelId].label}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
         </section>
       </main>
     </div>
