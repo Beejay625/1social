@@ -105,6 +105,9 @@ Visit http://localhost:3000
 - **Content Scheduling Optimization** - Get AI-powered recommendations for optimal posting times by day of week
 
 ### Intelligence & Insights
+- **Trend Tracking** - Monitor trending topics and hashtags in real-time
+- **Trend Alerts** - Get alerts for rapid growth in trending topics
+- **Trend Statistics** - Track topics monitored, average growth, and top categories
 - **Intelligence Forecasts** - Predictive analytics for content performance
 - **Intelligence Anomalies** - Detect unusual patterns and anomalies
 - **Audience Insights** - Deep audience analytics and segmentation
