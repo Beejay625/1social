@@ -20158,7 +20158,7 @@ export default function Home() {
             </header>
 
             <div className="space-y-4">
-              {approvalWorkflows.map((workflow) => (
+              {activeWorkflows.map((workflow) => (
                 <div
                   key={workflow.id}
                   className="rounded-3xl border border-white/15 bg-white/5 p-6"
@@ -20166,41 +20166,60 @@ export default function Home() {
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <h3 className="text-lg font-semibold text-white">{workflow.name}</h3>
-                      <p className="text-xs text-slate-200/60 mt-1">{workflow.description}</p>
+                      <p className="text-xs text-slate-200/60 mt-1">Current Step: {workflow.currentStep}</p>
                     </div>
                     <span
                       className={`text-xs px-2 py-1 rounded-full ${
-                        workflow.isActive
-                          ? "bg-emerald-500/20 text-emerald-300"
-                          : "bg-slate-500/20 text-slate-300"
+                        workflow.status === "in_progress"
+                          ? "bg-blue-500/20 text-blue-300"
+                          : workflow.status === "pending"
+                          ? "bg-amber-500/20 text-amber-300"
+                          : "bg-emerald-500/20 text-emerald-300"
                       }`}
                     >
-                      {workflow.isActive ? "Active" : "Inactive"}
+                      {workflow.status}
                     </span>
                   </div>
-                  <div className="space-y-2 mb-4">
+                  <div className="mb-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-xs text-slate-200/60">Progress</p>
+                      <p className="text-xs text-white">{workflow.progress}%</p>
+                    </div>
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-slate-800">
+                      <div
+                        className="h-full bg-gradient-to-r from-purple-400 to-pink-400"
+                        style={{ width: `${workflow.progress}%` }}
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
                     {workflow.steps.map((step, idx) => (
                       <div
-                        key={step.id}
+                        key={idx}
                         className="flex items-center gap-3 rounded-xl border border-white/10 bg-slate-950/40 p-3"
                       >
-                        <div className="h-8 w-8 rounded-full bg-purple-500/20 flex items-center justify-center">
-                          <span className="text-xs font-semibold text-purple-300">{idx + 1}</span>
+                        <div className={`h-8 w-8 rounded-full flex items-center justify-center ${
+                          step.status === "completed" ? "bg-emerald-500/20" : step.status === "in_progress" ? "bg-blue-500/20" : "bg-slate-500/20"
+                        }`}>
+                          <span className={`text-xs font-semibold ${
+                            step.status === "completed" ? "text-emerald-300" : step.status === "in_progress" ? "text-blue-300" : "text-slate-300"
+                          }`}>
+                            {idx + 1}
+                          </span>
                         </div>
                         <div className="flex-1">
                           <p className="text-sm font-semibold text-white">{step.name}</p>
-                          <p className="text-xs text-slate-200/60">{step.approver.name} ({step.approver.role})</p>
+                          {step.assignedTo && (
+                            <p className="text-xs text-slate-200/60">Assigned to: {step.assignedTo}</p>
+                          )}
                         </div>
-                        {step.required && (
-                          <span className="text-xs px-2 py-1 rounded-full bg-amber-500/20 text-amber-300">
-                            Required
-                          </span>
-                        )}
+                        <span className={`text-xs px-2 py-1 rounded-full ${
+                          step.status === "completed" ? "bg-emerald-500/20 text-emerald-300" : step.status === "in_progress" ? "bg-blue-500/20 text-blue-300" : "bg-slate-500/20 text-slate-300"
+                        }`}>
+                          {step.status.replace("_", " ")}
+                        </span>
                       </div>
                     ))}
-                  </div>
-                  <div className="flex items-center gap-4 text-xs text-slate-200/60">
-                    <span>Used {workflow.usedCount} times</span>
                   </div>
                 </div>
               ))}
@@ -20210,27 +20229,41 @@ export default function Home() {
           <aside className="flex flex-col gap-6">
             <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
               <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
-                Active Workflows
+                Workflow Statistics
+              </h3>
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Active Workflows</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{workflowStats.activeWorkflows}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Pending Approvals</p>
+                  <p className="mt-1 text-xl font-semibold text-amber-300">{workflowStats.pendingApprovals}</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                  <p className="text-xs text-slate-200/60">Avg Approval Time</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{workflowStats.avgApprovalTime}</p>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(236,72,153,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70 mb-4">
+                Approval Templates
               </h3>
               <div className="space-y-3">
-                {workflowInstances.map((instance) => (
+                {approvalTemplates.map((template) => (
                   <div
-                    key={instance.id}
+                    key={template.id}
                     className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
                   >
-                    <p className="text-sm font-semibold text-white mb-1">{instance.contentTitle}</p>
-                    <p className="text-xs text-slate-200/60 mb-2">Step {instance.currentStep} of {instance.steps.length}</p>
-                    <span
-                      className={`text-xs px-2 py-1 rounded-full ${
-                        instance.status === "approved"
-                          ? "bg-emerald-500/20 text-emerald-300"
-                          : instance.status === "in-progress"
-                          ? "bg-blue-500/20 text-blue-300"
-                          : "bg-amber-500/20 text-amber-300"
-                      }`}
-                    >
-                      {instance.status}
-                    </span>
+                    <p className="text-sm font-semibold text-white mb-1">{template.name}</p>
+                    <div className="flex items-center gap-4 text-xs text-slate-200/60">
+                      <span>{template.steps} steps</span>
+                      <span>·</span>
+                      <span>{template.avgTime}</span>
+                      <span>·</span>
+                      <span>Used {template.usage} times</span>
+                    </div>
                   </div>
                 ))}
               </div>
