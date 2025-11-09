@@ -8780,3 +8780,195 @@ export default function Home() {
     </div>
   );
 }
+
+        <section
+          id="api-management"
+          className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"
+        >
+          <article className="flex flex-col gap-6 rounded-4xl border border-white/15 bg-white/10 p-8 shadow-[0_18px_60px_rgba(59,130,246,0.25)] backdrop-blur-2xl">
+            <header className="flex flex-col gap-3">
+              <h2 className="text-2xl font-semibold text-white">API Management</h2>
+              <p className="text-sm text-slate-100/75">
+                Manage API keys, monitor endpoints, and configure webhooks.
+              </p>
+            </header>
+
+            <div className="space-y-4">
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  API Keys
+                </h3>
+                <div className="space-y-3">
+                  {apiKeys.map((key) => {
+                    const isSelected = key.id === selectedApiKeyId;
+                    return (
+                      <div
+                        key={key.id}
+                        className={`rounded-2xl border p-4 transition ${
+                          isSelected
+                            ? "border-white/30 bg-white/10"
+                            : "border-white/10 bg-slate-950/40 hover:border-white/20"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex-1">
+                            <p className="text-sm font-semibold text-white">{key.name}</p>
+                            <p className="mt-1 font-mono text-xs text-slate-200/70">{key.key}</p>
+                            <div className="mt-3 flex items-center gap-4 text-xs text-slate-200/70">
+                              <span>{key.requests.toLocaleString()} requests</span>
+                              <span>·</span>
+                              <span>Last used {formatRelativeTime(key.lastUsed)}</span>
+                            </div>
+                          </div>
+                          <span
+                            className={`text-[10px] uppercase tracking-wider ${
+                              key.status === "active" ? "text-emerald-300" : "text-slate-300"
+                            }`}
+                          >
+                            {key.status}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                  Endpoints
+                </h3>
+                <div className="space-y-3">
+                  {apiEndpoints.map((endpoint) => (
+                    <div
+                      key={endpoint.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3">
+                            <span
+                              className={`rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-wider ${
+                                endpoint.method === "GET"
+                                  ? "bg-blue-500/20 text-blue-300"
+                                  : "bg-emerald-500/20 text-emerald-300"
+                              }`}
+                            >
+                              {endpoint.method}
+                            </span>
+                            <code className="text-sm text-white">{endpoint.path}</code>
+                          </div>
+                          <p className="mt-2 text-xs text-slate-200/70">{endpoint.description}</p>
+                          <div className="mt-3 grid grid-cols-3 gap-3 text-xs">
+                            <div>
+                              <p className="text-slate-200/60">Requests</p>
+                              <p className="mt-1 text-sm font-semibold text-white">
+                                {endpoint.requests.toLocaleString()}
+                              </p>
+                            </div>
+                            <div>
+                              <p className="text-slate-200/60">Success</p>
+                              <p className="mt-1 text-sm font-semibold text-emerald-300">
+                                {endpoint.successRate}%
+                              </p>
+                            </div>
+                            <div>
+                              <p className="text-slate-200/60">Avg time</p>
+                              <p className="mt-1 text-sm font-semibold text-white">
+                                {endpoint.avgResponseTime}ms
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside className="flex flex-col gap-6">
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Webhooks
+              </h3>
+              <div className="mt-4 space-y-3">
+                {webhookEvents.map((webhook) => (
+                  <div
+                    key={webhook.id}
+                    className={`rounded-2xl border p-4 ${
+                      webhook.status === "active"
+                        ? "border-emerald-400/50 bg-emerald-400/10"
+                        : "border-white/10 bg-slate-950/40"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">{webhook.name}</p>
+                        <p className="mt-1 font-mono text-xs text-slate-200/70">{webhook.url}</p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {webhook.events.map((event) => (
+                            <span
+                              key={event}
+                              className="rounded-full bg-white/10 px-2 py-1 text-[10px] text-slate-200/70"
+                            >
+                              {event}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="mt-3 flex items-center gap-4 text-xs text-slate-200/70">
+                          <span>Success: {webhook.successRate}%</span>
+                          <span>·</span>
+                          <span>Last: {formatRelativeTime(webhook.lastTriggered)}</span>
+                        </div>
+                      </div>
+                      <span
+                        className={`text-[10px] uppercase tracking-wider ${
+                          webhook.status === "active" ? "text-emerald-300" : "text-slate-300"
+                        }`}
+                      >
+                        {webhook.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-4xl border border-white/15 bg-white/10 p-6 shadow-[0_18px_60px_rgba(59,130,246,0.2)] backdrop-blur-2xl">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-200/70">
+                Rate Limits
+              </h3>
+              <div className="mt-4 space-y-3">
+                {rateLimits.map((limit) => {
+                  const usagePercent = (limit.current / limit.limit) * 100;
+                  return (
+                    <div
+                      key={limit.endpoint}
+                      className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <code className="text-xs text-white">{limit.endpoint}</code>
+                        <span className="text-xs text-slate-200/70">
+                          {limit.current}/{limit.limit} per {limit.window}
+                        </span>
+                      </div>
+                      <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
+                        <div
+                          className={`h-full ${
+                            usagePercent > 80 ? "bg-rose-400" : usagePercent > 50 ? "bg-amber-400" : "bg-emerald-400"
+                          }`}
+                          style={{ width: `${usagePercent}%` }}
+                        />
+                      </div>
+                      <p className="mt-2 text-xs text-slate-200/70">
+                        {limit.remaining} remaining
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </aside>
+        </section>
