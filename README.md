@@ -268,10 +268,76 @@ All features are built with **Reown AppKit** and **Wagmi** for seamless wallet i
 
 - **Next.js** (App Router) - React framework
 - **Tailwind CSS** - Styling
-- **Reown AppKit** + **Wagmi** + **Viem** - Web3 wallet integration (Primary wallet solution)
+- **Reown AppKit** + **Wagmi** + **Viem** - Web3 wallet integration (All 40+ onchain features powered by Reown)
 - **TypeScript** - Type safety
 - **IPFS/Arweave** - Decentralized storage
 - **The Graph** - Blockchain indexing
+
+## 40+ Onchain Features Powered by Reown Wallet
+
+All features below use **Reown wallet integration** via Wagmi hooks (`useAccount`, `useSignMessage`, `useWriteContract`, `useReadContract`, `useBalance`, `useSwitchChain`, `useFeeData`, etc.):
+
+### Wallet & Authentication (5 features)
+1. **Wallet-Signed Composer** - Cryptographically sign content with Reown wallet
+2. **Wallet Verification** - Verify wallet ownership with signed messages
+3. **Wallet Connector** - Connect/disconnect wallets via Reown AppKit
+4. **Network Detector** - Detect current chain via Reown connection
+5. **Balance Checker** - Check wallet balances using Reown hooks
+
+### Content & Publishing (5 features)
+6. **Onchain Scheduling Queue** - Schedule posts with blockchain timestamps
+7. **Cross-Chain Router** - Switch chains and publish across protocols
+8. **Gas-Optimized Planner** - Optimize posting times based on gas fees
+9. **Content Ownership** - Claim ownership of content with wallet signatures
+10. **Onchain Storage** - Store content on IPFS with wallet-signed proofs
+
+### Token & NFT Features (5 features)
+11. **Token-Gated Campaigns** - Restrict access based on token/NFT holdings
+12. **NFT Content Drops** - Mint social media content as NFTs
+13. **Token Staking** - Stake tokens for content boosts
+14. **Staking Rewards** - Read staking rewards from contracts
+15. **Merkle Claims** - Claim rewards via merkle proofs with signatures
+
+### DAO & Governance (4 features)
+16. **DAO Approval Flow** - Submit content for DAO approval
+17. **DAO Voting** - Vote on proposals with wallet signatures
+18. **Governance Proposals** - Create and read governance proposals
+19. **Multi-Sig Treasury** - Manage DAO treasuries with multi-sig support
+
+### Analytics & Tracking (5 features)
+20. **Onchain Analytics Ledger** - Publish analytics with IPFS hashes
+21. **Wallet Reputation** - Calculate reputation from onchain activity
+22. **Reputation System** - Read reputation scores from contracts
+23. **Content Attribution** - Track attribution with wallet signatures
+24. **Gas Tracker** - Monitor gas prices and usage
+
+### Financial Features (5 features)
+25. **Sponsored Post Escrow** - Lock funds in escrow contracts
+26. **Revenue Splitter** - Split revenue across multiple wallets
+27. **Tip Collector** - Collect tips for content creators
+28. **Token Rewards Distributor** - Distribute token rewards
+29. **Airdrop Manager** - Create and manage airdrops
+
+### Smart Contracts (4 features)
+30. **Smart Contract Rules** - Enforce content rules via contracts
+31. **Contract Reader** - Read data from any smart contract
+32. **Contract Writer** - Write to smart contracts via Reown
+33. **Smart Contract Webhooks** - Register webhooks for contract events
+
+### Advanced Features (11 features)
+34. **Stake-Backed Boosts** - Boost content visibility with staked tokens
+35. **Onchain A/B Testing** - Register test results onchain
+36. **Compliance Proof Vault** - Store compliance decisions with signatures
+37. **Audience Segments** - Create segments based on token holdings
+38. **Wallet Delegate Access** - Delegate publishing permissions
+39. **Protocol Health Monitor** - Monitor chain health status
+40. **Social Graph Sync** - Sync social graphs with wallet signatures
+41. **Vesting Schedule** - Read vesting schedules from contracts
+42. **Chain Switcher** - Switch between chains seamlessly
+43. **Transaction Signer** - Sign transactions with Reown wallet
+44. **ENS Resolver** - Resolve ENS names to addresses
+
+**All 40+ features require Reown wallet connection** and use wallet hooks for authentication, signing, and contract interactions. Every onchain operation is secured by Reown wallet signatures.
 
 ## Environment Setup
 
