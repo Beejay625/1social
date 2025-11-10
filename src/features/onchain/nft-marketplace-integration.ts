@@ -1,46 +1,36 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
-import { parseEther } from 'viem';
 
-export interface NFTListing {
+export interface MarketplaceListing {
   tokenId: string;
   price: string;
-  currency: string;
+  marketplace: string;
   listed: boolean;
-  timestamp: number;
 }
 
 export function useNFTMarketplaceIntegration() {
-  const { address, isConnected } = useAccount();
-  const { writeContract } = useWriteContract();
-  const [listings, setListings] = useState<NFTListing[]>([]);
+  const { address } = useAccount();
+  const { signMessageAsync } = useSignMessage();
+  const [listings, setListings] = useState<MarketplaceListing[]>([]);
 
-  const listNFT = async (tokenId: string, price: string, currency: string) => {
-    if (!isConnected || !address) {
-      throw new Error('Wallet not connected');
-    }
-
-    const txHash = await writeContract({
-      address: '0x' as `0x${string}`,
-      abi: [],
-      functionName: 'listNFT',
-      args: [tokenId, parseEther(price), currency],
-    });
-
-    const listing: NFTListing = {
+  const listNFT = async (tokenId: string, price: string, marketplace: string) => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `List: ${tokenId} ${price} on ${marketplace}`;
+    await signMessageAsync({ message });
+    
+    const listing: MarketplaceListing = {
       tokenId,
       price,
-      currency,
+      marketplace,
       listed: true,
-      timestamp: Date.now(),
     };
-
+    
     setListings([...listings, listing]);
-    return txHash;
+    return listing;
   };
 
-  return { listNFT, listings, isConnected, address };
+  return { listNFT, listings, address };
 }
-
