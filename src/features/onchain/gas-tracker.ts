@@ -1,13 +1,14 @@
 'use client';
-import { useFeeData } from 'wagmi';
+import { useFeeData, useAccount } from 'wagmi';
 export function useGasTracker() {
   const { data: feeData } = useFeeData();
+  const { chainId } = useAccount();
   const trackGasUsage = () => {
     return {
       gasPrice: feeData?.gasPrice,
       maxFeePerGas: feeData?.maxFeePerGas,
-      maxPriorityFeePerGas: feeData?.maxPriorityFeePerGas,
+      chainId,
     };
   };
-  return { trackGasUsage, feeData };
+  return { trackGasUsage, feeData, chainId };
 }
