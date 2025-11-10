@@ -187,6 +187,28 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Staking Rewards** - Track and claim staking rewards
 - **Cross-Protocol Messaging** - Send messages across protocols with wallet signatures
 
+### Latest Onchain Features (Reown Wallet Integrated)
+- **Token Lock Manager** - Lock tokens with unlock dates using Reown wallet signatures
+- **Multi-Chain Balance Aggregator** - Aggregate balances across multiple chains with Reown
+- **Transaction Fee Estimator** - Estimate transaction fees before execution with Reown
+- **Contract Event Subscriber** - Subscribe to smart contract events in real-time with Reown
+- **Wallet Nonce Tracker** - Track wallet nonce for transaction ordering with Reown
+- **Token Price Calculator** - Calculate token prices from onchain data with Reown
+- **Gas Price Predictor** - Predict future gas prices based on trends with Reown
+- **Transaction Queue Manager** - Queue and manage multiple transactions with Reown signatures
+- **Smart Contract Verifier** - Verify smart contract source code with Reown wallet
+- **Token Holder Tracker** - Track token holders and their balances with Reown
+- **NFT Collection Manager** - Create and manage NFT collections with Reown wallet
+- **Cross-Chain Asset Tracker** - Track assets across multiple blockchain networks with Reown
+- **DeFi Position Manager** - Manage DeFi positions and yields with Reown wallet
+- **Liquidity Provider Tracker** - Track LP positions and fees with Reown
+- **Yield Optimizer** - Optimize yield farming strategies with Reown wallet
+- **Risk Calculator** - Calculate risk scores for DeFi positions with Reown
+- **Portfolio Rebalancer** - Automatically rebalance portfolios with Reown signatures
+- **Token Swap Router** - Find optimal swap routes across DEXs with Reown
+- **Multi-Sig Proposal Manager** - Manage multi-signature proposals with Reown wallet
+- **Governance Quorum Tracker** - Track quorum requirements for governance with Reown
+
 ## New Onchain Features (All Powered by Reown Wallet)
 
 ### Wallet Integration & Management
