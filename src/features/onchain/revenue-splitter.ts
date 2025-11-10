@@ -1,28 +1,34 @@
 'use client';
 
-import { useAccount, useWriteContract } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface RevenueSplit {
   recipient: string;
   percentage: number;
+  amount: string;
 }
 
-export function useCreatorRevenueSplitter() {
+export function useRevenueSplitter() {
   const { address } = useAccount();
-  const { writeContractAsync } = useWriteContract();
+  const { signMessageAsync } = useSignMessage();
   const [splits, setSplits] = useState<RevenueSplit[]>([]);
 
-  const configureSplit = async (splits: RevenueSplit[]) => {
-    if (!address) throw new Error('Wallet not connected');
+  const createSplit = async (recipient: string, percentage: number) => {
+    if (!address) throw new Error('Reown wallet not connected');
     
-    const total = splits.reduce((sum, s) => sum + s.percentage, 0);
-    if (total !== 100) throw new Error('Splits must total 100%');
+    const message = `Split: ${recipient} ${percentage}%`;
+    await signMessageAsync({ message });
     
-    setSplits(splits);
-    return { splits, configuredBy: address };
+    const split: RevenueSplit = {
+      recipient,
+      percentage,
+      amount: '0',
+    };
+    
+    setSplits([...splits, split]);
+    return split;
   };
 
-  return { configureSplit, splits };
+  return { createSplit, splits, address };
 }
-

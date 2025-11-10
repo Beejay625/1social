@@ -3,35 +3,37 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface ContentVerification {
+export interface VerifiedContent {
   contentHash: string;
-  verified: boolean;
-  verifier: string;
+  signature: string;
+  wallet: string;
   timestamp: number;
 }
 
 export function useContentVerification() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [verifications, setVerifications] = useState<ContentVerification[]>([]);
+  const [verifiedContent, setVerifiedContent] = useState<VerifiedContent[]>([]);
 
-  const verifyContent = async (contentHash: string) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Verify: ${contentHash}`;
-    await signMessageAsync({ message });
-    
-    const verification: ContentVerification = {
+  const verifyContent = async (content: string) => {
+    if (!isConnected || !address) {
+      throw new Error('Reown wallet not connected');
+    }
+
+    const contentHash = `0x${Buffer.from(content).toString('hex').slice(0, 64)}`;
+    const message = `Verify: ${contentHash}\nTimestamp: ${Date.now()}`;
+    const signature = await signMessageAsync({ message });
+
+    const verified: VerifiedContent = {
       contentHash,
-      verified: true,
-      verifier: address,
+      signature,
+      wallet: address,
       timestamp: Date.now(),
     };
-    
-    setVerifications([...verifications, verification]);
-    return verification;
+
+    setVerifiedContent([...verifiedContent, verified]);
+    return verified;
   };
 
-  return { verifyContent, verifications, address };
+  return { verifyContent, verifiedContent, isConnected, address };
 }
-
