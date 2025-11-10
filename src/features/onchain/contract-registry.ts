@@ -1,39 +1,13 @@
 'use client';
-
 import { useAccount, useSignMessage } from 'wagmi';
-import { useState } from 'react';
-
-export interface RegistryEntry {
-  name: string;
-  address: string;
-  chainId: number;
-  verified: boolean;
-  wallet: string;
-}
-
 export function useContractRegistry() {
-  const { address, chainId } = useAccount();
+  const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [entries, setEntries] = useState<RegistryEntry[]>([]);
-
-  const registerContract = async (name: string, contractAddress: string) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Register: ${name} at ${contractAddress}`;
+  const registerContract = async (contractAddress: string, name: string) => {
+    if (!isConnected || !address) throw new Error('Reown wallet not connected');
+    const message = `Register:${contractAddress}:${name}`;
     await signMessageAsync({ message });
-    
-    const entry: RegistryEntry = {
-      name,
-      address: contractAddress,
-      chainId: chainId || 1,
-      verified: true,
-      wallet: address,
-    };
-    
-    setEntries([...entries, entry]);
-    return entry;
+    return { contractAddress, name, registeredBy: address };
   };
-
-  return { registerContract, entries, address, chainId };
+  return { registerContract, isConnected, address };
 }
-
