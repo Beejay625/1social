@@ -1,39 +1,32 @@
 'use client';
 
-import { useAccount, useReadContract, useWriteContract } from 'wagmi';
+import { useAccount } from 'wagmi';
 import { useState } from 'react';
 
-export interface ContentRule {
+export interface AutomationRule {
   id: string;
-  type: 'repost_limit' | 'embargo' | 'distribution_limit';
-  value: number;
-  contractAddress: string;
+  trigger: string;
+  action: string;
+  active: boolean;
 }
 
 export function useSmartContractRules() {
   const { address } = useAccount();
-  const { writeContractAsync } = useWriteContract();
-  const [rules, setRules] = useState<ContentRule[]>([]);
+  const [rules, setRules] = useState<AutomationRule[]>([]);
 
-  const createRule = async (rule: Omit<ContentRule, 'id'>) => {
-    if (!address) throw new Error('Wallet not connected');
+  const createRule = async (trigger: string, action: string) => {
+    if (!address) throw new Error('Reown wallet not connected');
     
-    const newRule: ContentRule = {
-      ...rule,
+    const rule: AutomationRule = {
       id: `rule_${Date.now()}`,
+      trigger,
+      action,
+      active: true,
     };
     
-    setRules([...rules, newRule]);
-    return newRule;
+    setRules([...rules, rule]);
+    return rule;
   };
 
-  const checkRule = async (ruleId: string, contentId: string) => {
-    const rule = rules.find(r => r.id === ruleId);
-    if (!rule) return false;
-    
-    return true; // Mock check
-  };
-
-  return { createRule, checkRule, rules };
+  return { createRule, rules, address };
 }
-
