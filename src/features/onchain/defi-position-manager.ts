@@ -1,39 +1,14 @@
 'use client';
-
-import { useAccount, useReadContract } from 'wagmi';
-import { useState, useEffect } from 'react';
-
-export interface DeFiPosition {
-  protocol: string;
-  position: string;
-  value: bigint;
-  apy: number;
-}
-
+import { useAccount, useReadContract, useSignMessage } from 'wagmi';
 export function useDeFiPositionManager() {
-  const { address } = useAccount();
-  const [positions, setPositions] = useState<DeFiPosition[]>([]);
-
-  const { data: positionData } = useReadContract({
+  const { address, isConnected } = useAccount();
+  const { signMessageAsync } = useSignMessage();
+  const { data: position } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
     functionName: 'getPosition',
     args: address ? [address] : undefined,
-    query: { enabled: !!address },
+    query: { enabled: isConnected && !!address },
   });
-
-  useEffect(() => {
-    if (address && positionData) {
-      const position: DeFiPosition = {
-        protocol: 'Aave',
-        position: 'lending',
-        value: (positionData as any)?.value || BigInt(0),
-        apy: 5.2,
-      };
-      setPositions([position]);
-    }
-  }, [address, positionData]);
-
-  return { positions, address };
+  return { position, isConnected, address };
 }
-
