@@ -3,44 +3,34 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface ArweaveUpload {
+export interface ArweaveRecord {
   txId: string;
-  contentHash: string;
+  content: string;
+  wallet: string;
   timestamp: number;
-  permanent: boolean;
 }
 
 export function useArweaveStorage() {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [uploads, setUploads] = useState<ArweaveUpload[]>([]);
+  const [records, setRecords] = useState<ArweaveRecord[]>([]);
 
   const storeOnArweave = async (content: string) => {
-    if (!isConnected || !address) {
-      throw new Error('Wallet not connected');
-    }
-
-    const message = `Arweave Storage: ${content.substring(0, 50)}\nTimestamp: ${Date.now()}`;
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `Arweave: ${content.substring(0, 50)}`;
     await signMessageAsync({ message });
-
-    const response = await fetch('/api/arweave/store', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content }),
-    });
-
-    const data = await response.json();
-    const upload: ArweaveUpload = {
-      txId: data.txId,
-      contentHash: data.hash,
+    
+    const record: ArweaveRecord = {
+      txId: `ar_${Date.now()}`,
+      content,
+      wallet: address,
       timestamp: Date.now(),
-      permanent: true,
     };
-
-    setUploads([...uploads, upload]);
-    return upload;
+    
+    setRecords([...records, record]);
+    return record;
   };
 
-  return { storeOnArweave, uploads, isConnected, address };
+  return { storeOnArweave, records, address };
 }
-
