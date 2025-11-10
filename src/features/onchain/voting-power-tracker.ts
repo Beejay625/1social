@@ -4,10 +4,11 @@ import { useAccount, useReadContract } from 'wagmi';
 import { useState, useEffect } from 'react';
 
 export interface VotingPower {
-  voter: string;
+  address: string;
   power: bigint;
-  proposalId: string;
-  delegated: boolean;
+  delegated: bigint;
+  received: bigint;
+  timestamp: number;
 }
 
 export function useVotingPowerTracker() {
@@ -24,10 +25,11 @@ export function useVotingPowerTracker() {
     if (!address || !power) return;
     
     const votingPower: VotingPower = {
-      voter: address,
+      address,
       power: BigInt(power as string),
-      proposalId: '0',
-      delegated: false,
+      delegated: BigInt(0),
+      received: BigInt(0),
+      timestamp: Date.now(),
     };
     
     setPowers([votingPower]);
