@@ -1,39 +1,13 @@
 'use client';
-
 import { useAccount, useSignMessage } from 'wagmi';
-import { useState } from 'react';
-
-export interface EventFilter {
-  contract: string;
-  eventName: string;
-  fromBlock: bigint;
-  toBlock: bigint;
-  args: any;
-}
-
 export function useEventFilterBuilder() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [filters, setFilters] = useState<EventFilter[]>([]);
-
-  const createFilter = async (contract: string, eventName: string, fromBlock: bigint, toBlock: bigint, args: any) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Filter: ${eventName} on ${contract}`;
+  const buildFilter = async (eventName: string, filters: Record<string, any>) => {
+    if (!isConnected || !address) throw new Error('Reown wallet not connected');
+    const message = `Filter:${eventName}:${JSON.stringify(filters)}`;
     await signMessageAsync({ message });
-    
-    const filter: EventFilter = {
-      contract,
-      eventName,
-      fromBlock,
-      toBlock,
-      args,
-    };
-    
-    setFilters([...filters, filter]);
-    return filter;
+    return { eventName, filters, builtBy: address };
   };
-
-  return { createFilter, filters, address };
+  return { buildFilter, isConnected, address };
 }
-
