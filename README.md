@@ -145,6 +145,48 @@ Visit http://localhost:3000
 - **Account Health Scores** - Monitor wallet reputation and protocol standing
 - **Performance Alerts** - Automated alerts for anomalous onchain activity
 
+### New Onchain Features (Reown Wallet Integrated)
+All features below are fully integrated with **Reown AppKit** for seamless wallet connectivity:
+
+- **NFT Minting Service** - Mint content as NFTs with Reown wallet signatures
+- **Tip Collector** - Collect tips with real-time balance tracking via Reown
+- **Token Rewards Distributor** - Batch distribute tokens to multiple recipients
+- **Onchain Reputation Tracker** - Track wallet reputation scores onchain
+- **Multi-Sig Treasury** - Create and manage treasury proposals with multi-signature support
+- **IPFS Uploader** - Upload files to IPFS with wallet-signed verification
+- **Arweave Storage** - Permanent decentralized storage with wallet authentication
+- **Cross-Chain Bridge** - Bridge tokens across chains with automatic chain switching
+- **Gas Price Monitor** - Real-time gas price tracking for optimal transaction timing
+- **Transaction Batcher** - Batch multiple transactions for gas efficiency
+- **Wallet Verification** - Verify wallet ownership with cryptographic signatures
+- **Onchain Voting** - Cast votes with token-weighted voting power
+- **Token Staking** - Stake tokens with lock periods and reward tracking
+- **NFT Marketplace Integration** - List and sell NFTs on marketplaces
+- **DeFi Yield Tracker** - Track yield positions and APY across protocols
+- **Governance Proposals** - Create and manage DAO governance proposals
+- **Airdrop Manager** - Create and distribute token airdrops
+- **Liquidity Pool Tracker** - Monitor LP positions and fees
+- **Smart Contract Deployer** - Deploy custom smart contracts directly from wallet
+- **Onchain Identity** - Verify and manage onchain identity with ENS support
+- **Content Verification** - Cryptographically verify content authenticity
+- **Creator Tokens** - Mint and manage creator tokens
+- **Content Attribution** - Track content creators and contributors onchain
+- **Audience Segments** - Segment audiences by wallet holdings and behavior
+- **Compliance Vault** - Submit content for onchain compliance checks
+- **DAO Voting** - Token-weighted voting for DAO proposals
+- **Decentralized Backup** - Backup data to IPFS and Arweave with verification
+- **Social Graph Sync** - Synchronize social connections across protocols
+- **Protocol Health** - Monitor protocol status and latency
+- **Smart Contract Webhooks** - Listen to smart contract events in real-time
+- **Smart Contract Rules** - Create automation rules for smart contracts
+- **Protocol Registry** - Register and manage supported protocols
+- **A/B Testing Registry** - Run onchain A/B tests with verified results
+- **NFT Drops** - Create and manage NFT drop campaigns
+- **Wallet Delegation** - Delegate wallet permissions with expiry
+- **Wallet Connectivity** - Manage wallet connections and disconnections
+- **Staking Rewards** - Track and claim staking rewards
+- **Cross-Protocol Messaging** - Send messages across protocols with wallet signatures
+
 ## Tech Stack
 
 - **Next.js** (App Router) - React framework
