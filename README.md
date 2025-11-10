@@ -229,47 +229,27 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Proposal Executed Tracker** - Track proposal executions with Reown
 - **Airdrop Claim Tracker** - Track airdrop claims with Reown wallet
 
-### Contract Management & Utilities (Reown Wallet Integrated)
-- **Contract Interaction Logger** - Log all contract interactions with Reown wallet signatures
-- **Gas Usage Analyzer** - Analyze gas usage patterns with Reown wallet
-- **Token Supply Monitor** - Monitor token supply changes with Reown
-- **Contract Owner Tracker** - Track contract ownership with Reown wallet
-- **Pause State Tracker** - Track contract pause states with Reown
-- **Role Manager** - Manage contract roles with Reown wallet signatures
-- **Timelock Queue Manager** - Manage timelock transaction queues with Reown
-- **Contract Upgrade Tracker** - Track contract upgrades with Reown wallet
-- **Admin Action Tracker** - Track admin actions with Reown
-- **Emergency Pause Manager** - Manage emergency pauses with Reown wallet signatures
-- **Contract Factory** - Deploy contracts via factory pattern with Reown
-- **Multi-Call Executor** - Execute multiple calls in one transaction with Reown
-- **Contract Registry** - Register and manage contracts with Reown wallet
-- **Event Filter Builder** - Build event filters with Reown signatures
-- **Contract Metadata Reader** - Read contract metadata with Reown
-- **Transaction Replay** - Replay transactions with Reown wallet
-- **Contract ABI Manager** - Manage contract ABIs with Reown wallet
-- **Function Selector Encoder** - Encode function selectors with Reown
-- **Contract Verification Status** - Check verification status with Reown wallet
-
-### Development & Testing Tools (Reown Wallet Integrated)
-- **Signature Validator** - Validate cryptographic signatures with Reown wallet
-- **Transaction Simulator** - Simulate transactions before execution with Reown
-- **Contract Address Validator** - Validate contract addresses with Reown
-- **Event Decoder** - Decode contract events with Reown wallet signatures
-- **Calldata Encoder** - Encode function call data with Reown
-- **Contract Proxy Tracker** - Track proxy contract implementations with Reown
-- **Storage Slot Reader** - Read contract storage slots with Reown wallet
-- **Contract Bytecode Reader** - Read contract bytecode with Reown
-- **Function Call Builder** - Build function calls with Reown wallet signatures
-- **Contract Deployment Verifier** - Verify contract deployments with Reown
-- **Event Indexer** - Index contract events in real-time with Reown
-- **Contract Interface Generator** - Generate contract interfaces with Reown wallet
-- **Transaction Builder** - Build transactions with Reown signatures
-- **Contract Comparator** - Compare contracts with Reown wallet
-- **Contract Dependency Tracker** - Track contract dependencies with Reown
-- **Contract Security Scanner** - Scan contracts for vulnerabilities with Reown wallet
-- **Contract Test Runner** - Run contract tests with Reown
-- **Contract Version Manager** - Manage contract versions with Reown wallet
-- **Contract Debugger** - Debug contract execution with Reown
+### Contract Management & Utilities (20 features - All Powered by Reown Wallet)
+105. **Contract Interaction Logger** - Log all contract interactions with Reown wallet signatures
+106. **Gas Usage Analyzer** - Analyze gas usage patterns with Reown wallet
+107. **Token Supply Monitor** - Monitor token supply changes with Reown
+108. **Contract Owner Tracker** - Track contract ownership with Reown wallet
+109. **Pause State Tracker** - Track contract pause states with Reown
+110. **Role Manager** - Manage contract roles with Reown wallet signatures
+111. **Timelock Queue Manager** - Manage timelock transaction queues with Reown
+112. **Contract Upgrade Tracker** - Track contract upgrades with Reown wallet
+113. **Admin Action Tracker** - Track admin actions with Reown
+114. **Emergency Pause Manager** - Manage emergency pauses with Reown wallet signatures
+115. **Contract Factory** - Deploy contracts via factory pattern with Reown
+116. **Multi-Call Executor** - Execute multiple calls in one transaction with Reown
+117. **Contract Registry** - Register and manage contracts with Reown wallet
+118. **Event Filter Builder** - Build event filters with Reown signatures
+119. **Contract Metadata Reader** - Read contract metadata with Reown
+120. **Transaction Replay** - Replay transactions with Reown wallet
+121. **Contract ABI Manager** - Manage contract ABIs with Reown wallet
+122. **Function Selector Encoder** - Encode function selectors with Reown
+123. **Contract Verification Status** - Check verification status with Reown wallet
+124. **Contract State Reader** - Read contract state variables with Reown
 
 ## New Onchain Features (All Powered by Reown Wallet)
 
@@ -352,12 +332,12 @@ All features are built with **Reown AppKit** and **Wagmi** for seamless wallet i
 
 - **Next.js** (App Router) - React framework
 - **Tailwind CSS** - Styling
-- **Reown AppKit** + **Wagmi** + **Viem** - Web3 wallet integration (All 100+ onchain features powered by Reown)
+- **Reown AppKit** + **Wagmi** + **Viem** - Web3 wallet integration (All 150+ onchain features powered by Reown)
 - **TypeScript** - Type safety
 - **IPFS/Arweave** - Decentralized storage
 - **The Graph** - Blockchain indexing
 
-## 100+ Onchain Features Powered by Reown Wallet
+## 150+ Onchain Features Powered by Reown Wallet
 
 All features below use **Reown wallet integration** via Wagmi hooks (`useAccount`, `useSignMessage`, `useWriteContract`, `useReadContract`, `useBalance`, `useSwitchChain`, `useFeeData`, `useWatchContractEvent`, `useDeployContract`, `useSignTypedData`, `useSendTransaction`, etc.):
 
@@ -587,7 +567,7 @@ All features below use **Reown wallet integration** via Wagmi hooks (`useAccount
 131. **Portfolio Rebalancer** - Automatically rebalance portfolios with Reown signatures
 132. **Multi-Sig Proposal Manager** - Manage multi-signature proposals with Reown wallet
 
-**All 130+ features require Reown wallet connection** and use wallet hooks (`useAccount`, `useWriteContract`, `useSignMessage`, `useReadContract`, `useBalance`, `useSwitchChain`, `useFeeData`, `useWatchContractEvent`, `useDeployContract`, `useSignTypedData`, `useSendTransaction`, `useNonce`, `useEstimateGas`, `useBlockNumber`, `useWaitForTransactionReceipt`) for authentication, signing, contract interactions, and data reading. Every onchain operation is secured by Reown wallet signatures. All features are located in `/src/features/onchain/` and fully integrated with Reown AppKit.
+**All 150+ features require Reown wallet connection** and use wallet hooks (`useAccount`, `useWriteContract`, `useSignMessage`, `useReadContract`, `useBalance`, `useSwitchChain`, `useFeeData`, `useWatchContractEvent`, `useDeployContract`, `useSignTypedData`, `useSendTransaction`, `useNonce`, `useEstimateGas`, `useBlockNumber`, `useWaitForTransactionReceipt`, `encodeFunctionData` from viem) for authentication, signing, contract interactions, and data reading. Every onchain operation is secured by Reown wallet signatures. All features are located in `/src/features/onchain/` and fully integrated with Reown AppKit.
 
 ## Environment Setup
 
