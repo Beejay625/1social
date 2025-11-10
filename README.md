@@ -1,6 +1,6 @@
-# 1Social Dashboard
+# 1Social - Decentralized Social Media Command Center
 
-A comprehensive social media management dashboard built with Next.js. Compose once and share to multiple platforms (Farcaster, Instagram, X, Lens, Mirror) with advanced analytics, automation, and collaboration features.
+The first truly onchain social media management platform built with Next.js. Compose once and publish across decentralized protocols (Farcaster, Lens Protocol, Mirror) and traditional platforms (Instagram, X) with advanced web3-native analytics, automation, and DAO collaboration features.
 
 ## Quick Start
 
@@ -13,279 +13,184 @@ Visit http://localhost:3000
 
 ## Features
 
-### Core Features
-- **Multi-platform Content Publishing** - Compose once and publish to Farcaster, Instagram, X, Lens, and Mirror
-- **Content Scheduling** - Schedule posts across multiple platforms with advanced calendar views
-- **Workflow Automation** - Streamline content approval workflows with customizable templates
-- **Distribution Management** - Manage content distribution across channels with performance tracking
+### Core Onchain Features
+- **Multi-Protocol Content Publishing** - Compose once and publish onchain to Farcaster, Lens Protocol, Mirror, plus traditional platforms (Instagram, X)
+- **Decentralized Content Scheduling** - Schedule posts across protocols with blockchain-verified timestamps and advanced calendar views
+- **DAO Workflow Automation** - Streamline DAO content approval with token-gated workflows and NFT-based permissions
+- **Cross-Chain Distribution** - Manage content distribution across chains and protocols with onchain performance tracking
 
-### AI & Content Creation
-- **AI Studio** - AI-powered content generation with tone and persona customization
-- **Content Templates** - Pre-built templates for quick content creation
-- **Social Media Post Templates** - Use pre-built templates to quickly create engaging content
-- **Automated Content Suggestions** - AI-powered suggestions to improve content strategy
-- **Content Performance Predictions** - Predict post performance before publishing
-- **Content Performance Predictor** - AI-powered predictions for content performance before publishing with confidence scores, engagement/reach forecasts, and optimization recommendations
-- **Content Repurposing Tools** - Transform existing content across formats and channels
-- **Repurposing Suggestions** - AI-powered suggestions to repurpose content for maximum reach
-- **Content Creation Workflows** - Predefined workflows for different content types
-- **Calendar AI Assistant** - AI-powered suggestions for optimal posting times, content scheduling, and calendar optimization with reasoning and performance impact analysis
+### AI & Web3 Content Creation
+- **AI Studio** - AI-powered content generation optimized for onchain publishing with wallet-signed authenticity
+- **NFT Content Templates** - Pre-built templates for minting social NFTs and creating onchain content
+- **Web3 Post Templates** - Templates optimized for Farcaster frames, Lens publications, and Mirror articles
+- **Tokenized Content Suggestions** - AI-powered suggestions with token-curated reputation scoring
+- **Onchain Performance Predictions** - Predict post performance with blockchain-verified historical data
+- **Smart Contract Performance Predictor** - AI predictions with confidence scores stored onchain for transparency
+- **Cross-Protocol Repurposing** - Transform content across web3 protocols and traditional channels
+- **DAO Repurposing Votes** - Community-driven content repurposing with token-weighted voting
+- **Blockchain Workflow Automation** - Smart contract-based workflows for content creation and approval
+- **Calendar AI Assistant** - AI-powered scheduling with gas optimization and protocol-specific timing recommendations
 
-### Analytics & Reporting
-- **Analytics Dashboards** - Comprehensive performance dashboards with real-time metrics
-- **Content Performance Dashboard** - Comprehensive overview of social media performance metrics
-- **Content Analytics Dashboard** - Comprehensive analytics for all content across platforms with views, engagement, clicks, and shares tracking
-- **Content Performance Analytics** - Track post performance, identify top performers
-- **Performance Comparison** - Compare current metrics against previous periods
-- **Content Performance Comparison** - Compare performance metrics across different time periods
-- **Performance Tracking** - Detailed tracking for individual posts and content pieces
-- **Content Performance Tracking** - Track detailed performance metrics for individual content pieces
-- **Performance Heatmaps** - Visualize performance patterns by day and time with color-coded intensity maps showing optimal posting times
-- **Performance Benchmarking** - Compare performance against industry averages
-- **Industry Benchmarking** - Compare your performance against industry standards with percentile rankings, insights, and actionable recommendations
-- **Performance Insights** - AI-powered insights and recommendations
-- **Analytics Reports** - Generate comprehensive reports with customizable metrics
-- **Custom Report Builder** - Create custom reports with your own metrics, formulas, automated scheduling, and multiple recipients
-- **Analytics Export** - Export analytics data in multiple formats (PDF, CSV, Excel)
-- **Social Media Analytics Export** - Export analytics data in multiple formats for reporting
-- **Post Analytics Deep Dive** - Detailed analytics for individual posts
-- **Engagement Calculator** - Calculate and analyze engagement rates across all platforms with detailed breakdowns by type (likes, comments, shares, saves)
+### Onchain Analytics & Reporting
+- **Blockchain Analytics Dashboards** - Real-time performance tracking with onchain data verification
+- **Cross-Protocol Performance Dashboard** - Unified view of performance across Farcaster, Lens, Mirror, and traditional platforms
+- **Onchain Content Analytics** - Track views, mints, collects, mirrors, and shares with blockchain-verified metrics
+- **NFT Content Performance** - Track collectible post performance, mint rates, and secondary market activity
+- **Time-Series Comparison** - Compare metrics across epochs with blockchain timestamp verification
+- **Cross-Chain Performance Analysis** - Compare performance across different blockchain networks
+- **Wallet-Level Tracking** - Track individual post performance tied to wallet addresses
+- **Immutable Performance Records** - All metrics stored onchain for transparent, tamper-proof analytics
+- **Heatmaps for Gas Optimization** - Visualize optimal posting times based on gas prices and engagement
+- **Protocol Benchmarking** - Compare performance against protocol-wide averages from onchain data
+- **DAO Analytics Integration** - Compare against community benchmarks with token-holder verified data
+- **AI Performance Insights** - AI insights powered by decentralized compute networks
+- **Composable Analytics Reports** - Generate reports that can be composed with other web3 data sources
+- **Custom Report Smart Contracts** - Deploy custom analytics contracts with automated on-chain reporting
+- **Multi-Format Export** - Export to IPFS, Arweave, and traditional formats (PDF, CSV)
+- **Verifiable Analytics Export** - All exports include cryptographic proof of authenticity
+- **Deep Dive with Blockchain Explorer** - Link directly to transaction and wallet data
+- **Token-Weighted Engagement Calculator** - Calculate engagement weighted by wallet token holdings
 
-### Engagement & Social
-- **Engagement Tools** - Automated engagement tools including auto-reply, mention tracking, and comment moderation
-- **Engagement Metrics** - Track total engagements, response times, and satisfaction rates
-- **Engagement Inbox** - Centralized inbox for managing all social interactions
-- **Engagement Analytics** - Track detailed engagement metrics (likes, comments, shares, saves)
-- **Social Media Engagement Analytics** - Detailed engagement breakdown by channel
-- **Engagement Tracking** - Track mentions, DMs, comments across channels
-- **Social Media Engagement Tracking** - Track mentions, direct messages, comments, and other engagement types
-- **Engagement Rate Analysis** - Deep dive into engagement metrics and benchmarks
-- **Social Listening** - Monitor keywords, track mentions, understand audience sentiment
-- **Social Media Listening Insights** - Track conversations, sentiment, and trends
-- **Social Media Monitoring Dashboard** - Real-time alerts for mentions and activity
-- **Social Listening Dashboard** - Comprehensive listening dashboard with keyword alerts, trending topics, sentiment analysis, and real-time monitoring
-- **Brand Mentions** - Track all brand mentions across platforms with sentiment analysis, engagement tracking, and growth metrics
-- **Hashtag Analytics** - Track hashtag performance, growth trends, and engagement
-- **Hashtag Performance** - Detailed hashtag performance metrics
-- **Social Media Hashtag Performance** - Track hashtag performance, growth trends, and engagement metrics
+### Onchain Engagement & Community
+- **Token-Gated Engagement** - Automated engagement with NFT/token holder verification
+- **Wallet Reputation Tracking** - Track engagement quality based on wallet age, holdings, and onchain activity
+- **Decentralized Inbox** - Manage interactions across protocols with wallet-to-wallet messaging
+- **Onchain Engagement Metrics** - Track mints, collects, mirrors, tips, and NFT-based interactions
+- **Protocol-Specific Analytics** - Detailed breakdowns for Farcaster casts, Lens mirrors, and Mirror collects
+- **Cross-Chain Mention Tracking** - Track mentions and tags across multiple blockchain networks
+- **Web3 Social Graph Analysis** - Leverage onchain social graphs for engagement insights
+- **Engagement Rate with Whale Detection** - Identify high-value wallet interactions and whale activity
+- **Decentralized Social Listening** - Monitor keywords across web3 protocols with privacy-preserving analytics
+- **Protocol Sentiment Analysis** - Track sentiment using onchain reaction data and token signals
+- **Real-Time Chain Monitoring** - Instant alerts for onchain mentions and interactions
+- **DAO Listening Dashboard** - Monitor governance proposals, community sentiment, and token-holder discussions
+- **Wallet Mention Tracking** - Track when your wallet is mentioned across protocols with reputation scoring
+- **Hashtag & Tag Performance** - Track hashtag performance with blockchain-verified engagement data
+- **Protocol-Native Tags** - Optimize tags for each protocol (Farcaster channels, Lens topics, Mirror tags)
+- **NFT-Based Hashtag Analytics** - Track performance of NFT collection tags and community hashtags
 
-### Campaign & Influencer Management
-- **Campaign Management** - Track campaign status, budget, reach, engagement, and conversion
-- **Influencer Tracking** - Monitor influencer performance, collaboration status, and reach
-- **Influencer Campaigns** - Track influencer campaign performance and ROI
-- **Influencer Campaign Tracking** - Monitor influencer campaign performance, ROI, and engagement metrics
-- **Influencer Outreach Management** - Manage outreach campaigns and response rates
-- **Budget Management** - Track budget allocation, spending, and remaining budget
-- **Social Media Budget Management** - Track budget allocation, spending, and remaining budget across campaigns
-- **ROI Calculator** - Calculate return on investment for campaigns
-- **Social Media ROI Calculator** - Calculate return on investment for social media campaigns
+### Onchain Campaign & Creator Collaboration
+- **Smart Contract Campaign Management** - Deploy campaigns as smart contracts with automated budget distribution
+- **Wallet-Based Creator Tracking** - Monitor creator performance using wallet addresses and onchain activity
+- **NFT Collaboration Campaigns** - Launch campaigns using NFTs as proof of collaboration
+- **Token-Incentivized Campaigns** - Track campaigns with token rewards and airdrops
+- **Creator Outreach via Wallet** - Direct wallet-to-wallet outreach with payment automation
+- **Treasury Budget Management** - Manage campaign budgets using multi-sig wallets and DAO treasuries
+- **Onchain Budget Tracking** - Real-time budget tracking with blockchain transparency
+- **Web3 ROI Calculator** - Calculate ROI including token appreciation, NFT value, and protocol rewards
+- **Multi-Chain ROI Analytics** - Track returns across different blockchain networks and protocols
 
-### Team & Collaboration
-- **Team Collaboration Tools** - Review boards, creative briefs, and asset requests
-- **Content Collaboration Tools** - Streamline team workflows with review boards, creative briefs, and asset requests
-- **Real-time Collaboration** - Collaborate in real-time with team members on content creation with presence indicators and active session tracking
-- **Conflict Detection** - Automatically detect and resolve conflicts when multiple users edit the same content with resolution tracking
-- **Team Performance Metrics** - Track individual team member performance
-- **Team Performance Analytics** - Comprehensive team performance tracking with individual scores, engagement rates, response times, approval rates, and team goals with progress tracking
-- **Content Approval Workflows** - Multi-step approval processes with templates
-- **Workflow Builder** - Create custom approval workflows with multiple steps, conditions, automation, and assignees
-- **Approval Queue** - Review and approve content submissions
-- **Content Approval Queue** - Review and approve content submissions from team members
-- **User Management & Permissions** - Manage team members, roles, and access
+### DAO & Team Collaboration
+- **Token-Gated Collaboration** - NFT-based access control for team features and content review
+- **Onchain Approval Workflows** - Multi-step approval via smart contracts with immutable audit trails
+- **Wallet-Based Permissions** - Role management using token holdings and NFT ownership
+- **DAO Voting Integration** - Governance-based content approval with token-weighted voting
+- **Real-time Collaboration** - Co-create content with wallet-verified presence tracking
+- **Conflict Resolution via DAO** - Community-driven conflict resolution for competing edits
+- **Team Performance NFTs** - Mint achievement NFTs for team milestones and performance
+- **Contributor Attribution** - Onchain attribution tracking for all team contributions
 
-### Content Management
-- **Video Management** - Manage and analyze video content performance across platforms
-- **Video Analytics** - Track video views, engagement rates, and top performers
-- **Video Templates** - Pre-built video templates for quick content creation
-- **Content Library** - Manage media assets, templates, and reusable content
-- **Content Library Management** - Organize and manage your content library by category
-- **Social Media Content Library** - Manage and organize your media assets, templates, and reusable content
-- **Content Calendar** - Advanced calendar with multiple views (week, month, list)
-- **Content Calendar Templates** - Pre-built templates for content planning
-- **Content Calendar Sync** - Sync with external calendar platforms
-- **Content Calendar Integration** - Integrate with Google Calendar, Outlook, Apple Calendar
-- **Content Calendar Views** - Switch between different calendar views
-- **Content Tagging & Organization** - Organize content with tags for discoverability
-- **Content Moderation** - Review and manage flagged content
-- **Content Templates Library** - Reusable templates by category with usage tracking
-- **Content Recycling** - Automatically repost top-performing content with customizable rules, engagement tracking, and scheduling optimization
-- **Content Suggestions** - AI-powered suggestions to improve content strategy with confidence scores and category-based recommendations
-- **Content Version History** - Track all changes made to content with complete version history, author tracking, and restore capabilities
-- **Bulk Operations** - Perform bulk actions on multiple posts, schedules, or content items with progress tracking and operation templates
+### Decentralized Content Management
+- **IPFS/Arweave Storage** - Store media assets permanently on decentralized storage
+- **NFT Content Library** - Manage assets as NFTs with provenance tracking
+- **Onchain Calendar** - Blockchain-timestamped scheduling with protocol-aware planning
+- **Smart Contract Templates** - Deploy reusable content templates as smart contracts
+- **Token-Curated Content** - Community-curated content library with token voting
+- **Immutable Version History** - All content versions stored onchain with wallet attribution
+- **Blockchain Moderation** - Decentralized content moderation with DAO governance
+- **Automated NFT Recycling** - Repost top-performing content as limited edition NFTs
+- **Web3 Bulk Operations** - Batch transactions for efficient multi-post management
 
-### Automation & Workflows
-- **Automation Rules** - Create trigger-based automation rules
-- **Social Media Automation Rules** - Create and manage automation rules with trigger-based actions
-- **Automated Response System** - Set up automated responses for common interactions
-- **Scheduling Optimization** - AI-powered recommendations for optimal posting times
-- **Content Scheduling Optimization** - Get AI-powered recommendations for optimal posting times by day of week
+### Smart Contract Automation
+- **Onchain Automation Rules** - Trigger-based smart contracts for automated publishing and engagement
+- **Token-Gated Auto-Responses** - Automated replies with holder verification
+- **Gas-Optimized Scheduling** - AI recommendations factoring in gas prices and network congestion
+- **Cross-Chain Automation** - Orchestrate content across multiple blockchain networks
 
-### Intelligence & Insights
-- **Trend Tracking** - Monitor trending topics and hashtags in real-time
-- **Trend Alerts** - Get alerts for rapid growth in trending topics
-- **Trend Statistics** - Track topics monitored, average growth, and top categories
-- **Intelligence Forecasts** - Predictive analytics for content performance
-- **Intelligence Anomalies** - Detect unusual patterns and anomalies
-- **Audience Insights** - Deep audience analytics and segmentation
-- **Audience Segmentation Cards** - Cohort segmentation dashboards
-- **Audience Growth Tracking** - Monitor follower growth and trends
-- **Competitor Tracking** - Analyze competitor metrics and compare performance
-- **Competitor Analysis** - Track competitor performance and benchmark strategy
-- **Social Media Competitor Analysis** - Track competitor performance and identify competitive advantages
-- **Trend Analysis** - Track trending topics, hashtags, and conversations
-- **Social Media Trend Analysis** - Monitor trends relevant to your brand
+### Web3 Intelligence & Insights
+- **Onchain Trend Tracking** - Monitor trending topics across protocols with blockchain-verified metrics
+- **Protocol Analytics** - Real-time insights from Farcaster, Lens, and Mirror activity
+- **Wallet Audience Segmentation** - Segment by token holdings, NFT ownership, and onchain behavior
+- **Follower Growth via Social Graph** - Track growth using decentralized social graphs
+- **Competitor Wallet Tracking** - Analyze competitor wallets and onchain strategy
+- **NFT Trend Analysis** - Monitor trending NFT collections and communities
+- **DAO Intelligence** - Track governance activity and community sentiment
 
-### Testing & Optimization
-- **A/B Testing Dashboard** - Manage active and completed tests
-- **A/B Testing Results** - Analyze test results to optimize performance
-- **Content A/B Testing Results** - Detailed A/B test analysis
+### A/B Testing & Optimization
+- **Onchain A/B Testing** - Test variations with blockchain-verified results
+- **NFT Split Testing** - Compare performance of different NFT mint strategies
 
 ### Compliance & Safety
-- **Content Moderation** - Review flagged content, spam, and inappropriate posts
-- **Brand Safety** - Monitor brand reputation and detect threats
-- **Social Media Compliance & Legal** - Ensure content meets legal requirements
-- **Social Media Crisis Response** - Monitor and respond to crises with automated workflows
-- **Crisis Management Dashboard** - Comprehensive crisis management with severity-based alerts, automated detection, response tracking, and resolution metrics
+- **DAO-Based Moderation** - Community-driven content moderation with token voting
+- **Smart Contract Compliance** - Automated compliance checks via smart contracts
+- **Crisis Response DAO** - Decentralized crisis management with multi-sig controls
+- **Reputation System** - Onchain reputation tracking for safety and trust
 
-### Integrations & API
-- **Webhook Integrations** - Configure webhooks for various events
-- **API Management** - Manage API keys, monitor usage, and control access
-- **Integrations** - Connect with external tools and platforms
+### Web3 Integrations & API
+- **Smart Contract Webhooks** - Blockchain event triggers for automated workflows
+- **Web3 API Gateway** - Decentralized API access with wallet authentication
+- **Protocol Integrations** - Native connections to Farcaster, Lens, Mirror, and more
 
-### Advanced Features
-- **Social Commerce** - Sell products directly through social media posts
-- **Product Management** - Manage products, track sales, and monitor conversion rates
-- **Shopping Posts** - Track performance of posts with product links
-- **Commerce Statistics** - Monitor total revenue, orders, conversion rates, and average order value
-- **Advanced Search** - Search across content, posts, and analytics
-- **Export & Backup** - Export data in multiple formats and track backup history
-- **Revenue Tracking** - Track revenue from sponsored posts and affiliate links
-- **Multi-language Support** - Manage content across multiple languages
-- **Notification Center** - Centralize notifications for approvals, mentions, and alerts
-- **Smart Notifications** - Intelligent notifications that prioritize what matters most with priority levels and read/unread tracking
-- **Social Media Audit Tools** - Run comprehensive audits to identify issues and get recommendations
-- **Social Media Audit** - Comprehensive audit of your social media presence with category-based scoring, issue identification (critical/warning/info), actionable recommendations, and audit history tracking
-- **Content Forecasting** - AI-powered predictions for content performance before publishing with confidence scores and key factors
-- **Content Attribution** - Track which content drives conversions and revenue across the customer journey with multiple attribution models
-- **Content Benchmarking** - Compare your performance against industry benchmarks and top performers with percentile rankings
-- **Multi-language Management** - Comprehensive translation workflows with AI translation, human review, and localization settings
-- **Performance Attribution** - Deep dive into content performance and attribution across the customer journey with first-touch, last-touch, and assisted conversions
-- **Performance Alerts** - Automated alerts for performance metrics that exceed thresholds with severity levels and trend tracking
-- **Mobile App Management** - Manage mobile app versions, features, and user analytics across iOS and Android with download tracking, ratings, and device statistics
-- **Account Health** - Monitor the health status of all connected social media accounts with health scores, issue tracking, and trend analysis
-- **Sentiment Analysis** - Track and analyze sentiment across all platforms with real-time alerts, sentiment trends, and top sentiment drivers
-- **Distribution Analytics** - Track how content spreads across platforms with viral coefficient, distribution patterns, and cross-platform performance
-- **Engagement Scoring** - Comprehensive scoring system for audience engagement quality and quantity with weighted factors and recommendations
-- **Performance Insights** - AI-powered insights and recommendations to optimize content strategy with opportunity, strength, and warning insights
-- **Social Media Health** - Comprehensive health score tracking across all platforms and metrics with trend analysis and alerts
-- **Calendar Optimization** - AI-powered calendar optimization with optimal time slots, gap analysis, and posting schedule recommendations
-- **Advanced Scheduling Queue** - Manage and optimize content scheduling queue with AI-powered recommendations, priority management, and estimated performance metrics
-- **Brand Mentions Tracking** - Track brand mentions across all platforms with sentiment analysis, response tracking, and growth metrics
-- **Team Performance Analytics** - Track individual and team performance with goals, productivity metrics, content creation stats, and engagement generation
-- **Crisis Management Dashboard** - Monitor and respond to crises with automated detection, severity alerts, response tracking, and resolution metrics
-- **Approval Workflows** - Manage multi-step approval workflows with templates, progress tracking, step assignments, and bottleneck identification
-- **Social Listening Dashboard** - Monitor keywords, track trending topics, get real-time alerts, and analyze platform-specific mentions
+### Advanced Web3 Features
+- **Social Commerce NFTs** - Sell products as NFTs directly through social posts
+- **Token-Gated Content** - Exclusive content for token/NFT holders
+- **Onchain Revenue Tracking** - Track revenue from creator tokens, NFT sales, and tips
+- **Multi-Chain Search** - Search across all protocols and blockchains
+- **Decentralized Backup** - Export data to IPFS/Arweave with verifiable proofs
+- **Smart Notifications** - Priority alerts for high-value wallet interactions
+- **Protocol Health Monitoring** - Track connected wallet and protocol health status
+- **Sentiment via Onchain Signals** - Analyze sentiment using token prices and voting patterns
+- **Viral Coefficient Tracking** - Measure content spread across web3 social graphs
+- **Engagement NFT Rewards** - Mint NFTs as rewards for quality engagement
+- **Account Health Scores** - Monitor wallet reputation and protocol standing
+- **Performance Alerts** - Automated alerts for anomalous onchain activity
 
 ## Tech Stack
 
-- **Next.js** (App Router) - React framework for production
-- **Tailwind CSS** - Utility-first CSS framework
-- **Reown AppKit** + **Wagmi** + **Viem** - Wallet connection and Web3 integration
-- **TypeScript** - Type-safe JavaScript
+- **Next.js** (App Router) - React framework
+- **Tailwind CSS** - Styling
+- **Reown AppKit** + **Wagmi** + **Viem** - Web3 wallet integration
+- **TypeScript** - Type safety
+- **IPFS/Arweave** - Decentralized storage
+- **The Graph** - Blockchain indexing
 
 ## Environment Setup
 
 Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown.com).
 
-## Supported Platforms
+## Supported Protocols & Platforms
 
-- **Farcaster** - Decentralized social network
+### Decentralized Protocols
+- **Farcaster** - Decentralized social network with frames support
+- **Lens Protocol** - Composable web3 social graph
+- **Mirror** - Decentralized publishing and NFT minting
+
+### Traditional Platforms
 - **Instagram** - Photo and video sharing
-- **X (Twitter)** - Microblogging platform
-- **Lens Protocol** - Decentralized social graph
-- **Mirror** - Web3 publishing platform
+- **X (Twitter)** - Microblogging
 
-## Key Capabilities
+## Key Web3 Capabilities
 
-- **140+ Feature Modules** - Comprehensive social media management suite
-- **Multi-channel Publishing** - Publish to 5+ platforms simultaneously
-- **AI-Powered Insights** - Machine learning for content optimization
-- **Real-time Analytics** - Live performance tracking and reporting
-- **Team Collaboration** - Built-in tools for team workflows
-- **Automation** - Reduce manual work with intelligent automation
-- **Social Commerce** - Sell products directly through social media
-- **Video Management** - Complete video content management and analytics
-- **Engagement Automation** - Automated tools for audience engagement
-- **Trend Monitoring** - Real-time trend tracking and alerts
-- **Compliance** - Ensure brand safety and legal compliance
-- **Advanced Reporting** - Export data in multiple formats for analysis
-- **Content Performance Prediction** - AI-powered predictions with 85%+ accuracy
-- **Industry Benchmarking** - Compare performance against industry standards with percentile rankings
-- **Social Media Auditing** - Comprehensive audits with actionable recommendations
-- **Content Recycling** - Automatically repost top-performing content with customizable rules
-- **Mobile App Management** - Full mobile app analytics and feature management
-- **Calendar AI Assistant** - AI-powered scheduling optimization and recommendations
-- **Custom Report Builder** - Create custom reports with your own metrics and formulas
-- **Sentiment Analysis** - Real-time sentiment tracking with platform-specific insights and alerts
-- **Distribution Analytics** - Track content distribution patterns and viral coefficient across platforms
-- **Engagement Scoring** - Weighted engagement scoring system with quality and quantity metrics
-- **Performance Insights** - AI-powered actionable insights with opportunity, strength, and warning categories
-- **Social Media Health** - Overall health score tracking with trend analysis and metric breakdowns
-- **Calendar Optimization** - AI-powered calendar optimization with optimal time slots and gap analysis
-- **Social Listening Dashboard** - Real-time keyword monitoring, trending topics, and sentiment analysis
-- **Brand Mentions Tracking** - Comprehensive brand mention tracking with sentiment analysis and growth metrics
-- **Team Performance Analytics** - Individual and team performance tracking with goals and productivity metrics
-- **Crisis Management Dashboard** - Automated crisis detection, severity alerts, and response tracking
-- **Workflow Builder** - Custom workflow creation with multi-step processes and automation
-- **Content Performance Tracking** - Detailed performance metrics tracking with top-performing content identification and trend analysis
-- **Audience Insights** - Audience segmentation, demographics analysis, behavior patterns, and actionable insights with confidence scoring
-- **Competitor Analysis** - Competitor performance tracking, market benchmarking, strengths/weaknesses analysis, and market position monitoring
-- **A/B Testing** - Content variation testing with performance comparison, confidence levels, and winner identification
-- **Content Library** - Centralized asset management with folders, tags, usage tracking, and metadata
-- **Social Commerce** - Product performance tracking, sales analytics, revenue metrics, and conversion optimization
-- **Video Analytics** - Video performance tracking with watch time, retention rates, engagement metrics, and optimization insights
-- **Analytics Export** - Multi-format export (PDF, CSV, Excel, JSON, PNG) with templates and scheduled exports
-- **White-Label Branding** - Custom branding with logos, colors, typography, custom domains, and white-label features
-- **Real-time Collaboration** - Live collaboration with presence indicators and active session tracking
-- **Conflict Detection** - Automatic conflict detection and resolution for concurrent edits
-- **Bulk Operations** - Perform bulk actions on multiple items with progress tracking
-- **Content Suggestions** - AI-powered content suggestions with confidence scores
-- **Content Version History** - Complete version tracking with restore capabilities
-- **Smart Notifications** - Intelligent notification prioritization system
-- **Performance Alerts** - Automated performance metric alerts with thresholds
-- **Account Health Monitoring** - Comprehensive health status tracking with issue detection and trends
-- **Content Analytics Dashboard** - Comprehensive analytics for all content with views, engagement, clicks, and shares
-- **Audience Insights** - Deep audience analytics with demographics, behavior patterns, and growth tracking
-- **Scheduling Queue** - Manage and monitor scheduled posts with status tracking and failure alerts
-- **Moderation Tools** - Advanced content moderation with automated rules and severity levels
-- **Calendar Sync** - Sync with Google Calendar, Outlook, Apple Calendar, and iCal
-- **Engagement Calculator** - Calculate engagement rates with detailed breakdowns by type
-- **Hashtag Research** - Research hashtags with volume, difficulty, growth metrics, and related suggestions
-- **Performance Heatmaps** - Visualize performance patterns by day and time with color-coded intensity maps
-- **Engagement Tools** - Automated engagement with auto-replies, mention tracking, and moderation
-- **Hashtag Research** - Hashtag analytics, trending tag discovery, and performance insights
-- **Analytics Export** - Export analytics data in multiple formats (PDF, CSV, Excel, JSON) with templates
-- **Content Predictor** - AI-powered content performance predictions with confidence scores
-- **Audience Growth** - Track follower growth across platforms with trend analysis
-- **Competitor Analysis** - Monitor competitor performance and identify competitive advantages
-- **Content Library** - Organize and manage media assets, templates, and reusable content
-- **Social Commerce** - Sell products directly through social media with sales tracking
-- **Video Analytics** - Track video performance with watch time, completion rate, and insights
-- **Influencer Management** - Manage influencer relationships and track collaboration performance
-- **Social Auditing** - Comprehensive audit of social media presence with actionable recommendations
-- **Content Recycling** - Automatically repost top-performing content with customizable rules
-- **White-Label Branding** - Customize platform with brand identity, logos, colors, and custom domains
-- **Custom Reports** - Create custom reports with your own metrics, formulas, and scheduled generation
-- **Sentiment Dashboard** - Monitor sentiment across platforms with real-time analysis and trends
-- **Distribution Analytics** - Track content distribution patterns, viral coefficient, and reach multipliers
-- **Engagement Scoring** - Comprehensive scoring system evaluating quality and quantity of interactions
-- **Performance Insights** - AI-powered insights and recommendations to optimize content strategy
-- **Scheduling Automation** - Intelligent automation rules for content scheduling, posting, and workflows with time-based, event-based, and content-based triggers
-- **Influencer Collaboration** - Comprehensive influencer partnership management with campaign tracking, ROI analysis, and performance metrics
-- **Social Compliance** - Automated compliance checking for copyright, trademark, privacy, accessibility, and advertising requirements with issue detection and recommendations
-- **Content Repurposing** - Automated content transformation across platforms and formats with performance tracking and template library
-- **Notification Center** - Centralized notification system with priority levels, category filtering, quiet hours, and multi-channel delivery (email, push, SMS)
-- **API Management** - Complete API key management with usage monitoring, rate limiting, permissions, and performance tracking
+- **🔗 Multi-Protocol Publishing** - One-click to Farcaster, Lens, Mirror + traditional platforms
+- **⛓️ Blockchain-Verified Analytics** - Immutable, transparent performance tracking
+- **💎 NFT Content Management** - Create and track social NFTs
+- **🏛️ DAO Collaboration** - Token-gated workflows with onchain governance
+- **🔐 Wallet-Based Auth** - Secure access via Web3 wallets
+- **💰 Web3 Commerce** - Sell NFTs and accept crypto payments
+- **📊 Cross-Chain Analytics** - Unified metrics across blockchains
+- **🎯 Token-Weighted Engagement** - Prioritize high-value wallet interactions
+- **🌐 Decentralized Storage** - IPFS/Arweave integration
+- **⚡ Gas Optimization** - Smart scheduling to minimize costs
+- **🎨 Social NFT Minting** - Mint posts as collectibles
+- **📈 Protocol Benchmarking** - Compare against onchain averages
+- **🗳️ Community Moderation** - DAO-based governance
+- **💼 Treasury Management** - Multi-sig wallet integration
+- **🎁 Token Rewards** - Distribute tokens/NFTs for engagement
+- **📱 Farcaster Frames** - Create interactive frames
+- **🌟 Reputation System** - Onchain reputation tracking
+- **🔄 Automated NFT Recycling** - Repost as limited editions
+- **📡 Smart Contract Webhooks** - Blockchain event automation
+- **🎪 Creator Collaboration** - Wallet-to-wallet partnerships
 
 ## Project Structure
 
@@ -295,436 +200,64 @@ src/
     page.tsx          # Main dashboard component with all features
 ```
 
-## Feature Highlights
+## Core Features
 
-### Content Management
-- Multi-platform publishing with one-click distribution
-- Advanced content calendar with multiple views
-- Content library with category management
-- Template library for quick content creation
-- Content repurposing tools and suggestions
+### 🌐 Web3-Native Publishing
+- One-click cross-protocol publishing (Farcaster, Lens, Mirror)
+- Blockchain-timestamped scheduling
+- IPFS/Arweave permanent storage
+- NFT content minting and tracking
 
-### Analytics & Performance
-- Real-time performance dashboards
-- Comprehensive analytics across all channels
-- Performance comparison and benchmarking
-- Detailed post-level analytics
-- Engagement tracking and analysis
-- Hashtag performance monitoring
+### 📊 Onchain Analytics
+- Blockchain-verified performance metrics
+- Cross-chain analytics dashboards
+- Token-weighted engagement tracking
+- Protocol-specific insights (casts, mirrors, collects)
 
-### Team & Workflow
-- Multi-step approval workflows
-- Team performance tracking
-- Collaboration tools (review boards, briefs, asset requests)
-- Approval queue management
-- User management and permissions
+### 🏛️ DAO Collaboration
+- Token-gated access control
+- Smart contract approval workflows
+- Multi-sig treasury management
+- Onchain contributor attribution
 
-### Automation & Optimization
-- AI-powered scheduling optimization
-- Automated response system
-- Trigger-based automation rules
-- Content performance predictions
-- Engagement predictions
+### 🤖 Smart Automation
+- Gas-optimized scheduling
+- Smart contract event triggers
+- Automated NFT recycling
+- Token-gated auto-responses
 
-### Intelligence & Insights
-- Competitor analysis and benchmarking
-- Trend analysis and monitoring
-- Audience insights and segmentation
-- Performance insights and recommendations
-- Social listening and sentiment analysis
+### 💎 Web3 Commerce
+- NFT product sales
+- Crypto payment processing
+- Creator token integration
+- Revenue tracking (tokens, NFTs, tips)
 
-### Campaign Management
-- Campaign tracking and management
-- Influencer campaign tracking
-- Budget management and tracking
-- ROI calculation and reporting
-- Revenue tracking
+### 🔐 Security & Compliance
+- Wallet-based authentication
+- DAO-governed moderation
+- Onchain reputation system
+- Smart contract compliance checks
 
-### Compliance & Safety
-- Content moderation tools
-- Brand safety monitoring
-- Compliance checks and legal review
-- Crisis response management
+## Why Choose 1Social?
 
-### Integrations
-- Calendar integrations (Google, Outlook, Apple)
-- Webhook configurations
-- API management
-- Export capabilities (PDF, CSV, Excel)
+### 🔗 True Web3 Integration
+Built natively for decentralized protocols with onchain verification, not just API wrappers.
 
-### Predictive Analytics & Attribution
-- Content forecasting with AI-powered performance predictions
-- Multiple attribution models (first-touch, last-touch, linear, time-decay, position-based)
-- Industry benchmarking with percentile rankings
-- Performance attribution tracking across customer journey
-- Conversion path analysis with first-touch, last-touch, and assisted conversions
+### ⚡ Gas Efficient
+Smart scheduling and batching to minimize transaction costs across all operations.
 
-### Multi-language & Localization
-- AI-powered translation workflows
-- Human review and approval process
-- Multi-language content performance tracking
-- Localization settings and cultural adaptation
-- Translation status monitoring and management
+### 🎯 Token-Native
+Everything from access control to analytics leverages tokens and NFTs for enhanced functionality.
 
-### Sentiment & Distribution
-- Real-time sentiment analysis across all platforms
-- Sentiment trends and alerts with severity levels
-- Top sentiment drivers and impact analysis
-- Content distribution patterns and viral coefficient tracking
-- Cross-platform distribution analytics
-- Distribution score and optimization recommendations
+### 🌍 Decentralized First
+Permanent storage on IPFS/Arweave with blockchain-verified analytics and attribution.
 
-### Engagement & Health Scoring
-- Comprehensive engagement scoring system
-- Weighted engagement factors (response time, engagement rate, content quality)
-- Quality vs quantity engagement metrics
-- Social media health score tracking
-- Health metrics breakdown (content, engagement, growth, compliance)
-- Health trend analysis and alerts
-
-### Performance Insights & Optimization
-- AI-powered performance insights with confidence scores
-- Opportunity, strength, and warning insight categories
-- Actionable recommendations with expected improvements
-- Calendar optimization with optimal time slots
-- Gap analysis and posting schedule recommendations
-- Optimization score tracking and improvement metrics
-
-### Scheduling & Queue Management
-- Advanced scheduling queue with priority management
-- Estimated performance metrics (reach, engagement) before posting
-- Queue optimization recommendations
-- Status tracking (scheduled, pending)
-- Multi-platform queue management
-
-### Brand & Mention Tracking
-- Real-time brand mention tracking across all platforms
-- Sentiment analysis for each mention
-- Response tracking and response time metrics
-- Mention growth trends and alerts
-- Top mention drivers and impact analysis
-
-### Team & Workflow Management
-- Individual team member performance tracking
-- Team goals and progress monitoring
-- Content creation and engagement generation metrics
-- Multi-step approval workflows with templates
-- Workflow progress tracking and bottleneck identification
-- Step assignments and completion status
-
-### Crisis & Listening Management
-- Automated crisis detection with severity levels
-- Crisis response tracking and resolution metrics
-- Response templates by category and severity
-- Social listening with keyword monitoring
-- Trending topics tracking with relevance scoring
-- Real-time alerts for spikes and sentiment changes
-
-### Performance & Analytics
-- Content performance tracking with detailed metrics
-- Top-performing content identification with performance scores
-- Performance trend analysis and period comparisons
-- Audience segmentation and demographics analysis
-- Behavior pattern insights with actionable recommendations
-- Competitor performance tracking and benchmarking
-- Market position analysis with rank tracking
-- Strengths and weaknesses identification
-- A/B testing with variant comparison and confidence levels
-- Video analytics with watch time and retention tracking
-- Analytics export in multiple formats (PDF, CSV, Excel, JSON, PNG)
-
-### Content & Asset Management
-- Content library with centralized asset organization
-- Folder-based organization with color coding
-- Asset tagging and metadata management
-- Usage tracking and last-used timestamps
-- Support for images, videos, documents, templates, and audio
-- File size and format tracking
-
-### Commerce & Monetization
-- Social commerce product tracking
-- Sales performance analytics
-- Revenue metrics and conversion tracking
-- Order management and status tracking
-- Product performance comparison
-- Average order value and conversion rate analysis
-
-### Branding & Customization
-- White-label branding with custom logos
-- Color scheme customization (primary, secondary, accent)
-- Typography customization
-- Custom domain support
-- Branded email templates
-- White-label support portal options
-
-### Automation & Workflow Management
-- **Scheduling Automation** - Create intelligent automation rules with time-based, event-based, and content-based triggers. Automate content reposting, responses, and report generation with high success rates and time savings
-- **Automation Rules** - Configure custom automation rules with conditions and actions. Track success rates, run counts, and scheduled executions
-- **Scheduled Automations** - Monitor pending, running, and completed automation tasks with status tracking
-
-### Influencer & Partnership Management
-- **Influencer Collaboration** - Manage influencer partnerships with comprehensive campaign tracking, budget management, and ROI analysis
-- **Campaign Performance** - Track reach, engagement, conversions, and ROI for influencer campaigns
-- **Influencer Database** - Maintain a database of influencers with follower counts, engagement rates, and collaboration history
-- **Deliverable Tracking** - Monitor campaign deliverables and ensure completion
-
-### Compliance & Legal Management
-- **Social Compliance** - Automated compliance checking for copyright, trademark, privacy, accessibility, and advertising requirements
-- **Compliance Rules** - Configure active compliance rules with severity levels (critical, high, medium, low) and match tracking
-- **Issue Detection** - Automatically detect compliance issues and provide actionable recommendations
-- **Compliance Scoring** - Track overall compliance score with passed, failed, and warning check counts
-
-### Content Transformation
-- **Content Repurposing** - Automatically transform content across different platforms and formats (blog to Instagram carousel, video to shorts, thread to article)
-- **Repurposing Templates** - Use popular templates with proven performance metrics and usage statistics
-- **Performance Tracking** - Monitor repurposing task progress and track performance gains
-- **Time Savings** - Quantify time saved through automated repurposing workflows
-
-### Notification & Communication
-- **Notification Center** - Centralized notification system with priority levels (high, medium, low) and category filtering
-- **Multi-channel Delivery** - Configure email, push, and SMS notification preferences
-- **Quiet Hours** - Set quiet hours to prevent notifications during specific times
-- **Notification Settings** - Customize notification preferences by category (publishing, engagement, workflow, analytics, reports)
-- **Response Tracking** - Monitor average response times and notification statistics
-
-### API & Integration Management
-- **API Management** - Complete API key management with creation, revocation, and expiration tracking
-- **Usage Monitoring** - Track API usage counts, last used timestamps, and request patterns
-- **Rate Limiting** - Configure and monitor rate limits per API key (requests per hour)
-- **Permissions Management** - Set granular permissions (read, write, publish) for each API key
-- **Performance Tracking** - Monitor API response times, success rates, and endpoint usage
-- **Recent Usage Logs** - View recent API calls with status codes, response times, and endpoint details
+### 🛡️ DAO-Ready
+Built for communities with token-gated access, multi-sig support, and onchain governance.
 
 ## Contributing
 
-This is a comprehensive social media management platform with extensive features for content creation, scheduling, analytics, team collaboration, and automation.
-
-## License
-
-MIT
-
-### Integrations
-- Calendar integrations (Google, Outlook, Apple)
-- Webhook configurations
-- API management
-- Export capabilities (PDF, CSV, Excel)
-
-### Content Analysis & Comparison
-- Side-by-side content performance comparison
-- Version A/B testing results
-- Performance metric differences (reach, engagement, clicks, conversions)
-- Winner identification and insights
-- Comparison statistics and trends
-- Top performing factor analysis
-
-### Financial Analytics & ROI
-- ROI calculation for campaigns
-- Investment breakdown (ad spend, content creation, tools)
-- Returns tracking (revenue, leads, conversions, engagement)
-- ROAS (Return on Ad Spend) calculation
-- Payback period analysis
-- Total ROI and revenue metrics
-- Financial performance trends
-
-### Calendar Management & Views
-- Multiple calendar view types (week, month, agenda, timeline)
-- Customizable filters by platform and status
-- Default view settings
-- Upcoming events overview
-- Calendar statistics tracking
-- Scheduled vs published tracking
-
-### Team Management & Performance
-- Individual team member performance tracking
-- Productivity metrics (posts created, engagement generated)
-- Goal setting and progress tracking
-- Team goals with deadlines and assignments
-- Average engagement rate tracking
-- Response time monitoring
-- Goals completion rate
-
-### Content Moderation & Safety
-- Automated moderation rules (keyword, spam, toxicity)
-- Manual review queue
-- Severity-based flagging (low, medium, high, critical)
-- Approval/rejection workflow
-- Moderation statistics
-- Average review time tracking
-- Rule match counting
-
-### Brand Safety & Reputation
-- Brand safety score tracking (overall, sentiment, reputation)
-- Threat detection alerts
-- Platform-specific monitoring
-- Safety trend analysis
-- Alert severity classification
-- Investigation and resolution tracking
-- Brand reputation metrics
-
-### Crisis Management & Response
-- Automated crisis detection
-- Severity-based alerts (low, medium, high, critical)
-- Crisis type classification (negative-trend, viral-negative, media-coverage)
-- Response plan management
-- Response action tracking
-- Crisis statistics and metrics
-- Average response time
-- Resolution rate tracking
-
-### Multi-Account Management
-- Unified dashboard for multiple accounts
-- Account health monitoring per account
-- Connection status tracking
-- Account grouping and organization
-- Follower and engagement tracking
-- Last sync monitoring
-- Account statistics aggregation
-
-### Analytics Export & Reporting
-- Export analytics in multiple formats (PDF, CSV, Excel, JSON)
-- Export job tracking with status monitoring
-- Pre-built export templates
-- Customizable filters (date range, platforms, metrics)
-- Export statistics and usage tracking
-- Download management for completed exports
-
-### Content Performance Prediction
-- AI-powered content performance predictions
-- Confidence scores for predictions
-- Predicted metrics (reach, engagement, clicks, conversions)
-- Key factor analysis (posting time, hashtags, content type)
-- Recommended actions for optimization
-- Prediction accuracy tracking
-- Historical prediction performance
-
-### Audience Growth Tracking
-- Follower growth monitoring across platforms
-- Growth trends (growing, stable, declining)
-- Daily, weekly, and monthly growth metrics
-- Growth rate calculation
-- Peak growth day and time identification
-- Growth event tracking (spikes, drops)
-- Growth statistics and insights
-
-### Competitor Analysis
-- Competitor performance tracking
-- Metrics comparison (followers, engagement rate, posting frequency)
-- Performance gap analysis (follower gap, engagement gap)
-- Competitive insights (strengths, weaknesses, opportunities)
-- Competitor statistics and benchmarking
-- Top performer identification
-
-### Content Library Management
-- Media asset organization (images, videos, documents, templates)
-- Category-based organization
-- Asset tagging and search
-- Usage tracking and statistics
-- Upload history and metadata
-- Library statistics (total assets, size, most used category)
-- Asset reuse tracking
-
-### Social Commerce
-- Product management and catalog
-- Product metrics (views, clicks, conversions, revenue)
-- Shopping post performance tracking
-- Conversion rate monitoring
-- Revenue tracking per product
-- Commerce statistics and analytics
-- Product status management (active, draft, archived)
-
-### Video Analytics
-- Video performance metrics (views, watch time, completion rate)
-- Average watch time tracking
-- Engagement metrics (likes, comments, shares)
-- Video insights (peak moments, drop-off points, engagement spikes)
-- Platform-specific video analytics
-- Completion rate visualization
-- Video statistics aggregation
-
-### Influencer Management
-- Influencer profile management
-- Influencer metrics (followers, engagement rate, reach)
-- Collaboration history tracking
-- Influencer rating system
-- Tag-based organization
-- Active collaboration monitoring
-- Influencer statistics and performance tracking
-
-### Social Media Auditing
-- Comprehensive audit of social media presence
-- Category-based scoring (content quality, engagement, consistency)
-- Issue tracking with severity levels
-- Actionable recommendations per category
-- Overall score and improvement tracking
-- Audit scheduling and history
-- Issue resolution tracking
-
-### Content Recycling
-- Automated reposting of top-performing content
-- Customizable recycling rules (engagement threshold, age, frequency)
-- Performance tracking for recycled content
-- Success rate and engagement increase metrics
-- Rule-based automation with scheduling
-- Content performance comparison (original vs recycled)
-- Active rule management
-
-### White-Label Branding
-- Custom logo and branding configuration
-- Primary and secondary color customization
-- Font family selection
-- Custom domain support
-- Feature enable/disable controls
-- Branding statistics and customization level tracking
-- Last updated tracking
-
-### Custom Report Builder
-- Create custom reports with personalized metrics
-- Standard and custom metric types
-- Formula-based calculations
-- Custom filters (date range, platforms, content types)
-- Scheduled report generation
-- Multiple export formats (PDF, CSV, Excel)
-- Report usage tracking and history
-
-### Sentiment Dashboard
-- Real-time sentiment analysis across platforms
-- Sentiment breakdown (positive, neutral, negative)
-- Sentiment score calculation
-- Trend tracking (improving, stable, declining)
-- Recent mentions with sentiment classification
-- Platform-specific sentiment analysis
-- Overall sentiment statistics
-
-### Distribution Analytics
-- Content distribution pattern tracking
-- Viral coefficient calculation
-- Reach multiplier analysis
-- Top sharing events tracking
-- Platform-specific distribution metrics
-- Share performance tracking
-- Distribution statistics aggregation
-
-### Engagement Scoring
-- Quality and quantity scoring system
-- Weighted factor analysis (comment quality, share rate, response time)
-- Overall engagement score calculation
-- Factor impact tracking (positive, negative, neutral)
-- Score visualization and trends
-- Top scoring content identification
-- Average score tracking
-
-### Performance Insights
-- AI-powered performance insights
-- Insight types (opportunities, strengths, warnings)
-- Impact-based prioritization (high, medium, low)
-- Current vs potential metrics comparison
-- Improvement percentage calculation
-- Actionable recommendations
-- Insight statistics and categorization
-
-## Contributing
-
-This is a comprehensive social media management platform with extensive features for content creation, scheduling, analytics, team collaboration, and automation.
+Built for the decentralized web. Contributions welcome to help make web3 social media management more accessible.
 
 ## License
 
