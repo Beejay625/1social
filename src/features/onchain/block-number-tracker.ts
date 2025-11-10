@@ -4,9 +4,9 @@ import { useAccount, useBlockNumber } from 'wagmi';
 import { useState, useEffect } from 'react';
 
 export interface BlockData {
-  blockNumber: bigint;
+  blockNumber: number;
   timestamp: number;
-  chainId: number;
+  chain: string;
 }
 
 export function useBlockNumberTracker() {
@@ -17,14 +17,14 @@ export function useBlockNumberTracker() {
   useEffect(() => {
     if (!address || !blockNumber) return;
     
-    const blockData: BlockData = {
-      blockNumber,
+    const block: BlockData = {
+      blockNumber: Number(blockNumber),
       timestamp: Date.now(),
-      chainId: 1,
+      chain: 'ethereum',
     };
     
-    setBlocks([blockData]);
+    setBlocks([block]);
   }, [address, blockNumber]);
 
-  return { blocks, address };
+  return { blocks, address, blockNumber };
 }
