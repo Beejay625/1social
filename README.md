@@ -284,6 +284,44 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 ### Compliance & Security
 - **Compliance Vault** - Check content compliance with Reown wallet verification
 
+### Advanced Wallet Features
+- **Multi-Sig Creator** - Create multi-signature wallets with multiple owners using Reown wallet
+- **Token Vesting** - Schedule token vesting with time-based releases via Reown wallet
+
+### Dispute & Resolution
+- **Dispute Resolution** - Create and manage onchain disputes with Reown wallet signatures
+
+### Licensing & Royalties
+- **Content Licensing** - License content to other creators with Reown wallet-authenticated agreements
+- **Royalty Distribution** - Automatically distribute royalties to content creators using Reown wallet
+
+### Monetization Features
+- **Subscription Manager** - Manage recurring subscriptions with monthly/yearly billing via Reown wallet
+- **Pay-Per-View** - Enable pay-per-view content access with Reown wallet payments
+- **Content Monetization** - Multiple monetization models (paywall, tips, subscription) with Reown wallet
+
+### Token Economics
+- **Token Burn** - Burn tokens with reason tracking using Reown wallet
+- **Token Swap Aggregator** - Swap tokens across DEXes with best rates via Reown wallet
+
+### DeFi & Yield
+- **Liquidity Mining** - Stake liquidity and earn rewards with Reown wallet
+- **Yield Farming** - Optimize yield farming positions with APY tracking via Reown wallet
+
+### NFT Advanced Features
+- **NFT Rental** - Rent NFTs for limited periods with Reown wallet payments
+- **Fractional NFT** - Fractionalize NFTs into shares with Reown wallet ownership tracking
+
+### Reputation & Badges
+- **Onchain Badges** - Issue and track achievement badges with Reown wallet verification
+- **Reputation Staking** - Stake reputation (positive/negative) with Reown wallet
+- **Reputation Marketplace** - Buy and sell reputation tokens on marketplace with Reown wallet
+
+### Community & Funding
+- **Creator Fund** - Contribute to creator funds with Reown wallet
+- **Community Treasury** - Manage community treasury with deposits, withdrawals, and proposals via Reown wallet
+- **Proposal Templates** - Create reusable proposal templates with Reown wallet signatures
+
 All features are built with **Reown AppKit** and **Wagmi** for seamless wallet integration, ensuring every onchain operation is authenticated and verified through the Reown wallet.
 
 ## Tech Stack
