@@ -5,34 +5,30 @@ import { useState } from 'react';
 
 export interface Attribution {
   contentId: string;
-  creator: string;
   contributors: string[];
-  timestamp: number;
+  shares: number[];
 }
 
 export function useContentAttribution() {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
   const [attributions, setAttributions] = useState<Attribution[]>([]);
 
-  const attributeContent = async (contentId: string, contributors: string[]) => {
-    if (!isConnected || !address) {
-      throw new Error('Reown wallet not connected');
-    }
-
-    const message = `Attribution: ${contentId}\nContributors: ${contributors.join(',')}\nTimestamp: ${Date.now()}`;
+  const addAttribution = async (contentId: string, contributors: string[], shares: number[]) => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `Attribution: ${contentId} ${contributors.length} contributors`;
     await signMessageAsync({ message });
-
+    
     const attribution: Attribution = {
       contentId,
-      creator: address,
       contributors,
-      timestamp: Date.now(),
+      shares,
     };
-
+    
     setAttributions([...attributions, attribution]);
     return attribution;
   };
 
-  return { attributeContent, attributions, isConnected, address };
+  return { addAttribution, attributions, address };
 }
