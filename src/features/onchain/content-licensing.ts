@@ -8,7 +8,8 @@ export interface License {
   licensor: string;
   licensee: string;
   terms: string;
-  fee: bigint;
+  price: string;
+  wallet: string;
 }
 
 export function useContentLicensing() {
@@ -16,24 +17,24 @@ export function useContentLicensing() {
   const { signMessageAsync } = useSignMessage();
   const [licenses, setLicenses] = useState<License[]>([]);
 
-  const createLicense = async (contentId: string, licensee: string, terms: string, fee: string) => {
+  const createLicense = async (contentId: string, licensee: string, terms: string, price: string) => {
     if (!address) throw new Error('Reown wallet not connected');
     
-    const message = `License: ${contentId} to ${licensee}\nTerms: ${terms}\nFee: ${fee}`;
+    const message = `License: ${contentId} to ${licensee} for ${price}`;
     await signMessageAsync({ message });
-
+    
     const license: License = {
       contentId,
       licensor: address,
       licensee,
       terms,
-      fee: BigInt(fee),
+      price,
+      wallet: address,
     };
-
+    
     setLicenses([...licenses, license]);
     return license;
   };
 
   return { createLicense, licenses, address };
 }
-
