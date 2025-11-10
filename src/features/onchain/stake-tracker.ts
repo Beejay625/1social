@@ -1,34 +1,37 @@
 'use client';
 
-import { useAccount, useWatchContractEvent } from 'wagmi';
-import { useState } from 'react';
+import { useAccount, useReadContract } from 'wagmi';
+import { useState, useEffect } from 'react';
 
-export interface Stake {
+export interface StakeEvent {
   staker: string;
   amount: bigint;
-  token: string;
-  timestamp: number;
+  pool: string;
+  stakedAt: number;
 }
 
 export function useStakeTracker() {
   const { address } = useAccount();
-  const [stakes, setStakes] = useState<Stake[]>([]);
-
-  useWatchContractEvent({
+  const { data: staked } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    eventName: 'Staked',
-    onLogs(logs) {
-      const stake: Stake = {
-        staker: logs[0]?.args?.user || '',
-        amount: logs[0]?.args?.amount || BigInt(0),
-        token: '0x',
-        timestamp: Date.now(),
-      };
-      setStakes([...stakes, stake]);
-    },
+    functionName: 'balanceOf',
+    args: [address],
   });
+  const [stakes, setStakes] = useState<StakeEvent[]>([]);
+
+  useEffect(() => {
+    if (!address || !staked) return;
+    
+    const stake: StakeEvent = {
+      staker: address,
+      amount: BigInt(staked as string),
+      pool: '0x',
+      stakedAt: Date.now(),
+    };
+    
+    setStakes([stake]);
+  }, [address, staked]);
 
   return { stakes, address };
 }
-
