@@ -1,36 +1,14 @@
 'use client';
-
-import { useAccount, useSignMessage } from 'wagmi';
-import { useState } from 'react';
-
-export interface Stake {
-  token: string;
-  amount: string;
-  lockPeriod: number;
-  wallet: string;
-}
-
+import { useAccount, useBalance } from 'wagmi';
 export function useTokenStaking() {
-  const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
-  const [stakes, setStakes] = useState<Stake[]>([]);
-
-  const stakeToken = async (token: string, amount: string, lockPeriod: number) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Stake: ${token} ${amount} ${lockPeriod} days`;
-    await signMessageAsync({ message });
-    
-    const stake: Stake = {
-      token,
-      amount,
-      lockPeriod,
-      wallet: address,
-    };
-    
-    setStakes([...stakes, stake]);
-    return stake;
+  const { address, isConnected } = useAccount();
+  const { data: balance } = useBalance({ address });
+  const stakeTokens = async (amount: string) => {
+    if (!isConnected || !address) throw new Error('Reown wallet not connected');
+    if (Number(balance?.value || 0) < Number(amount)) {
+      throw new Error('Insufficient balance');
+    }
+    return { amount, staker: address };
   };
-
-  return { stakeToken, stakes, address };
+  return { stakeTokens, balance, isConnected, address };
 }
