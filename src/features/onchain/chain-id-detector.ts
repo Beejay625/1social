@@ -1,33 +1,10 @@
 'use client';
-
-import { useAccount, useChainId } from 'wagmi';
-import { useState, useEffect } from 'react';
-
-export interface ChainInfo {
-  chainId: number;
-  name: string;
-  nativeCurrency: string;
-  blockExplorer: string;
+import { useAccount } from 'wagmi';
+export function useChainIDDetector() {
+  const { chainId, chain, isConnected } = useAccount();
+  const detectChain = () => {
+    if (!isConnected) return null;
+    return { chainId, chainName: chain?.name, network: chain?.network };
+  };
+  return { detectChain, chainId, chain, isConnected };
 }
-
-export function useChainIdDetector() {
-  const { address } = useAccount();
-  const chainId = useChainId();
-  const [chainInfo, setChainInfo] = useState<ChainInfo | null>(null);
-
-  useEffect(() => {
-    if (!address) return;
-    
-    const info: ChainInfo = {
-      chainId,
-      name: 'Ethereum',
-      nativeCurrency: 'ETH',
-      blockExplorer: 'https://etherscan.io',
-    };
-    
-    setChainInfo(info);
-  }, [address, chainId]);
-
-  return { chainInfo, address, chainId };
-}
-
