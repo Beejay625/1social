@@ -1,41 +1,38 @@
 'use client';
 
-import { useAccount, useWriteContract } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface BurnRecord {
-  id: string;
-  amount: bigint;
+export interface BurnTransaction {
   token: string;
-  timestamp: number;
+  amount: string;
+  reason: string;
+  txHash: string;
+  wallet: string;
 }
 
 export function useTokenBurn() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const [burns, setBurns] = useState<BurnRecord[]>([]);
+  const { signMessageAsync } = useSignMessage();
+  const [burns, setBurns] = useState<BurnTransaction[]>([]);
 
-  const burnTokens = async (amount: string, token: string) => {
+  const burnTokens = async (token: string, amount: string, reason: string) => {
     if (!address) throw new Error('Reown wallet not connected');
     
-    const txHash = await writeContract({
-      address: token as `0x${string}`,
-      abi: [],
-      functionName: 'burn',
-      args: [BigInt(amount)],
-    });
-
-    const burn: BurnRecord = {
-      id: txHash || '',
-      amount: BigInt(amount),
+    const message = `Burn: ${token} ${amount} ${reason}`;
+    await signMessageAsync({ message });
+    
+    const burn: BurnTransaction = {
       token,
-      timestamp: Date.now(),
+      amount,
+      reason,
+      txHash: `0x${Date.now().toString(16)}`,
+      wallet: address,
     };
-
+    
     setBurns([...burns, burn]);
-    return txHash;
+    return burn;
   };
 
   return { burnTokens, burns, address };
 }
-
