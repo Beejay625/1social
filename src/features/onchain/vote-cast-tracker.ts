@@ -1,36 +1,39 @@
 'use client';
 
-import { useAccount, useWatchContractEvent } from 'wagmi';
-import { useState } from 'react';
+import { useAccount, useReadContract } from 'wagmi';
+import { useState, useEffect } from 'react';
 
 export interface VoteCast {
+  proposalId: string;
   voter: string;
-  proposalId: bigint;
   support: boolean;
   weight: bigint;
-  timestamp: number;
+  blockNumber: number;
 }
 
 export function useVoteCastTracker() {
   const { address } = useAccount();
-  const [votes, setVotes] = useState<VoteCast[]>([]);
-
-  useWatchContractEvent({
+  const { data: vote } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    eventName: 'VoteCast',
-    onLogs(logs) {
-      const vote: VoteCast = {
-        voter: logs[0]?.args?.voter || '',
-        proposalId: logs[0]?.args?.proposalId || BigInt(0),
-        support: logs[0]?.args?.support || false,
-        weight: logs[0]?.args?.weight || BigInt(0),
-        timestamp: Date.now(),
-      };
-      setVotes([...votes, vote]);
-    },
+    functionName: 'hasVoted',
+    args: [address],
   });
+  const [votes, setVotes] = useState<VoteCast[]>([]);
+
+  useEffect(() => {
+    if (!address || vote === undefined) return;
+    
+    const voteCast: VoteCast = {
+      proposalId: '0',
+      voter: address,
+      support: true,
+      weight: BigInt(0),
+      blockNumber: 0,
+    };
+    
+    setVotes([voteCast]);
+  }, [address, vote]);
 
   return { votes, address };
 }
-
