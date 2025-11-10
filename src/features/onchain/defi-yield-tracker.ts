@@ -1,41 +1,31 @@
 'use client';
 
-import { useAccount, useReadContract } from 'wagmi';
+import { useAccount } from 'wagmi';
 import { useState, useEffect } from 'react';
 
 export interface YieldPosition {
   protocol: string;
   apy: number;
-  balance: bigint;
-  rewards: bigint;
-  timestamp: number;
+  balance: string;
+  wallet: string;
 }
 
 export function useDeFiYieldTracker() {
-  const { address, isConnected } = useAccount();
-  const [yieldPositions, setYieldPositions] = useState<YieldPosition[]>([]);
-
-  const { data: yieldData } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'getYieldPosition',
-    args: address ? [address] : undefined,
-    query: { enabled: !!address && isConnected },
-  });
+  const { address } = useAccount();
+  const [positions, setPositions] = useState<YieldPosition[]>([]);
 
   useEffect(() => {
-    if (address && yieldData) {
-      const position: YieldPosition = {
-        protocol: 'Aave',
-        apy: 5.2,
-        balance: (yieldData as any)?.balance || BigInt(0),
-        rewards: (yieldData as any)?.rewards || BigInt(0),
-        timestamp: Date.now(),
-      };
-      setYieldPositions([position]);
-    }
-  }, [address, yieldData]);
+    if (!address) return;
+    
+    const position: YieldPosition = {
+      protocol: 'compound',
+      apy: 5.2,
+      balance: '0',
+      wallet: address,
+    };
+    
+    setPositions([position]);
+  }, [address]);
 
-  return { yieldPositions, isConnected, address };
+  return { positions, address };
 }
-
