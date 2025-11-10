@@ -3,40 +3,40 @@
 import { useAccount, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface RebalanceAction {
+export interface Rebalance {
   id: string;
-  token: string;
-  action: 'buy' | 'sell';
-  amount: bigint;
-  targetAllocation: number;
+  tokens: string[];
+  targetWeights: number[];
+  currentWeights: number[];
+  executed: boolean;
 }
 
 export function usePortfolioRebalancer() {
   const { address } = useAccount();
   const { writeContract } = useWriteContract();
-  const [actions, setActions] = useState<RebalanceAction[]>([]);
+  const [rebalances, setRebalances] = useState<Rebalance[]>([]);
 
-  const rebalance = async (token: string, action: 'buy' | 'sell', amount: string, targetAllocation: number) => {
+  const rebalancePortfolio = async (tokens: string[], targetWeights: number[]) => {
     if (!address) throw new Error('Reown wallet not connected');
     
     const txHash = await writeContract({
-      address: token as `0x${string}`,
+      address: '0x' as `0x${string}`,
       abi: [],
       functionName: 'rebalance',
-      args: [action, BigInt(amount), targetAllocation * 100],
+      args: [tokens, targetWeights.map(w => w * 100)],
     });
 
-    const rebalanceAction: RebalanceAction = {
+    const rebalance: Rebalance = {
       id: txHash || '',
-      token,
-      action,
-      amount: BigInt(amount),
-      targetAllocation,
+      tokens,
+      targetWeights,
+      currentWeights: [],
+      executed: true,
     };
 
-    setActions([...actions, rebalanceAction]);
+    setRebalances([...rebalances, rebalance]);
     return txHash;
   };
 
-  return { rebalance, actions, address };
+  return { rebalancePortfolio, rebalances, address };
 }
