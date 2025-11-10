@@ -1,36 +1,38 @@
 'use client';
 
-import { useAccount, useWatchContractEvent } from 'wagmi';
-import { useState } from 'react';
+import { useAccount, useReadContract } from 'wagmi';
+import { useState, useEffect } from 'react';
 
 export interface ProposalCreated {
-  proposalId: bigint;
+  proposalId: string;
   proposer: string;
-  targets: string[];
-  values: bigint[];
-  timestamp: number;
+  startBlock: number;
+  endBlock: number;
+  description: string;
 }
 
 export function useProposalCreatedTracker() {
   const { address } = useAccount();
-  const [proposals, setProposals] = useState<ProposalCreated[]>([]);
-
-  useWatchContractEvent({
+  const { data: proposal } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    eventName: 'ProposalCreated',
-    onLogs(logs) {
-      const proposal: ProposalCreated = {
-        proposalId: logs[0]?.args?.proposalId || BigInt(0),
-        proposer: logs[0]?.args?.proposer || '',
-        targets: [],
-        values: [],
-        timestamp: Date.now(),
-      };
-      setProposals([...proposals, proposal]);
-    },
+    functionName: 'proposalCount',
   });
+  const [proposals, setProposals] = useState<ProposalCreated[]>([]);
+
+  useEffect(() => {
+    if (!address || !proposal) return;
+    
+    const proposalCreated: ProposalCreated = {
+      proposalId: (proposal as bigint).toString(),
+      proposer: address,
+      startBlock: 0,
+      endBlock: 0,
+      description: '',
+    };
+    
+    setProposals([proposalCreated]);
+  }, [address, proposal]);
 
   return { proposals, address };
 }
-
