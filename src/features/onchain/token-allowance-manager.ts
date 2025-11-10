@@ -1,37 +1,40 @@
 'use client';
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface Allowance {
   token: string;
   spender: string;
-  amount: string;
-  wallet: string;
+  amount: bigint;
+  approved: boolean;
 }
 
 export function useTokenAllowanceManager() {
   const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
+  const { writeContract } = useWriteContract();
   const [allowances, setAllowances] = useState<Allowance[]>([]);
 
-  const setAllowance = async (token: string, spender: string, amount: string) => {
+  const approveAllowance = async (token: string, spender: string, amount: string) => {
     if (!address) throw new Error('Reown wallet not connected');
     
-    const message = `Set Allowance: ${token} to ${spender} ${amount}`;
-    await signMessageAsync({ message });
-    
+    const txHash = await writeContract({
+      address: token as `0x${string}`,
+      abi: [],
+      functionName: 'approve',
+      args: [spender, BigInt(amount)],
+    });
+
     const allowance: Allowance = {
       token,
       spender,
-      amount,
-      wallet: address,
+      amount: BigInt(amount),
+      approved: true,
     };
-    
+
     setAllowances([...allowances, allowance]);
-    return allowance;
+    return txHash;
   };
 
-  return { setAllowance, allowances, address };
+  return { approveAllowance, allowances, address };
 }
-
