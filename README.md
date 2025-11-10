@@ -187,11 +187,88 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Staking Rewards** - Track and claim staking rewards
 - **Cross-Protocol Messaging** - Send messages across protocols with wallet signatures
 
+## New Onchain Features (All Powered by Reown Wallet)
+
+### Wallet Integration & Management
+- **Wallet Connectivity** - Seamless Reown AppKit integration for wallet connection and management
+- **Wallet Verification** - Verify wallet ownership with cryptographic signatures via Reown wallet
+- **Wallet Delegation** - Delegate wallet permissions with time-based access control using Reown signatures
+- **Wallet Reputation** - Track wallet reputation scores based on onchain activity and holdings
+
+### NFT & Content Management
+- **NFT Content Minting** - Mint social posts as NFTs with Reown wallet-signed metadata
+- **NFT Marketplace Integration** - List and manage NFTs across marketplaces with Reown wallet
+- **NFT Drops** - Create and manage NFT drop campaigns with Reown wallet distribution
+- **NFT Minting Service** - Comprehensive NFT minting service with metadata management via Reown wallet
+
+### Token & Rewards Systems
+- **Token Rewards** - Distribute token rewards with Reown wallet signatures
+- **Token Rewards Distributor** - Batch token distribution to multiple recipients via Reown wallet
+- **Token Staking** - Stake tokens with lock periods using Reown wallet
+- **Staking Rewards** - Track and manage staking rewards with Reown wallet integration
+- **Airdrop Manager** - Create and execute airdrops to multiple recipients with Reown wallet
+
+### Governance & DAO Features
+- **DAO Voting** - Cast votes on DAO proposals with Reown wallet signatures
+- **Governance Proposals** - Create and manage governance proposals with Reown wallet
+- **Onchain Voting** - Vote with power tracking and weighted voting via Reown wallet
+- **Multi-Sig Treasury** - Create treasury proposals requiring multiple Reown wallet signatures
+
+### Storage & Backup
+- **IPFS Storage** - Store content on IPFS with Reown wallet verification
+- **IPFS Uploader** - Upload files to IPFS with Reown wallet-signed metadata
+- **Arweave Storage** - Permanent storage on Arweave with Reown wallet signatures
+- **Decentralized Backup** - Create backups to IPFS/Arweave with Reown wallet verification
+
+### Smart Contracts & Automation
+- **Smart Contract Deployer** - Deploy smart contracts with Reown wallet signatures
+- **Smart Contract Webhooks** - Subscribe to blockchain events with Reown wallet
+- **Smart Contract Rules** - Create automation rules with trigger-based actions via Reown wallet
+- **Transaction Batcher** - Batch multiple transactions for gas optimization with Reown wallet
+
+### Cross-Chain & Bridge Features
+- **Cross-Chain Bridge** - Bridge assets across chains with Reown wallet integration
+- **Cross-Protocol Messaging** - Send messages across protocols with Reown wallet signatures
+
+### Analytics & Tracking
+- **Onchain Reputation Tracker** - Track and update reputation scores with Reown wallet
+- **Gas Tracker** - Real-time gas price tracking with Reown wallet monitoring
+- **Gas Price Monitor** - Monitor gas prices across different speed tiers with Reown wallet
+- **DeFi Yield Tracker** - Track DeFi yield positions and APY with Reown wallet
+- **Liquidity Pool Tracker** - Monitor liquidity pool positions with Reown wallet
+
+### Social & Graph Features
+- **Social Graph** - Manage social connections across protocols with Reown wallet
+- **Social Graph Sync** - Sync social graphs across protocols with Reown wallet
+- **Onchain Identity** - Create and manage onchain identities with Reown wallet verification
+
+### Content & Attribution
+- **Content Verification** - Verify content authenticity with Reown wallet signatures
+- **Content Attribution** - Track content contributors with Reown wallet attribution
+
+### Revenue & Payments
+- **Revenue Splitter** - Split revenue among multiple recipients with Reown wallet signatures
+- **Sponsored Escrow** - Create escrow accounts for sponsored content with Reown wallet
+- **Tip Collector** - Collect tips with Reown wallet integration
+
+### Testing & Optimization
+- **A/B Testing Registry** - Create and manage A/B tests with Reown wallet
+- **Audience Segments** - Create audience segments with token-based criteria via Reown wallet
+
+### Protocol & Health Monitoring
+- **Protocol Registry** - Register with protocols using Reown wallet signatures
+- **Protocol Health** - Monitor protocol health and status with Reown wallet
+
+### Compliance & Security
+- **Compliance Vault** - Check content compliance with Reown wallet verification
+
+All features are built with **Reown AppKit** and **Wagmi** for seamless wallet integration, ensuring every onchain operation is authenticated and verified through the Reown wallet.
+
 ## Tech Stack
 
 - **Next.js** (App Router) - React framework
 - **Tailwind CSS** - Styling
-- **Reown AppKit** + **Wagmi** + **Viem** - Web3 wallet integration
+- **Reown AppKit** + **Wagmi** + **Viem** - Web3 wallet integration (Primary wallet solution)
 - **TypeScript** - Type safety
 - **IPFS/Arweave** - Decentralized storage
 - **The Graph** - Blockchain indexing
