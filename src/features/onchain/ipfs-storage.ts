@@ -1,34 +1,38 @@
 'use client';
 
-import { useAccount } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface IPFSStorage {
+export interface IPFSRecord {
   cid: string;
-  content: string;
+  fileName: string;
+  size: number;
   wallet: string;
   timestamp: number;
 }
 
 export function useIPFSStorage() {
   const { address } = useAccount();
-  const [stored, setStored] = useState<IPFSStorage[]>([]);
+  const { signMessageAsync } = useSignMessage();
+  const [records, setRecords] = useState<IPFSRecord[]>([]);
 
-  const storeOnIPFS = async (content: string) => {
+  const uploadToIPFS = async (fileName: string, content: string) => {
     if (!address) throw new Error('Reown wallet not connected');
     
-    const cid = `Qm${Date.now().toString(36)}`;
-    const storage: IPFSStorage = {
-      cid,
-      content,
+    const message = `IPFS Upload: ${fileName}`;
+    await signMessageAsync({ message });
+    
+    const record: IPFSRecord = {
+      cid: `ipfs_${Date.now()}`,
+      fileName,
+      size: content.length,
       wallet: address,
       timestamp: Date.now(),
     };
     
-    setStored([...stored, storage]);
-    return storage;
+    setRecords([...records, record]);
+    return record;
   };
 
-  return { storeOnIPFS, stored, address };
+  return { uploadToIPFS, records, address };
 }
-
