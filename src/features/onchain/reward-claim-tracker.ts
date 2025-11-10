@@ -4,10 +4,10 @@ import { useAccount, useReadContract } from 'wagmi';
 import { useState, useEffect } from 'react';
 
 export interface RewardClaim {
-  claimer: string;
+  pool: string;
   amount: bigint;
-  token: string;
   claimedAt: number;
+  period: number;
 }
 
 export function useRewardClaimTracker() {
@@ -15,7 +15,7 @@ export function useRewardClaimTracker() {
   const { data: rewards } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'pendingRewards',
+    functionName: 'earned',
     args: [address],
   });
   const [claims, setClaims] = useState<RewardClaim[]>([]);
@@ -24,10 +24,10 @@ export function useRewardClaimTracker() {
     if (!address || !rewards) return;
     
     const claim: RewardClaim = {
-      claimer: address,
+      pool: '0x',
       amount: BigInt(rewards as string),
-      token: 'ETH',
       claimedAt: Date.now(),
+      period: 30,
     };
     
     setClaims([claim]);
