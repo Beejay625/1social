@@ -209,6 +209,26 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Multi-Sig Proposal Manager** - Manage multi-signature proposals with Reown wallet
 - **Governance Quorum Tracker** - Track quorum requirements for governance with Reown
 
+### Event Tracking Features (Reown Wallet Integrated)
+- **Token Allowance Manager** - Manage token allowances with Reown wallet signatures
+- **Block Number Tracker** - Track current block numbers in real-time with Reown
+- **Transaction Status Checker** - Check transaction status and confirmations with Reown
+- **Token Transfer Tracker** - Track token transfers in real-time with Reown wallet
+- **NFT Transfer Tracker** - Track NFT transfers across contracts with Reown
+- **Approval Tracker** - Track token approvals with Reown wallet
+- **Contract Deployment Tracker** - Track new contract deployments with Reown
+- **Vote Cast Tracker** - Track governance votes as they're cast with Reown
+- **Proposal Created Tracker** - Track new governance proposals with Reown
+- **Stake Tracker** - Track staking events in real-time with Reown wallet
+- **Unstake Tracker** - Track unstaking events with Reown
+- **Reward Claim Tracker** - Track reward claims with Reown wallet
+- **NFT Mint Tracker** - Track NFT mints as they happen with Reown
+- **Token Burn Tracker** - Track token burns in real-time with Reown
+- **Delegation Tracker** - Track voting delegations with Reown wallet
+- **Voting Power Tracker** - Track voting power changes with Reown
+- **Proposal Executed Tracker** - Track proposal executions with Reown
+- **Airdrop Claim Tracker** - Track airdrop claims with Reown wallet
+
 ## New Onchain Features (All Powered by Reown Wallet)
 
 ### Wallet Integration & Management
