@@ -1,48 +1,32 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+import { useAccount } from 'wagmi';
 import { useState } from 'react';
-import { parseEther } from 'viem';
 
 export interface TreasuryProposal {
   id: string;
   amount: string;
   recipient: string;
-  purpose: string;
-  approvals: number;
-  threshold: number;
+  signatures: string[];
 }
 
 export function useMultiSigTreasury() {
-  const { address, isConnected } = useAccount();
-  const { writeContract } = useWriteContract();
+  const { address } = useAccount();
   const [proposals, setProposals] = useState<TreasuryProposal[]>([]);
 
-  const createProposal = async (amount: string, recipient: string, purpose: string) => {
-    if (!isConnected || !address) {
-      throw new Error('Wallet not connected');
-    }
-
-    const txHash = await writeContract({
-      address: '0x' as `0x${string}`,
-      abi: [],
-      functionName: 'submitProposal',
-      args: [recipient, parseEther(amount), purpose],
-    });
-
+  const createProposal = async (amount: string, recipient: string) => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
     const proposal: TreasuryProposal = {
-      id: txHash || '',
+      id: `prop_${Date.now()}`,
       amount,
       recipient,
-      purpose,
-      approvals: 1,
-      threshold: 3,
+      signatures: [address],
     };
-
+    
     setProposals([...proposals, proposal]);
-    return txHash;
+    return proposal;
   };
 
-  return { createProposal, proposals, isConnected, address };
+  return { createProposal, proposals, address };
 }
-
