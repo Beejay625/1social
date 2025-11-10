@@ -310,12 +310,12 @@ All features are built with **Reown AppKit** and **Wagmi** for seamless wallet i
 
 - **Next.js** (App Router) - React framework
 - **Tailwind CSS** - Styling
-- **Reown AppKit** + **Wagmi** + **Viem** - Web3 wallet integration (All 60+ onchain features powered by Reown)
+- **Reown AppKit** + **Wagmi** + **Viem** - Web3 wallet integration (All 100+ onchain features powered by Reown)
 - **TypeScript** - Type safety
 - **IPFS/Arweave** - Decentralized storage
 - **The Graph** - Blockchain indexing
 
-## 60+ Onchain Features Powered by Reown Wallet
+## 100+ Onchain Features Powered by Reown Wallet
 
 All features below use **Reown wallet integration** via Wagmi hooks (`useAccount`, `useSignMessage`, `useWriteContract`, `useReadContract`, `useBalance`, `useSwitchChain`, `useFeeData`, `useWatchContractEvent`, `useDeployContract`, `useSignTypedData`, `useSendTransaction`, etc.):
 
@@ -407,6 +407,28 @@ All features below use **Reown wallet integration** via Wagmi hooks (`useAccount
 63. **Contract Deployer** - Deploy new smart contracts
 64. **Transaction Status** - Monitor transaction confirmations
 
+### Latest Onchain Features (20 features - All Powered by Reown Wallet)
+85. **Token Lock Manager** - Lock tokens with unlock dates using Reown wallet signatures
+86. **Multi-Chain Balance Aggregator** - Aggregate balances across multiple chains with Reown
+87. **Transaction Fee Estimator** - Estimate transaction fees before execution with Reown
+88. **Contract Event Subscriber** - Subscribe to smart contract events in real-time with Reown
+89. **Wallet Nonce Tracker** - Track wallet nonce for transaction ordering with Reown
+90. **Token Price Calculator** - Calculate token prices from onchain data with Reown
+91. **Gas Price Predictor** - Predict future gas prices based on trends with Reown
+92. **Transaction Queue Manager** - Queue and manage multiple transactions with Reown signatures
+93. **Smart Contract Verifier** - Verify smart contract source code with Reown wallet
+94. **Token Holder Tracker** - Track token holders and their balances with Reown
+95. **NFT Collection Manager** - Create and manage NFT collections with Reown wallet
+96. **Cross-Chain Asset Tracker** - Track assets across multiple blockchain networks with Reown
+97. **DeFi Position Manager** - Manage DeFi positions and yields with Reown wallet
+98. **Liquidity Provider Tracker** - Track LP positions and fees with Reown
+99. **Yield Optimizer** - Optimize yield farming strategies with Reown wallet
+100. **Risk Calculator** - Calculate risk scores for DeFi positions with Reown
+101. **Portfolio Rebalancer** - Automatically rebalance portfolios with Reown signatures
+102. **Token Swap Router** - Find optimal swap routes across DEXs with Reown
+103. **Multi-Sig Proposal Manager** - Manage multi-signature proposals with Reown wallet
+104. **Governance Quorum Tracker** - Track quorum requirements for governance with Reown
+
 ### Faucet & Claiming Features (2 features)
 65. **Token Faucet** - Claim tokens from faucets with Reown wallet
 66. **Vesting Claimer** - Claim vested tokens with Reown wallet contract writes
@@ -457,7 +479,7 @@ All features below use **Reown wallet integration** via Wagmi hooks (`useAccount
 ### Lock Management (1 feature)
 84. **Token Lock Claimer** - Claim tokens from locked positions with Reown wallet
 
-**All 80+ features require Reown wallet connection** and use wallet hooks (`useAccount`, `useWriteContract`, `useSignMessage`, `useReadContract`) for authentication, signing, contract interactions, and data reading. Every onchain operation is secured by Reown wallet signatures. All features are located in `/src/features/onchain/` and fully integrated with Reown AppKit.
+**All 100+ features require Reown wallet connection** and use wallet hooks (`useAccount`, `useWriteContract`, `useSignMessage`, `useReadContract`, `useBalance`, `useSwitchChain`, `useFeeData`, `useWatchContractEvent`, `useDeployContract`, `useSignTypedData`, `useSendTransaction`, `useNonce`, `useEstimateGas`) for authentication, signing, contract interactions, and data reading. Every onchain operation is secured by Reown wallet signatures. All features are located in `/src/features/onchain/` and fully integrated with Reown AppKit.
 
 ## Environment Setup
 
