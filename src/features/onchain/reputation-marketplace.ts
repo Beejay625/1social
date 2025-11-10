@@ -1,43 +1,38 @@
 'use client';
 
-import { useAccount, useWriteContract } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface ReputationListing {
-  id: string;
   seller: string;
-  reputationScore: number;
-  price: bigint;
-  sold: boolean;
+  reputationType: string;
+  price: string;
+  quantity: number;
+  wallet: string;
 }
 
 export function useReputationMarketplace() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
+  const { signMessageAsync } = useSignMessage();
   const [listings, setListings] = useState<ReputationListing[]>([]);
 
-  const listReputation = async (score: number, price: string) => {
+  const listReputation = async (reputationType: string, price: string, quantity: number) => {
     if (!address) throw new Error('Reown wallet not connected');
     
-    const txHash = await writeContract({
-      address: '0x' as `0x${string}`,
-      abi: [],
-      functionName: 'listReputation',
-      args: [score, BigInt(price)],
-    });
-
+    const message = `List Reputation: ${reputationType} ${price} x${quantity}`;
+    await signMessageAsync({ message });
+    
     const listing: ReputationListing = {
-      id: txHash || '',
       seller: address,
-      reputationScore: score,
-      price: BigInt(price),
-      sold: false,
+      reputationType,
+      price,
+      quantity,
+      wallet: address,
     };
-
+    
     setListings([...listings, listing]);
-    return txHash;
+    return listing;
   };
 
   return { listReputation, listings, address };
 }
-
