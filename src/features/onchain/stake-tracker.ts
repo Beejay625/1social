@@ -3,11 +3,11 @@
 import { useAccount, useReadContract } from 'wagmi';
 import { useState, useEffect } from 'react';
 
-export interface StakeEvent {
-  staker: string;
-  amount: bigint;
+export interface StakeRecord {
   pool: string;
+  amount: bigint;
   stakedAt: number;
+  rewards: bigint;
 }
 
 export function useStakeTracker() {
@@ -18,16 +18,16 @@ export function useStakeTracker() {
     functionName: 'balanceOf',
     args: [address],
   });
-  const [stakes, setStakes] = useState<StakeEvent[]>([]);
+  const [stakes, setStakes] = useState<StakeRecord[]>([]);
 
   useEffect(() => {
     if (!address || !staked) return;
     
-    const stake: StakeEvent = {
-      staker: address,
-      amount: BigInt(staked as string),
+    const stake: StakeRecord = {
       pool: '0x',
+      amount: BigInt(staked as string),
       stakedAt: Date.now(),
+      rewards: BigInt(0),
     };
     
     setStakes([stake]);
