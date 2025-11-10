@@ -1,43 +1,32 @@
 'use client';
 
-import { useAccount, useReadContract } from 'wagmi';
-import { useState, useEffect } from 'react';
+import { useAccount } from 'wagmi';
+import { useState } from 'react';
 
 export interface LiquidityPosition {
-  poolAddress: string;
-  token0: string;
-  token1: string;
-  liquidity: bigint;
+  pool: string;
+  tokens: string[];
   share: number;
-  fees: bigint;
+  wallet: string;
 }
 
 export function useLiquidityPoolTracker() {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const [positions, setPositions] = useState<LiquidityPosition[]>([]);
 
-  const { data: poolData } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'getLiquidityPosition',
-    args: address ? [address] : undefined,
-    query: { enabled: !!address && isConnected },
-  });
+  const addPosition = async (pool: string, tokens: string[], share: number) => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const position: LiquidityPosition = {
+      pool,
+      tokens,
+      share,
+      wallet: address,
+    };
+    
+    setPositions([...positions, position]);
+    return position;
+  };
 
-  useEffect(() => {
-    if (address && poolData) {
-      const position: LiquidityPosition = {
-        poolAddress: '0x',
-        token0: 'ETH',
-        token1: 'USDC',
-        liquidity: (poolData as any)?.liquidity || BigInt(0),
-        share: (poolData as any)?.share || 0,
-        fees: (poolData as any)?.fees || BigInt(0),
-      };
-      setPositions([position]);
-    }
-  }, [address, poolData]);
-
-  return { positions, isConnected, address };
+  return { addPosition, positions, address };
 }
-
