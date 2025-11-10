@@ -500,6 +500,52 @@ All features below use **Reown wallet integration** via Wagmi hooks (`useAccount
 ### Lock Management (1 feature)
 84. **Token Lock Claimer** - Claim tokens from locked positions with Reown wallet
 
+### Snapshot & Analytics Features (5 features)
+85. **Token Snapshot** - Create token holder snapshots at specific block numbers with Reown wallet
+86. **Airdrop Calculator** - Calculate airdrop distributions with Reown wallet balance tracking
+87. **Vesting Calculator** - Calculate vesting schedules and unlock amounts with Reown wallet
+88. **Staking Reward Calculator** - Calculate staking rewards based on APY and duration via Reown wallet
+89. **Proposal Calculator** - Calculate proposal voting results and quorum with Reown wallet
+
+### NFT Management Features (6 features)
+90. **NFT Whitelist Manager** - Manage NFT collection whitelists with Reown wallet
+91. **NFT Collection Verifier** - Verify NFT collection standards and metadata with Reown wallet
+92. **NFT Rarity Calculator** - Calculate NFT rarity scores and rankings with Reown wallet
+93. **NFT Trait Manager** - Update NFT traits and metadata with Reown wallet
+94. **NFT Floor Price Tracker** - Track NFT collection floor prices with Reown wallet monitoring
+95. **NFT Bid Manager** - Place and manage NFT bids with Reown wallet
+
+### Cross-Chain Features (1 feature)
+96. **Cross-Chain Token Bridge** - Bridge tokens across blockchain networks with Reown wallet
+
+### Distribution & Supply Features (2 features)
+97. **Token Distribution Manager** - Distribute tokens to multiple recipients with Reown wallet
+98. **Token Supply Tracker** - Track token supply metrics (total, circulating, burned, locked) with Reown wallet
+
+### Analytics & Tracking Features (9 features)
+99. **Token Price Aggregator** - Aggregate token prices from multiple sources with Reown wallet
+100. **Token Holder Analytics** - Analyze token holder distribution and top holders with Reown wallet
+101. **NFT Collection Analytics** - Analyze NFT collection metrics (supply, owners, volume) with Reown wallet
+102. **Token Emission Schedule** - Track token emission schedules and rates with Reown wallet
+103. **Token Pool Analytics** - Analyze liquidity pool metrics (liquidity, volume, fees, APY) with Reown wallet
+104. **NFT Marketplace Analytics** - Track marketplace metrics (volume, listings, sales) with Reown wallet
+105. **Token Inflation Tracker** - Track token inflation rates and emission schedules with Reown wallet
+106. **NFT Sales Tracker** - Track NFT sales history and records with Reown wallet
+107. **Token Transaction History** - Track token transaction history with Reown wallet
+
+### History & Records Features (3 features)
+108. **NFT Ownership History** - Track NFT ownership transfer history with Reown wallet
+109. **NFT Transfer History** - Track NFT transfer records with Reown wallet
+110. **Token Vesting Schedule Viewer** - View vesting schedules and unlock timelines with Reown wallet
+
+### Additional Analytics Features (6 features)
+111. **NFT Collection Stats** - View comprehensive NFT collection statistics with Reown wallet
+112. **Token Rewards Calculator** - Calculate token rewards based on staking and duration with Reown wallet
+113. **NFT Minting Tracker** - Track NFT minting activity and records with Reown wallet
+114. **Token Staking Analytics** - Analyze staking positions, APY, and rewards with Reown wallet
+115. **Token Liquidity Tracker** - Track token liquidity and pool reserves with Reown wallet
+116. **Token Unlock Schedule** - Track token unlock schedules and remaining amounts with Reown wallet
+
 **All 100+ features require Reown wallet connection** and use wallet hooks (`useAccount`, `useWriteContract`, `useSignMessage`, `useReadContract`, `useBalance`, `useSwitchChain`, `useFeeData`, `useWatchContractEvent`, `useDeployContract`, `useSignTypedData`, `useSendTransaction`, `useNonce`, `useEstimateGas`) for authentication, signing, contract interactions, and data reading. Every onchain operation is secured by Reown wallet signatures. All features are located in `/src/features/onchain/` and fully integrated with Reown AppKit.
 
 ## Environment Setup
