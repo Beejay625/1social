@@ -22,7 +22,7 @@ Visit http://localhost:3000
 ### AI & Web3 Content Creation
 - **AI Studio** - AI-powered content generation optimized for onchain publishing with wallet-signed authenticity
 - **NFT Content Templates** - Pre-built templates for minting social NFTs and creating onchain content
-- **Web3 Post Templates** - Templates optimized for Farcaster frames, Lens publications, and Mirror articles
+- **Web3 Post Templates** - Templates optimized for Farcaster, Lens publications, and Mirror articles
 - **Tokenized Content Suggestions** - AI-powered suggestions with token-curated reputation scoring
 - **Onchain Performance Predictions** - Predict post performance with blockchain-verified historical data
 - **Smart Contract Performance Predictor** - AI predictions with confidence scores stored onchain for transparency
@@ -626,7 +626,7 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 ## Supported Protocols & Platforms
 
 ### Decentralized Protocols
-- **Farcaster** - Decentralized social network with frames support
+- **Farcaster** - Decentralized social network
 - **Lens Protocol** - Composable web3 social graph
 - **Mirror** - Decentralized publishing and NFT minting
 
@@ -651,7 +651,7 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **🗳️ Community Moderation** - DAO-based governance
 - **💼 Treasury Management** - Multi-sig wallet integration
 - **🎁 Token Rewards** - Distribute tokens/NFTs for engagement
-- **📱 Farcaster Frames** - Create interactive frames
+- **📱 Farcaster Integration** - Create interactive content
 - **🌟 Reputation System** - Onchain reputation tracking
 - **🔄 Automated NFT Recycling** - Repost as limited editions
 - **📡 Smart Contract Webhooks** - Blockchain event automation
