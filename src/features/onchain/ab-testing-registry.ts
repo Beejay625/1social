@@ -1,32 +1,45 @@
 'use client';
 
-import { useAccount } from 'wagmi';
+import { useAccount, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface ABTest {
   id: string;
   variantA: string;
   variantB: string;
-  results: Record<string, number>;
+  results: {
+    variantAViews: number;
+    variantBViews: number;
+  };
 }
 
 export function useABTestingRegistry() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
+  const { writeContract } = useWriteContract();
   const [tests, setTests] = useState<ABTest[]>([]);
 
   const createTest = async (variantA: string, variantB: string) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
+    if (!isConnected || !address) {
+      throw new Error('Reown wallet not connected');
+    }
+
+    const txHash = await writeContract({
+      address: '0x' as `0x${string}`,
+      abi: [],
+      functionName: 'createTest',
+      args: [variantA, variantB],
+    });
+
     const test: ABTest = {
-      id: `test_${Date.now()}`,
+      id: txHash || '',
       variantA,
       variantB,
-      results: {},
+      results: { variantAViews: 0, variantBViews: 0 },
     };
-    
+
     setTests([...tests, test]);
-    return test;
+    return txHash;
   };
 
-  return { createTest, tests, address };
+  return { createTest, tests, isConnected, address };
 }
