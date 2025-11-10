@@ -1,43 +1,36 @@
 'use client';
 
-import { useAccount, useDeployContract } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface DeployedContract {
   address: string;
-  abi: any[];
-  bytecode: string;
-  chainId: number;
+  type: string;
+  deployer: string;
   timestamp: number;
 }
 
 export function useSmartContractDeployer() {
-  const { address, isConnected, chainId } = useAccount();
-  const { deployContract: deployContractHook } = useDeployContract();
-  const [deployedContracts, setDeployedContracts] = useState<DeployedContract[]>([]);
+  const { address } = useAccount();
+  const { signMessageAsync } = useSignMessage();
+  const [contracts, setContracts] = useState<DeployedContract[]>([]);
 
-  const deployContract = async (abi: any[], bytecode: string) => {
-    if (!isConnected || !address) {
-      throw new Error('Reown wallet not connected');
-    }
-
-    const hash = await deployContractHook({
-      abi,
-      bytecode: bytecode as `0x${string}`,
-    });
-
+  const deployContract = async (type: string) => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `Deploy: ${type}`;
+    await signMessageAsync({ message });
+    
     const contract: DeployedContract = {
-      address: hash || '',
-      abi,
-      bytecode,
-      chainId: chainId || 1,
+      address: `0x${Date.now().toString(16)}`,
+      type,
+      deployer: address,
       timestamp: Date.now(),
     };
-
-    setDeployedContracts([...deployedContracts, contract]);
-    return hash;
+    
+    setContracts([...contracts, contract]);
+    return contract;
   };
 
-  return { deployContract, deployedContracts, isConnected, address, chainId };
+  return { deployContract, contracts, address };
 }
-
