@@ -1,34 +1,37 @@
 'use client';
 
-import { useAccount, useWatchContractEvent } from 'wagmi';
-import { useState } from 'react';
+import { useAccount, useReadContract } from 'wagmi';
+import { useState, useEffect } from 'react';
 
 export interface VotingPower {
-  delegate: string;
-  previousBalance: bigint;
-  newBalance: bigint;
-  timestamp: number;
+  voter: string;
+  power: bigint;
+  proposalId: string;
+  delegated: boolean;
 }
 
 export function useVotingPowerTracker() {
   const { address } = useAccount();
-  const [powers, setPowers] = useState<VotingPower[]>([]);
-
-  useWatchContractEvent({
+  const { data: power } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    eventName: 'DelegateVotesChanged',
-    onLogs(logs) {
-      const power: VotingPower = {
-        delegate: logs[0]?.args?.delegate || '',
-        previousBalance: logs[0]?.args?.previousBalance || BigInt(0),
-        newBalance: logs[0]?.args?.newBalance || BigInt(0),
-        timestamp: Date.now(),
-      };
-      setPowers([...powers, power]);
-    },
+    functionName: 'getVotes',
+    args: [address],
   });
+  const [powers, setPowers] = useState<VotingPower[]>([]);
+
+  useEffect(() => {
+    if (!address || !power) return;
+    
+    const votingPower: VotingPower = {
+      voter: address,
+      power: BigInt(power as string),
+      proposalId: '0',
+      delegated: false,
+    };
+    
+    setPowers([votingPower]);
+  }, [address, power]);
 
   return { powers, address };
 }
-
