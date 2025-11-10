@@ -1,36 +1,13 @@
 'use client';
-
 import { useAccount, useSignMessage } from 'wagmi';
-import { useState } from 'react';
-
-export interface Airdrop {
-  recipients: string[];
-  token: string;
-  amount: string;
-  txHash: string;
-}
-
 export function useAirdropManager() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [airdrops, setAirdrops] = useState<Airdrop[]>([]);
-
-  const createAirdrop = async (recipients: string[], token: string, amount: string) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Airdrop: ${recipients.length} recipients ${amount} ${token}`;
+  const createAirdrop = async (recipients: string[], amount: string) => {
+    if (!isConnected || !address) throw new Error('Reown wallet not connected');
+    const message = `Airdrop:${recipients.length}:${amount}`;
     await signMessageAsync({ message });
-    
-    const airdrop: Airdrop = {
-      recipients,
-      token,
-      amount,
-      txHash: `0x${Date.now().toString(16)}`,
-    };
-    
-    setAirdrops([...airdrops, airdrop]);
-    return airdrop;
+    return { recipients, amount, createdBy: address };
   };
-
-  return { createAirdrop, airdrops, address };
+  return { createAirdrop, isConnected, address };
 }
