@@ -1,36 +1,36 @@
 'use client';
 
-import { useAccount, useEstimateGas } from 'wagmi';
-import { useState } from 'react';
+import { useAccount, useReadContract } from 'wagmi';
+import { useState, useEffect } from 'react';
 
 export interface FeeEstimate {
-  gasLimit: bigint;
   gasPrice: bigint;
+  gasLimit: bigint;
   totalFee: bigint;
   currency: string;
 }
 
 export function useTransactionFeeEstimator() {
   const { address } = useAccount();
-  const { data: gasEstimate } = useEstimateGas({
-    to: '0x' as `0x${string}`,
-    value: BigInt(0),
+  const { data: gasPrice } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'gasPrice',
   });
   const [estimates, setEstimates] = useState<FeeEstimate[]>([]);
 
-  const estimateFee = async () => {
-    if (!address || !gasEstimate) return null;
+  useEffect(() => {
+    if (!address || !gasPrice) return;
     
     const estimate: FeeEstimate = {
-      gasLimit: gasEstimate,
-      gasPrice: BigInt(20000000000),
-      totalFee: gasEstimate * BigInt(20000000000),
+      gasPrice: BigInt(gasPrice as string),
+      gasLimit: BigInt(21000),
+      totalFee: BigInt(gasPrice as string) * BigInt(21000),
       currency: 'ETH',
     };
     
     setEstimates([estimate]);
-    return estimate;
-  };
+  }, [address, gasPrice]);
 
-  return { estimateFee, estimates, address };
+  return { estimates, address };
 }
