@@ -1,39 +1,14 @@
 'use client';
-
-import { useAccount, useSignMessage } from 'wagmi';
-import { useState } from 'react';
-
-export interface RebalanceAction {
-  token: string;
-  current: number;
-  target: number;
-  action: 'buy' | 'sell';
-  wallet: string;
-}
-
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 export function usePortfolioRebalancer() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [actions, setActions] = useState<RebalanceAction[]>([]);
-
-  const rebalance = async (token: string, current: number, target: number) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Rebalance: ${token} ${current}% -> ${target}%`;
+  const { writeContractAsync } = useWriteContract();
+  const rebalance = async (allocations: Record<string, number>) => {
+    if (!isConnected || !address) throw new Error('Reown wallet not connected');
+    const message = `Rebalance:${JSON.stringify(allocations)}`;
     await signMessageAsync({ message });
-    
-    const action: RebalanceAction = {
-      token,
-      current,
-      target,
-      action: target > current ? 'buy' : 'sell',
-      wallet: address,
-    };
-    
-    setActions([...actions, action]);
-    return action;
+    return { allocations, rebalancedBy: address };
   };
-
-  return { rebalance, actions, address };
+  return { rebalance, isConnected, address };
 }
-
