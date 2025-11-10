@@ -1,39 +1,13 @@
 'use client';
-
 import { useAccount, useSignMessage } from 'wagmi';
-import { useState } from 'react';
-
-export interface ABIRecord {
-  contract: string;
-  abi: any[];
-  version: string;
-  wallet: string;
-  timestamp: number;
-}
-
 export function useContractABIManager() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [abis, setAbis] = useState<ABIRecord[]>([]);
-
-  const saveABI = async (contract: string, abi: any[], version: string) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Save ABI: ${contract} v${version}`;
+  const saveABI = async (contractAddress: string, abi: any) => {
+    if (!isConnected || !address) throw new Error('Reown wallet not connected');
+    const message = `SaveABI:${contractAddress}:${abi.length}`;
     await signMessageAsync({ message });
-    
-    const record: ABIRecord = {
-      contract,
-      abi,
-      version,
-      wallet: address,
-      timestamp: Date.now(),
-    };
-    
-    setAbis([...abis, record]);
-    return record;
+    return { contractAddress, abi, savedBy: address };
   };
-
-  return { saveABI, abis, address };
+  return { saveABI, isConnected, address };
 }
-
