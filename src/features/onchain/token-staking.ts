@@ -1,52 +1,36 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
-import { parseEther } from 'viem';
 
-export interface StakingPosition {
-  amount: bigint;
+export interface Stake {
+  token: string;
+  amount: string;
   lockPeriod: number;
-  rewards: bigint;
-  startTime: number;
+  wallet: string;
 }
 
 export function useTokenStaking() {
-  const { address, isConnected } = useAccount();
-  const { writeContract } = useWriteContract();
-  const [positions, setPositions] = useState<StakingPosition[]>([]);
+  const { address } = useAccount();
+  const { signMessageAsync } = useSignMessage();
+  const [stakes, setStakes] = useState<Stake[]>([]);
 
-  const { data: stakedBalance } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'balanceOf',
-    args: address ? [address] : undefined,
-    query: { enabled: !!address && isConnected },
-  });
-
-  const stakeTokens = async (amount: string, lockPeriod: number) => {
-    if (!isConnected || !address) {
-      throw new Error('Wallet not connected');
-    }
-
-    const txHash = await writeContract({
-      address: '0x' as `0x${string}`,
-      abi: [],
-      functionName: 'stake',
-      args: [parseEther(amount), lockPeriod],
-    });
-
-    const position: StakingPosition = {
-      amount: parseEther(amount),
+  const stakeToken = async (token: string, amount: string, lockPeriod: number) => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `Stake: ${token} ${amount} ${lockPeriod} days`;
+    await signMessageAsync({ message });
+    
+    const stake: Stake = {
+      token,
+      amount,
       lockPeriod,
-      rewards: BigInt(0),
-      startTime: Date.now(),
+      wallet: address,
     };
-
-    setPositions([...positions, position]);
-    return txHash;
+    
+    setStakes([...stakes, stake]);
+    return stake;
   };
 
-  return { stakeTokens, positions, stakedBalance, isConnected, address };
+  return { stakeToken, stakes, address };
 }
-
