@@ -617,7 +617,7 @@ All features below use **Reown wallet integration** via Wagmi hooks (`useAccount
 ### Governance Features (1 feature)
 154. **Governance Vote Caster** - Cast governance votes with Reown wallet signatures
 
-**All 150+ features require Reown wallet connection** and use wallet hooks (`useAccount`, `useWriteContract`, `useSignMessage`, `useReadContract`, `useBalance`, `useSwitchChain`, `useFeeData`, `useWatchContractEvent`, `useDeployContract`, `useSignTypedData`, `useSendTransaction`, `useNonce`, `useEstimateGas`, `useBlockNumber`, `useWaitForTransactionReceipt`, `useChainId`, `useEstimateGas`) for authentication, signing, contract interactions, and data reading. Every onchain operation is secured by Reown wallet signatures. All features are located in `/src/features/onchain/` and fully integrated with Reown AppKit.
+**All 170+ features require Reown wallet connection** and use wallet hooks (`useAccount`, `useWriteContract`, `useSignMessage`, `useReadContract`, `useBalance`, `useSwitchChain`, `useFeeData`, `useWatchContractEvent`, `useDeployContract`, `useSignTypedData`, `useSendTransaction`, `useNonce`, `useEstimateGas`, `useBlockNumber`, `useWaitForTransactionReceipt`, `useChainId`, `useEstimateGas`, `useReadContract`, `useWatchContractEvent`) for authentication, signing, contract interactions, and data reading. Every onchain operation is secured by Reown wallet signatures. All features are located in `/src/features/onchain/` and fully integrated with Reown AppKit.
 
 ## Environment Setup
 
