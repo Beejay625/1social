@@ -9,34 +9,33 @@ export interface SaleRecord {
   price: bigint;
   buyer: string;
   seller: string;
-  timestamp: number;
+  soldAt: number;
 }
 
 export function useNFTSalesTracker() {
   const { address } = useAccount();
-  const { data: sales } = useReadContract({
+  const { data: sale } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'getSales',
-    args: [address],
+    functionName: 'lastSale',
+    args: [BigInt(1)],
   });
-  const [records, setRecords] = useState<SaleRecord[]>([]);
+  const [sales, setSales] = useState<SaleRecord[]>([]);
 
   useEffect(() => {
-    if (!address || !sales) return;
+    if (!address || !sale) return;
     
-    const record: SaleRecord = {
+    const saleRecord: SaleRecord = {
       tokenId: '1',
       collection: '0x',
-      price: BigInt(0),
+      price: BigInt(sale as string),
       buyer: address,
       seller: '0x',
-      timestamp: Date.now(),
+      soldAt: Date.now(),
     };
     
-    setRecords([record]);
-  }, [address, sales]);
+    setSales([saleRecord]);
+  }, [address, sale]);
 
-  return { records, address };
+  return { sales, address };
 }
-
