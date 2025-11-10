@@ -1,35 +1,36 @@
 'use client';
 
-import { useAccount, useWatchContractEvent } from 'wagmi';
-import { useState } from 'react';
+import { useAccount, useReadContract } from 'wagmi';
+import { useState, useEffect } from 'react';
 
-export interface TokenBurn {
-  from: string;
-  amount: bigint;
+export interface BurnRecord {
   token: string;
+  totalBurned: bigint;
+  burnedBy: string;
   timestamp: number;
 }
 
 export function useTokenBurnTracker() {
   const { address } = useAccount();
-  const [burns, setBurns] = useState<TokenBurn[]>([]);
-
-  useWatchContractEvent({
+  const { data: burned } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    eventName: 'Transfer',
-    onLogs(logs) {
-      if (logs[0]?.args?.to === '0x0000000000000000000000000000000000000000') {
-        const burn: TokenBurn = {
-          from: logs[0]?.args?.from || '',
-          amount: logs[0]?.args?.value || BigInt(0),
-          token: '0x',
-          timestamp: Date.now(),
-        };
-        setBurns([...burns, burn]);
-      }
-    },
+    functionName: 'totalBurned',
   });
+  const [burns, setBurns] = useState<BurnRecord[]>([]);
+
+  useEffect(() => {
+    if (!address || !burned) return;
+    
+    const burn: BurnRecord = {
+      token: 'ETH',
+      totalBurned: BigInt(burned as string),
+      burnedBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setBurns([burn]);
+  }, [address, burned]);
 
   return { burns, address };
 }
