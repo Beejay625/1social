@@ -3,39 +3,36 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface MultiSigProposal {
+export interface ProposalManagement {
   id: string;
-  proposer: string;
-  approvals: string[];
-  threshold: number;
+  proposalId: string;
+  action: 'approve' | 'reject' | 'execute';
+  signatures: string[];
   executed: boolean;
-  wallet: string;
 }
 
 export function useMultiSigProposalManager() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [proposals, setProposals] = useState<MultiSigProposal[]>([]);
+  const [proposals, setProposals] = useState<ProposalManagement[]>([]);
 
-  const createProposal = async (threshold: number) => {
+  const manageProposal = async (proposalId: string, action: 'approve' | 'reject' | 'execute') => {
     if (!address) throw new Error('Reown wallet not connected');
     
-    const message = `Create Proposal: threshold ${threshold}`;
-    await signMessageAsync({ message });
-    
-    const proposal: MultiSigProposal = {
-      id: `prop_${Date.now()}`,
-      proposer: address,
-      approvals: [address],
-      threshold,
-      executed: false,
-      wallet: address,
+    const message = `Proposal ${action}: ${proposalId}`;
+    const signature = await signMessageAsync({ message });
+
+    const proposal: ProposalManagement = {
+      id: signature,
+      proposalId,
+      action,
+      signatures: [signature],
+      executed: action === 'execute',
     };
-    
+
     setProposals([...proposals, proposal]);
     return proposal;
   };
 
-  return { createProposal, proposals, address };
+  return { manageProposal, proposals, address };
 }
-
