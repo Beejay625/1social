@@ -250,6 +250,27 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Function Selector Encoder** - Encode function selectors with Reown
 - **Contract Verification Status** - Check verification status with Reown wallet
 
+### Development & Testing Tools (Reown Wallet Integrated)
+- **Signature Validator** - Validate cryptographic signatures with Reown wallet
+- **Transaction Simulator** - Simulate transactions before execution with Reown
+- **Contract Address Validator** - Validate contract addresses with Reown
+- **Event Decoder** - Decode contract events with Reown wallet signatures
+- **Calldata Encoder** - Encode function call data with Reown
+- **Contract Proxy Tracker** - Track proxy contract implementations with Reown
+- **Storage Slot Reader** - Read contract storage slots with Reown wallet
+- **Contract Bytecode Reader** - Read contract bytecode with Reown
+- **Function Call Builder** - Build function calls with Reown wallet signatures
+- **Contract Deployment Verifier** - Verify contract deployments with Reown
+- **Event Indexer** - Index contract events in real-time with Reown
+- **Contract Interface Generator** - Generate contract interfaces with Reown wallet
+- **Transaction Builder** - Build transactions with Reown signatures
+- **Contract Comparator** - Compare contracts with Reown wallet
+- **Contract Dependency Tracker** - Track contract dependencies with Reown
+- **Contract Security Scanner** - Scan contracts for vulnerabilities with Reown wallet
+- **Contract Test Runner** - Run contract tests with Reown
+- **Contract Version Manager** - Manage contract versions with Reown wallet
+- **Contract Debugger** - Debug contract execution with Reown
+
 ## New Onchain Features (All Powered by Reown Wallet)
 
 ### Wallet Integration & Management
