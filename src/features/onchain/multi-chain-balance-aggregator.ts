@@ -1,30 +1,35 @@
 'use client';
 
-import { useAccount, useBalance } from 'wagmi';
+import { useAccount, useReadContract } from 'wagmi';
 import { useState, useEffect } from 'react';
 
-export interface AggregatedBalance {
+export interface ChainBalance {
   chain: string;
-  total: bigint;
-  tokens: Array<{ symbol: string; balance: bigint }>;
+  balance: bigint;
+  token: string;
 }
 
 export function useMultiChainBalanceAggregator() {
   const { address } = useAccount();
-  const { data: balance } = useBalance({ address });
-  const [aggregated, setAggregated] = useState<AggregatedBalance[]>([]);
+  const { data: balance } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'balanceOf',
+    args: [address],
+  });
+  const [balances, setBalances] = useState<ChainBalance[]>([]);
 
   useEffect(() => {
-    if (address && balance) {
-      const agg: AggregatedBalance = {
-        chain: 'ethereum',
-        total: balance.value,
-        tokens: [{ symbol: balance.symbol, balance: balance.value }],
-      };
-      setAggregated([agg]);
-    }
+    if (!address || !balance) return;
+    
+    const chainBalance: ChainBalance = {
+      chain: 'ethereum',
+      balance: BigInt(balance as string),
+      token: 'ETH',
+    };
+    
+    setBalances([chainBalance]);
   }, [address, balance]);
 
-  return { aggregated, address };
+  return { balances, address };
 }
-
