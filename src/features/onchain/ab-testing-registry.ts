@@ -1,26 +1,32 @@
 'use client';
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount } from 'wagmi';
+import { useState } from 'react';
 
-export interface ABTestVariant {
+export interface ABTest {
   id: string;
-  content: string;
+  variantA: string;
+  variantB: string;
   results: Record<string, number>;
 }
 
-export function useOnchainABTesting() {
+export function useABTestingRegistry() {
   const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
+  const [tests, setTests] = useState<ABTest[]>([]);
 
-  const registerTest = async (testId: string, variants: ABTestVariant[]) => {
-    if (!address) throw new Error('Wallet not connected');
+  const createTest = async (variantA: string, variantB: string) => {
+    if (!address) throw new Error('Reown wallet not connected');
     
-    const message = `ABTest:${testId}:${JSON.stringify(variants)}`;
-    await signMessageAsync({ message });
+    const test: ABTest = {
+      id: `test_${Date.now()}`,
+      variantA,
+      variantB,
+      results: {},
+    };
     
-    return { testId, variants, registered: true };
+    setTests([...tests, test]);
+    return test;
   };
 
-  return { registerTest };
+  return { createTest, tests, address };
 }
-
