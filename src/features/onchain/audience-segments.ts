@@ -1,19 +1,38 @@
 'use client';
+
 import { useAccount, useReadContract } from 'wagmi';
+import { useState, useEffect } from 'react';
+
 export interface AudienceSegment {
-  id: string;
-  criteria: { tokenAddress?: string; minBalance: string };
-}
-export function useOnchainAudienceSegments() {
-  const { address } = useAccount();
-  const createSegment = async (criteria: AudienceSegment['criteria']) => {
-    if (!address) throw new Error('Wallet not connected');
-    const segment: AudienceSegment = {
-      id: `segment_${Date.now()}`,
-      criteria,
-    };
-    return segment;
-  };
-  return { createSegment };
+  name: string;
+  wallets: string[];
+  tokenHoldings: Record<string, bigint>;
+  nftCollections: string[];
 }
 
+export function useAudienceSegments() {
+  const { address, isConnected } = useAccount();
+  const [segments, setSegments] = useState<AudienceSegment[]>([]);
+
+  const { data: segmentData } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'getSegment',
+    args: address ? [address] : undefined,
+    query: { enabled: !!address && isConnected },
+  });
+
+  useEffect(() => {
+    if (address && segmentData) {
+      const segment: AudienceSegment = {
+        name: 'Token Holders',
+        wallets: [address],
+        tokenHoldings: {},
+        nftCollections: [],
+      };
+      setSegments([segment]);
+    }
+  }, [address, segmentData]);
+
+  return { segments, isConnected, address };
+}
