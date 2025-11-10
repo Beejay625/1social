@@ -1,37 +1,12 @@
 'use client';
-
 import { useAccount, useReadContract } from 'wagmi';
-import { useState, useEffect } from 'react';
-
-export interface PriceData {
-  token: string;
-  price: bigint;
-  decimals: number;
-  timestamp: number;
-}
-
 export function useTokenPriceFetcher() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { data: price } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'getPrice',
+    functionName: 'latestRoundData',
+    query: { enabled: isConnected && !!address },
   });
-  const [prices, setPrices] = useState<PriceData[]>([]);
-
-  useEffect(() => {
-    if (!address || !price) return;
-    
-    const priceData: PriceData = {
-      token: 'ETH',
-      price: BigInt(price as string),
-      decimals: 18,
-      timestamp: Date.now(),
-    };
-    
-    setPrices([priceData]);
-  }, [address, price]);
-
-  return { prices, address };
+  return { price, isConnected, address };
 }
-
