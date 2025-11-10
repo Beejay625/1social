@@ -1,34 +1,41 @@
 'use client';
 
-import { useAccount, useConnect } from 'wagmi';
+import { useAccount, useDisconnect, useConnect } from 'wagmi';
 import { useState } from 'react';
 
-export interface WalletStatus {
+export interface ConnectionStatus {
   connected: boolean;
   address: string | undefined;
   chainId: number | undefined;
+  connector: string | undefined;
 }
 
 export function useWalletConnectivity() {
-  const { address, isConnected, chainId } = useAccount();
+  const { address, isConnected, chainId, connector } = useAccount();
+  const { disconnect } = useDisconnect();
   const { connect, connectors } = useConnect();
-  const [status, setStatus] = useState<WalletStatus>({
+  const [status, setStatus] = useState<ConnectionStatus>({
     connected: isConnected,
     address,
     chainId,
+    connector: connector?.name,
   });
 
   const connectWallet = async () => {
     if (connectors[0]) {
       await connect({ connector: connectors[0] });
-      setStatus({
-        connected: true,
-        address,
-        chainId,
-      });
     }
   };
 
-  return { connectWallet, status, isConnected, address };
-}
+  const disconnectWallet = async () => {
+    await disconnect();
+    setStatus({
+      connected: false,
+      address: undefined,
+      chainId: undefined,
+      connector: undefined,
+    });
+  };
 
+  return { connectWallet, disconnectWallet, status, isConnected, address };
+}
