@@ -1,51 +1,36 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface Vote {
   proposalId: string;
-  support: boolean;
-  weight: bigint;
-  timestamp: number;
+  choice: number;
+  power: number;
+  wallet: string;
 }
 
 export function useOnchainVoting() {
-  const { address, isConnected } = useAccount();
-  const { writeContract } = useWriteContract();
+  const { address } = useAccount();
+  const { signMessageAsync } = useSignMessage();
   const [votes, setVotes] = useState<Vote[]>([]);
 
-  const { data: votingPower } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'getVotingPower',
-    args: address ? [address] : undefined,
-    query: { enabled: !!address && isConnected },
-  });
-
-  const castVote = async (proposalId: string, support: boolean) => {
-    if (!isConnected || !address) {
-      throw new Error('Wallet not connected');
-    }
-
-    const txHash = await writeContract({
-      address: '0x' as `0x${string}`,
-      abi: [],
-      functionName: 'vote',
-      args: [proposalId, support],
-    });
-
+  const castVote = async (proposalId: string, choice: number, power: number) => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `Vote: ${proposalId} choice ${choice} power ${power}`;
+    await signMessageAsync({ message });
+    
     const vote: Vote = {
       proposalId,
-      support,
-      weight: votingPower as bigint || BigInt(0),
-      timestamp: Date.now(),
+      choice,
+      power,
+      wallet: address,
     };
-
+    
     setVotes([...votes, vote]);
-    return txHash;
+    return vote;
   };
 
-  return { castVote, votes, votingPower, isConnected, address };
+  return { castVote, votes, address };
 }
-
