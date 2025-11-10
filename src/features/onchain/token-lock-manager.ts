@@ -1,14 +1,42 @@
 'use client';
-import { useAccount, useWriteContract, useSignMessage } from 'wagmi';
+
+import { useAccount, useWriteContract } from 'wagmi';
+import { useState } from 'react';
+
+export interface Lock {
+  id: string;
+  token: string;
+  amount: bigint;
+  unlockTime: number;
+  locked: boolean;
+}
+
 export function useTokenLockManager() {
-  const { address, isConnected } = useAccount();
-  const { writeContractAsync } = useWriteContract();
-  const { signMessageAsync } = useSignMessage();
-  const lockTokens = async (tokenAddress: string, amount: string, unlockDate: number) => {
-    if (!isConnected || !address) throw new Error('Reown wallet not connected');
-    const message = `Lock:${tokenAddress}:${amount}:${unlockDate}`;
-    await signMessageAsync({ message });
-    return { tokenAddress, amount, unlockDate, lockedBy: address };
+  const { address } = useAccount();
+  const { writeContract } = useWriteContract();
+  const [locks, setLocks] = useState<Lock[]>([]);
+
+  const createLock = async (token: string, amount: string, unlockTime: number) => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const txHash = await writeContract({
+      address: token as `0x${string}`,
+      abi: [],
+      functionName: 'lock',
+      args: [BigInt(amount), unlockTime],
+    });
+
+    const lock: Lock = {
+      id: txHash || '',
+      token,
+      amount: BigInt(amount),
+      unlockTime,
+      locked: true,
+    };
+
+    setLocks([...locks, lock]);
+    return txHash;
   };
-  return { lockTokens, isConnected, address };
+
+  return { createLock, locks, address };
 }
