@@ -1,34 +1,36 @@
 'use client';
 
-import { useAccount, useWatchContractEvent } from 'wagmi';
-import { useState } from 'react';
+import { useAccount, useReadContract } from 'wagmi';
+import { useState, useEffect } from 'react';
 
-export interface Upgrade {
+export interface UpgradeRecord {
   contract: string;
-  oldImplementation: string;
-  newImplementation: string;
-  timestamp: number;
+  oldVersion: string;
+  newVersion: string;
+  upgradedAt: number;
 }
 
 export function useContractUpgradeTracker() {
   const { address } = useAccount();
-  const [upgrades, setUpgrades] = useState<Upgrade[]>([]);
-
-  useWatchContractEvent({
+  const { data: version } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    eventName: 'Upgraded',
-    onLogs(logs) {
-      const upgrade: Upgrade = {
-        contract: '0x',
-        oldImplementation: logs[0]?.args?.previousImplementation || '',
-        newImplementation: logs[0]?.args?.newImplementation || '',
-        timestamp: Date.now(),
-      };
-      setUpgrades([...upgrades, upgrade]);
-    },
+    functionName: 'version',
   });
+  const [upgrades, setUpgrades] = useState<UpgradeRecord[]>([]);
+
+  useEffect(() => {
+    if (!address || !version) return;
+    
+    const upgrade: UpgradeRecord = {
+      contract: '0x',
+      oldVersion: '1.0.0',
+      newVersion: version as string,
+      upgradedAt: Date.now(),
+    };
+    
+    setUpgrades([upgrade]);
+  }, [address, version]);
 
   return { upgrades, address };
 }
-
