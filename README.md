@@ -187,6 +187,28 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Staking Rewards** - Track and claim staking rewards
 - **Cross-Protocol Messaging** - Send messages across protocols with wallet signatures
 
+### Additional Onchain Features (Reown Wallet Integrated)
+- **Token Vesting** - Create vesting schedules with time-locked token releases
+- **Multi-Chain Portfolio** - Track assets across multiple blockchain networks
+- **Reputation Marketplace** - Buy and sell reputation scores onchain
+- **Content Licensing** - License content with wallet-signed agreements
+- **Subscription Payments** - Set up recurring payments with automatic execution
+- **Revenue Sharing** - Distribute revenue among multiple participants
+- **Token Burn** - Burn tokens to reduce supply with onchain verification
+- **Governance Delegation** - Delegate voting power to trusted addresses
+- **Proposal Execution** - Execute approved governance proposals automatically
+- **Treasury Manager** - Manage DAO treasuries with multi-sig support
+- **Cross-Protocol Analytics** - Unified analytics across all protocols
+- **Wallet Activity Monitor** - Real-time monitoring of wallet transactions
+- **Transaction History** - Complete transaction history with onchain verification
+- **Gas Refund System** - Request gas refunds for failed transactions
+- **Batch Approvals** - Approve multiple tokens in a single transaction
+- **Token Swap Aggregator** - Find best swap rates across DEXs
+- **Yield Farming Optimizer** - Optimize yield farming strategies
+- **Liquidity Mining** - Stake liquidity and earn mining rewards
+- **Price Oracle Integration** - Get real-time token prices from oracles
+- **Flash Loan Integration** - Access flash loans for arbitrage and strategies
+
 ## New Onchain Features (All Powered by Reown Wallet)
 
 ### Wallet Integration & Management
