@@ -1,39 +1,40 @@
 'use client';
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface LiquidityMining {
+export interface MiningPosition {
+  id: string;
   pool: string;
-  amount: string;
-  rewards: string;
-  period: number;
-  wallet: string;
+  liquidity: bigint;
+  rewards: bigint;
 }
 
 export function useLiquidityMining() {
   const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
-  const [positions, setPositions] = useState<LiquidityMining[]>([]);
+  const { writeContract } = useWriteContract();
+  const [positions, setPositions] = useState<MiningPosition[]>([]);
 
-  const stakeLiquidity = async (pool: string, amount: string, period: number) => {
+  const stakeLiquidity = async (pool: string, amount: string) => {
     if (!address) throw new Error('Reown wallet not connected');
     
-    const message = `Liquidity Mining: ${pool} ${amount} ${period} days`;
-    await signMessageAsync({ message });
-    
-    const position: LiquidityMining = {
+    const txHash = await writeContract({
+      address: '0x' as `0x${string}`,
+      abi: [],
+      functionName: 'stake',
+      args: [pool, BigInt(amount)],
+    });
+
+    const position: MiningPosition = {
+      id: txHash || '',
       pool,
-      amount,
-      rewards: '0',
-      period,
-      wallet: address,
+      liquidity: BigInt(amount),
+      rewards: BigInt(0),
     };
-    
+
     setPositions([...positions, position]);
-    return position;
+    return txHash;
   };
 
   return { stakeLiquidity, positions, address };
 }
-
