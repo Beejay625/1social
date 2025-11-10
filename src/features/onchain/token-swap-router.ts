@@ -1,45 +1,40 @@
 'use client';
 
-import { useAccount, useWriteContract } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface SwapRoute {
-  id: string;
-  fromToken: string;
-  toToken: string;
-  amountIn: bigint;
-  amountOut: bigint;
-  route: string[];
+  from: string;
+  to: string;
+  path: string[];
+  amountIn: string;
+  amountOut: string;
+  wallet: string;
 }
 
 export function useTokenSwapRouter() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
+  const { signMessageAsync } = useSignMessage();
   const [routes, setRoutes] = useState<SwapRoute[]>([]);
 
-  const swapWithRoute = async (fromToken: string, toToken: string, amount: string, route: string[]) => {
+  const findRoute = async (from: string, to: string, amountIn: string) => {
     if (!address) throw new Error('Reown wallet not connected');
     
-    const txHash = await writeContract({
-      address: '0x' as `0x${string}`,
-      abi: [],
-      functionName: 'swap',
-      args: [fromToken, toToken, BigInt(amount), route],
-    });
-
-    const swapRoute: SwapRoute = {
-      id: txHash || '',
-      fromToken,
-      toToken,
-      amountIn: BigInt(amount),
-      amountOut: BigInt(0),
-      route,
+    const message = `Find Route: ${from} -> ${to} ${amountIn}`;
+    await signMessageAsync({ message });
+    
+    const route: SwapRoute = {
+      from,
+      to,
+      path: [from, to],
+      amountIn,
+      amountOut: '0',
+      wallet: address,
     };
-
-    setRoutes([...routes, swapRoute]);
-    return txHash;
+    
+    setRoutes([...routes, route]);
+    return route;
   };
 
-  return { swapWithRoute, routes, address };
+  return { findRoute, routes, address };
 }
-
