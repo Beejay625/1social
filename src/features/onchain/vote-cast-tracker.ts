@@ -6,9 +6,9 @@ import { useState, useEffect } from 'react';
 export interface VoteCast {
   proposalId: string;
   voter: string;
-  support: boolean;
-  weight: bigint;
-  blockNumber: number;
+  choice: number;
+  power: bigint;
+  timestamp: number;
 }
 
 export function useVoteCastTracker() {
@@ -16,20 +16,20 @@ export function useVoteCastTracker() {
   const { data: vote } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'hasVoted',
-    args: [address],
+    functionName: 'getVote',
+    args: [address, '0'],
   });
   const [votes, setVotes] = useState<VoteCast[]>([]);
 
   useEffect(() => {
-    if (!address || vote === undefined) return;
+    if (!address || !vote) return;
     
     const voteCast: VoteCast = {
       proposalId: '0',
       voter: address,
-      support: true,
-      weight: BigInt(0),
-      blockNumber: 0,
+      choice: 1,
+      power: BigInt(vote as string),
+      timestamp: Date.now(),
     };
     
     setVotes([voteCast]);
