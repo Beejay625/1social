@@ -3,11 +3,11 @@
 import { useAccount, useReadContract } from 'wagmi';
 import { useState, useEffect } from 'react';
 
-export interface UnstakeEvent {
-  unstaker: string;
-  amount: bigint;
+export interface UnstakeRecord {
   pool: string;
+  amount: bigint;
   unstakedAt: number;
+  cooldown: number;
 }
 
 export function useUnstakeTracker() {
@@ -18,16 +18,16 @@ export function useUnstakeTracker() {
     functionName: 'unstakedBalance',
     args: [address],
   });
-  const [unstakes, setUnstakes] = useState<UnstakeEvent[]>([]);
+  const [unstakes, setUnstakes] = useState<UnstakeRecord[]>([]);
 
   useEffect(() => {
     if (!address || !unstaked) return;
     
-    const unstake: UnstakeEvent = {
-      unstaker: address,
-      amount: BigInt(unstaked as string),
+    const unstake: UnstakeRecord = {
       pool: '0x',
+      amount: BigInt(unstaked as string),
       unstakedAt: Date.now(),
+      cooldown: 7,
     };
     
     setUnstakes([unstake]);
