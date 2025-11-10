@@ -4,123 +4,307 @@ The first truly onchain social media management platform built with Next.js. Com
 
 ## Quick Start
 
+See [Environment Setup](#environment-setup) for detailed setup instructions.
+
 ```bash
 npm install
 npm run dev
 ```
 
-Visit http://localhost:3000
-
 ## Features
 
-### Core Publishing & Content
-- **Multi-Protocol Publishing** - Compose once and publish onchain to Farcaster, Lens Protocol, Mirror, plus traditional platforms (Instagram, X)
-- **Decentralized Content Scheduling** - Schedule posts across protocols with blockchain-verified timestamps
-- **AI Studio** - AI-powered content generation optimized for onchain publishing
-- **Content Templates** - Pre-built templates for NFTs, Farcaster, Lens publications, and Mirror articles
-- **IPFS/Arweave Storage** - Permanent decentralized storage for media assets
-- **Content Verification** - Cryptographically verify content authenticity with wallet signatures
+### Core Onchain Features
+- **Multi-Protocol Content Publishing** - Compose once and publish onchain to Farcaster, Lens Protocol, Mirror, plus traditional platforms (Instagram, X)
+- **Decentralized Content Scheduling** - Schedule posts across protocols with blockchain-verified timestamps and advanced calendar views
+- **DAO Workflow Automation** - Streamline DAO content approval with token-gated workflows and NFT-based permissions
+- **Cross-Chain Distribution** - Manage content distribution across chains and protocols with onchain performance tracking
 
-### Analytics & Reporting
+### AI & Web3 Content Creation
+- **AI Studio** - AI-powered content generation optimized for onchain publishing with wallet-signed authenticity
+- **NFT Content Templates** - Pre-built templates for minting social NFTs and creating onchain content
+- **Web3 Post Templates** - Templates optimized for Farcaster frames, Lens publications, and Mirror articles
+- **Tokenized Content Suggestions** - AI-powered suggestions with token-curated reputation scoring
+- **Onchain Performance Predictions** - Predict post performance with blockchain-verified historical data
+- **Smart Contract Performance Predictor** - AI predictions with confidence scores stored onchain for transparency
+- **Cross-Protocol Repurposing** - Transform content across web3 protocols and traditional channels
+- **DAO Repurposing Votes** - Community-driven content repurposing with token-weighted voting
+- **Blockchain Workflow Automation** - Smart contract-based workflows for content creation and approval
+- **Calendar AI Assistant** - AI-powered scheduling with gas optimization and protocol-specific timing recommendations
+
+### Onchain Analytics & Reporting
 - **Blockchain Analytics Dashboards** - Real-time performance tracking with onchain data verification
-- **Cross-Protocol Performance** - Unified view across Farcaster, Lens, Mirror, and traditional platforms
+- **Cross-Protocol Performance Dashboard** - Unified view of performance across Farcaster, Lens, Mirror, and traditional platforms
 - **Onchain Content Analytics** - Track views, mints, collects, mirrors, and shares with blockchain-verified metrics
 - **NFT Content Performance** - Track collectible post performance, mint rates, and secondary market activity
+- **Time-Series Comparison** - Compare metrics across epochs with blockchain timestamp verification
+- **Cross-Chain Performance Analysis** - Compare performance across different blockchain networks
 - **Wallet-Level Tracking** - Track individual post performance tied to wallet addresses
-- **Protocol Benchmarking** - Compare performance against protocol-wide averages
-- **Gas Optimization Analytics** - Visualize optimal posting times based on gas prices
+- **Immutable Performance Records** - All metrics stored onchain for transparent, tamper-proof analytics
+- **Heatmaps for Gas Optimization** - Visualize optimal posting times based on gas prices and engagement
+- **Protocol Benchmarking** - Compare performance against protocol-wide averages from onchain data
+- **DAO Analytics Integration** - Compare against community benchmarks with token-holder verified data
+- **AI Performance Insights** - AI insights powered by decentralized compute networks
+- **Composable Analytics Reports** - Generate reports that can be composed with other web3 data sources
+- **Custom Report Smart Contracts** - Deploy custom analytics contracts with automated on-chain reporting
 - **Multi-Format Export** - Export to IPFS, Arweave, and traditional formats (PDF, CSV)
+- **Verifiable Analytics Export** - All exports include cryptographic proof of authenticity
+- **Deep Dive with Blockchain Explorer** - Link directly to transaction and wallet data
+- **Token-Weighted Engagement Calculator** - Calculate engagement weighted by wallet token holdings
 
-### DAO & Governance
-- **Token-Gated Workflows** - Streamline DAO content approval with token-gated workflows and NFT-based permissions
-- **Onchain Approval Workflows** - Multi-step approval via smart contracts with immutable audit trails
-- **DAO Voting Integration** - Governance-based content approval with token-weighted voting
-- **Multi-Sig Treasury** - Manage DAO treasuries with multi-signature support
-- **Governance Proposals** - Create and manage governance proposals
-- **Voting Power Tracking** - Monitor voting power and delegation
-- **Quorum Tracking** - Track quorum requirements for governance
-
-### NFT & Token Features
-- **NFT Content Minting** - Mint social posts as NFTs with wallet-signed metadata
-- **NFT Marketplace Integration** - List and manage NFTs across marketplaces
-- **NFT Drops** - Create and manage NFT drop campaigns
-- **Token Rewards** - Distribute token rewards with wallet signatures
-- **Token Staking** - Stake tokens with lock periods and reward tracking
-- **Airdrop Manager** - Create and execute airdrops to multiple recipients
-- **Token-Gated Content** - Exclusive content for token/NFT holders
-- **Creator Tokens** - Mint and manage creator tokens
-
-### Smart Contracts & Automation
-- **Smart Contract Deployer** - Deploy smart contracts with wallet signatures
-- **Smart Contract Webhooks** - Subscribe to blockchain events for automated workflows
-- **Contract Event Listener** - Listen to contract events in real-time
-- **Onchain Automation Rules** - Trigger-based smart contracts for automated publishing
-- **Gas-Optimized Scheduling** - AI recommendations factoring in gas prices
-- **Transaction Batcher** - Batch multiple transactions for gas optimization
-
-### Cross-Chain & Bridge
-- **Cross-Chain Distribution** - Manage content distribution across chains
-- **Cross-Chain Bridge** - Bridge assets across chains with automatic chain switching
-- **Multi-Chain Balance Aggregator** - Aggregate balances across multiple chains
-- **Cross-Protocol Messaging** - Send messages across protocols with wallet signatures
-
-### Engagement & Community
+### Onchain Engagement & Community
 - **Token-Gated Engagement** - Automated engagement with NFT/token holder verification
-- **Wallet Reputation Tracking** - Track engagement quality based on wallet age, holdings, and activity
+- **Wallet Reputation Tracking** - Track engagement quality based on wallet age, holdings, and onchain activity
+- **Decentralized Inbox** - Manage interactions across protocols with wallet-to-wallet messaging
 - **Onchain Engagement Metrics** - Track mints, collects, mirrors, tips, and NFT-based interactions
 - **Protocol-Specific Analytics** - Detailed breakdowns for Farcaster casts, Lens mirrors, and Mirror collects
-- **Social Graph Analysis** - Leverage onchain social graphs for engagement insights
-- **Sentiment Analysis** - Track sentiment using onchain reaction data and token signals
+- **Cross-Chain Mention Tracking** - Track mentions and tags across multiple blockchain networks
+- **Web3 Social Graph Analysis** - Leverage onchain social graphs for engagement insights
+- **Engagement Rate with Whale Detection** - Identify high-value wallet interactions and whale activity
+- **Decentralized Social Listening** - Monitor keywords across web3 protocols with privacy-preserving analytics
+- **Protocol Sentiment Analysis** - Track sentiment using onchain reaction data and token signals
+- **Real-Time Chain Monitoring** - Instant alerts for onchain mentions and interactions
+- **DAO Listening Dashboard** - Monitor governance proposals, community sentiment, and token-holder discussions
+- **Wallet Mention Tracking** - Track when your wallet is mentioned across protocols with reputation scoring
+- **Hashtag & Tag Performance** - Track hashtag performance with blockchain-verified engagement data
+- **Protocol-Native Tags** - Optimize tags for each protocol (Farcaster channels, Lens topics, Mirror tags)
+- **NFT-Based Hashtag Analytics** - Track performance of NFT collection tags and community hashtags
 
-### Campaign & Creator Tools
-- **Smart Contract Campaign Management** - Deploy campaigns as smart contracts
-- **Wallet-Based Creator Tracking** - Monitor creator performance using wallet addresses
+### Onchain Campaign & Creator Collaboration
+- **Smart Contract Campaign Management** - Deploy campaigns as smart contracts with automated budget distribution
+- **Wallet-Based Creator Tracking** - Monitor creator performance using wallet addresses and onchain activity
 - **NFT Collaboration Campaigns** - Launch campaigns using NFTs as proof of collaboration
-- **Creator Outreach** - Direct wallet-to-wallet outreach with payment automation
+- **Token-Incentivized Campaigns** - Track campaigns with token rewards and airdrops
+- **Creator Outreach via Wallet** - Direct wallet-to-wallet outreach with payment automation
+- **Treasury Budget Management** - Manage campaign budgets using multi-sig wallets and DAO treasuries
+- **Onchain Budget Tracking** - Real-time budget tracking with blockchain transparency
 - **Web3 ROI Calculator** - Calculate ROI including token appreciation, NFT value, and protocol rewards
+- **Multi-Chain ROI Analytics** - Track returns across different blockchain networks and protocols
 
-### Compliance & Security
+### DAO & Team Collaboration
+- **Token-Gated Collaboration** - NFT-based access control for team features and content review
+- **Onchain Approval Workflows** - Multi-step approval via smart contracts with immutable audit trails
+- **Wallet-Based Permissions** - Role management using token holdings and NFT ownership
+- **DAO Voting Integration** - Governance-based content approval with token-weighted voting
+- **Real-time Collaboration** - Co-create content with wallet-verified presence tracking
+- **Conflict Resolution via DAO** - Community-driven conflict resolution for competing edits
+- **Team Performance NFTs** - Mint achievement NFTs for team milestones and performance
+- **Contributor Attribution** - Onchain attribution tracking for all team contributions
+
+### Decentralized Content Management
+- **IPFS/Arweave Storage** - Store media assets permanently on decentralized storage
+- **NFT Content Library** - Manage assets as NFTs with provenance tracking
+- **Onchain Calendar** - Blockchain-timestamped scheduling with protocol-aware planning
+- **Smart Contract Templates** - Deploy reusable content templates as smart contracts
+- **Token-Curated Content** - Community-curated content library with token voting
+- **Immutable Version History** - All content versions stored onchain with wallet attribution
+- **Blockchain Moderation** - Decentralized content moderation with DAO governance
+- **Automated NFT Recycling** - Repost top-performing content as limited edition NFTs
+- **Web3 Bulk Operations** - Batch transactions for efficient multi-post management
+
+### Smart Contract Automation
+- **Onchain Automation Rules** - Trigger-based smart contracts for automated publishing and engagement
+- **Token-Gated Auto-Responses** - Automated replies with holder verification
+- **Gas-Optimized Scheduling** - AI recommendations factoring in gas prices and network congestion
+- **Cross-Chain Automation** - Orchestrate content across multiple blockchain networks
+
+### Web3 Intelligence & Insights
+- **Onchain Trend Tracking** - Monitor trending topics across protocols with blockchain-verified metrics
+- **Protocol Analytics** - Real-time insights from Farcaster, Lens, and Mirror activity
+- **Wallet Audience Segmentation** - Segment by token holdings, NFT ownership, and onchain behavior
+- **Follower Growth via Social Graph** - Track growth using decentralized social graphs
+- **Competitor Wallet Tracking** - Analyze competitor wallets and onchain strategy
+- **NFT Trend Analysis** - Monitor trending NFT collections and communities
+- **DAO Intelligence** - Track governance activity and community sentiment
+
+### A/B Testing & Optimization
+- **Onchain A/B Testing** - Test variations with blockchain-verified results
+- **NFT Split Testing** - Compare performance of different NFT mint strategies
+
+### Compliance & Safety
 - **DAO-Based Moderation** - Community-driven content moderation with token voting
 - **Smart Contract Compliance** - Automated compliance checks via smart contracts
+- **Crisis Response DAO** - Decentralized crisis management with multi-sig controls
 - **Reputation System** - Onchain reputation tracking for safety and trust
-- **Wallet Verification** - Verify wallet ownership with cryptographic signatures
-- **Content Attribution** - Track content creators and contributors onchain
 
-### Developer & Integration
+### Web3 Integrations & API
+- **Smart Contract Webhooks** - Blockchain event triggers for automated workflows
 - **Web3 API Gateway** - Decentralized API access with wallet authentication
 - **Protocol Integrations** - Native connections to Farcaster, Lens, Mirror, and more
-- **Contract Reader/Writer** - Read from and write to any smart contract
-- **Transaction Status Tracking** - Monitor transaction confirmations and status
-- **Gas Price Monitoring** - Real-time gas price tracking for optimal transaction timing
+
+### Advanced Web3 Features
+- **Social Commerce NFTs** - Sell products as NFTs directly through social posts
+- **Token-Gated Content** - Exclusive content for token/NFT holders
+- **Onchain Revenue Tracking** - Track revenue from creator tokens, NFT sales, and tips
+- **Multi-Chain Search** - Search across all protocols and blockchains
+- **Decentralized Backup** - Export data to IPFS/Arweave with verifiable proofs
+- **Smart Notifications** - Priority alerts for high-value wallet interactions
+- **Protocol Health Monitoring** - Track connected wallet and protocol health status
+- **Sentiment via Onchain Signals** - Analyze sentiment using token prices and voting patterns
+- **Viral Coefficient Tracking** - Measure content spread across web3 social graphs
+- **Engagement NFT Rewards** - Mint NFTs as rewards for quality engagement
+- **Account Health Scores** - Monitor wallet reputation and protocol standing
+- **Performance Alerts** - Automated alerts for anomalous onchain activity
+
+### New Onchain Features (Reown Wallet Integrated)
+All features below are fully integrated with **Reown AppKit** for seamless wallet connectivity:
+
+- **NFT Minting Service** - Mint content as NFTs with Reown wallet signatures
+- **Tip Collector** - Collect tips with real-time balance tracking via Reown
+- **Token Rewards Distributor** - Batch distribute tokens to multiple recipients
+- **Onchain Reputation Tracker** - Track wallet reputation scores onchain
+- **Multi-Sig Treasury** - Create and manage treasury proposals with multi-signature support
+- **IPFS Uploader** - Upload files to IPFS with wallet-signed verification
+- **Arweave Storage** - Permanent decentralized storage with wallet authentication
+- **Cross-Chain Bridge** - Bridge tokens across chains with automatic chain switching
+- **Gas Price Monitor** - Real-time gas price tracking for optimal transaction timing
+- **Transaction Batcher** - Batch multiple transactions for gas efficiency
+- **Wallet Verification** - Verify wallet ownership with cryptographic signatures
+- **Onchain Voting** - Cast votes with token-weighted voting power
+- **Token Staking** - Stake tokens with lock periods and reward tracking
+- **NFT Marketplace Integration** - List and sell NFTs on marketplaces
+- **DeFi Yield Tracker** - Track yield positions and APY across protocols
+- **Governance Proposals** - Create and manage DAO governance proposals
+- **Airdrop Manager** - Create and distribute token airdrops
+- **Liquidity Pool Tracker** - Monitor LP positions and fees
+- **Smart Contract Deployer** - Deploy custom smart contracts directly from wallet
+- **Onchain Identity** - Verify and manage onchain identity with ENS support
+- **Content Verification** - Cryptographically verify content authenticity
+- **Creator Tokens** - Mint and manage creator tokens
+- **Content Attribution** - Track content creators and contributors onchain
+- **Audience Segments** - Segment audiences by wallet holdings and behavior
+- **Compliance Vault** - Submit content for onchain compliance checks
+- **DAO Voting** - Token-weighted voting for DAO proposals
+- **Decentralized Backup** - Backup data to IPFS and Arweave with verification
+- **Social Graph Sync** - Synchronize social connections across protocols
+- **Protocol Health** - Monitor protocol status and latency
+- **Smart Contract Webhooks** - Listen to smart contract events in real-time
+- **Smart Contract Rules** - Create automation rules for smart contracts
+- **Protocol Registry** - Register and manage supported protocols
+- **A/B Testing Registry** - Run onchain A/B tests with verified results
+- **NFT Drops** - Create and manage NFT drop campaigns
+- **Wallet Delegation** - Delegate wallet permissions with expiry
+- **Wallet Connectivity** - Manage wallet connections and disconnections
+- **Staking Rewards** - Track and claim staking rewards
+- **Cross-Protocol Messaging** - Send messages across protocols with wallet signatures
+
+## New Onchain Features (All Powered by Reown Wallet)
+
+### Wallet Integration & Management
+- **Wallet Connectivity** - Seamless Reown AppKit integration for wallet connection and management
+- **Wallet Verification** - Verify wallet ownership with cryptographic signatures via Reown wallet
+- **Wallet Delegation** - Delegate wallet permissions with time-based access control using Reown signatures
+- **Wallet Reputation** - Track wallet reputation scores based on onchain activity and holdings
+
+### NFT & Content Management
+- **NFT Content Minting** - Mint social posts as NFTs with Reown wallet-signed metadata
+- **NFT Marketplace Integration** - List and manage NFTs across marketplaces with Reown wallet
+- **NFT Drops** - Create and manage NFT drop campaigns with Reown wallet distribution
+- **NFT Minting Service** - Comprehensive NFT minting service with metadata management via Reown wallet
+
+### Token & Rewards Systems
+- **Token Rewards** - Distribute token rewards with Reown wallet signatures
+- **Token Rewards Distributor** - Batch token distribution to multiple recipients via Reown wallet
+- **Token Staking** - Stake tokens with lock periods using Reown wallet
+- **Staking Rewards** - Track and manage staking rewards with Reown wallet integration
+- **Airdrop Manager** - Create and execute airdrops to multiple recipients with Reown wallet
+
+### Governance & DAO Features
+- **DAO Voting** - Cast votes on DAO proposals with Reown wallet signatures
+- **Governance Proposals** - Create and manage governance proposals with Reown wallet
+- **Onchain Voting** - Vote with power tracking and weighted voting via Reown wallet
+- **Multi-Sig Treasury** - Create treasury proposals requiring multiple Reown wallet signatures
+
+### Storage & Backup
+- **IPFS Storage** - Store content on IPFS with Reown wallet verification
+- **IPFS Uploader** - Upload files to IPFS with Reown wallet-signed metadata
+- **Arweave Storage** - Permanent storage on Arweave with Reown wallet signatures
+- **Decentralized Backup** - Create backups to IPFS/Arweave with Reown wallet verification
+
+### Smart Contracts & Automation
+- **Smart Contract Deployer** - Deploy smart contracts with Reown wallet signatures
+- **Smart Contract Webhooks** - Subscribe to blockchain events with Reown wallet
+- **Smart Contract Rules** - Create automation rules with trigger-based actions via Reown wallet
+- **Transaction Batcher** - Batch multiple transactions for gas optimization with Reown wallet
+
+### Cross-Chain & Bridge Features
+- **Cross-Chain Bridge** - Bridge assets across chains with Reown wallet integration
+- **Cross-Protocol Messaging** - Send messages across protocols with Reown wallet signatures
+
+### Analytics & Tracking
+- **Onchain Reputation Tracker** - Track and update reputation scores with Reown wallet
+- **Gas Tracker** - Real-time gas price tracking with Reown wallet monitoring
+- **Gas Price Monitor** - Monitor gas prices across different speed tiers with Reown wallet
+- **DeFi Yield Tracker** - Track DeFi yield positions and APY with Reown wallet
+- **Liquidity Pool Tracker** - Monitor liquidity pool positions with Reown wallet
+
+### Social & Graph Features
+- **Social Graph** - Manage social connections across protocols with Reown wallet
+- **Social Graph Sync** - Sync social graphs across protocols with Reown wallet
+- **Onchain Identity** - Create and manage onchain identities with Reown wallet verification
+
+### Content & Attribution
+- **Content Verification** - Verify content authenticity with Reown wallet signatures
+- **Content Attribution** - Track content contributors with Reown wallet attribution
+
+### Revenue & Payments
+- **Revenue Splitter** - Split revenue among multiple recipients with Reown wallet signatures
+- **Sponsored Escrow** - Create escrow accounts for sponsored content with Reown wallet
+- **Tip Collector** - Collect tips with Reown wallet integration
+
+### Testing & Optimization
+- **A/B Testing Registry** - Create and manage A/B tests with Reown wallet
+- **Audience Segments** - Create audience segments with token-based criteria via Reown wallet
+
+### Protocol & Health Monitoring
+- **Protocol Registry** - Register with protocols using Reown wallet signatures
+- **Protocol Health** - Monitor protocol health and status with Reown wallet
+
+### Compliance & Security
+- **Compliance Vault** - Check content compliance with Reown wallet verification
+
+All features are built with **Reown AppKit** and **Wagmi** for seamless wallet integration, ensuring every onchain operation is authenticated and verified through the Reown wallet.
 
 ## Tech Stack
 
 - **Next.js** (App Router) - React framework
 - **Tailwind CSS** - Styling
-- **Reown AppKit** + **Wagmi** + **Viem** - Web3 wallet integration
+- **Reown AppKit** + **Wagmi** + **Viem** - Web3 wallet integration (Primary wallet solution)
 - **TypeScript** - Type safety
 - **IPFS/Arweave** - Decentralized storage
-
-## Wallet Integration
-
-All onchain features are powered by **Reown AppKit** and **Wagmi** for seamless wallet connectivity. Every onchain operation requires wallet connection and uses wallet hooks for:
-
-- Authentication and wallet verification
-- Transaction signing and contract interactions
-- Balance checking and chain switching
-- Event monitoring and data reading
-- Gas estimation and transaction management
-
-Key hooks used: `useAccount`, `useWriteContract`, `useSignMessage`, `useReadContract`, `useBalance`, `useSwitchChain`, `useFeeData`, `useWatchContractEvent`, `useDeployContract`, `useSignTypedData`, `useSendTransaction`, and more.
+- **The Graph** - Blockchain indexing
 
 ## Environment Setup
 
-Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown.com).
+### 1. Install Dependencies
+
+```bash
+npm install
+```
+
+### 2. Configure Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```bash
+NEXT_PUBLIC_PROJECT_ID=your_reown_project_id_here
+```
+
+### 3. Add your Reown AppKit Project ID (required for wallet connection)
+
+**Note:** Without a valid Reown Project ID, the dApp will not be able to connect wallets. Get your Project ID from [reown.com](https://reown.com/).
+
+### 4. Start the dApp
+
+```bash
+npm run dev
+```
+
+Visit http://localhost:3000
 
 ## Supported Protocols & Platforms
 
 ### Decentralized Protocols
-- **Farcaster** - Decentralized social network
+- **Farcaster** - Decentralized social network with frames support
 - **Lens Protocol** - Composable web3 social graph
 - **Mirror** - Decentralized publishing and NFT minting
 
@@ -128,7 +312,7 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **Instagram** - Photo and video sharing
 - **X (Twitter)** - Microblogging
 
-## Key Capabilities
+## Key Web3 Capabilities
 
 - **🔗 Multi-Protocol Publishing** - One-click to Farcaster, Lens, Mirror + traditional platforms
 - **⛓️ Blockchain-Verified Analytics** - Immutable, transparent performance tracking
@@ -137,23 +321,65 @@ Set `NEXT_PUBLIC_PROJECT_ID` from your [Reown dashboard](https://dashboard.reown
 - **🔐 Wallet-Based Auth** - Secure access via Web3 wallets
 - **💰 Web3 Commerce** - Sell NFTs and accept crypto payments
 - **📊 Cross-Chain Analytics** - Unified metrics across blockchains
+- **🎯 Token-Weighted Engagement** - Prioritize high-value wallet interactions
 - **🌐 Decentralized Storage** - IPFS/Arweave integration
 - **⚡ Gas Optimization** - Smart scheduling to minimize costs
+- **🎨 Social NFT Minting** - Mint posts as collectibles
 - **📈 Protocol Benchmarking** - Compare against onchain averages
 - **🗳️ Community Moderation** - DAO-based governance
 - **💼 Treasury Management** - Multi-sig wallet integration
+- **🎁 Token Rewards** - Distribute tokens/NFTs for engagement
+- **📱 Farcaster Frames** - Create interactive frames
+- **🌟 Reputation System** - Onchain reputation tracking
+- **🔄 Automated NFT Recycling** - Repost as limited editions
+- **📡 Smart Contract Webhooks** - Blockchain event automation
+- **🎪 Creator Collaboration** - Wallet-to-wallet partnerships
 
 ## Project Structure
 
 ```
 src/
   app/
-    page.tsx          # Main dashboard component
-  features/
-    onchain/         # All onchain feature implementations
-  context/           # Wallet and app context providers
-  config.ts          # Reown and Wagmi configuration
+    page.tsx          # Main dashboard component with all features
 ```
+
+## Core Features
+
+### 🌐 Web3-Native Publishing
+- One-click cross-protocol publishing (Farcaster, Lens, Mirror)
+- Blockchain-timestamped scheduling
+- IPFS/Arweave permanent storage
+- NFT content minting and tracking
+
+### 📊 Onchain Analytics
+- Blockchain-verified performance metrics
+- Cross-chain analytics dashboards
+- Token-weighted engagement tracking
+- Protocol-specific insights (casts, mirrors, collects)
+
+### 🏛️ DAO Collaboration
+- Token-gated access control
+- Smart contract approval workflows
+- Multi-sig treasury management
+- Onchain contributor attribution
+
+### 🤖 Smart Automation
+- Gas-optimized scheduling
+- Smart contract event triggers
+- Automated NFT recycling
+- Token-gated auto-responses
+
+### 💎 Web3 Commerce
+- NFT product sales
+- Crypto payment processing
+- Creator token integration
+- Revenue tracking (tokens, NFTs, tips)
+
+### 🔐 Security & Compliance
+- Wallet-based authentication
+- DAO-governed moderation
+- Onchain reputation system
+- Smart contract compliance checks
 
 ## Why Choose 1Social?
 
