@@ -3,27 +3,28 @@
 import { useAccount, useBlockNumber } from 'wagmi';
 import { useState, useEffect } from 'react';
 
-export interface BlockInfo {
-  number: bigint;
+export interface BlockData {
+  blockNumber: bigint;
   timestamp: number;
   chainId: number;
 }
 
 export function useBlockNumberTracker() {
-  const { address, chainId } = useAccount();
-  const { data: blockNumber } = useBlockNumber({ watch: true });
-  const [blockInfo, setBlockInfo] = useState<BlockInfo | null>(null);
+  const { address } = useAccount();
+  const { data: blockNumber } = useBlockNumber();
+  const [blocks, setBlocks] = useState<BlockData[]>([]);
 
   useEffect(() => {
-    if (blockNumber !== undefined && chainId) {
-      setBlockInfo({
-        number: blockNumber,
-        timestamp: Date.now(),
-        chainId,
-      });
-    }
-  }, [blockNumber, chainId]);
+    if (!address || !blockNumber) return;
+    
+    const blockData: BlockData = {
+      blockNumber,
+      timestamp: Date.now(),
+      chainId: 1,
+    };
+    
+    setBlocks([blockData]);
+  }, [address, blockNumber]);
 
-  return { blockInfo, address, chainId };
+  return { blocks, address };
 }
-
