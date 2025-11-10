@@ -1,37 +1,54 @@
 'use client';
 
-import { useAccount, useSignMessage } from 'wagmi';
-import { useState } from 'react';
+import { useAccount, useReadContract, useWriteContract } from 'wagmi';
+import { useState, useEffect } from 'react';
 
 export interface StakingReward {
-  amount: string;
+  amount: bigint;
   period: number;
-  wallet: string;
-  timestamp: number;
+  apy: number;
+  claimed: boolean;
 }
 
 export function useStakingRewards() {
-  const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
+  const { address, isConnected } = useAccount();
+  const { writeContract } = useWriteContract();
   const [rewards, setRewards] = useState<StakingReward[]>([]);
 
-  const stakeTokens = async (amount: string, period: number) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Stake: ${amount} for ${period} days`;
-    await signMessageAsync({ message });
-    
-    const reward: StakingReward = {
-      amount,
-      period,
-      wallet: address,
-      timestamp: Date.now(),
-    };
-    
-    setRewards([...rewards, reward]);
-    return reward;
+  const { data: rewardData } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'getRewards',
+    args: address ? [address] : undefined,
+    query: { enabled: !!address && isConnected },
+  });
+
+  useEffect(() => {
+    if (address && rewardData) {
+      const reward: StakingReward = {
+        amount: (rewardData as any)?.amount || BigInt(0),
+        period: 30,
+        apy: 12.5,
+        claimed: false,
+      };
+      setRewards([reward]);
+    }
+  }, [address, rewardData]);
+
+  const claimRewards = async () => {
+    if (!isConnected || !address) {
+      throw new Error('Reown wallet not connected');
+    }
+
+    const txHash = await writeContract({
+      address: '0x' as `0x${string}`,
+      abi: [],
+      functionName: 'claimRewards',
+      args: [],
+    });
+
+    return txHash;
   };
 
-  return { stakeTokens, rewards, address };
+  return { rewards, claimRewards, isConnected, address };
 }
-
