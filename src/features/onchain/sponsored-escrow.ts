@@ -1,36 +1,38 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface EscrowPost {
-  postId: string;
+export interface Escrow {
+  id: string;
   sponsor: string;
+  creator: string;
   amount: string;
-  kpiTarget: number;
-  status: 'locked' | 'released' | 'refunded';
+  released: boolean;
 }
 
-export function useSponsoredPostEscrow() {
+export function useSponsoredEscrow() {
   const { address } = useAccount();
-  const { writeContractAsync } = useWriteContract();
-  const [escrows, setEscrows] = useState<EscrowPost[]>([]);
+  const { signMessageAsync } = useSignMessage();
+  const [escrows, setEscrows] = useState<Escrow[]>([]);
 
-  const createEscrow = async (postId: string, amount: string, kpi: number) => {
-    if (!address) throw new Error('Wallet not connected');
+  const createEscrow = async (creator: string, amount: string) => {
+    if (!address) throw new Error('Reown wallet not connected');
     
-    const escrow: EscrowPost = {
-      postId,
+    const message = `Escrow: ${creator} ${amount}`;
+    await signMessageAsync({ message });
+    
+    const escrow: Escrow = {
+      id: `escrow_${Date.now()}`,
       sponsor: address,
+      creator,
       amount,
-      kpiTarget: kpi,
-      status: 'locked',
+      released: false,
     };
     
     setEscrows([...escrows, escrow]);
     return escrow;
   };
 
-  return { createEscrow, escrows };
+  return { createEscrow, escrows, address };
 }
-

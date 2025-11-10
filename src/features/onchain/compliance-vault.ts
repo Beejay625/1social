@@ -1,20 +1,42 @@
 'use client';
-import { useAccount, useSignMessage } from 'wagmi';
-export interface ComplianceProof {
+
+import { useAccount, useWriteContract } from 'wagmi';
+import { useState } from 'react';
+
+export interface ComplianceRecord {
   contentId: string;
-  decision: string;
+  status: 'approved' | 'rejected' | 'pending';
+  checks: string[];
   timestamp: number;
-  signature: string;
-}
-export function useComplianceProofVault() {
-  const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
-  const attestDecision = async (contentId: string, decision: string) => {
-    if (!address) throw new Error('Wallet not connected');
-    const message = `Compliance:${contentId}:${decision}`;
-    const signature = await signMessageAsync({ message });
-    return { contentId, decision, signature, attestedBy: address };
-  };
-  return { attestDecision };
 }
 
+export function useComplianceVault() {
+  const { address, isConnected } = useAccount();
+  const { writeContract } = useWriteContract();
+  const [records, setRecords] = useState<ComplianceRecord[]>([]);
+
+  const submitForCompliance = async (contentId: string, checks: string[]) => {
+    if (!isConnected || !address) {
+      throw new Error('Reown wallet not connected');
+    }
+
+    const txHash = await writeContract({
+      address: '0x' as `0x${string}`,
+      abi: [],
+      functionName: 'submitCompliance',
+      args: [contentId, checks],
+    });
+
+    const record: ComplianceRecord = {
+      contentId,
+      status: 'pending',
+      checks,
+      timestamp: Date.now(),
+    };
+
+    setRecords([...records, record]);
+    return txHash;
+  };
+
+  return { submitForCompliance, records, isConnected, address };
+}
