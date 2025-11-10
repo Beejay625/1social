@@ -337,7 +337,51 @@ All features below use **Reown wallet integration** via Wagmi hooks (`useAccount
 43. **Transaction Signer** - Sign transactions with Reown wallet
 44. **ENS Resolver** - Resolve ENS names to addresses
 
-**All 40+ features require Reown wallet connection** and use wallet hooks for authentication, signing, and contract interactions. Every onchain operation is secured by Reown wallet signatures.
+### Token & Lock Features (3 features)
+45. **Token Lock** - Lock tokens with time-based unlocks via Reown wallet
+46. **Timelock Transactions** - Schedule transactions for future execution with Reown wallet
+47. **Conditional Payments** - Create payments that execute when conditions are met via Reown wallet
+
+### Multi-Signature & Governance (3 features)
+48. **Multi-Sig Proposals** - Create multi-signature proposals with Reown wallet signatures
+49. **Vote Delegation** - Delegate voting power to other addresses with Reown wallet
+50. **Governance Timelock** - Queue governance proposals with time delays via Reown wallet
+
+### Airdrops & Claims (1 feature)
+51. **Airdrop Claims** - Claim airdrops with merkle proofs using Reown wallet
+
+### NFT Advanced Features (2 features)
+52. **NFT Staking** - Stake NFTs to earn rewards with Reown wallet
+53. **NFT Marketplace Orders** - Create buy/sell orders on NFT marketplaces via Reown wallet
+
+### Cross-Chain Features (1 feature)
+54. **Cross-Chain Messaging** - Send messages across blockchain networks with Reown wallet
+
+### Oracle & Data (1 feature)
+55. **Oracle Price Feeds** - Access price feeds from oracles with Reown wallet monitoring
+
+### Staking & Yield (2 features)
+56. **Liquid Staking** - Stake tokens and receive liquid receipt tokens via Reown wallet
+57. **Token Streaming** - Stream tokens over time with Reown wallet
+
+### DeFi & Lending (1 feature)
+58. **Collateralized Loans** - Create loans backed by collateral using Reown wallet
+
+### Markets & Trading (2 features)
+59. **Prediction Markets** - Create and participate in prediction markets with Reown wallet
+60. **Token Bonding Curves** - Buy tokens from bonding curves via Reown wallet
+
+### Treasury Management (1 feature)
+61. **DAO Treasury Manager** - Manage DAO treasury with deposits, withdrawals, and transfers via Reown wallet
+
+### Cryptographic Features (2 features)
+62. **Merkle Verification** - Verify merkle proofs onchain with Reown wallet
+63. **Zero-Knowledge Proofs** - Generate and verify ZK proofs with Reown wallet signatures
+
+### Token Management (1 feature)
+64. **Token Metadata Updater** - Update token metadata (name, symbol, decimals) with Reown wallet
+
+**All 60+ features require Reown wallet connection** and use wallet hooks (`useAccount`, `useWriteContract`, `useSignMessage`) for authentication, signing, and contract interactions. Every onchain operation is secured by Reown wallet signatures.
 
 ## Environment Setup
 
