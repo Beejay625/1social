@@ -1,22 +1,19 @@
 'use client';
 
-import { useAccount, useReadContract } from 'wagmi';
+import { useAccount, useBalance } from 'wagmi';
 import { useState, useEffect } from 'react';
 
 export interface ChainBalance {
   chain: string;
   balance: bigint;
-  token: string;
-  usdValue: number;
+  formatted: string;
+  symbol: string;
 }
 
 export function useMultiChainBalance() {
   const { address } = useAccount();
-  const { data: balance } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'balanceOf',
-    args: [address],
+  const { data: balance } = useBalance({
+    address,
   });
   const [balances, setBalances] = useState<ChainBalance[]>([]);
 
@@ -25,9 +22,9 @@ export function useMultiChainBalance() {
     
     const chainBalance: ChainBalance = {
       chain: 'ethereum',
-      balance: BigInt(balance as string),
-      token: 'ETH',
-      usdValue: 0,
+      balance: balance.value,
+      formatted: balance.formatted,
+      symbol: balance.symbol,
     };
     
     setBalances([chainBalance]);
