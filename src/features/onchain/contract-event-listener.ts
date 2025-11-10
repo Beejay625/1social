@@ -1,37 +1,13 @@
 'use client';
-
 import { useAccount, useWatchContractEvent } from 'wagmi';
-import { useState } from 'react';
-
-export interface EventLog {
-  eventName: string;
-  args: Record<string, unknown>;
-  blockNumber: bigint;
-  txHash: string;
-}
-
 export function useContractEventListener() {
-  const { address } = useAccount();
-  const [events, setEvents] = useState<EventLog[]>([]);
-
+  const { address, isConnected } = useAccount();
   useWatchContractEvent({
     address: '0x' as `0x${string}`,
     abi: [],
-    eventName: 'Transfer',
-    onLogs(logs) {
-      if (!address) return;
-      
-      const eventLog: EventLog = {
-        eventName: 'Transfer',
-        args: {},
-        blockNumber: BigInt(0),
-        txHash: '',
-      };
-      
-      setEvents([...events, eventLog]);
-    },
+    eventName: 'AllEvents',
+    onLogs: (logs) => console.log('Contract events:', logs),
+    enabled: isConnected && !!address,
   });
-
-  return { events, address };
+  return { isConnected, address };
 }
-
