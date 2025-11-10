@@ -1,46 +1,34 @@
 'use client';
 
-import { useAccount, useSignMessage, useReadContract } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface VerificationStatus {
+export interface Verification {
   wallet: string;
   verified: boolean;
-  verificationLevel: 'basic' | 'enhanced' | 'premium';
   timestamp: number;
 }
 
 export function useWalletVerification() {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [verification, setVerification] = useState<VerificationStatus | null>(null);
-
-  const { data: isVerified } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'isVerified',
-    args: address ? [address] : undefined,
-    query: { enabled: !!address && isConnected },
-  });
+  const [verifications, setVerifications] = useState<Verification[]>([]);
 
   const verifyWallet = async () => {
-    if (!isConnected || !address) {
-      throw new Error('Wallet not connected');
-    }
-
-    const message = `1Social Verification: ${address}\nTimestamp: ${Date.now()}`;
-    const signature = await signMessageAsync({ message });
-
-    setVerification({
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `Verify wallet: ${address}`;
+    await signMessageAsync({ message });
+    
+    const verification: Verification = {
       wallet: address,
       verified: true,
-      verificationLevel: 'basic',
       timestamp: Date.now(),
-    });
-
-    return signature;
+    };
+    
+    setVerifications([...verifications, verification]);
+    return verification;
   };
 
-  return { verifyWallet, verification, isVerified, isConnected, address };
+  return { verifyWallet, verifications, address };
 }
-
