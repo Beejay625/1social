@@ -1,34 +1,42 @@
 'use client';
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface Delegation {
   delegate: string;
   permissions: string[];
-  expiresAt: number;
+  expiry: number;
+  active: boolean;
 }
 
 export function useWalletDelegate() {
-  const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
+  const { address, isConnected } = useAccount();
+  const { writeContract } = useWriteContract();
   const [delegations, setDelegations] = useState<Delegation[]>([]);
 
-  const delegateAccess = async (delegate: string, permissions: string[]) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Delegate: ${delegate} ${permissions.join(',')}`;
-    await signMessageAsync({ message });
-    
+  const delegatePermissions = async (delegate: string, permissions: string[], expiry: number) => {
+    if (!isConnected || !address) {
+      throw new Error('Reown wallet not connected');
+    }
+
+    const txHash = await writeContract({
+      address: '0x' as `0x${string}`,
+      abi: [],
+      functionName: 'delegate',
+      args: [delegate, permissions, expiry],
+    });
+
     const delegation: Delegation = {
       delegate,
       permissions,
-      expiresAt: Date.now() + 86400000,
+      expiry,
+      active: true,
     };
-    
+
     setDelegations([...delegations, delegation]);
-    return delegation;
+    return txHash;
   };
 
-  return { delegateAccess, delegations, address };
+  return { delegatePermissions, delegations, isConnected, address };
 }
