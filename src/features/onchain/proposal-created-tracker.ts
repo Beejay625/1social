@@ -4,11 +4,11 @@ import { useAccount, useReadContract } from 'wagmi';
 import { useState, useEffect } from 'react';
 
 export interface ProposalCreated {
-  proposalId: string;
+  id: string;
   proposer: string;
-  startBlock: number;
-  endBlock: number;
-  description: string;
+  startBlock: bigint;
+  endBlock: bigint;
+  createdAt: number;
 }
 
 export function useProposalCreatedTracker() {
@@ -16,7 +16,8 @@ export function useProposalCreatedTracker() {
   const { data: proposal } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'proposalCount',
+    functionName: 'proposals',
+    args: [BigInt(0)],
   });
   const [proposals, setProposals] = useState<ProposalCreated[]>([]);
 
@@ -24,11 +25,11 @@ export function useProposalCreatedTracker() {
     if (!address || !proposal) return;
     
     const proposalCreated: ProposalCreated = {
-      proposalId: (proposal as bigint).toString(),
+      id: '0',
       proposer: address,
-      startBlock: 0,
-      endBlock: 0,
-      description: '',
+      startBlock: BigInt(0),
+      endBlock: BigInt(0),
+      createdAt: Date.now(),
     };
     
     setProposals([proposalCreated]);
