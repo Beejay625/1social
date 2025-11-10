@@ -1,31 +1,38 @@
 'use client';
 
-import { useAccount } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface ReputationScore {
   wallet: string;
   score: number;
-  factors: string[];
+  category: string;
+  verified: boolean;
+  timestamp: number;
 }
 
 export function useOnchainReputation() {
   const { address } = useAccount();
-  const [reputation, setReputation] = useState<ReputationScore | null>(null);
+  const { signMessageAsync } = useSignMessage();
+  const [scores, setScores] = useState<ReputationScore[]>([]);
 
-  const calculateReputation = async () => {
+  const updateReputation = async (score: number, category: string) => {
     if (!address) throw new Error('Reown wallet not connected');
     
-    const score: ReputationScore = {
+    const message = `Update Reputation: ${score} in ${category}`;
+    await signMessageAsync({ message });
+    
+    const reputation: ReputationScore = {
       wallet: address,
-      score: Math.floor(Math.random() * 100),
-      factors: ['age', 'activity', 'holdings'],
+      score,
+      category,
+      verified: true,
+      timestamp: Date.now(),
     };
     
-    setReputation(score);
-    return score;
+    setScores([...scores, reputation]);
+    return reputation;
   };
 
-  return { calculateReputation, reputation, address };
+  return { updateReputation, scores, address };
 }
-
