@@ -13,15 +13,15 @@ export interface DeployedContract {
 
 export function useSmartContractDeployer() {
   const { address, isConnected, chainId } = useAccount();
-  const { deployContract } = useDeployContract();
+  const { deployContract: deployContractHook } = useDeployContract();
   const [deployedContracts, setDeployedContracts] = useState<DeployedContract[]>([]);
 
   const deployContract = async (abi: any[], bytecode: string) => {
     if (!isConnected || !address) {
-      throw new Error('Wallet not connected');
+      throw new Error('Reown wallet not connected');
     }
 
-    const hash = await deployContract({
+    const hash = await deployContractHook({
       abi,
       bytecode: bytecode as `0x${string}`,
     });
