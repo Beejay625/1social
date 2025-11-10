@@ -5,15 +5,15 @@ import { useState, useEffect } from 'react';
 
 export interface QuorumData {
   proposalId: string;
-  required: bigint;
-  current: bigint;
+  currentVotes: bigint;
+  requiredQuorum: bigint;
+  quorumMet: boolean;
   percentage: number;
-  met: boolean;
 }
 
 export function useGovernanceQuorumTracker() {
   const { address } = useAccount();
-  const { data: quorum } = useReadContract({
+  const { data: votes } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
     functionName: 'quorum',
@@ -21,18 +21,18 @@ export function useGovernanceQuorumTracker() {
   const [quorums, setQuorums] = useState<QuorumData[]>([]);
 
   useEffect(() => {
-    if (!address || !quorum) return;
+    if (!address || !votes) return;
     
-    const quorumData: QuorumData = {
+    const quorum: QuorumData = {
       proposalId: '0',
-      required: BigInt(quorum as string),
-      current: BigInt(0),
+      currentVotes: BigInt(votes as string),
+      requiredQuorum: BigInt(0),
+      quorumMet: false,
       percentage: 0,
-      met: false,
     };
     
-    setQuorums([quorumData]);
-  }, [address, quorum]);
+    setQuorums([quorum]);
+  }, [address, votes]);
 
   return { quorums, address };
 }
