@@ -1,34 +1,37 @@
 'use client';
 
-import { useAccount, useWatchContractEvent } from 'wagmi';
-import { useState } from 'react';
+import { useAccount, useReadContract } from 'wagmi';
+import { useState, useEffect } from 'react';
 
 export interface RewardClaim {
   claimer: string;
   amount: bigint;
   token: string;
-  timestamp: number;
+  claimedAt: number;
 }
 
 export function useRewardClaimTracker() {
   const { address } = useAccount();
-  const [claims, setClaims] = useState<RewardClaim[]>([]);
-
-  useWatchContractEvent({
+  const { data: rewards } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    eventName: 'RewardClaimed',
-    onLogs(logs) {
-      const claim: RewardClaim = {
-        claimer: logs[0]?.args?.user || '',
-        amount: logs[0]?.args?.amount || BigInt(0),
-        token: '0x',
-        timestamp: Date.now(),
-      };
-      setClaims([...claims, claim]);
-    },
+    functionName: 'pendingRewards',
+    args: [address],
   });
+  const [claims, setClaims] = useState<RewardClaim[]>([]);
+
+  useEffect(() => {
+    if (!address || !rewards) return;
+    
+    const claim: RewardClaim = {
+      claimer: address,
+      amount: BigInt(rewards as string),
+      token: 'ETH',
+      claimedAt: Date.now(),
+    };
+    
+    setClaims([claim]);
+  }, [address, rewards]);
 
   return { claims, address };
 }
-
