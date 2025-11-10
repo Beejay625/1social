@@ -365,7 +365,57 @@ All features below use **Reown wallet integration** via Wagmi hooks (`useAccount
 63. **Contract Deployer** - Deploy new smart contracts
 64. **Transaction Status** - Monitor transaction confirmations
 
-**All 60+ features require Reown wallet connection** and use wallet hooks for authentication, signing, and contract interactions. Every onchain operation is secured by Reown wallet signatures. All features are located in `/src/features/onchain/` and fully integrated with Reown AppKit.
+### Faucet & Claiming Features (2 features)
+65. **Token Faucet** - Claim tokens from faucets with Reown wallet
+66. **Vesting Claimer** - Claim vested tokens with Reown wallet contract writes
+
+### NFT Batch Operations (2 features)
+67. **NFT Batch Transfer** - Transfer multiple NFTs in a single transaction with Reown wallet
+68. **NFT Collection Creator** - Create new NFT collections with Reown wallet
+
+### Airdrop & Scheduling (1 feature)
+69. **Airdrop Scheduler** - Schedule airdrops for future execution with Reown wallet
+
+### Cross-Chain NFT Features (1 feature)
+70. **Cross-Chain NFT Bridge** - Bridge NFTs across blockchain networks with Reown wallet
+
+### NFT Metadata & Royalties (2 features)
+71. **NFT Metadata Updater** - Update NFT token URIs and metadata with Reown wallet
+72. **NFT Royalty Updater** - Update NFT royalty recipients and percentages with Reown wallet
+
+### Oracle & Price Features (1 feature)
+73. **Token Price Oracle** - Access real-time token prices from oracles with Reown wallet
+
+### Pool Creation Features (2 features)
+74. **Liquidity Pool Creator** - Create new liquidity pools with Reown wallet
+75. **Staking Pool Creator** - Create staking pools with custom APY via Reown wallet
+
+### Token Operations (2 features)
+76. **Token Minting** - Mint new tokens to addresses with Reown wallet
+77. **Token Burn Tracker** - Track total burned tokens with Reown wallet monitoring
+
+### Governance & Execution (1 feature)
+78. **Proposal Executor** - Execute approved governance proposals with Reown wallet
+
+### Balance & Aggregation (1 feature)
+79. **Multi-Chain Balance Aggregator** - Aggregate balances across multiple chains with Reown wallet
+
+### Swap & Routing (1 feature)
+80. **Token Swap Router** - Swap tokens using optimized routes with Reown wallet
+
+### Auction Systems (1 feature)
+81. **NFT Auction System** - Create and manage NFT auctions with Reown wallet
+
+### Vesting Management (1 feature)
+82. **Vesting Revoker** - Revoke vesting schedules with Reown wallet
+
+### Cross-Protocol Features (1 feature)
+83. **Cross-Protocol Bridge** - Bridge assets across different protocols with Reown wallet
+
+### Lock Management (1 feature)
+84. **Token Lock Claimer** - Claim tokens from locked positions with Reown wallet
+
+**All 80+ features require Reown wallet connection** and use wallet hooks (`useAccount`, `useWriteContract`, `useSignMessage`, `useReadContract`) for authentication, signing, contract interactions, and data reading. Every onchain operation is secured by Reown wallet signatures. All features are located in `/src/features/onchain/` and fully integrated with Reown AppKit.
 
 ## Environment Setup
 
