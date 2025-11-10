@@ -229,6 +229,27 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Proposal Executed Tracker** - Track proposal executions with Reown
 - **Airdrop Claim Tracker** - Track airdrop claims with Reown wallet
 
+### Contract Management & Utilities (Reown Wallet Integrated)
+- **Contract Interaction Logger** - Log all contract interactions with Reown wallet signatures
+- **Gas Usage Analyzer** - Analyze gas usage patterns with Reown wallet
+- **Token Supply Monitor** - Monitor token supply changes with Reown
+- **Contract Owner Tracker** - Track contract ownership with Reown wallet
+- **Pause State Tracker** - Track contract pause states with Reown
+- **Role Manager** - Manage contract roles with Reown wallet signatures
+- **Timelock Queue Manager** - Manage timelock transaction queues with Reown
+- **Contract Upgrade Tracker** - Track contract upgrades with Reown wallet
+- **Admin Action Tracker** - Track admin actions with Reown
+- **Emergency Pause Manager** - Manage emergency pauses with Reown wallet signatures
+- **Contract Factory** - Deploy contracts via factory pattern with Reown
+- **Multi-Call Executor** - Execute multiple calls in one transaction with Reown
+- **Contract Registry** - Register and manage contracts with Reown wallet
+- **Event Filter Builder** - Build event filters with Reown signatures
+- **Contract Metadata Reader** - Read contract metadata with Reown
+- **Transaction Replay** - Replay transactions with Reown wallet
+- **Contract ABI Manager** - Manage contract ABIs with Reown wallet
+- **Function Selector Encoder** - Encode function selectors with Reown
+- **Contract Verification Status** - Check verification status with Reown wallet
+
 ## New Onchain Features (All Powered by Reown Wallet)
 
 ### Wallet Integration & Management
