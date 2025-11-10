@@ -250,6 +250,24 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 122. **Function Selector Encoder** - Encode function selectors with Reown
 123. **Contract Verification Status** - Check verification status with Reown wallet
 124. **Contract State Reader** - Read contract state variables with Reown
+125. **Block Explorer Integration** - Generate explorer links with Reown wallet
+126. **Transaction Receipt Reader** - Read transaction receipts with Reown
+127. **Log Parser** - Parse contract logs with Reown wallet signatures
+128. **Contract State Inspector** - Inspect contract state with Reown
+129. **Function ABI Extractor** - Extract function ABIs with Reown wallet
+130. **Contract Template Generator** - Generate contract templates with Reown
+131. **Transaction Batch Processor** - Process transaction batches with Reown
+132. **Contract Events Subscriber** - Subscribe to contract events with Reown wallet
+133. **Contract Deployment Optimizer** - Optimize contract deployments with Reown
+134. **Contract Permission Manager** - Manage contract permissions with Reown wallet
+135. **Contract Config Manager** - Manage contract configurations with Reown
+136. **Contract Lifecycle Manager** - Manage contract lifecycle stages with Reown wallet
+137. **Contract Metrics Collector** - Collect contract metrics with Reown
+138. **Contract Audit Logger** - Log contract audit actions with Reown wallet
+139. **Contract Backup Manager** - Backup contracts with Reown signatures
+140. **Contract Documentation Generator** - Generate documentation with Reown wallet
+141. **Contract Code Analyzer** - Analyze contract code with Reown
+142. **Contract Performance Monitor** - Monitor contract performance with Reown wallet
 
 ## New Onchain Features (All Powered by Reown Wallet)
 
