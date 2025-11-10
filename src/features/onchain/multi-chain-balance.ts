@@ -1,12 +1,37 @@
 'use client';
-import { useAccount, useBalance } from 'wagmi';
-export function useMultiChainBalance() {
-  const { address, isConnected } = useAccount();
-  const { data: balance } = useBalance({ address });
-  const aggregateBalances = async (chains: number[]) => {
-    if (!isConnected || !address) throw new Error('Reown wallet not connected');
-    return { chains, totalBalance: balance?.value || 0n, address };
-  };
-  return { aggregateBalances, balance, isConnected, address };
+
+import { useAccount, useReadContract } from 'wagmi';
+import { useState, useEffect } from 'react';
+
+export interface ChainBalance {
+  chain: string;
+  balance: bigint;
+  token: string;
+  usdValue: number;
 }
 
+export function useMultiChainBalance() {
+  const { address } = useAccount();
+  const { data: balance } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'balanceOf',
+    args: [address],
+  });
+  const [balances, setBalances] = useState<ChainBalance[]>([]);
+
+  useEffect(() => {
+    if (!address || !balance) return;
+    
+    const chainBalance: ChainBalance = {
+      chain: 'ethereum',
+      balance: BigInt(balance as string),
+      token: 'ETH',
+      usdValue: 0,
+    };
+    
+    setBalances([chainBalance]);
+  }, [address, balance]);
+
+  return { balances, address };
+}
