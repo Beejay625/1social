@@ -546,7 +546,27 @@ All features below use **Reown wallet integration** via Wagmi hooks (`useAccount
 115. **Token Liquidity Tracker** - Track token liquidity and pool reserves with Reown wallet
 116. **Token Unlock Schedule** - Track token unlock schedules and remaining amounts with Reown wallet
 
-**All 100+ features require Reown wallet connection** and use wallet hooks (`useAccount`, `useWriteContract`, `useSignMessage`, `useReadContract`, `useBalance`, `useSwitchChain`, `useFeeData`, `useWatchContractEvent`, `useDeployContract`, `useSignTypedData`, `useSendTransaction`, `useNonce`, `useEstimateGas`) for authentication, signing, contract interactions, and data reading. Every onchain operation is secured by Reown wallet signatures. All features are located in `/src/features/onchain/` and fully integrated with Reown AppKit.
+### Tracking & Monitoring Features (10 features)
+117. **Liquidity Position Calculator** - Calculate LP position shares and value with Reown wallet
+118. **Vote Cast Tracker** - Track governance votes cast with Reown wallet monitoring
+119. **Proposal Created Tracker** - Monitor new governance proposals with Reown wallet
+120. **Stake Tracker** - Track staking positions and rewards with Reown wallet
+121. **Unstake Tracker** - Monitor unstaking events and cooldowns with Reown wallet
+122. **Reward Claim Tracker** - Track reward claims from staking pools with Reown wallet
+123. **Voting Power Tracker** - Monitor voting power and delegation with Reown wallet
+124. **Contract Upgrade Tracker** - Track smart contract upgrades and versions with Reown wallet
+125. **Token Transfer Tracker** - Monitor token transfers and movements with Reown wallet
+126. **Token Lock Manager** - Create and manage token locks with Reown wallet
+
+### Management & Utility Features (5 features)
+127. **Token Allowance Manager** - Manage token allowances for spending with Reown wallet
+128. **Transaction Status Checker** - Check transaction status and confirmations with Reown wallet
+129. **Multi-Chain Balance** - Check balances across multiple chains with Reown wallet
+130. **Governance Quorum Tracker** - Track quorum requirements for governance with Reown wallet
+131. **Portfolio Rebalancer** - Automatically rebalance portfolios with Reown signatures
+132. **Multi-Sig Proposal Manager** - Manage multi-signature proposals with Reown wallet
+
+**All 130+ features require Reown wallet connection** and use wallet hooks (`useAccount`, `useWriteContract`, `useSignMessage`, `useReadContract`, `useBalance`, `useSwitchChain`, `useFeeData`, `useWatchContractEvent`, `useDeployContract`, `useSignTypedData`, `useSendTransaction`, `useNonce`, `useEstimateGas`, `useBlockNumber`, `useWaitForTransactionReceipt`) for authentication, signing, contract interactions, and data reading. Every onchain operation is secured by Reown wallet signatures. All features are located in `/src/features/onchain/` and fully integrated with Reown AppKit.
 
 ## Environment Setup
 
