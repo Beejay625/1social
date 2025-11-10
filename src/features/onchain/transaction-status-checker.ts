@@ -4,29 +4,32 @@ import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
 import { useState } from 'react';
 
 export interface TransactionStatus {
-  txHash: string;
+  hash: string;
   status: 'pending' | 'success' | 'failed';
-  blockNumber: number | null;
+  blockNumber: bigint | null;
   confirmations: number;
 }
 
 export function useTransactionStatusChecker() {
   const { address } = useAccount();
-  const [transactions, setTransactions] = useState<TransactionStatus[]>([]);
+  const { data: receipt } = useWaitForTransactionReceipt({
+    hash: '0x' as `0x${string}`,
+  });
+  const [statuses, setStatuses] = useState<TransactionStatus[]>([]);
 
-  const checkStatus = async (txHash: string) => {
+  const checkStatus = (hash: string) => {
     if (!address) throw new Error('Reown wallet not connected');
     
     const status: TransactionStatus = {
-      txHash,
-      status: 'pending',
-      blockNumber: null,
-      confirmations: 0,
+      hash,
+      status: receipt?.status === 'success' ? 'success' : 'pending',
+      blockNumber: receipt?.blockNumber || null,
+      confirmations: receipt?.confirmations || 0,
     };
     
-    setTransactions([...transactions, status]);
+    setStatuses([...statuses, status]);
     return status;
   };
 
-  return { checkStatus, transactions, address };
+  return { checkStatus, statuses, address };
 }
