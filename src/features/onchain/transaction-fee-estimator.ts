@@ -7,30 +7,30 @@ export interface FeeEstimate {
   gasLimit: bigint;
   gasPrice: bigint;
   totalFee: bigint;
-  timestamp: number;
+  currency: string;
 }
 
 export function useTransactionFeeEstimator() {
   const { address } = useAccount();
-  const [estimates, setEstimates] = useState<FeeEstimate[]>([]);
-
   const { data: gasEstimate } = useEstimateGas({
     to: '0x' as `0x${string}`,
     value: BigInt(0),
-    query: { enabled: !!address },
   });
+  const [estimates, setEstimates] = useState<FeeEstimate[]>([]);
 
-  const estimateFee = (gasLimit: bigint, gasPrice: bigint) => {
+  const estimateFee = async () => {
+    if (!address || !gasEstimate) return null;
+    
     const estimate: FeeEstimate = {
-      gasLimit,
-      gasPrice,
-      totalFee: gasLimit * gasPrice,
-      timestamp: Date.now(),
+      gasLimit: gasEstimate,
+      gasPrice: BigInt(20000000000),
+      totalFee: gasEstimate * BigInt(20000000000),
+      currency: 'ETH',
     };
-    setEstimates([...estimates, estimate]);
+    
+    setEstimates([estimate]);
     return estimate;
   };
 
-  return { estimateFee, estimates, gasEstimate, address };
+  return { estimateFee, estimates, address };
 }
-
