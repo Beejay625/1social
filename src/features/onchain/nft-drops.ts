@@ -1,33 +1,36 @@
 'use client';
 
-import { useAccount, useWriteContract } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface NFTDrop {
-  id: string;
-  contentId: string;
-  tokenId?: string;
-  contractAddress?: string;
+  collection: string;
+  supply: number;
+  price: string;
+  wallet: string;
 }
 
-export function useNFTContentDrops() {
+export function useNFTDrops() {
   const { address } = useAccount();
-  const { writeContractAsync } = useWriteContract();
+  const { signMessageAsync } = useSignMessage();
   const [drops, setDrops] = useState<NFTDrop[]>([]);
 
-  const mintContentNFT = async (contentId: string, metadata: string) => {
-    if (!address) throw new Error('Wallet not connected');
+  const createDrop = async (collection: string, supply: number, price: string) => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `NFT Drop: ${collection} ${supply} @ ${price}`;
+    await signMessageAsync({ message });
     
     const drop: NFTDrop = {
-      id: `drop_${Date.now()}`,
-      contentId,
-      contractAddress: '0x...', // Mock address
+      collection,
+      supply,
+      price,
+      wallet: address,
     };
     
     setDrops([...drops, drop]);
     return drop;
   };
 
-  return { mintContentNFT, drops };
+  return { createDrop, drops, address };
 }
-
