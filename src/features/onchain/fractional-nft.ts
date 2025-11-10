@@ -4,36 +4,35 @@ import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface FractionalNFT {
-  tokenId: string;
+  nftId: string;
   shares: number;
   pricePerShare: string;
-  owners: string[];
+  totalShares: number;
   wallet: string;
 }
 
 export function useFractionalNFT() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [fractionals, setFractionals] = useState<FractionalNFT[]>([]);
+  const [fractions, setFractions] = useState<FractionalNFT[]>([]);
 
-  const fractionalizeNFT = async (tokenId: string, shares: number, pricePerShare: string) => {
+  const fractionalize = async (nftId: string, shares: number, pricePerShare: string) => {
     if (!address) throw new Error('Reown wallet not connected');
     
-    const message = `Fractionalize: ${tokenId} ${shares} shares @ ${pricePerShare}`;
+    const message = `Fractionalize NFT: ${nftId} into ${shares} shares`;
     await signMessageAsync({ message });
     
-    const fractional: FractionalNFT = {
-      tokenId,
+    const fraction: FractionalNFT = {
+      nftId,
       shares,
       pricePerShare,
-      owners: [address],
+      totalShares: shares,
       wallet: address,
     };
     
-    setFractionals([...fractionals, fractional]);
-    return fractional;
+    setFractions([...fractions, fraction]);
+    return fraction;
   };
 
-  return { fractionalizeNFT, fractionals, address };
+  return { fractionalize, fractions, address };
 }
-
