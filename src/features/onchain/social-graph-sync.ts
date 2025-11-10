@@ -1,38 +1,30 @@
 'use client';
 
-import { useAccount, useReadContract } from 'wagmi';
-import { useState, useEffect } from 'react';
+import { useAccount } from 'wagmi';
+import { useState } from 'react';
 
-export interface SocialConnection {
-  from: string;
-  to: string;
+export interface GraphSync {
   protocol: string;
-  timestamp: number;
+  synced: boolean;
+  lastSync: number;
 }
 
 export function useSocialGraphSync() {
-  const { address, isConnected } = useAccount();
-  const [connections, setConnections] = useState<SocialConnection[]>([]);
+  const { address } = useAccount();
+  const [syncs, setSyncs] = useState<GraphSync[]>([]);
 
-  const { data: graphData } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'getConnections',
-    args: address ? [address] : undefined,
-    query: { enabled: !!address && isConnected },
-  });
+  const syncGraph = async (protocol: string) => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const sync: GraphSync = {
+      protocol,
+      synced: true,
+      lastSync: Date.now(),
+    };
+    
+    setSyncs([...syncs, sync]);
+    return sync;
+  };
 
-  useEffect(() => {
-    if (address && graphData) {
-      const connection: SocialConnection = {
-        from: address,
-        to: (graphData as any)?.to || '',
-        protocol: 'farcaster',
-        timestamp: Date.now(),
-      };
-      setConnections([connection]);
-    }
-  }, [address, graphData]);
-
-  return { connections, isConnected, address };
+  return { syncGraph, syncs, address };
 }
