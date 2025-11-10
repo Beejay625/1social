@@ -5,33 +5,34 @@ import { useState } from 'react';
 
 export interface OnchainIdentity {
   wallet: string;
-  name: string;
-  avatar: string;
+  ensName: string | null;
   verified: boolean;
+  credentials: string[];
 }
 
 export function useOnchainIdentity() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
   const [identity, setIdentity] = useState<OnchainIdentity | null>(null);
 
-  const createIdentity = async (name: string, avatar: string) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Identity: ${name} ${avatar}`;
-    await signMessageAsync({ message });
-    
-    const id: OnchainIdentity = {
+  const verifyIdentity = async () => {
+    if (!isConnected || !address) {
+      throw new Error('Reown wallet not connected');
+    }
+
+    const message = `1Social Identity: ${address}\nTimestamp: ${Date.now()}`;
+    const signature = await signMessageAsync({ message });
+
+    const identityData: OnchainIdentity = {
       wallet: address,
-      name,
-      avatar,
-      verified: false,
+      ensName: null,
+      verified: true,
+      credentials: ['wallet_signature'],
     };
-    
-    setIdentity(id);
-    return id;
+
+    setIdentity(identityData);
+    return signature;
   };
 
-  return { createIdentity, identity, address };
+  return { verifyIdentity, identity, isConnected, address };
 }
-

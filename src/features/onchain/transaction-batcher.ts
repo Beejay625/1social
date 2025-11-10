@@ -1,42 +1,32 @@
 'use client';
 
-import { useAccount, useWriteContract } from 'wagmi';
+import { useAccount } from 'wagmi';
 import { useState } from 'react';
 
 export interface BatchedTransaction {
-  calls: Array<{
-    target: string;
-    data: string;
-  }>;
-  txHash: string;
+  id: string;
+  operations: string[];
+  wallet: string;
+  status: 'pending' | 'executed';
 }
 
 export function useTransactionBatcher() {
-  const { address, isConnected } = useAccount();
-  const { writeContract } = useWriteContract();
-  const [batchedTxs, setBatchedTxs] = useState<BatchedTransaction[]>([]);
+  const { address } = useAccount();
+  const [batches, setBatches] = useState<BatchedTransaction[]>([]);
 
-  const batchTransactions = async (calls: Array<{ target: string; data: string }>) => {
-    if (!isConnected || !address) {
-      throw new Error('Wallet not connected');
-    }
-
-    const txHash = await writeContract({
-      address: '0x' as `0x${string}`,
-      abi: [],
-      functionName: 'multicall',
-      args: [calls],
-    });
-
-    const batched: BatchedTransaction = {
-      calls,
-      txHash: txHash || '',
+  const createBatch = async (operations: string[]) => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const batch: BatchedTransaction = {
+      id: `batch_${Date.now()}`,
+      operations,
+      wallet: address,
+      status: 'pending',
     };
-
-    setBatchedTxs([...batchedTxs, batched]);
-    return txHash;
+    
+    setBatches([...batches, batch]);
+    return batch;
   };
 
-  return { batchTransactions, batchedTxs, isConnected, address };
+  return { createBatch, batches, address };
 }
-
