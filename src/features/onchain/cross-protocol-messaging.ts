@@ -4,36 +4,39 @@ import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface ProtocolMessage {
+  id: string;
   from: string;
   to: string;
   protocol: string;
-  message: string;
+  content: string;
   timestamp: number;
 }
 
 export function useCrossProtocolMessaging() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
   const [messages, setMessages] = useState<ProtocolMessage[]>([]);
 
-  const sendMessage = async (to: string, protocol: string, message: string) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const msg = `Message to ${to}: ${message}`;
-    await signMessageAsync({ message: msg });
-    
+  const sendMessage = async (to: string, protocol: string, content: string) => {
+    if (!isConnected || !address) {
+      throw new Error('Reown wallet not connected');
+    }
+
+    const message = `Message to ${to} on ${protocol}: ${content}\nTimestamp: ${Date.now()}`;
+    const signature = await signMessageAsync({ message });
+
     const protocolMessage: ProtocolMessage = {
+      id: `msg_${Date.now()}`,
       from: address,
       to,
       protocol,
-      message,
+      content,
       timestamp: Date.now(),
     };
-    
+
     setMessages([...messages, protocolMessage]);
-    return protocolMessage;
+    return signature;
   };
 
-  return { sendMessage, messages, address };
+  return { sendMessage, messages, isConnected, address };
 }
-
