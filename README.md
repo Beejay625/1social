@@ -567,7 +567,39 @@ All features below use **Reown wallet integration** via Wagmi hooks (`useAccount
 131. **Portfolio Rebalancer** - Automatically rebalance portfolios with Reown signatures
 132. **Multi-Sig Proposal Manager** - Manage multi-signature proposals with Reown wallet
 
-**All 150+ features require Reown wallet connection** and use wallet hooks (`useAccount`, `useWriteContract`, `useSignMessage`, `useReadContract`, `useBalance`, `useSwitchChain`, `useFeeData`, `useWatchContractEvent`, `useDeployContract`, `useSignTypedData`, `useSendTransaction`, `useNonce`, `useEstimateGas`, `useBlockNumber`, `useWaitForTransactionReceipt`, `encodeFunctionData` from viem) for authentication, signing, contract interactions, and data reading. Every onchain operation is secured by Reown wallet signatures. All features are located in `/src/features/onchain/` and fully integrated with Reown AppKit.
+### Reader & Fetcher Features (8 features)
+133. **Token Burn Tracker** - Track token burn events and totals with Reown wallet
+134. **Contract Event Listener** - Listen to contract events in real-time with Reown wallet
+135. **Token Allowance Checker** - Check token allowances for spending with Reown wallet
+136. **NFT Approval Checker** - Check NFT operator approvals with Reown wallet
+137. **Token Balance Fetcher** - Fetch token balances with formatted values via Reown wallet
+138. **NFT Metadata Fetcher** - Fetch NFT metadata and attributes with Reown wallet
+139. **Token Price Fetcher** - Fetch token prices from onchain oracles with Reown wallet
+140. **Token Decimals Reader** - Read token decimal precision with Reown wallet
+
+### Contract Interaction Features (4 features)
+141. **Contract Call Estimator** - Estimate gas for contract calls with Reown wallet
+142. **Contract Bytecode Verifier** - Verify contract bytecode with Reown wallet signatures
+143. **Contract Storage Reader** - Read contract storage slots with Reown wallet
+144. **Block Timestamp Reader** - Read block timestamps with Reown wallet
+
+### Tracking & Monitoring Features (4 features)
+145. **Governance Proposal Tracker** - Track governance proposals and voting with Reown wallet
+146. **Transaction Confirmation Tracker** - Track transaction confirmations with Reown wallet
+147. **Token Transfer Event Tracker** - Track token transfer events with Reown wallet
+148. **Chain ID Detector** - Detect current chain ID and network info with Reown wallet
+
+### Token & NFT Info Features (4 features)
+149. **Token Supply Monitor** - Monitor token supply metrics with Reown wallet
+150. **NFT Owner Checker** - Check NFT ownership status with Reown wallet
+151. **Token Symbol Reader** - Read token symbols from contracts with Reown wallet
+152. **Token Name Reader** - Read token names from contracts with Reown wallet
+153. **NFT Total Supply Tracker** - Track NFT collection total supply with Reown wallet
+
+### Governance Features (1 feature)
+154. **Governance Vote Caster** - Cast governance votes with Reown wallet signatures
+
+**All 150+ features require Reown wallet connection** and use wallet hooks (`useAccount`, `useWriteContract`, `useSignMessage`, `useReadContract`, `useBalance`, `useSwitchChain`, `useFeeData`, `useWatchContractEvent`, `useDeployContract`, `useSignTypedData`, `useSendTransaction`, `useNonce`, `useEstimateGas`, `useBlockNumber`, `useWaitForTransactionReceipt`, `useChainId`, `useEstimateGas`) for authentication, signing, contract interactions, and data reading. Every onchain operation is secured by Reown wallet signatures. All features are located in `/src/features/onchain/` and fully integrated with Reown AppKit.
 
 ## Environment Setup
 
