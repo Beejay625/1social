@@ -1,22 +1,34 @@
 'use client';
 
 import { useAccount, useEstimateGas } from 'wagmi';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export interface GasEstimate {
+  function: string;
   gas: bigint;
-  gasPrice: bigint;
-  totalCost: bigint;
+  timestamp: number;
 }
 
 export function useContractGasEstimator() {
   const { address } = useAccount();
-  const { data: gasEstimate } = useEstimateGas({
+  const [estimates, setEstimates] = useState<GasEstimate[]>([]);
+
+  const { data: gasData } = useEstimateGas({
     to: '0x' as `0x${string}`,
-    value: BigInt(0),
+    value: 0n,
+    query: { enabled: !!address },
   });
-  const [estimate, setEstimate] = useState<GasEstimate | null>(null);
 
-  return { estimate, address, gasEstimate };
+  useEffect(() => {
+    if (address && gasData) {
+      const estimate: GasEstimate = {
+        function: 'transfer',
+        gas: gasData,
+        timestamp: Date.now(),
+      };
+      setEstimates([estimate]);
+    }
+  }, [address, gasData]);
+
+  return { estimates, address };
 }
-
