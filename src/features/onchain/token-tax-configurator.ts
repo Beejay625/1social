@@ -7,26 +7,24 @@ export interface TaxConfig {
   tokenAddress: string;
   buyTax: number;
   sellTax: number;
-  taxRecipient: string;
 }
 
 export function useTokenTaxConfigurator() {
   const { address } = useAccount();
   const { writeContract } = useWriteContract();
-  const { data: taxConfig } = useReadContract({
+  const { data: taxRate } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'taxConfig',
+    functionName: 'taxRate',
   });
   const [configuring, setConfiguring] = useState(false);
 
   const configureTax = async (config: TaxConfig) => {
     if (!address) return;
     setConfiguring(true);
-    // Implementation for configuring taxes
+    // Implementation for tax configuration
     setConfiguring(false);
   };
 
-  return { configureTax, configuring, address, taxConfig };
+  return { configureTax, configuring, address, taxRate };
 }
-
