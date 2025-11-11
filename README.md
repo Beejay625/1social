@@ -145,6 +145,26 @@ npm run dev
 - **Account Health Scores** - Monitor wallet reputation and protocol standing
 - **Performance Alerts** - Automated alerts for anomalous onchain activity
 
+## Smart Contract
+
+### SocialMediaContract
+A comprehensive smart contract for onchain social media features, deployed and ready for interaction.
+
+**Contract Address:** `0x0000000000000000000000000000000000000000` (Update after deployment)
+
+**Location:** `contracts/SocialMediaContract.sol`
+
+**Features:**
+- Create and manage social media posts
+- Add comments to posts
+- Add reactions (likes, loves, etc.) to posts
+- Update user profiles
+- Track reputation scores
+- Verify users
+- Query posts, comments, reactions, and profiles
+
+**Contract Interactions:** 20 interaction features available for interacting with the contract, all powered by Reown wallet.
+
 ### New Onchain Features (Reown Wallet Integrated)
 All features below are fully integrated with **Reown AppKit** for seamless wallet connectivity:
 
@@ -186,6 +206,43 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Wallet Connectivity** - Manage wallet connections and disconnections
 - **Staking Rewards** - Track and claim staking rewards
 - **Cross-Protocol Messaging** - Send messages across protocols with wallet signatures
+
+### Latest 20 Onchain Social Features (All Powered by Reown Wallet)
+
+#### Social Media Core Features
+- **Social Post Minting** - Mint social posts as onchain assets with Reown wallet signatures
+- **Social Comment Minting** - Create onchain comments with wallet verification
+- **Social Reaction Tracker** - Track likes, loves, tips, and collects with Reown wallet
+- **Social Share Tracker** - Track cross-protocol shares with blockchain verification
+- **Social Follow Tracker** - Manage follows and unfollows with onchain records
+
+#### Profile & Identity Features
+- **Social Profile Updater** - Update profiles with name, bio, and avatar via Reown wallet
+- **Social Verification Badge** - Issue and manage verification badges for users
+- **Social Reputation Calculator** - Calculate reputation scores based on onchain activity
+
+#### Content Management Features
+- **Social Bookmark Manager** - Bookmark content with tags and categorization
+- **Social Content Curator** - Curate and feature content with category management
+- **Social Content Licensing** - Manage content licenses (CC0, CC-BY, CC-BY-SA, commercial)
+- **Social Content Voting** - Vote on content with weighted voting power
+
+#### Token & Rewards Features
+- **Social Token Distributor** - Distribute tokens to users with Reown wallet signatures
+- **Social Engagement Rewards** - Reward users for engagement (likes, comments, shares, tips)
+- **Social Tip Distributor** - Distribute tips to content creators
+- **Social Token Staking** - Stake tokens with lock periods and reward tracking
+
+#### Social Graph & Protocol Features
+- **Social Graph Builder** - Build and manage social connections across protocols
+- **Social Feed Aggregator** - Aggregate feeds from multiple protocols
+- **Social Protocol Sync** - Sync content across different protocols
+- **Social Community Governance** - Create and vote on governance proposals
+
+#### Smart Contract Features
+- **Social Contract Deployer** - Deploy the SocialMediaContract with Reown wallet
+- **Social Contract Interactions** - Comprehensive contract interaction features
+- **20 Contract Interaction Features** - Individual interaction hooks for all contract functions
 
 ### Latest Onchain Features (40 New Features - All Powered by Reown Wallet)
 
@@ -246,36 +303,6 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 #### Advanced Features
 - **Wallet Activity Feed** - Get wallet activity feed with Reown wallet
 - **Token Swap Aggregator V2** - Advanced token swap routing with Reown wallet
-
-### Additional Onchain Features (20 New Features - All Powered by Reown Wallet)
-
-#### Token Management & Advanced Operations
-- **Token Vesting Canceler** - Cancel vesting schedules with Reown wallet
-- **Token Rebasing Adjuster** - Adjust rebasing parameters with Reown wallet
-- **Token Dividend Distributor** - Distribute dividends to token holders with Reown wallet
-- **Token Reflection Tracker** - Track reflection tokens and rewards with Reown wallet
-- **Token Tax Configurator** - Configure buy/sell taxes with Reown wallet
-- **Token Buyback Executor** - Execute token buybacks with Reown wallet
-- **Token Migration Manager** - Manage token migrations to new contracts with Reown wallet
-- **Token Liquidity Migrator** - Migrate liquidity between pools with Reown wallet
-
-#### NFT Advanced Operations
-- **NFT Batch Burn** - Burn multiple NFTs in a single transaction with Reown wallet
-- **NFT Soulbound Issuer** - Issue soulbound (non-transferable) NFTs with Reown wallet
-- **NFT Metadata Batch Updater** - Update metadata for multiple NFTs with Reown wallet
-- **NFT Metadata Freezer** - Freeze NFT metadata permanently with Reown wallet
-- **NFT Whitelist Batch Manager** - Manage whitelists for NFT collections with Reown wallet
-- **NFT Auction Creator** - Create NFT auctions with Reown wallet
-- **NFT Staking Pool Creator** - Create staking pools for NFTs with Reown wallet
-
-#### Contract Security & Management
-- **Contract Emergency Stop** - Emergency stop contract operations with Reown wallet
-- **Contract Rate Limiter** - Configure rate limiting for contracts with Reown wallet
-- **Contract Access Control Manager** - Manage access control roles with Reown wallet
-- **Contract Event Emitter** - Emit custom contract events with Reown wallet
-- **Contract Circular Dependency Checker** - Check for circular dependencies with Reown wallet
-- **Contract Gas Optimizer** - Optimize contract gas usage with Reown wallet
-- **Contract Upgrade Scheduler** - Schedule contract upgrades with Reown wallet
 
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
