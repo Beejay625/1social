@@ -3,11 +3,6 @@
 import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface CooldownConfig {
-  tokenAddress: string;
-  cooldownSeconds: number;
-}
-
 export function useTokenCooldownManager() {
   const { address } = useAccount();
   const { writeContract } = useWriteContract();
@@ -17,15 +12,14 @@ export function useTokenCooldownManager() {
     functionName: 'cooldown',
     args: [address],
   });
-  const [configuring, setConfiguring] = useState(false);
+  const [managing, setManaging] = useState(false);
 
-  const setCooldown = async (config: CooldownConfig) => {
+  const setCooldown = async (tokenAddress: string, cooldownSeconds: number) => {
     if (!address) return;
-    setConfiguring(true);
+    setManaging(true);
     // Implementation for setting cooldown
-    setConfiguring(false);
+    setManaging(false);
   };
 
-  return { setCooldown, configuring, address, cooldown };
+  return { setCooldown, managing, address, cooldown };
 }
-
