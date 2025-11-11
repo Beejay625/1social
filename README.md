@@ -246,7 +246,35 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Social Contract Interactions** - Comprehensive contract interaction features
 - **20 Contract Interaction Features** - Individual interaction hooks for all contract functions
 
-### Latest Onchain Features (40 New Features - All Powered by Reown Wallet)
+### Latest Onchain Features (60 New Features - All Powered by Reown Wallet)
+
+#### Token Management & Advanced Features
+- **Token Vesting Canceler** - Cancel vesting schedules with Reown wallet
+- **Token Rebasing Adjuster** - Adjust rebasing parameters with Reown wallet
+- **Token Dividend Distributor** - Distribute dividends to token holders with Reown wallet
+- **Token Reflection Tracker** - Track reflection rewards with Reown wallet
+- **Token Tax Configurator** - Configure buy/sell taxes with Reown wallet
+- **Token Buyback Executor** - Execute token buybacks with Reown wallet
+- **Token Migration Manager** - Migrate tokens to new contracts with Reown wallet
+- **Token Liquidity Migrator** - Migrate liquidity between pools with Reown wallet
+- **Token Blacklist Manager** - Manage blacklisted addresses with Reown wallet
+- **Token Whitelist Manager** - Manage whitelisted addresses with Reown wallet
+- **Token Max Wallet Manager** - Configure maximum wallet limits with Reown wallet
+- **Token Max Transaction Manager** - Configure maximum transaction limits with Reown wallet
+- **Token Cooldown Manager** - Set cooldown periods between transactions with Reown wallet
+- **Token Holder Snapshot Creator** - Create snapshots of token holders with Reown wallet
+- **Token Liquidity Pool Creator** - Create new liquidity pools with Reown wallet
+
+#### NFT Advanced Operations
+- **NFT Batch Burn** - Burn multiple NFTs in batch with Reown wallet
+- **NFT Attribute Updater** - Update NFT attributes with Reown wallet
+- **NFT Multiple Royalty Setter** - Set multiple royalty recipients with Reown wallet
+- **NFT Escrow Manager** - Manage NFT escrow transactions with Reown wallet
+- **NFT Collection Freeze Manager** - Freeze/unfreeze NFT collections with Reown wallet
+
+#### Contract Management & Advanced Features
+- **Contract Role Revoker** - Revoke contract roles with Reown wallet
+- **Contract Events Indexer** - Index and track contract events with Reown wallet
 
 #### Batch Operations & Optimizations
 - **Token Batch Approver** - Batch approve tokens for multiple spenders with Reown wallet
