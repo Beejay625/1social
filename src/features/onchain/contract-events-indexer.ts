@@ -12,7 +12,7 @@ export interface IndexedEvent {
 
 export function useContractEventsIndexer() {
   const { address } = useAccount();
-  const [indexedEvents, setIndexedEvents] = useState<IndexedEvent[]>([]);
+  const [events, setEvents] = useState<IndexedEvent[]>([]);
   
   useWatchContractEvent({
     address: '0x' as `0x${string}`,
@@ -20,16 +20,15 @@ export function useContractEventsIndexer() {
     eventName: 'Transfer',
     onLogs: (logs) => {
       // Index events
-      const events = logs.map(log => ({
+      const indexedEvents: IndexedEvent[] = logs.map((log) => ({
         eventName: 'Transfer',
-        blockNumber: log.blockNumber,
-        txHash: log.transactionHash,
+        blockNumber: log.blockNumber || BigInt(0),
+        txHash: log.transactionHash || '',
         data: log,
       }));
-      setIndexedEvents([...indexedEvents, ...events]);
+      setEvents([...events, ...indexedEvents]);
     },
   });
 
-  return { indexedEvents, address };
+  return { events, address };
 }
-
