@@ -1,34 +1,29 @@
 'use client';
 
-import { useAccount, useReadContract } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface HolderSnapshot {
+export interface SnapshotParams {
   tokenAddress: string;
   blockNumber: bigint;
-  holders: Array<{ address: string; balance: bigint }>;
 }
 
 export function useTokenHolderSnapshotCreator() {
   const { address } = useAccount();
-  const { data: balance } = useReadContract({
+  const { writeContract } = useWriteContract();
+  const { data: snapshot } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'balanceOf',
-    args: [address],
+    functionName: 'snapshot',
   });
-  const [snapshot, setSnapshot] = useState<HolderSnapshot | null>(null);
+  const [creating, setCreating] = useState(false);
 
-  const createSnapshot = async (tokenAddress: string, blockNumber: bigint) => {
+  const createSnapshot = async (params: SnapshotParams) => {
     if (!address) return;
-    // Implementation for creating holder snapshots
-    setSnapshot({
-      tokenAddress,
-      blockNumber,
-      holders: [],
-    });
+    setCreating(true);
+    // Implementation for creating snapshots
+    setCreating(false);
   };
 
-  return { createSnapshot, snapshot, address, balance };
+  return { createSnapshot, creating, address, snapshot };
 }
-
