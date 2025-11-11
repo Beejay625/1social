@@ -3,6 +3,12 @@
 import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
+export interface RebasingParams {
+  tokenAddress: string;
+  rebaseRate: bigint;
+  targetSupply: bigint;
+}
+
 export function useTokenRebasingAdjuster() {
   const { address } = useAccount();
   const { writeContract } = useWriteContract();
@@ -13,13 +19,13 @@ export function useTokenRebasingAdjuster() {
   });
   const [adjusting, setAdjusting] = useState(false);
 
-  const adjustRebase = async (tokenAddress: string, adjustment: bigint) => {
+  const adjustRebasing = async (params: RebasingParams) => {
     if (!address) return;
     setAdjusting(true);
-    // Implementation for rebasing adjustment
+    // Implementation for adjusting rebasing
     setAdjusting(false);
   };
 
-  return { adjustRebase, adjusting, address, rebaseInfo };
+  return { adjustRebasing, adjusting, address, rebaseInfo };
 }
 
