@@ -6,26 +6,26 @@ import { useState } from 'react';
 export interface BuybackParams {
   tokenAddress: string;
   amount: bigint;
-  slippageTolerance: number;
+  burnPercentage: number;
 }
 
 export function useTokenBuybackExecutor() {
   const { address } = useAccount();
   const { writeContract } = useWriteContract();
-  const { data: buybackInfo } = useReadContract({
+  const { data: buybackFund } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'buybackInfo',
+    functionName: 'buybackFund',
   });
   const [executing, setExecuting] = useState(false);
 
   const executeBuyback = async (params: BuybackParams) => {
     if (!address) return;
     setExecuting(true);
-    // Implementation for buyback execution
+    // Implementation for executing buybacks
     setExecuting(false);
   };
 
-  return { executeBuyback, executing, address, buybackInfo };
+  return { executeBuyback, executing, address, buybackFund };
 }
 
