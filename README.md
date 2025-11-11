@@ -187,6 +187,66 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Staking Rewards** - Track and claim staking rewards
 - **Cross-Protocol Messaging** - Send messages across protocols with wallet signatures
 
+### Latest Onchain Features (40 New Features - All Powered by Reown Wallet)
+
+#### Batch Operations & Optimizations
+- **Token Batch Approver** - Batch approve tokens for multiple spenders with Reown wallet
+- **NFT Batch Mint** - Mint multiple NFTs in a single transaction with Reown wallet
+- **NFT Batch Approve** - Batch approve NFTs for operators with Reown wallet
+- **NFT Batch Listing** - List multiple NFTs on marketplaces with Reown wallet
+- **NFT Batch Transfer Optimizer** - Optimize batch NFT transfers for gas efficiency with Reown wallet
+- **Token Multi-Transfer** - Transfer tokens to multiple recipients with Reown wallet
+- **Token Multicall Executor** - Execute multiple token operations in one call with Reown wallet
+
+#### Price Alerts & Monitoring
+- **Token Price Alert** - Set price alerts for tokens with Reown wallet monitoring
+- **NFT Price Alert** - Set price alerts for NFTs with Reown wallet monitoring
+- **Wallet Balance Alert** - Set balance alerts with Reown wallet integration
+- **Token Bridge Monitor** - Monitor cross-chain bridge events with Reown wallet
+
+#### Contract Management & Utilities
+- **Contract Gas Estimator** - Estimate gas costs for contract calls with Reown wallet
+- **Contract Upgrade Manager** - Manage contract upgrades with Reown wallet signatures
+- **Contract Proxy Upgrader** - Upgrade proxy contracts with Reown wallet
+- **Contract Pauser** - Pause and unpause contracts with Reown wallet
+- **Contract Owner Changer** - Change contract ownership with Reown wallet
+- **Contract Permission Granter** - Grant contract permissions with Reown wallet
+- **Contract Multisig Approver** - Approve multisig proposals with Reown wallet
+- **Contract Timelock Creator** - Create timelock transactions with Reown wallet
+- **Contract Storage Snapshot** - Create storage snapshots at specific blocks with Reown wallet
+- **Contract Event Filter** - Filter and monitor contract events with Reown wallet
+- **Contract ABI Validator** - Validate contract ABIs with Reown wallet
+- **Contract Function Call Simulator** - Simulate contract function calls with Reown wallet
+- **Contract Verification Submitter** - Submit contracts for verification with Reown wallet
+
+#### Token Operations
+- **Token Burn Scheduler** - Schedule token burns with Reown wallet
+- **Token Lock Extender** - Extend token lock periods with Reown wallet
+- **Token Vesting Accelerator** - Accelerate vesting schedules with Reown wallet
+- **Token Vesting Releaser** - Release vested tokens with Reown wallet
+- **Token Allowance Revoker** - Revoke token allowances with Reown wallet
+- **Token Recovery Manager** - Recover tokens from contracts with Reown wallet
+- **Token Liquidity Locker** - Lock token liquidity with Reown wallet
+- **Token Liquidity Remover** - Remove liquidity from pools with Reown wallet
+- **Token Staking Compounder** - Compound staking rewards with Reown wallet
+- **Token Governance Delegator** - Delegate governance voting power with Reown wallet
+- **Token Emission Scheduler** - Schedule token emissions with Reown wallet
+
+#### NFT Operations
+- **NFT Lazy Minting** - Lazy mint NFTs with signature verification via Reown wallet
+- **NFT Rental Manager** - Create and manage NFT rentals with Reown wallet
+- **NFT Fractionalizer** - Fractionalize NFTs into shares with Reown wallet
+- **NFT Metadata Validator** - Validate NFT metadata with Reown wallet
+- **NFT Royalty Distributor** - Distribute NFT royalties with Reown wallet
+- **NFT Auction Bidder** - Place bids on NFT auctions with Reown wallet
+- **NFT Marketplace Offer** - Make offers on NFT marketplaces with Reown wallet
+- **NFT Staking Rewards** - Claim NFT staking rewards with Reown wallet
+- **NFT Collection Deployer** - Deploy new NFT collections with Reown wallet
+
+#### Advanced Features
+- **Wallet Activity Feed** - Get wallet activity feed with Reown wallet
+- **Token Swap Aggregator V2** - Advanced token swap routing with Reown wallet
+
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
 - **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
