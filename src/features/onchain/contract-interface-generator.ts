@@ -36,4 +36,3 @@ export function useContractInterfaceGenerator() {
 
   return { generateInterface, interfaces, address };
 }
-
