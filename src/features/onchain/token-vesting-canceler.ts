@@ -23,4 +23,3 @@ export function useTokenVestingCanceler() {
 
   return { cancelVesting, canceling, address, vestingInfo };
 }
-
