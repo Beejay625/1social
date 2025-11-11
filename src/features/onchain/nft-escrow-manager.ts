@@ -7,35 +7,33 @@ export interface EscrowParams {
   collection: string;
   tokenId: string;
   buyer: string;
-  seller: string;
   price: bigint;
-  expiration: number;
+  duration: number;
 }
 
 export function useNFTEscrowManager() {
   const { address } = useAccount();
   const { writeContract } = useWriteContract();
-  const { data: escrowInfo } = useReadContract({
+  const { data: escrow } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'escrowInfo',
+    functionName: 'escrow',
   });
-  const [creating, setCreating] = useState(false);
+  const [managing, setManaging] = useState(false);
 
   const createEscrow = async (params: EscrowParams) => {
     if (!address) return;
-    setCreating(true);
+    setManaging(true);
     // Implementation for creating escrow
-    setCreating(false);
+    setManaging(false);
   };
 
   const releaseEscrow = async (escrowId: string) => {
     if (!address) return;
-    setCreating(true);
+    setManaging(true);
     // Implementation for releasing escrow
-    setCreating(false);
+    setManaging(false);
   };
 
-  return { createEscrow, releaseEscrow, creating, address, escrowInfo };
+  return { createEscrow, releaseEscrow, managing, address, escrow };
 }
-
