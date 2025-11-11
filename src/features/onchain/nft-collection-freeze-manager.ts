@@ -9,24 +9,23 @@ export function useNFTCollectionFreezeManager() {
   const { data: isFrozen } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'isFrozen',
+    functionName: 'frozen',
   });
-  const [freezing, setFreezing] = useState(false);
+  const [managing, setManaging] = useState(false);
 
   const freezeCollection = async (collection: string) => {
     if (!address) return;
-    setFreezing(true);
+    setManaging(true);
     // Implementation for freezing collection
-    setFreezing(false);
+    setManaging(false);
   };
 
   const unfreezeCollection = async (collection: string) => {
     if (!address) return;
-    setFreezing(true);
+    setManaging(true);
     // Implementation for unfreezing collection
-    setFreezing(false);
+    setManaging(false);
   };
 
-  return { freezeCollection, unfreezeCollection, freezing, address, isFrozen };
+  return { freezeCollection, unfreezeCollection, managing, address, isFrozen };
 }
-
