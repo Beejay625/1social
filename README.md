@@ -150,7 +150,9 @@ npm run dev
 ### SocialMediaContract
 A comprehensive smart contract for onchain social media features, deployed and ready for interaction.
 
-**Contract Address:** `0x0000000000000000000000000000000000000000` (Update after deployment)
+**Contract Address:** `0x0000000000000000000000000000000000000000` (Placeholder - Update after deployment)
+
+**Note:** The contract address is currently a placeholder. After deploying the SocialMediaContract, update the address in `src/constants/contractAddress.ts` and this README.
 
 **Location:** `contracts/SocialMediaContract.sol`
 
