@@ -12,22 +12,21 @@ export function useTokenBlacklistManager() {
     functionName: 'isBlacklisted',
     args: [address],
   });
-  const [blacklisting, setBlacklisting] = useState(false);
+  const [managing, setManaging] = useState(false);
 
-  const blacklistAddress = async (tokenAddress: string, targetAddress: string) => {
+  const blacklistAddress = async (tokenAddress: string, account: string) => {
     if (!address) return;
-    setBlacklisting(true);
+    setManaging(true);
     // Implementation for blacklisting
-    setBlacklisting(false);
+    setManaging(false);
   };
 
-  const unblacklistAddress = async (tokenAddress: string, targetAddress: string) => {
+  const unblacklistAddress = async (tokenAddress: string, account: string) => {
     if (!address) return;
-    setBlacklisting(true);
+    setManaging(true);
     // Implementation for unblacklisting
-    setBlacklisting(false);
+    setManaging(false);
   };
 
-  return { blacklistAddress, unblacklistAddress, blacklisting, address, isBlacklisted };
+  return { blacklistAddress, unblacklistAddress, managing, address, isBlacklisted };
 }
-
