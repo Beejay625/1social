@@ -29,4 +29,3 @@ export function useNFTAttributeUpdater() {
 
   return { updateAttributes, updating, address, attributes };
 }
-
