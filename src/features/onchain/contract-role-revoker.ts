@@ -29,4 +29,3 @@ export function useContractRoleRevoker() {
 
   return { revokeRole, revoking, address, hasRole };
 }
-
