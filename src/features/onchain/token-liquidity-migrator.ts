@@ -6,7 +6,7 @@ import { useState } from 'react';
 export interface LiquidityMigration {
   oldPool: string;
   newPool: string;
-  amount: bigint;
+  liquidity: bigint;
 }
 
 export function useTokenLiquidityMigrator() {
@@ -29,4 +29,3 @@ export function useTokenLiquidityMigrator() {
 
   return { migrateLiquidity, migrating, address, liquidity };
 }
-
