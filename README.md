@@ -187,6 +187,50 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Staking Rewards** - Track and claim staking rewards
 - **Cross-Protocol Messaging** - Send messages across protocols with wallet signatures
 
+### Contract Analysis & Development Tools (Reown Wallet Integrated)
+- **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
+- **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
+- **Contract Inheritance Tracker** - Track contract inheritance hierarchies with Reown wallet
+- **Contract Library Linker** - Link contract libraries with Reown wallet verification
+- **Contract Constructor Analyzer** - Analyze contract constructors with Reown wallet
+- **Contract Modifier Tracker** - Track contract modifiers with Reown wallet
+- **Contract Error Handler** - Handle contract errors with Reown wallet signatures
+- **Contract Storage Layout** - Analyze contract storage layouts with Reown wallet
+- **Contract Constant Reader** - Read contract constants with Reown wallet
+- **Contract Enum Reader** - Read contract enums with Reown wallet
+- **Contract Struct Reader** - Read contract structs with Reown wallet
+- **Contract Mapping Reader** - Read contract mappings with Reown wallet
+- **Contract Array Reader** - Read contract arrays with Reown wallet
+- **Contract Event Signature** - Generate event signatures with Reown wallet
+- **Contract Function Signature** - Generate function signatures with Reown wallet
+- **Contract Interface Generator** - Generate contract interfaces with Reown wallet
+- **Contract Deployment Verifier** - Verify contract deployments with Reown wallet
+- **Contract Bytecode Analyzer** - Analyze contract bytecode with Reown wallet
+- **Contract Gas Estimator** - Estimate gas costs with Reown wallet
+- **Contract Call Tracer** - Trace contract calls with Reown wallet signatures
+- **Contract State Snapshot** - Create contract state snapshots with Reown wallet
+- **Contract Dependency Graph** - Build dependency graphs with Reown wallet
+- **Contract Test Coverage** - Calculate test coverage with Reown wallet
+- **Contract Security Audit** - Perform security audits with Reown wallet signatures
+- **Contract Opcode Counter** - Count contract opcodes with Reown wallet
+- **Contract Jump Dest Analyzer** - Analyze jump destinations with Reown wallet
+- **Contract Stack Analyzer** - Analyze contract stack usage with Reown wallet
+- **Contract Memory Analyzer** - Analyze contract memory usage with Reown wallet
+- **Contract Reentrancy Detector** - Detect reentrancy vulnerabilities with Reown wallet
+- **Contract Overflow Detector** - Detect overflow vulnerabilities with Reown wallet
+- **Contract Access Control Checker** - Check access control with Reown wallet
+- **Contract Pausability Checker** - Check pausability with Reown wallet
+- **Contract Upgradeability Checker** - Check upgradeability with Reown wallet
+- **Contract Proxy Detector** - Detect proxy contracts with Reown wallet
+- **Contract ERC165 Checker** - Check ERC165 interface support with Reown wallet
+- **Contract ERC20 Checker** - Check ERC20 compliance with Reown wallet
+- **Contract ERC721 Checker** - Check ERC721 compliance with Reown wallet
+- **Contract ERC1155 Checker** - Check ERC1155 compliance with Reown wallet
+- **Contract Constructor Args Decoder** - Decode constructor arguments with Reown wallet
+- **Contract Function Args Decoder** - Decode function arguments with Reown wallet
+- **Contract Event Args Decoder** - Decode event arguments with Reown wallet
+- **Contract ABI Validator** - Validate contract ABIs with Reown wallet signatures
+
 ## New Onchain Features (All Powered by Reown Wallet)
 
 ### Wallet Integration & Management
