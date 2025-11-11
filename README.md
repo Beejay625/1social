@@ -247,6 +247,36 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Wallet Activity Feed** - Get wallet activity feed with Reown wallet
 - **Token Swap Aggregator V2** - Advanced token swap routing with Reown wallet
 
+### Additional Onchain Features (20 New Features - All Powered by Reown Wallet)
+
+#### Token Management & Advanced Operations
+- **Token Vesting Canceler** - Cancel vesting schedules with Reown wallet
+- **Token Rebasing Adjuster** - Adjust rebasing parameters with Reown wallet
+- **Token Dividend Distributor** - Distribute dividends to token holders with Reown wallet
+- **Token Reflection Tracker** - Track reflection tokens and rewards with Reown wallet
+- **Token Tax Configurator** - Configure buy/sell taxes with Reown wallet
+- **Token Buyback Executor** - Execute token buybacks with Reown wallet
+- **Token Migration Manager** - Manage token migrations to new contracts with Reown wallet
+- **Token Liquidity Migrator** - Migrate liquidity between pools with Reown wallet
+
+#### NFT Advanced Operations
+- **NFT Batch Burn** - Burn multiple NFTs in a single transaction with Reown wallet
+- **NFT Soulbound Issuer** - Issue soulbound (non-transferable) NFTs with Reown wallet
+- **NFT Metadata Batch Updater** - Update metadata for multiple NFTs with Reown wallet
+- **NFT Metadata Freezer** - Freeze NFT metadata permanently with Reown wallet
+- **NFT Whitelist Batch Manager** - Manage whitelists for NFT collections with Reown wallet
+- **NFT Auction Creator** - Create NFT auctions with Reown wallet
+- **NFT Staking Pool Creator** - Create staking pools for NFTs with Reown wallet
+
+#### Contract Security & Management
+- **Contract Emergency Stop** - Emergency stop contract operations with Reown wallet
+- **Contract Rate Limiter** - Configure rate limiting for contracts with Reown wallet
+- **Contract Access Control Manager** - Manage access control roles with Reown wallet
+- **Contract Event Emitter** - Emit custom contract events with Reown wallet
+- **Contract Circular Dependency Checker** - Check for circular dependencies with Reown wallet
+- **Contract Gas Optimizer** - Optimize contract gas usage with Reown wallet
+- **Contract Upgrade Scheduler** - Schedule contract upgrades with Reown wallet
+
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
 - **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
