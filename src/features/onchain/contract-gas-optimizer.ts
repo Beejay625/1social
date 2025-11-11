@@ -1,39 +1,39 @@
 'use client';
 
-import { useAccount, useEstimateGas, useReadContract } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface GasOptimization {
-  originalGas: bigint;
-  optimizedGas: bigint;
+  contract: string;
   savings: bigint;
-  optimizationTips: string[];
+  suggestions: string[];
+  wallet: string;
+  timestamp: number;
 }
 
 export function useContractGasOptimizer() {
   const { address } = useAccount();
-  const { data: gasEstimate } = useEstimateGas({
-    to: '0x' as `0x${string}`,
-    value: BigInt(0),
-  });
-  const { data: contractData } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'bytecode',
-  });
-  const [optimization, setOptimization] = useState<GasOptimization | null>(null);
+  const { signMessageAsync } = useSignMessage();
+  const [optimizations, setOptimizations] = useState<GasOptimization[]>([]);
 
-  const optimizeGas = async (contractAddress: string, functionName: string) => {
-    if (!address) return;
-    // Implementation for gas optimization
-    setOptimization({
-      originalGas: gasEstimate || BigInt(0),
-      optimizedGas: BigInt(0),
-      savings: BigInt(0),
-      optimizationTips: [],
-    });
+  const optimizeGas = async (contract: string, savings: bigint, suggestions: string[]) => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `Optimize Gas: ${contract}`;
+    await signMessageAsync({ message });
+    
+    const optimization: GasOptimization = {
+      contract,
+      savings,
+      suggestions,
+      wallet: address,
+      timestamp: Date.now(),
+    };
+    
+    setOptimizations([...optimizations, optimization]);
+    return optimization;
   };
 
-  return { optimizeGas, optimization, address, gasEstimate };
+  return { optimizeGas, optimizations, address };
 }
 
