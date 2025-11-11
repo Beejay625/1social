@@ -4,18 +4,18 @@ import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface MigrationParams {
-  oldTokenAddress: string;
-  newTokenAddress: string;
-  migrationRate: bigint;
+  oldToken: string;
+  newToken: string;
+  amount: bigint;
 }
 
 export function useTokenMigrationManager() {
   const { address } = useAccount();
   const { writeContract } = useWriteContract();
-  const { data: migrationStatus } = useReadContract({
+  const { data: balance } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'migrationStatus',
+    functionName: 'balanceOf',
     args: [address],
   });
   const [migrating, setMigrating] = useState(false);
@@ -27,6 +27,5 @@ export function useTokenMigrationManager() {
     setMigrating(false);
   };
 
-  return { migrateTokens, migrating, address, migrationStatus };
+  return { migrateTokens, migrating, address, balance };
 }
-
