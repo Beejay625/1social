@@ -4,8 +4,8 @@ import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface LiquidityMigration {
-  oldPoolAddress: string;
-  newPoolAddress: string;
+  oldPool: string;
+  newPool: string;
   amount: bigint;
 }
 
