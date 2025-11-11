@@ -22,4 +22,3 @@ export function useNFTBatchBurn() {
 
   return { batchBurn, burning, address };
 }
-
