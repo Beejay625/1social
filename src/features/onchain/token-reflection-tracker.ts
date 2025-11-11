@@ -6,29 +6,29 @@ import { useState, useEffect } from 'react';
 export interface ReflectionInfo {
   totalReflected: bigint;
   reflectionRate: number;
-  holderReflections: Record<string, bigint>;
+  lastReflection: number;
 }
 
 export function useTokenReflectionTracker() {
   const { address } = useAccount();
-  const { data: reflectionData } = useReadContract({
+  const { data: reflections } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
     functionName: 'reflectionInfo',
     args: [address],
   });
-  const [reflections, setReflections] = useState<ReflectionInfo | null>(null);
+  const [reflectionInfo, setReflectionInfo] = useState<ReflectionInfo | null>(null);
 
   useEffect(() => {
-    if (!address || !reflectionData) return;
+    if (!address || !reflections) return;
     // Parse reflection data
-    setReflections({
+    setReflectionInfo({
       totalReflected: BigInt(0),
       reflectionRate: 0,
-      holderReflections: {},
+      lastReflection: Date.now(),
     });
-  }, [address, reflectionData]);
+  }, [address, reflections]);
 
-  return { reflections, address };
+  return { reflectionInfo, address };
 }
 
