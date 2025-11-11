@@ -3,7 +3,7 @@
 import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface MultipleRoyaltyConfig {
+export interface MultipleRoyaltyParams {
   collection: string;
   tokenId: string;
   recipients: string[];
@@ -21,7 +21,7 @@ export function useNFTMultipleRoyaltySetter() {
   });
   const [setting, setSetting] = useState(false);
 
-  const setMultipleRoyalties = async (config: MultipleRoyaltyConfig) => {
+  const setMultipleRoyalties = async (params: MultipleRoyaltyParams) => {
     if (!address) return;
     setSetting(true);
     // Implementation for setting multiple royalties
@@ -30,4 +30,3 @@ export function useNFTMultipleRoyaltySetter() {
 
   return { setMultipleRoyalties, setting, address, royalties };
 }
-
