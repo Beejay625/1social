@@ -3,10 +3,10 @@
 import { useAccount, useReadContract } from 'wagmi';
 import { useState, useEffect } from 'react';
 
-export interface ReflectionInfo {
-  totalReflected: bigint;
-  reflectionRate: number;
-  lastReflection: number;
+export interface ReflectionReward {
+  holder: string;
+  amount: bigint;
+  timestamp: number;
 }
 
 export function useTokenReflectionTracker() {
@@ -14,21 +14,16 @@ export function useTokenReflectionTracker() {
   const { data: reflections } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'reflectionInfo',
+    functionName: 'reflectionRewards',
     args: [address],
   });
-  const [reflectionInfo, setReflectionInfo] = useState<ReflectionInfo | null>(null);
+  const [rewards, setRewards] = useState<ReflectionReward[]>([]);
 
   useEffect(() => {
     if (!address || !reflections) return;
-    // Parse reflection data
-    setReflectionInfo({
-      totalReflected: BigInt(0),
-      reflectionRate: 0,
-      lastReflection: Date.now(),
-    });
+    // Parse reflection rewards
+    setRewards([]);
   }, [address, reflections]);
 
-  return { reflectionInfo, address };
+  return { rewards, address };
 }
-
