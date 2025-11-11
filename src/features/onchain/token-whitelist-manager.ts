@@ -12,22 +12,21 @@ export function useTokenWhitelistManager() {
     functionName: 'isWhitelisted',
     args: [address],
   });
-  const [whitelisting, setWhitelisting] = useState(false);
+  const [managing, setManaging] = useState(false);
 
-  const whitelistAddress = async (tokenAddress: string, targetAddress: string) => {
+  const whitelistAddress = async (tokenAddress: string, account: string) => {
     if (!address) return;
-    setWhitelisting(true);
+    setManaging(true);
     // Implementation for whitelisting
-    setWhitelisting(false);
+    setManaging(false);
   };
 
-  const removeFromWhitelist = async (tokenAddress: string, targetAddress: string) => {
+  const unwhitelistAddress = async (tokenAddress: string, account: string) => {
     if (!address) return;
-    setWhitelisting(true);
-    // Implementation for removing from whitelist
-    setWhitelisting(false);
+    setManaging(true);
+    // Implementation for unwhitelisting
+    setManaging(false);
   };
 
-  return { whitelistAddress, removeFromWhitelist, whitelisting, address, isWhitelisted };
+  return { whitelistAddress, unwhitelistAddress, managing, address, isWhitelisted };
 }
-
