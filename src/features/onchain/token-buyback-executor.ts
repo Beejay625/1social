@@ -6,7 +6,6 @@ import { useState } from 'react';
 export interface BuybackParams {
   tokenAddress: string;
   amount: bigint;
-  burnPercentage: number;
 }
 
 export function useTokenBuybackExecutor() {
@@ -22,10 +21,9 @@ export function useTokenBuybackExecutor() {
   const executeBuyback = async (params: BuybackParams) => {
     if (!address) return;
     setExecuting(true);
-    // Implementation for executing buybacks
+    // Implementation for buyback execution
     setExecuting(false);
   };
 
   return { executeBuyback, executing, address, buybackFund };
 }
-
