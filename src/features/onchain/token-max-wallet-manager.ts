@@ -3,11 +3,6 @@
 import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface MaxWalletConfig {
-  tokenAddress: string;
-  maxWalletPercentage: number;
-}
-
 export function useTokenMaxWalletManager() {
   const { address } = useAccount();
   const { writeContract } = useWriteContract();
@@ -16,15 +11,14 @@ export function useTokenMaxWalletManager() {
     abi: [],
     functionName: 'maxWallet',
   });
-  const [configuring, setConfiguring] = useState(false);
+  const [managing, setManaging] = useState(false);
 
-  const setMaxWallet = async (config: MaxWalletConfig) => {
+  const setMaxWallet = async (tokenAddress: string, maxAmount: bigint) => {
     if (!address) return;
-    setConfiguring(true);
+    setManaging(true);
     // Implementation for setting max wallet
-    setConfiguring(false);
+    setManaging(false);
   };
 
-  return { setMaxWallet, configuring, address, maxWallet };
+  return { setMaxWallet, managing, address, maxWallet };
 }
-
