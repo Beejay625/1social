@@ -16,7 +16,7 @@ export function useNFTBatchBurn() {
   const batchBurn = async (params: BatchBurnParams) => {
     if (!address) return;
     setBurning(true);
-    // Implementation for batch burning NFTs
+    // Implementation for batch burning
     setBurning(false);
   };
 
