@@ -1,35 +1,38 @@
 'use client';
 
-import { useAccount, useReadContract } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface ABIValidation {
-  contractAddress: string;
   abi: any[];
   valid: boolean;
   errors: string[];
+  wallet: string;
+  timestamp: number;
 }
 
 export function useContractABIValidator() {
   const { address } = useAccount();
-  const { data: bytecode } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'bytecode',
-  });
-  const [validation, setValidation] = useState<ABIValidation | null>(null);
+  const { signMessageAsync } = useSignMessage();
+  const [validations, setValidations] = useState<ABIValidation[]>([]);
 
-  const validateABI = async (contractAddress: string, abi: any[]) => {
-    if (!address) return;
-    // Implementation for ABI validation
-    setValidation({
-      contractAddress,
+  const validateABI = async (abi: any[], errors: string[]) => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `Validate ABI: ${abi.length} items`;
+    await signMessageAsync({ message });
+    
+    const validation: ABIValidation = {
       abi,
-      valid: true,
-      errors: [],
-    });
+      valid: errors.length === 0,
+      errors,
+      wallet: address,
+      timestamp: Date.now(),
+    };
+    
+    setValidations([...validations, validation]);
+    return validation;
   };
 
-  return { validateABI, validation, address, bytecode };
+  return { validateABI, validations, address };
 }
-
