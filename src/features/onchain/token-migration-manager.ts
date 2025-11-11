@@ -12,10 +12,10 @@ export interface MigrationParams {
 export function useTokenMigrationManager() {
   const { address } = useAccount();
   const { writeContract } = useWriteContract();
-  const { data: migrationInfo } = useReadContract({
+  const { data: migrationStatus } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'migrationInfo',
+    functionName: 'migrationStatus',
     args: [address],
   });
   const [migrating, setMigrating] = useState(false);
@@ -27,6 +27,6 @@ export function useTokenMigrationManager() {
     setMigrating(false);
   };
 
-  return { migrateTokens, migrating, address, migrationInfo };
+  return { migrateTokens, migrating, address, migrationStatus };
 }
 
