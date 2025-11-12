@@ -6,16 +6,16 @@ import { useState } from 'react';
 export interface UpgradeSchedule {
   contractAddress: string;
   newImplementation: string;
-  upgradeTime: number;
+  scheduledTime: number;
 }
 
 export function useContractUpgradeScheduler() {
   const { address } = useAccount();
   const { writeContract } = useWriteContract();
-  const { data: upgradeInfo } = useReadContract({
+  const { data: upgradeTime } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'upgradeInfo',
+    functionName: 'upgradeTime',
   });
   const [scheduling, setScheduling] = useState(false);
 
@@ -26,6 +26,6 @@ export function useContractUpgradeScheduler() {
     setScheduling(false);
   };
 
-  return { scheduleUpgrade, scheduling, address, upgradeInfo };
+  return { scheduleUpgrade, scheduling, address, upgradeTime };
 }
 
