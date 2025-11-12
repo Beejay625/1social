@@ -3,7 +3,7 @@
 import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface AuctionCreation {
+export interface AuctionParams {
   collection: string;
   tokenId: string;
   startingPrice: bigint;
@@ -14,20 +14,20 @@ export interface AuctionCreation {
 export function useNFTAuctionCreator() {
   const { address } = useAccount();
   const { writeContract } = useWriteContract();
-  const { data: auctionInfo } = useReadContract({
+  const { data: auctionId } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'auctionInfo',
+    functionName: 'auctionId',
   });
   const [creating, setCreating] = useState(false);
 
-  const createAuction = async (creation: AuctionCreation) => {
+  const createAuction = async (params: AuctionParams) => {
     if (!address) return;
     setCreating(true);
     // Implementation for creating auctions
     setCreating(false);
   };
 
-  return { createAuction, creating, address, auctionInfo };
+  return { createAuction, creating, address, auctionId };
 }
 
