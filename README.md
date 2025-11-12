@@ -297,6 +297,42 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **NFT Batch Transfer Optimizer V2** - Enhanced batch transfer optimization with Reown wallet
 
 #### Contract Management & Development
+
+### New 20 Onchain Social Features (All Powered by Reown Wallet)
+
+#### Token & Financial Features
+- **Social Token Vesting** - Create vesting schedules for token distribution with Reown wallet
+- **Social Token Locks** - Lock tokens with time-based restrictions via Reown wallet
+- **Social Token Minting** - Mint new tokens with Reown wallet signatures
+- **Social Token Burns** - Burn tokens with reason tracking using Reown wallet
+- **Social Token Swaps** - Swap tokens across different tokens with Reown wallet
+- **Social Token Airdrops** - Create and distribute token airdrops to multiple recipients
+- **Social Token Bonding Curves** - Create bonding curves for token pricing with Reown wallet
+- **Social Token Farming** - Create farming pools with reward tokens via Reown wallet
+
+#### Staking & Rewards Features
+- **Social Staking Pools** - Create staking pools with APY and lock periods
+- **Social Reputation Staking** - Stake reputation with positive/negative stakes
+- **Social Content Royalties** - Set and manage content royalties with Reown wallet
+
+#### Marketplace & Commerce Features
+- **Social NFT Marketplace** - List and sell NFTs on marketplace with Reown wallet
+- **Social Content Licensing Marketplace** - List content licenses for sale
+- **Social Content Monetization** - Enable monetization (subscription, pay-per-view, tips, ads)
+
+#### Cross-Chain & Protocol Features
+- **Social Cross-Chain Messaging** - Send messages across different chains
+- **Social Cross-Protocol Bridges** - Bridge assets across protocols with Reown wallet
+
+#### Governance & Moderation Features
+- **Social Governance Voting** - Cast votes on governance proposals with weighted voting
+- **Social Content Moderation** - Moderate content with approve/reject/flag/remove actions
+
+#### Analytics & Verification Features
+- **Social Content Analytics Onchain** - Record and track content analytics onchain
+- **Social Content Verification Onchain** - Verify content authenticity, copyright, fact-check, and source
+
+#### Contract Management & Development
 - **Contract Upgrade Scheduler** - Schedule contract upgrades with Reown wallet
 - **Contract Rate Limiter** - Configure rate limits for contract calls with Reown wallet
 - **Contract Event Emitter** - Emit custom contract events with Reown wallet
