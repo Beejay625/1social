@@ -3,11 +3,11 @@
 import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface AccessControlUpdate {
+export interface AccessControlParams {
   contractAddress: string;
   role: string;
   account: string;
-  granted: boolean;
+  grant: boolean;
 }
 
 export function useContractAccessControlManager() {
@@ -21,13 +21,13 @@ export function useContractAccessControlManager() {
   });
   const [managing, setManaging] = useState(false);
 
-  const updateAccessControl = async (update: AccessControlUpdate) => {
+  const manageAccessControl = async (params: AccessControlParams) => {
     if (!address) return;
     setManaging(true);
     // Implementation for access control management
     setManaging(false);
   };
 
-  return { updateAccessControl, managing, address, hasRole };
+  return { manageAccessControl, managing, address, hasRole };
 }
 
