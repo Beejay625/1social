@@ -3,10 +3,10 @@
 import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface VestingSplit {
+export interface VestingSplitParams {
   vestingId: string;
   recipients: string[];
-  amounts: bigint[];
+  percentages: number[];
 }
 
 export function useTokenVestingSplitter() {
@@ -20,7 +20,7 @@ export function useTokenVestingSplitter() {
   });
   const [splitting, setSplitting] = useState(false);
 
-  const splitVesting = async (split: VestingSplit) => {
+  const splitVesting = async (params: VestingSplitParams) => {
     if (!address) return;
     setSplitting(true);
     // Implementation for splitting vesting
