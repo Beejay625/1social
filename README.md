@@ -276,6 +276,33 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Contract Role Revoker** - Revoke contract roles with Reown wallet
 - **Contract Events Indexer** - Index and track contract events with Reown wallet
 
+### Additional 20 Onchain Features (All Powered by Reown Wallet)
+
+#### Token & Liquidity Features
+- **Token Liquidity Pool Creator V2** - Advanced liquidity pool creation with Reown wallet
+- **Token Vesting Splitter** - Split vesting schedules among multiple recipients with Reown wallet
+- **Token Rebase Tracker** - Track rebase events and supply changes with Reown wallet
+- **Token Holder Reward Distributor** - Distribute rewards to token holders with Reown wallet
+- **Token Burn Tax Calculator** - Calculate burn tax rates and totals with Reown wallet
+
+#### NFT Advanced Features
+- **NFT Soulbound Issuer** - Issue non-transferable soulbound NFTs with Reown wallet
+- **NFT Staking Pool Creator** - Create staking pools for NFTs with Reown wallet
+- **NFT Metadata Batch Updater** - Batch update NFT metadata with Reown wallet
+- **NFT Metadata Freezer** - Freeze/unfreeze NFT metadata with Reown wallet
+- **NFT Whitelist Batch Manager** - Batch manage NFT whitelists with Reown wallet
+- **NFT Auction Creator** - Create NFT auctions with Reown wallet
+- **NFT Trait Batch Updater** - Batch update NFT traits with Reown wallet
+- **NFT Royalty Splitter** - Split royalties among multiple recipients with Reown wallet
+- **NFT Batch Transfer Optimizer V2** - Enhanced batch transfer optimization with Reown wallet
+
+#### Contract Management & Development
+- **Contract Upgrade Scheduler** - Schedule contract upgrades with Reown wallet
+- **Contract Rate Limiter** - Configure rate limits for contract calls with Reown wallet
+- **Contract Event Emitter** - Emit custom contract events with Reown wallet
+- **Contract Circular Dependency Checker** - Check for circular dependencies with Reown wallet
+- **Contract Access Control Manager** - Manage access control roles with Reown wallet
+
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
 - **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
