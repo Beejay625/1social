@@ -12,10 +12,11 @@ export interface RateLimitConfig {
 export function useContractRateLimiter() {
   const { address } = useAccount();
   const { writeContract } = useWriteContract();
-  const { data: rateLimit } = useReadContract({
+  const { data: callCount } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'rateLimit',
+    functionName: 'callCount',
+    args: [address],
   });
   const [configuring, setConfiguring] = useState(false);
 
@@ -26,6 +27,6 @@ export function useContractRateLimiter() {
     setConfiguring(false);
   };
 
-  return { configureRateLimit, configuring, address, rateLimit };
+  return { configureRateLimit, configuring, address, callCount };
 }
 
