@@ -3,9 +3,10 @@
 import { useAccount, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface MetadataUpdate {
-  tokenId: string;
-  metadataURI: string;
+export interface BatchMetadataUpdate {
+  collection: string;
+  tokenIds: string[];
+  metadataURIs: string[];
 }
 
 export function useNFTMetadataBatchUpdater() {
@@ -13,7 +14,7 @@ export function useNFTMetadataBatchUpdater() {
   const { writeContract } = useWriteContract();
   const [updating, setUpdating] = useState(false);
 
-  const batchUpdateMetadata = async (collection: string, updates: MetadataUpdate[]) => {
+  const batchUpdateMetadata = async (update: BatchMetadataUpdate) => {
     if (!address) return;
     setUpdating(true);
     // Implementation for batch metadata updates
