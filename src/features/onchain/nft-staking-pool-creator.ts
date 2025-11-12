@@ -4,10 +4,9 @@ import { useAccount, useWriteContract, useDeployContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface StakingPoolParams {
-  nftCollection: string;
+  collection: string;
   rewardToken: string;
   rewardRate: bigint;
-  lockDuration: number;
 }
 
 export function useNFTStakingPoolCreator() {
