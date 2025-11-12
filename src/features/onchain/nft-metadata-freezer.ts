@@ -21,6 +21,13 @@ export function useNFTMetadataFreezer() {
     setFreezing(false);
   };
 
-  return { freezeMetadata, freezing, address, isFrozen };
+  const unfreezeMetadata = async (collection: string, tokenId: string) => {
+    if (!address) return;
+    setFreezing(true);
+    // Implementation for unfreezing metadata
+    setFreezing(false);
+  };
+
+  return { freezeMetadata, unfreezeMetadata, freezing, address, isFrozen };
 }
 
