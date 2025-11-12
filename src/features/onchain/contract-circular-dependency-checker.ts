@@ -5,8 +5,8 @@ import { useState } from 'react';
 
 export interface DependencyCheck {
   contractAddress: string;
-  hasCircularDependency: boolean;
-  dependencyChain: string[];
+  dependencies: string[];
+  hasCircular: boolean;
 }
 
 export function useContractCircularDependencyChecker() {
@@ -16,18 +16,18 @@ export function useContractCircularDependencyChecker() {
     abi: [],
     functionName: 'dependencies',
   });
-  const [checkResult, setCheckResult] = useState<DependencyCheck | null>(null);
+  const [check, setCheck] = useState<DependencyCheck | null>(null);
 
   const checkCircularDependencies = async (contractAddress: string) => {
     if (!address) return;
     // Implementation for checking circular dependencies
-    setCheckResult({
+    setCheck({
       contractAddress,
-      hasCircularDependency: false,
-      dependencyChain: [],
+      dependencies: [],
+      hasCircular: false,
     });
   };
 
-  return { checkCircularDependencies, checkResult, address, dependencies };
+  return { checkCircularDependencies, check, address, dependencies };
 }
 
