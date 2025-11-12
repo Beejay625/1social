@@ -17,7 +17,7 @@ export function useContractEventEmitter() {
   const emitEvent = async (emission: EventEmission) => {
     if (!address) return;
     setEmitting(true);
-    // Implementation for event emission
+    // Implementation for emitting events
     setEmitting(false);
   };
 
