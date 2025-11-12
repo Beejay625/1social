@@ -3,10 +3,10 @@
 import { useAccount, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface WhitelistUpdate {
+export interface BatchWhitelistParams {
   collection: string;
   addresses: string[];
-  whitelisted: boolean;
+  add: boolean;
 }
 
 export function useNFTWhitelistBatchManager() {
@@ -14,13 +14,13 @@ export function useNFTWhitelistBatchManager() {
   const { writeContract } = useWriteContract();
   const [managing, setManaging] = useState(false);
 
-  const batchUpdateWhitelist = async (update: WhitelistUpdate) => {
+  const batchManageWhitelist = async (params: BatchWhitelistParams) => {
     if (!address) return;
     setManaging(true);
-    // Implementation for batch whitelist updates
+    // Implementation for batch whitelist management
     setManaging(false);
   };
 
-  return { batchUpdateWhitelist, managing, address };
+  return { batchManageWhitelist, managing, address };
 }
 
