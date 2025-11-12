@@ -303,6 +303,31 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Contract Circular Dependency Checker** - Check for circular dependencies with Reown wallet
 - **Contract Access Control Manager** - Manage access control roles with Reown wallet
 
+### Latest 20 Onchain Features (All Powered by Reown Wallet)
+
+#### Token Protection & Management
+- **Token Anti-Whale Protection** - Configure anti-whale protection limits with Reown wallet
+- **Token Fee Exempt Manager** - Manage fee exemptions for addresses with Reown wallet
+- **Token Automatic Liquidity** - Configure automatic liquidity addition with Reown wallet
+- **Token Multisig Approver** - Approve multisig proposals with Reown wallet
+- **Token Lock Scheduler** - Schedule token locks with unlock times via Reown wallet
+- **Token Staking Pool Manager** - Manage staking pool parameters with Reown wallet
+- **Token Governance Proposal Creator** - Create governance proposals with Reown wallet
+- **Token Reward Claim Optimizer** - Optimize reward claims for gas efficiency with Reown wallet
+- **Token Liquidity Lock Extender** - Extend liquidity lock periods with Reown wallet
+- **Token Voting Power Calculator** - Calculate voting power and percentages with Reown wallet
+
+#### NFT Advanced Operations
+- **NFT Batch Approve All** - Approve all NFTs for operators with Reown wallet
+- **NFT Lazy Mint Batch** - Batch lazy mint NFTs with signatures via Reown wallet
+- **NFT Reveal Manager** - Manage NFT reveals and metadata updates with Reown wallet
+- **NFT Airdrop Creator** - Create NFT airdrops to multiple recipients with Reown wallet
+- **NFT Marketplace Listing Manager** - Create and manage marketplace listings with Reown wallet
+- **NFT Batch Sale Creator** - Create batch sales for multiple NFTs with Reown wallet
+- **NFT Collection Base URI Updater** - Update collection base URI with Reown wallet
+- **NFT Royalty Payment Tracker** - Track royalty payments in real-time with Reown wallet
+- **NFT Batch Transfer Validator** - Validate batch transfers before execution with Reown wallet
+
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
 - **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
