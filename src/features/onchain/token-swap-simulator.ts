@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * Token Swap Simulator
+ * Simulates token swaps with price impact calculations via Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
