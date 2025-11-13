@@ -27,6 +27,9 @@ export function useTokenApprovalManager() {
     amount: string
   ): Promise<Approval> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!tokenAddress.startsWith('0x') || !spender.startsWith('0x')) {
+      throw new Error('Invalid address format');
+    }
     
     const message = `Approve token: ${tokenAddress} to ${spender}`;
     await signMessageAsync({ message });
