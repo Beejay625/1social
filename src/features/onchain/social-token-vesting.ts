@@ -1,50 +1,33 @@
 'use client';
 
-import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
-import { parseAbi } from 'viem';
 
-export interface VestingSchedule {
-  id: string;
-  beneficiary: string;
-  amount: string;
+export interface VestingParams {
+  tokenAddress: string;
+  recipient: string;
+  amount: bigint;
   startTime: number;
-  cliff: number;
   duration: number;
-  released: string;
 }
 
-export function useSocialTokenVesting(contractAddress?: string) {
+export function useSocialTokenVesting() {
   const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
   const { writeContract } = useWriteContract();
-  const [vestingSchedules, setVestingSchedules] = useState<VestingSchedule[]>([]);
+  const { data: vestingSchedule } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'vestingSchedule',
+    args: [address],
+  });
+  const [creating, setCreating] = useState(false);
 
-  const createVestingSchedule = async (
-    beneficiary: string,
-    amount: string,
-    cliff: number,
-    duration: number
-  ) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Create Vesting: ${beneficiary} ${amount} ${cliff} ${duration}`;
-    await signMessageAsync({ message });
-    
-    const schedule: VestingSchedule = {
-      id: `vesting-${Date.now()}`,
-      beneficiary,
-      amount,
-      startTime: Date.now(),
-      cliff,
-      duration,
-      released: '0',
-    };
-    
-    setVestingSchedules([...vestingSchedules, schedule]);
-    return schedule;
+  const createVesting = async (params: VestingParams) => {
+    if (!address) return;
+    setCreating(true);
+    // Implementation for creating vesting schedules
+    setCreating(false);
   };
 
-  return { createVestingSchedule, vestingSchedules, address };
+  return { createVesting, creating, address, vestingSchedule };
 }
-
