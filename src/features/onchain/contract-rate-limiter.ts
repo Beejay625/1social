@@ -1,32 +1,40 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface RateLimitConfig {
-  contractAddress: string;
-  maxCalls: number;
-  timeWindow: number;
+export interface RateLimit {
+  contract: string;
+  limit: number;
+  window: number;
+  current: number;
+  wallet: string;
+  timestamp: number;
 }
 
 export function useContractRateLimiter() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const { data: callCount } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'callCount',
-    args: [address],
-  });
-  const [configuring, setConfiguring] = useState(false);
+  const { signMessageAsync } = useSignMessage();
+  const [rateLimits, setRateLimits] = useState<RateLimit[]>([]);
 
-  const configureRateLimit = async (config: RateLimitConfig) => {
-    if (!address) return;
-    setConfiguring(true);
-    // Implementation for rate limiting
-    setConfiguring(false);
+  const setRateLimit = async (contract: string, limit: number, window: number) => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `Set Rate Limit: ${limit} per ${window}s on ${contract}`;
+    await signMessageAsync({ message });
+    
+    const rateLimit: RateLimit = {
+      contract,
+      limit,
+      window,
+      current: 0,
+      wallet: address,
+      timestamp: Date.now(),
+    };
+    
+    setRateLimits([...rateLimits, rateLimit]);
+    return rateLimit;
   };
 
-  return { configureRateLimit, configuring, address, callCount };
+  return { setRateLimit, rateLimits, address };
 }
-
