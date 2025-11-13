@@ -22,17 +22,23 @@ export function useTokenMultiSendExecutor() {
   const { signMessageAsync } = useSignMessage();
   const [sends, setSends] = useState<MultiSend[]>([]);
 
-  const executeMultiSend = async (
+  const execute = async (
     tokenAddress: string,
     recipients: string[],
     amounts: string[]
   ): Promise<MultiSend> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid token address format');
+    }
     if (recipients.length !== amounts.length) {
       throw new Error('Recipients and amounts arrays must have the same length');
     }
-    if (!tokenAddress.startsWith('0x')) {
-      throw new Error('Invalid token address format');
+    if (recipients.length === 0) {
+      throw new Error('At least one recipient is required');
+    }
+    if (recipients.some(addr => !addr.startsWith('0x'))) {
+      throw new Error('All recipients must be valid Ethereum addresses');
     }
     
     const message = `Multi-send: ${tokenAddress} to ${recipients.length} recipients`;
@@ -51,6 +57,5 @@ export function useTokenMultiSendExecutor() {
     return send;
   };
 
-  return { executeMultiSend, sends, address };
+  return { execute, sends, address };
 }
-
