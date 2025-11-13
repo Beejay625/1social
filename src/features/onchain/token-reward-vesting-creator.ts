@@ -10,11 +10,10 @@ import { useState } from 'react';
 
 export interface RewardVesting {
   vestingId: string;
-  tokenAddress: string;
-  beneficiary: string;
-  totalReward: string;
+  recipient: string;
+  totalAmount: string;
   startTime: number;
-  duration: number;
+  endTime: number;
   cliff: number;
   createdBy: string;
   timestamp: number;
@@ -25,32 +24,30 @@ export function useTokenRewardVestingCreator() {
   const { signMessageAsync } = useSignMessage();
   const [vestings, setVestings] = useState<RewardVesting[]>([]);
 
-  const createVesting = async (
-    tokenAddress: string,
-    beneficiary: string,
-    totalReward: string,
+  const create = async (
+    recipient: string,
+    totalAmount: string,
     startTime: number,
-    duration: number,
+    endTime: number,
     cliff: number
   ): Promise<RewardVesting> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x') || !beneficiary.startsWith('0x')) {
-      throw new Error('Invalid address format');
+    if (!recipient.startsWith('0x')) {
+      throw new Error('Invalid recipient address format');
     }
-    if (cliff > duration) {
-      throw new Error('Cliff period cannot exceed duration');
+    if (endTime <= startTime) {
+      throw new Error('End time must be after start time');
     }
     
-    const message = `Create reward vesting: ${tokenAddress} for ${beneficiary}`;
+    const message = `Create reward vesting: ${recipient} ${totalAmount}`;
     await signMessageAsync({ message });
     
     const vesting: RewardVesting = {
       vestingId: `vest-${Date.now()}`,
-      tokenAddress,
-      beneficiary,
-      totalReward,
+      recipient,
+      totalAmount,
       startTime,
-      duration,
+      endTime,
       cliff,
       createdBy: address,
       timestamp: Date.now(),
@@ -60,5 +57,5 @@ export function useTokenRewardVestingCreator() {
     return vesting;
   };
 
-  return { createVesting, vestings, address };
+  return { create, vestings, address };
 }
