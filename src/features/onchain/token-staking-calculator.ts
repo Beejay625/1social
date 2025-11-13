@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * Token Staking Calculator
+ * Calculates staking rewards based on APY and duration using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
