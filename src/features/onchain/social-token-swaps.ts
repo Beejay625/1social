@@ -1,50 +1,31 @@
 'use client';
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface TokenSwap {
-  id: string;
-  swapper: string;
+export interface SwapParams {
   tokenIn: string;
   tokenOut: string;
-  amountIn: string;
-  amountOut: string;
-  timestamp: number;
-  status: 'pending' | 'completed' | 'failed';
+  amountIn: bigint;
+  minAmountOut: bigint;
 }
 
 export function useSocialTokenSwaps() {
   const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
-  const [swaps, setSwaps] = useState<TokenSwap[]>([]);
+  const { writeContract } = useWriteContract();
+  const { data: price } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'getPrice',
+  });
+  const [swapping, setSwapping] = useState(false);
 
-  const swapTokens = async (
-    tokenIn: string,
-    tokenOut: string,
-    amountIn: string,
-    amountOut: string
-  ) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Swap Tokens: ${tokenIn} to ${tokenOut} ${amountIn} for ${amountOut}`;
-    await signMessageAsync({ message });
-    
-    const swap: TokenSwap = {
-      id: `swap-${Date.now()}`,
-      swapper: address,
-      tokenIn,
-      tokenOut,
-      amountIn,
-      amountOut,
-      timestamp: Date.now(),
-      status: 'pending',
-    };
-    
-    setSwaps([...swaps, swap]);
-    return swap;
+  const swapTokens = async (params: SwapParams) => {
+    if (!address) return;
+    setSwapping(true);
+    // Implementation for token swaps
+    setSwapping(false);
   };
 
-  return { swapTokens, swaps, address };
+  return { swapTokens, swapping, address, price };
 }
-
