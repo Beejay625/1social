@@ -9,12 +9,13 @@ import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface CollectionStats {
+  statsId: string;
   collectionAddress: string;
   totalSupply: number;
-  owners: number;
+  totalOwners: number;
   floorPrice: string;
-  volume24h: string;
-  sales24h: number;
+  totalVolume: string;
+  averagePrice: string;
   timestamp: number;
 }
 
@@ -29,23 +30,23 @@ export function useNFTCollectionStatsTracker() {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Track collection stats: ${collectionAddress}`;
+    const message = `Track stats: ${collectionAddress}`;
     await signMessageAsync({ message });
     
-    const collectionStats: CollectionStats = {
+    const stat: CollectionStats = {
+      statsId: `stats-${Date.now()}`,
       collectionAddress,
-      totalSupply: 10000,
-      owners: 2500,
-      floorPrice: '0.5',
-      volume24h: '125.5',
-      sales24h: 45,
+      totalSupply: 0,
+      totalOwners: 0,
+      floorPrice: '0',
+      totalVolume: '0',
+      averagePrice: '0',
       timestamp: Date.now(),
     };
     
-    setStats([...stats, collectionStats]);
-    return collectionStats;
+    setStats([...stats, stat]);
+    return stat;
   };
 
   return { trackStats, stats, address };
 }
-
