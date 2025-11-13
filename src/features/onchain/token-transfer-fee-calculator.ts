@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * Token Transfer Fee Calculator
+ * Calculates transfer fees for token transactions using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
