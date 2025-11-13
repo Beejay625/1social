@@ -10,10 +10,10 @@ import { useState } from 'react';
 
 export interface RoyaltyCollection {
   collectionId: string;
-  tokenId: string;
   collectionAddress: string;
-  royaltyAmount: string;
+  totalRoyalties: string;
   currency: string;
+  collectedBy: string;
   txHash: string;
   timestamp: number;
 }
@@ -23,29 +23,24 @@ export function useNFTRoyaltyPaymentCollectorV2() {
   const { signMessageAsync } = useSignMessage();
   const [collections, setCollections] = useState<RoyaltyCollection[]>([]);
 
-  const collectRoyalty = async (
-    tokenId: string,
+  const collectRoyalties = async (
     collectionAddress: string,
-    royaltyAmount: string,
     currency: string
   ): Promise<RoyaltyCollection> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (parseFloat(royaltyAmount) <= 0) {
-      throw new Error('Royalty amount must be greater than zero');
-    }
     
-    const message = `Collect royalty: ${collectionAddress} #${tokenId} ${royaltyAmount} ${currency}`;
+    const message = `Collect royalties: ${collectionAddress}`;
     await signMessageAsync({ message });
     
     const collection: RoyaltyCollection = {
-      collectionId: `collect-${Date.now()}`,
-      tokenId,
+      collectionId: `royalty-${Date.now()}`,
       collectionAddress,
-      royaltyAmount,
+      totalRoyalties: '0',
       currency,
+      collectedBy: address,
       txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
@@ -54,6 +49,5 @@ export function useNFTRoyaltyPaymentCollectorV2() {
     return collection;
   };
 
-  return { collectRoyalty, collections, address };
+  return { collectRoyalties, collections, address };
 }
-
