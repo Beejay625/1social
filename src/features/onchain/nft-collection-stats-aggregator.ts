@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * NFT Collection Stats Aggregator
+ * Aggregates collection statistics including supply, owners, and volume using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
