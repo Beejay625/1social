@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * Gas Price Optimizer
+ * Optimizes gas prices for transactions using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
