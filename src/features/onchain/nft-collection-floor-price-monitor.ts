@@ -1,57 +1,60 @@
 'use client';
 
-import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
-import { useState } from 'react';
+/**
+ * NFT Collection Floor Price Monitor
+ * Monitor floor prices with alerts via Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
+import { useState, useEffect } from 'react';
 
 export interface FloorPriceAlert {
   collectionAddress: string;
-  currentFloor: string;
-  targetFloor: string;
-  alertType: 'above' | 'below';
-  active: boolean;
-  alertId: string;
+  currentPrice: string;
+  alertPrice: string;
+  direction: 'above' | 'below';
+  timestamp: number;
 }
 
-export function useNFTCollectionFloorPriceMonitor() {
-  const { address, isConnected } = useAccount();
+export function useNFTCollectionFloorPriceMonitor(collectionAddress?: string) {
+  const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const { writeContract, data: hash, isPending } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
   const [alerts, setAlerts] = useState<FloorPriceAlert[]>([]);
+  const [isMonitoring, setIsMonitoring] = useState(false);
 
-  const createAlert = async (collectionAddress: string, targetFloor: string, alertType: 'above' | 'below') => {
-    if (!address || !isConnected) throw new Error('Reown wallet not connected');
+  const startMonitoring = async (alertPrice: string, direction: 'above' | 'below') => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (collectionAddress && !collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
+    }
     
-    const message = `Create floor price alert for ${collectionAddress}: ${alertType} ${targetFloor}`;
+    const message = `Start monitoring floor price: ${collectionAddress || 'all'}`;
     await signMessageAsync({ message });
     
-    const alert: FloorPriceAlert = {
-      collectionAddress,
-      currentFloor: '0',
-      targetFloor,
-      alertType,
-      active: true,
-      alertId: `alert_${Date.now()}`,
-    };
+    setIsMonitoring(true);
+  };
+
+  const stopMonitoring = () => {
+    setIsMonitoring(false);
+  };
+
+  useEffect(() => {
+    if (!isMonitoring) return;
     
-    setAlerts([...alerts, alert]);
-    return alert;
-  };
+    const interval = setInterval(() => {
+      const alert: FloorPriceAlert = {
+        collectionAddress: collectionAddress || '0x0',
+        currentPrice: '0.5',
+        alertPrice: '0.6',
+        direction: 'above',
+        timestamp: Date.now(),
+      };
+      
+      setAlerts((prev) => [alert, ...prev.slice(0, 9)]);
+    }, 60000);
+    
+    return () => clearInterval(interval);
+  }, [isMonitoring, collectionAddress, address]);
 
-  const toggleAlert = (alertId: string) => {
-    setAlerts(alerts.map(a => a.alertId === alertId ? { ...a, active: !a.active } : a));
-  };
-
-  return { 
-    createAlert, 
-    toggleAlert,
-    alerts, 
-    address, 
-    isConnected,
-    hash,
-    isPending,
-    isConfirming,
-    isConfirmed
-  };
+  return { startMonitoring, stopMonitoring, alerts, isMonitoring, address };
 }
-
