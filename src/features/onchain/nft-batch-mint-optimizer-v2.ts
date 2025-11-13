@@ -8,43 +8,41 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface MintOptimization {
+export interface BatchMintOptimization {
   optimizationId: string;
   collectionAddress: string;
-  tokenCount: number;
-  gasEstimate: string;
-  optimalBatchSize: number;
-  recommendedTime: number;
+  quantity: number;
+  optimizedGas: string;
+  estimatedSavings: string;
   timestamp: number;
 }
 
 export function useNFTBatchMintOptimizerV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [optimizations, setOptimizations] = useState<MintOptimization[]>([]);
+  const [optimizations, setOptimizations] = useState<BatchMintOptimization[]>([]);
 
   const optimize = async (
     collectionAddress: string,
-    tokenCount: number
-  ): Promise<MintOptimization> => {
+    quantity: number
+  ): Promise<BatchMintOptimization> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (tokenCount <= 0) {
-      throw new Error('Token count must be greater than zero');
+    if (!collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
+    }
+    if (quantity <= 0) {
+      throw new Error('Quantity must be greater than zero');
     }
     
-    const message = `Optimize batch mint: ${collectionAddress} ${tokenCount} tokens`;
+    const message = `Optimize batch mint: ${collectionAddress} ${quantity} NFTs`;
     await signMessageAsync({ message });
     
-    const optimalBatchSize = Math.min(tokenCount, 50);
-    const gasEstimate = (optimalBatchSize * 50000).toString();
-    
-    const optimization: MintOptimization = {
+    const optimization: BatchMintOptimization = {
       optimizationId: `opt-${Date.now()}`,
       collectionAddress,
-      tokenCount,
-      gasEstimate,
-      optimalBatchSize,
-      recommendedTime: Date.now() + 1800000,
+      quantity,
+      optimizedGas: '200000',
+      estimatedSavings: '50000',
       timestamp: Date.now(),
     };
     
@@ -54,4 +52,3 @@ export function useNFTBatchMintOptimizerV2() {
 
   return { optimize, optimizations, address };
 }
-
