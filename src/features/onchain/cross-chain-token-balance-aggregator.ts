@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * Cross-Chain Token Balance Aggregator
+ * Aggregates token balances across multiple blockchain networks using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
