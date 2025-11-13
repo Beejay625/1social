@@ -9,11 +9,10 @@ import { useAccount, useSignMessage } from 'wagmi';
 import { useState, useEffect } from 'react';
 
 export interface PriceData {
+  priceId: string;
   tokenAddress: string;
   price: string;
   currency: string;
-  change24h: number;
-  volume24h: string;
   timestamp: number;
 }
 
@@ -44,11 +43,10 @@ export function useTokenPriceTrackerV2(tokenAddress?: string) {
     
     const interval = setInterval(() => {
       const price: PriceData = {
+        priceId: `price-${Date.now()}`,
         tokenAddress: tokenAddress || '0x0',
-        price: '1.5',
+        price: '1.25',
         currency: 'USD',
-        change24h: 2.5,
-        volume24h: '1000000',
         timestamp: Date.now(),
       };
       
@@ -60,4 +58,3 @@ export function useTokenPriceTrackerV2(tokenAddress?: string) {
 
   return { startTracking, stopTracking, prices, isTracking, address };
 }
-
