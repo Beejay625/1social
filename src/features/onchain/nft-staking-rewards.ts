@@ -14,7 +14,9 @@ export interface StakingReward {
   collectionAddress: string;
   rewardAmount: string;
   currency: string;
-  txHash: string;
+  claimed: boolean;
+  claimedBy: string;
+  txHash?: string;
   timestamp: number;
 }
 
@@ -37,7 +39,7 @@ export function useNFTStakingRewards() {
       throw new Error('Reward amount must be greater than zero');
     }
     
-    const message = `Claim NFT staking reward: ${collectionAddress} #${tokenId}`;
+    const message = `Claim staking reward: ${collectionAddress} #${tokenId} ${rewardAmount} ${currency}`;
     await signMessageAsync({ message });
     
     const reward: StakingReward = {
@@ -46,6 +48,8 @@ export function useNFTStakingRewards() {
       collectionAddress,
       rewardAmount,
       currency,
+      claimed: true,
+      claimedBy: address,
       txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
