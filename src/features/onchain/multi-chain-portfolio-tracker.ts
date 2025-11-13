@@ -29,6 +29,9 @@ export function useMultiChainPortfolioTracker() {
 
   const trackPortfolio = async (chainIds: number[]): Promise<Portfolio> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (chainIds.length === 0) {
+      throw new Error('At least one chain ID is required');
+    }
     
     const message = `Track multi-chain portfolio: ${chainIds.join(',')}`;
     await signMessageAsync({ message });
