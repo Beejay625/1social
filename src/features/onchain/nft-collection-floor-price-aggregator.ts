@@ -26,6 +26,9 @@ export function useNFTCollectionFloorPriceAggregator() {
     currency: string = 'ETH'
   ): Promise<FloorPrice> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!collectionAddress || !collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address');
+    }
     
     const message = `Aggregate floor price: ${collectionAddress}`;
     await signMessageAsync({ message });
