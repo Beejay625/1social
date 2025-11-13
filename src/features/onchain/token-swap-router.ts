@@ -13,7 +13,7 @@ export interface SwapRoute {
   tokenIn: string;
   tokenOut: string;
   amountIn: string;
-  route: string[];
+  path: string[];
   expectedAmountOut: string;
   priceImpact: number;
   timestamp: number;
@@ -30,11 +30,14 @@ export function useTokenSwapRouter() {
     amountIn: string
   ): Promise<SwapRoute> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!tokenIn.startsWith('0x') || !tokenOut.startsWith('0x')) {
+      throw new Error('Invalid token address format');
+    }
     if (parseFloat(amountIn) <= 0) {
       throw new Error('Amount must be greater than zero');
     }
     
-    const message = `Find swap route: ${tokenIn} -> ${tokenOut}`;
+    const message = `Find swap route: ${tokenIn} -> ${tokenOut} amount ${amountIn}`;
     await signMessageAsync({ message });
     
     const route: SwapRoute = {
@@ -42,9 +45,9 @@ export function useTokenSwapRouter() {
       tokenIn,
       tokenOut,
       amountIn,
-      route: [tokenIn, '0xWETH', tokenOut],
+      path: [tokenIn, tokenOut],
       expectedAmountOut: (parseFloat(amountIn) * 0.95).toString(),
-      priceImpact: 5.0,
+      priceImpact: 0.5,
       timestamp: Date.now(),
     };
     
