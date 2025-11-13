@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * NFT Metadata Batch Fetcher
+ * Fetches metadata for multiple NFTs in batch using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
