@@ -401,6 +401,33 @@ All 20 features are fully integrated with **Reown AppKit** and use `useAccount`,
 
 All features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
 
+### Latest 20 Onchain Features (All Powered by Reown Wallet)
+
+#### Token Management & Operations
+- **Token Transfer Fee Manager** - Configure transfer fees with Reown wallet
+- **Token Allowance Revoker** - Revoke token allowances with Reown wallet
+- **Token Recovery Manager** - Recover tokens from contracts with Reown wallet
+- **Token Liquidity Remover V2** - Remove liquidity from pools with enhanced features using Reown wallet
+- **Token Staking Compounder V2** - Compound staking rewards with enhanced features via Reown wallet
+- **Token Lock Extender** - Extend token lock periods with Reown wallet
+- **Token Vesting Releaser** - Release vested tokens with Reown wallet
+- **Token Governance Delegation Tracker** - Track governance delegations with Reown wallet
+- **Token Liquidity Pool Creator V2** - Create liquidity pools with enhanced features using Reown wallet
+- **Token Staking Reward Claimer** - Claim staking rewards with Reown wallet
+- **Token Multicall Executor** - Execute multiple token operations in one call with Reown wallet
+
+#### NFT Operations & Management
+- **NFT Listing Price Optimizer** - Optimize NFT listing prices with Reown wallet
+- **NFT Marketplace Offer Canceler V2** - Cancel marketplace offers with enhanced features via Reown wallet
+- **NFT Collection Supply Manager V2** - Manage collection max supply with enhanced features via Reown wallet
+- **NFT Attribute Updater V2** - Update NFT attributes with enhanced features via Reown wallet
+- **NFT Metadata Freezer V2** - Freeze NFT metadata with enhanced features via Reown wallet
+- **NFT Owner History Tracker** - Track NFT ownership history with Reown wallet
+- **NFT Collection Base URI Updater V2** - Update collection base URI with enhanced features via Reown wallet
+- **NFT Lazy Mint Batch V2** - Lazy mint multiple NFTs in batch with enhanced features via Reown wallet
+
+All features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
+
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
 - **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
