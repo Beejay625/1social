@@ -11,10 +11,14 @@ import { useState } from 'react';
 export interface BulkPurchase {
   purchaseId: string;
   marketplace: string;
-  tokenIds: string[];
-  collectionAddress: string;
+  listings: Array<{
+    tokenId: string;
+    collectionAddress: string;
+    price: string;
+  }>;
   totalPrice: string;
   currency: string;
+  purchasedBy: string;
   txHash: string;
   timestamp: number;
 }
@@ -26,29 +30,32 @@ export function useNFTMarketplaceBulkBuyerV2() {
 
   const bulkBuy = async (
     marketplace: string,
-    tokenIds: string[],
-    collectionAddress: string,
-    totalPrice: string,
+    listings: Array<{
+      tokenId: string;
+      collectionAddress: string;
+      price: string;
+    }>,
     currency: string
   ): Promise<BulkPurchase> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (tokenIds.length === 0) {
-      throw new Error('At least one token ID is required');
-    }
-    if (!collectionAddress.startsWith('0x')) {
-      throw new Error('Invalid collection address format');
+    if (listings.length === 0) {
+      throw new Error('At least one listing is required');
     }
     
-    const message = `Bulk buy: ${marketplace} ${tokenIds.length} NFTs from ${collectionAddress}`;
+    const totalPrice = listings.reduce((sum, listing) => 
+      (parseFloat(sum) + parseFloat(listing.price)).toString(), '0'
+    );
+    
+    const message = `Bulk buy: ${marketplace} ${listings.length} NFTs for ${totalPrice} ${currency}`;
     await signMessageAsync({ message });
     
     const purchase: BulkPurchase = {
       purchaseId: `buy-${Date.now()}`,
       marketplace,
-      tokenIds,
-      collectionAddress,
+      listings,
       totalPrice,
       currency,
+      purchasedBy: address,
       txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
@@ -59,4 +66,3 @@ export function useNFTMarketplaceBulkBuyerV2() {
 
   return { bulkBuy, purchases, address };
 }
-
