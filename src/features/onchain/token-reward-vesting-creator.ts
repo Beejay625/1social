@@ -37,8 +37,8 @@ export function useTokenRewardVestingCreator() {
     if (!tokenAddress.startsWith('0x') || !beneficiary.startsWith('0x')) {
       throw new Error('Invalid address format');
     }
-    if (duration <= 0 || cliff < 0) {
-      throw new Error('Duration must be greater than zero and cliff must be non-negative');
+    if (cliff > duration) {
+      throw new Error('Cliff period cannot exceed duration');
     }
     
     const message = `Create reward vesting: ${tokenAddress} for ${beneficiary}`;
