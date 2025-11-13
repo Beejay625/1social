@@ -21,10 +21,10 @@ export function useGasPriceOptimizer() {
   const { signMessageAsync } = useSignMessage();
   const [recommendations, setRecommendations] = useState<GasPriceRecommendation[]>([]);
 
-  const optimize = async (): Promise<GasPriceRecommendation> => {
+  const optimize = async (priority: 'slow' | 'standard' | 'fast' = 'standard'): Promise<GasPriceRecommendation> => {
     if (!address) throw new Error('Reown wallet not connected');
     
-    const message = `Optimize gas price`;
+    const message = `Optimize gas price: ${priority}`;
     await signMessageAsync({ message });
     
     const recommendation: GasPriceRecommendation = {
