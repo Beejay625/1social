@@ -15,6 +15,7 @@ export interface OrderMatch {
   tokenId: string;
   collectionAddress: string;
   price: string;
+  matchedBy: string;
   txHash: string;
   timestamp: number;
 }
@@ -35,8 +36,11 @@ export function useNFTOrderMatcherV2() {
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
+    if (parseFloat(price) <= 0) {
+      throw new Error('Price must be greater than zero');
+    }
     
-    const message = `Match orders: Buy ${buyOrderId} with Sell ${sellOrderId}`;
+    const message = `Match orders: Buy ${buyOrderId} Sell ${sellOrderId}`;
     await signMessageAsync({ message });
     
     const match: OrderMatch = {
@@ -46,6 +50,7 @@ export function useNFTOrderMatcherV2() {
       tokenId,
       collectionAddress,
       price,
+      matchedBy: address,
       txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
@@ -56,4 +61,3 @@ export function useNFTOrderMatcherV2() {
 
   return { matchOrders, matches, address };
 }
-
