@@ -11,9 +11,10 @@ import { useState } from 'react';
 export interface BaseURIUpdate {
   updateId: string;
   collectionAddress: string;
-  oldBaseURI: string;
-  newBaseURI: string;
+  oldBaseUri: string;
+  newBaseUri: string;
   updatedBy: string;
+  txHash: string;
   timestamp: number;
 }
 
@@ -24,26 +25,27 @@ export function useNFTCollectionBaseURIUpdaterV2() {
 
   const updateBaseURI = async (
     collectionAddress: string,
-    newBaseURI: string,
-    oldBaseURI: string
+    newBaseUri: string,
+    oldBaseUri: string
   ): Promise<BaseURIUpdate> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (!newBaseURI || newBaseURI.trim() === '') {
-      throw new Error('New base URI cannot be empty');
+    if (!newBaseUri.startsWith('http://') && !newBaseUri.startsWith('https://') && !newBaseUri.startsWith('ipfs://')) {
+      throw new Error('Base URI must be a valid HTTP, HTTPS, or IPFS URL');
     }
     
-    const message = `Update base URI: ${collectionAddress}`;
+    const message = `Update base URI: ${collectionAddress} to ${newBaseUri}`;
     await signMessageAsync({ message });
     
     const update: BaseURIUpdate = {
       updateId: `update-${Date.now()}`,
       collectionAddress,
-      oldBaseURI,
-      newBaseURI,
+      oldBaseUri,
+      newBaseUri,
       updatedBy: address,
+      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
@@ -53,4 +55,3 @@ export function useNFTCollectionBaseURIUpdaterV2() {
 
   return { updateBaseURI, updates, address };
 }
-
