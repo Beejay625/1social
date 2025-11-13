@@ -8,59 +8,47 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface PauseStatus {
-  statusId: string;
+export interface PauseManagement {
+  managementId: string;
   collectionAddress: string;
-  paused: boolean;
-  pausedBy: string;
+  action: 'pause' | 'unpause';
   reason?: string;
+  txHash: string;
+  managedBy: string;
   timestamp: number;
 }
 
 export function useNFTCollectionPauseManagerV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [statuses, setStatuses] = useState<PauseStatus[]>([]);
+  const [managements, setManagements] = useState<PauseManagement[]>([]);
 
-  const pause = async (collectionAddress: string, reason?: string): Promise<PauseStatus> => {
+  const manage = async (
+    collectionAddress: string,
+    action: 'pause' | 'unpause',
+    reason?: string
+  ): Promise<PauseManagement> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Pause collection: ${collectionAddress}${reason ? ` - ${reason}` : ''}`;
+    const message = `${action} collection: ${collectionAddress}${reason ? ` Reason: ${reason}` : ''}`;
     await signMessageAsync({ message });
     
-    const status: PauseStatus = {
-      statusId: `pause-${Date.now()}`,
+    const management: PauseManagement = {
+      managementId: `pause-${Date.now()}`,
       collectionAddress,
-      paused: true,
-      pausedBy: address,
+      action,
       reason,
+      txHash: `0x${Date.now().toString(16)}`,
+      managedBy: address,
       timestamp: Date.now(),
     };
     
-    setStatuses([...statuses, status]);
-    return status;
+    setManagements([...managements, management]);
+    return management;
   };
 
-  const unpause = async (collectionAddress: string): Promise<PauseStatus> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Unpause collection: ${collectionAddress}`;
-    await signMessageAsync({ message });
-    
-    const status: PauseStatus = {
-      statusId: `unpause-${Date.now()}`,
-      collectionAddress,
-      paused: false,
-      pausedBy: address,
-      timestamp: Date.now(),
-    };
-    
-    setStatuses([...statuses, status]);
-    return status;
-  };
-
-  return { pause, unpause, statuses, address };
+  return { manage, managements, address };
 }
