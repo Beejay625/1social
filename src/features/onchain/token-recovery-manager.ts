@@ -15,6 +15,7 @@ export interface TokenRecovery {
   amount: string;
   recipient: string;
   txHash: string;
+  recoveredBy: string;
   timestamp: number;
 }
 
@@ -30,11 +31,17 @@ export function useTokenRecoveryManager() {
     recipient: string
   ): Promise<TokenRecovery> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x') || !contractAddress.startsWith('0x') || !recipient.startsWith('0x')) {
-      throw new Error('Invalid address format');
+    if (!tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid token address format');
+    }
+    if (!contractAddress.startsWith('0x')) {
+      throw new Error('Invalid contract address format');
+    }
+    if (!recipient.startsWith('0x')) {
+      throw new Error('Invalid recipient address format');
     }
     
-    const message = `Recover tokens: ${tokenAddress} from ${contractAddress}`;
+    const message = `Recover tokens: ${tokenAddress} from ${contractAddress} to ${recipient}`;
     await signMessageAsync({ message });
     
     const recovery: TokenRecovery = {
@@ -44,6 +51,7 @@ export function useTokenRecoveryManager() {
       amount,
       recipient,
       txHash: `0x${Date.now().toString(16)}`,
+      recoveredBy: address,
       timestamp: Date.now(),
     };
     
