@@ -26,6 +26,9 @@ export function useNFTAuctionMonitor(collectionAddress?: string) {
 
   const startMonitoring = async () => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (collectionAddress && !collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
+    }
     
     const message = `Start monitoring NFT auctions: ${collectionAddress || 'all'}`;
     await signMessageAsync({ message });
