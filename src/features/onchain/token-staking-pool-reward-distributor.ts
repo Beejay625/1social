@@ -14,6 +14,7 @@ export interface RewardDistribution {
   totalRewards: string;
   recipients: string[];
   amounts: string[];
+  distributedBy: string;
   txHash: string;
   timestamp: number;
 }
@@ -30,6 +31,9 @@ export function useTokenStakingPoolRewardDistributor() {
     amounts: string[]
   ): Promise<RewardDistribution> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!stakingPool.startsWith('0x')) {
+      throw new Error('Invalid staking pool address format');
+    }
     if (recipients.length !== amounts.length) {
       throw new Error('Recipients and amounts arrays must have the same length');
     }
@@ -43,6 +47,7 @@ export function useTokenStakingPoolRewardDistributor() {
       totalRewards,
       recipients,
       amounts,
+      distributedBy: address,
       txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
