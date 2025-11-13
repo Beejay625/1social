@@ -13,7 +13,8 @@ export interface PriceAlert {
   tokenAddress: string;
   targetPrice: string;
   direction: 'above' | 'below';
-  enabled: boolean;
+  active: boolean;
+  createdBy: string;
   timestamp: number;
 }
 
@@ -43,7 +44,8 @@ export function useTokenPriceAlertManager() {
       tokenAddress,
       targetPrice,
       direction,
-      enabled: true,
+      active: true,
+      createdBy: address,
       timestamp: Date.now(),
     };
     
@@ -51,6 +53,9 @@ export function useTokenPriceAlertManager() {
     return alert;
   };
 
-  return { createAlert, alerts, address };
-}
+  const toggleAlert = (alertId: string) => {
+    setAlerts(alerts.map(a => a.alertId === alertId ? { ...a, active: !a.active } : a));
+  };
 
+  return { createAlert, toggleAlert, alerts, address };
+}
