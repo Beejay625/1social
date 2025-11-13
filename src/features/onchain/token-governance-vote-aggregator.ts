@@ -3,6 +3,9 @@
 import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { useState } from 'react';
 
+/**
+ * Vote aggregation results
+ */
 export interface VoteAggregation {
   proposalId: string;
   forVotes: number;
@@ -12,6 +15,10 @@ export interface VoteAggregation {
   quorumMet: boolean;
 }
 
+/**
+ * Hook for aggregating governance votes with Reown wallet integration
+ * Tracks and aggregates votes for governance proposals
+ */
 export function useTokenGovernanceVoteAggregator() {
   const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
