@@ -27,6 +27,9 @@ export function useTokenVestingScheduleViewer() {
 
   const viewSchedule = async (vestingId: string): Promise<VestingSchedule> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!vestingId || vestingId.trim() === '') {
+      throw new Error('Vesting ID is required');
+    }
     
     const message = `View vesting schedule: ${vestingId}`;
     await signMessageAsync({ message });
