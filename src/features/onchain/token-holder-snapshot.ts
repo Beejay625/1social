@@ -2,7 +2,7 @@
 
 /**
  * Token Holder Snapshot
- * Create snapshots of token holders at specific blocks with Reown wallet
+ * Create snapshots of token holders with Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
@@ -17,6 +17,7 @@ export interface HolderSnapshot {
     balance: string;
   }>;
   totalHolders: number;
+  createdBy: string;
   timestamp: number;
 }
 
@@ -44,11 +45,9 @@ export function useTokenHolderSnapshot() {
       snapshotId: `snapshot-${Date.now()}`,
       tokenAddress,
       blockNumber,
-      holders: [
-        { address: '0x1', balance: '1000000' },
-        { address: '0x2', balance: '500000' },
-      ],
-      totalHolders: 2,
+      holders: [],
+      totalHolders: 0,
+      createdBy: address,
       timestamp: Date.now(),
     };
     
@@ -58,4 +57,3 @@ export function useTokenHolderSnapshot() {
 
   return { createSnapshot, snapshots, address };
 }
-
