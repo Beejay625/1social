@@ -3,6 +3,9 @@
 import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { useState } from 'react';
 
+/**
+ * Vesting schedule configuration
+ */
 export interface VestingSchedule {
   beneficiary: string;
   tokenAddress: string;
@@ -13,6 +16,10 @@ export interface VestingSchedule {
   scheduleId: string;
 }
 
+/**
+ * Hook for creating and managing token vesting schedules with Reown wallet
+ * Supports custom start time, duration, and cliff periods
+ */
 export function useTokenVestingScheduler() {
   const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
