@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * NFT Ownership Verifier
+ * Verifies NFT ownership with cryptographic verification via Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
