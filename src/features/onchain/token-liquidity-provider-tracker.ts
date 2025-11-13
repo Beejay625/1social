@@ -12,9 +12,10 @@ export interface LPPosition {
   positionId: string;
   poolAddress: string;
   provider: string;
-  lpTokenAmount: string;
-  tokenAShare: string;
-  tokenBShare: string;
+  lpTokens: string;
+  tokenA: string;
+  tokenB: string;
+  share: number;
   timestamp: number;
 }
 
@@ -32,16 +33,17 @@ export function useTokenLiquidityProviderTracker() {
       throw new Error('Invalid address format');
     }
     
-    const message = `Track LP position: ${poolAddress} for ${provider}`;
+    const message = `Track LP position: ${poolAddress} provider ${provider}`;
     await signMessageAsync({ message });
     
     const position: LPPosition = {
-      positionId: `pos-${Date.now()}`,
+      positionId: `lp-${Date.now()}`,
       poolAddress,
       provider,
-      lpTokenAmount: '1000',
-      tokenAShare: '500',
-      tokenBShare: '1000',
+      lpTokens: '0',
+      tokenA: '0x0',
+      tokenB: '0x0',
+      share: 0,
       timestamp: Date.now(),
     };
     
@@ -51,4 +53,3 @@ export function useTokenLiquidityProviderTracker() {
 
   return { trackPosition, positions, address };
 }
-
