@@ -11,8 +11,9 @@ import { useState } from 'react';
 export interface TaxCalculation {
   calculationId: string;
   tokenAddress: string;
+  transactionType: 'buy' | 'sell' | 'transfer';
   amount: string;
-  taxPercentage: number;
+  taxRate: number;
   taxAmount: string;
   netAmount: string;
   timestamp: number;
@@ -25,27 +26,32 @@ export function useTokenTaxCalculator() {
 
   const calculate = async (
     tokenAddress: string,
+    transactionType: 'buy' | 'sell' | 'transfer',
     amount: string,
-    taxPercentage: number
+    taxRate: number
   ): Promise<TaxCalculation> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (taxPercentage < 0 || taxPercentage > 100) {
-      throw new Error('Tax percentage must be between 0 and 100');
+    if (!tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid token address format');
+    }
+    if (taxRate < 0 || taxRate > 100) {
+      throw new Error('Tax rate must be between 0 and 100');
     }
     
-    const message = `Calculate tax: ${tokenAddress} ${amount}`;
+    const message = `Calculate tax: ${tokenAddress} ${transactionType} ${amount}`;
     await signMessageAsync({ message });
     
-    const taxAmount = (BigInt(amount) * BigInt(Math.floor(taxPercentage * 100))) / BigInt(10000);
-    const netAmount = BigInt(amount) - taxAmount;
+    const taxAmount = (parseFloat(amount) * taxRate / 100).toString();
+    const netAmount = (parseFloat(amount) - parseFloat(taxAmount)).toString();
     
     const calculation: TaxCalculation = {
-      calculationId: `calc-${Date.now()}`,
+      calculationId: `tax-${Date.now()}`,
       tokenAddress,
+      transactionType,
       amount,
-      taxPercentage,
-      taxAmount: taxAmount.toString(),
-      netAmount: netAmount.toString(),
+      taxRate,
+      taxAmount,
+      netAmount,
       timestamp: Date.now(),
     };
     
@@ -55,4 +61,3 @@ export function useTokenTaxCalculator() {
 
   return { calculate, calculations, address };
 }
-
