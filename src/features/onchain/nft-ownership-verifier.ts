@@ -27,6 +27,9 @@ export function useNFTOwnershipVerifier() {
     expectedOwner: string
   ): Promise<OwnershipVerification> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!collectionAddress.startsWith('0x') || !expectedOwner.startsWith('0x')) {
+      throw new Error('Invalid address format');
+    }
     
     const message = `Verify NFT ownership: ${collectionAddress} #${tokenId}`;
     await signMessageAsync({ message });
