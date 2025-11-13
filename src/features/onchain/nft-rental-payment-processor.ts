@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * NFT Rental Payment Processor
+ * Processes rental payments for NFT rentals using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
