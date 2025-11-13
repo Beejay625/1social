@@ -3,6 +3,9 @@
 import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { useState } from 'react';
 
+/**
+ * Royalty split configuration
+ */
 export interface RoyaltySplit {
   collectionAddress: string;
   recipients: string[];
@@ -10,6 +13,10 @@ export interface RoyaltySplit {
   splitId: string;
 }
 
+/**
+ * Hook for splitting NFT collection royalties with Reown wallet integration
+ * Distributes royalties among multiple recipients with percentage-based allocation
+ */
 export function useNFTCollectionRoyaltySplitter() {
   const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
