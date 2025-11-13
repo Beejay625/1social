@@ -13,8 +13,8 @@ export interface TransferOptimization {
   tokenAddress: string;
   recipient: string;
   amount: string;
-  gasEstimate: string;
-  optimalTime: number;
+  optimizedGas: string;
+  estimatedSavings: string;
   timestamp: number;
 }
 
@@ -32,6 +32,9 @@ export function useTokenTransferOptimizer() {
     if (!tokenAddress.startsWith('0x') || !recipient.startsWith('0x')) {
       throw new Error('Invalid address format');
     }
+    if (parseFloat(amount) <= 0) {
+      throw new Error('Amount must be greater than zero');
+    }
     
     const message = `Optimize transfer: ${tokenAddress} to ${recipient}`;
     await signMessageAsync({ message });
@@ -41,8 +44,8 @@ export function useTokenTransferOptimizer() {
       tokenAddress,
       recipient,
       amount,
-      gasEstimate: '65000',
-      optimalTime: Date.now() + 1800000,
+      optimizedGas: '65000',
+      estimatedSavings: '15000',
       timestamp: Date.now(),
     };
     
@@ -52,4 +55,3 @@ export function useTokenTransferOptimizer() {
 
   return { optimize, optimizations, address };
 }
-
