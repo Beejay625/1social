@@ -2,53 +2,62 @@
 
 /**
  * Token Transfer Fee Calculator
- * Calculates transfer fees for token transactions using Reown wallet
+ * Calculate transfer fees for token transactions with Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface TransferFee {
+export interface FeeCalculation {
+  calculationId: string;
   tokenAddress: string;
   amount: string;
-  feePercentage: number;
+  transferType: 'standard' | 'tax' | 'reflection';
+  feeRate: number;
   feeAmount: string;
   netAmount: string;
+  timestamp: number;
 }
 
 export function useTokenTransferFeeCalculator() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [calculations, setCalculations] = useState<TransferFee[]>([]);
+  const [calculations, setCalculations] = useState<FeeCalculation[]>([]);
 
-  const calculateFee = async (
+  const calculate = async (
     tokenAddress: string,
     amount: string,
-    feePercentage: number
-  ): Promise<TransferFee> => {
+    transferType: 'standard' | 'tax' | 'reflection',
+    feeRate: number
+  ): Promise<FeeCalculation> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (feePercentage < 0 || feePercentage > 100) {
-      throw new Error('Fee percentage must be between 0 and 100');
+    if (!tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid token address format');
+    }
+    if (feeRate < 0 || feeRate > 100) {
+      throw new Error('Fee rate must be between 0 and 100');
     }
     
-    const message = `Calculate transfer fee: ${tokenAddress} ${amount}`;
+    const message = `Calculate transfer fee: ${tokenAddress} ${transferType} ${amount}`;
     await signMessageAsync({ message });
     
-    const feeAmount = (BigInt(amount) * BigInt(Math.floor(feePercentage * 100))) / BigInt(10000);
-    const netAmount = BigInt(amount) - feeAmount;
+    const feeAmount = (parseFloat(amount) * feeRate / 100).toString();
+    const netAmount = (parseFloat(amount) - parseFloat(feeAmount)).toString();
     
-    const fee: TransferFee = {
+    const calculation: FeeCalculation = {
+      calculationId: `fee-${Date.now()}`,
       tokenAddress,
       amount,
-      feePercentage,
-      feeAmount: feeAmount.toString(),
-      netAmount: netAmount.toString(),
+      transferType,
+      feeRate,
+      feeAmount,
+      netAmount,
+      timestamp: Date.now(),
     };
     
-    setCalculations([...calculations, fee]);
-    return fee;
+    setCalculations([...calculations, calculation]);
+    return calculation;
   };
 
-  return { calculateFee, calculations, address };
+  return { calculate, calculations, address };
 }
-
