@@ -247,149 +247,6 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Wallet Activity Feed** - Get wallet activity feed with Reown wallet
 - **Token Swap Aggregator V2** - Advanced token swap routing with Reown wallet
 
-### Latest 20 Advanced Onchain Features (All Powered by Reown Wallet)
-
-#### Token Management & Advanced Operations
-- **Token Vesting Canceler** - Cancel vesting schedules with Reown wallet
-- **Token Rebasing Adjuster** - Adjust rebasing parameters with Reown wallet
-- **Token Dividend Distributor** - Distribute dividends to token holders with Reown wallet
-- **Token Reflection Tracker** - Track reflection rewards with Reown wallet
-- **Token Tax Configurator** - Configure buy/sell taxes with Reown wallet
-- **Token Buyback Executor** - Execute token buybacks with Reown wallet
-- **Token Migration Manager** - Migrate tokens to new contracts with Reown wallet
-- **Token Liquidity Migrator** - Migrate liquidity between pools with Reown wallet
-- **Token Blacklist Manager** - Manage blacklisted addresses with Reown wallet
-- **Token Whitelist Manager** - Manage whitelisted addresses with Reown wallet
-- **Token Max Wallet Manager** - Configure maximum wallet limits with Reown wallet
-- **Token Max Transaction Manager** - Configure maximum transaction limits with Reown wallet
-- **Token Cooldown Manager** - Set cooldown periods between transactions with Reown wallet
-- **Token Holder Snapshot Creator** - Create snapshots of token holders with Reown wallet
-
-#### NFT Advanced Operations
-- **NFT Batch Burn** - Burn multiple NFTs in batch with Reown wallet
-- **NFT Attribute Updater** - Update NFT attributes with Reown wallet
-- **NFT Multiple Royalty Setter** - Set multiple royalty recipients with Reown wallet
-- **NFT Escrow Manager** - Manage NFT escrow transactions with Reown wallet
-- **NFT Collection Freeze Manager** - Freeze/unfreeze NFT collections with Reown wallet
-
-#### Contract Management & Advanced Features
-- **Contract Role Revoker** - Revoke contract roles with Reown wallet
-- **Contract Events Indexer** - Index and track contract events with Reown wallet
-
-### Additional 20 Onchain Features (All Powered by Reown Wallet)
-
-#### Token & Liquidity Features
-- **Token Liquidity Pool Creator V2** - Advanced liquidity pool creation with Reown wallet
-- **Token Vesting Splitter** - Split vesting schedules among multiple recipients with Reown wallet
-- **Token Rebase Tracker** - Track rebase events and supply changes with Reown wallet
-- **Token Holder Reward Distributor** - Distribute rewards to token holders with Reown wallet
-- **Token Burn Tax Calculator** - Calculate burn tax rates and totals with Reown wallet
-
-#### NFT Advanced Features
-- **NFT Soulbound Issuer** - Issue non-transferable soulbound NFTs with Reown wallet
-- **NFT Staking Pool Creator** - Create staking pools for NFTs with Reown wallet
-- **NFT Metadata Batch Updater** - Batch update NFT metadata with Reown wallet
-- **NFT Metadata Freezer** - Freeze/unfreeze NFT metadata with Reown wallet
-- **NFT Whitelist Batch Manager** - Batch manage NFT whitelists with Reown wallet
-- **NFT Auction Creator** - Create NFT auctions with Reown wallet
-- **NFT Trait Batch Updater** - Batch update NFT traits with Reown wallet
-- **NFT Royalty Splitter** - Split royalties among multiple recipients with Reown wallet
-- **NFT Batch Transfer Optimizer V2** - Enhanced batch transfer optimization with Reown wallet
-
-#### Contract Management & Development
-
-### New 20 Onchain Social Features (All Powered by Reown Wallet)
-
-#### Token & Financial Features
-- **Social Token Vesting** - Create vesting schedules for token distribution with Reown wallet
-- **Social Token Locks** - Lock tokens with time-based restrictions via Reown wallet
-- **Social Token Minting** - Mint new tokens with Reown wallet signatures
-- **Social Token Burns** - Burn tokens with reason tracking using Reown wallet
-- **Social Token Swaps** - Swap tokens across different tokens with Reown wallet
-- **Social Token Airdrops** - Create and distribute token airdrops to multiple recipients
-- **Social Token Bonding Curves** - Create bonding curves for token pricing with Reown wallet
-- **Social Token Farming** - Create farming pools with reward tokens via Reown wallet
-
-#### Staking & Rewards Features
-- **Social Staking Pools** - Create staking pools with APY and lock periods
-- **Social Reputation Staking** - Stake reputation with positive/negative stakes
-- **Social Content Royalties** - Set and manage content royalties with Reown wallet
-
-#### Marketplace & Commerce Features
-- **Social NFT Marketplace** - List and sell NFTs on marketplace with Reown wallet
-- **Social Content Licensing Marketplace** - List content licenses for sale
-- **Social Content Monetization** - Enable monetization (subscription, pay-per-view, tips, ads)
-
-#### Cross-Chain & Protocol Features
-- **Social Cross-Chain Messaging** - Send messages across different chains
-- **Social Cross-Protocol Bridges** - Bridge assets across protocols with Reown wallet
-
-#### Governance & Moderation Features
-- **Social Governance Voting** - Cast votes on governance proposals with weighted voting
-- **Social Content Moderation** - Moderate content with approve/reject/flag/remove actions
-
-#### Analytics & Verification Features
-- **Social Content Analytics Onchain** - Record and track content analytics onchain
-- **Social Content Verification Onchain** - Verify content authenticity, copyright, fact-check, and source
-
-### Another 20 Onchain Social Features (All Powered by Reown Wallet)
-
-#### Token & Financial Features
-- **Social Token Liquidity Pools** - Create liquidity pools for token pairs with Reown wallet
-- **Social Token Reflections** - Claim reflection rewards with Reown wallet signatures
-- **Social Token Buybacks** - Execute token buybacks with Reown wallet
-- **Social Token Dividends** - Distribute dividends to token holders with Reown wallet
-- **Social Token Migration** - Migrate tokens between contracts with Reown wallet
-- **Social Token Tax Calculator** - Calculate buy/sell taxes with Reown wallet
-- **Social Token Freeze** - Freeze and unfreeze token addresses with Reown wallet
-- **Social Token Snapshot** - Create token holder snapshots at specific blocks
-- **Social Token Rewards Pool** - Create rewards pools for token holders
-- **Social Token Multisig** - Create multisig wallets for token management
-- **Social Token Price Oracle** - Update and track token prices onchain
-
-#### Content & Access Control Features
-- **Social Content Curation Voting** - Vote on content curation with weighted voting
-- **Social Content Collaboration** - Add collaborators with role and share management
-- **Social Content Auction** - Create auctions for content with bidding
-- **Social Content Subscription** - Subscribe to creators with recurring payments
-- **Social Content Whitelist** - Manage whitelisted addresses for content access
-- **Social Content Blacklist** - Manage blacklisted addresses for content access
-- **Social Content Timelock** - Create timelocked actions for content
-- **Social Content Escrow** - Create escrow accounts for content transactions
-- **Social Content Dispute Resolution** - Create and resolve content disputes
-
-#### Contract Management & Development
-- **Contract Upgrade Scheduler** - Schedule contract upgrades with Reown wallet
-- **Contract Rate Limiter** - Configure rate limits for contract calls with Reown wallet
-- **Contract Event Emitter** - Emit custom contract events with Reown wallet
-- **Contract Circular Dependency Checker** - Check for circular dependencies with Reown wallet
-- **Contract Access Control Manager** - Manage access control roles with Reown wallet
-
-### Latest 20 Onchain Features (All Powered by Reown Wallet)
-
-#### Token Protection & Management
-- **Token Anti-Whale Protection** - Configure anti-whale protection limits with Reown wallet
-- **Token Fee Exempt Manager** - Manage fee exemptions for addresses with Reown wallet
-- **Token Automatic Liquidity** - Configure automatic liquidity addition with Reown wallet
-- **Token Multisig Approver** - Approve multisig proposals with Reown wallet
-- **Token Lock Scheduler** - Schedule token locks with unlock times via Reown wallet
-- **Token Staking Pool Manager** - Manage staking pool parameters with Reown wallet
-- **Token Governance Proposal Creator** - Create governance proposals with Reown wallet
-- **Token Reward Claim Optimizer** - Optimize reward claims for gas efficiency with Reown wallet
-- **Token Liquidity Lock Extender** - Extend liquidity lock periods with Reown wallet
-- **Token Voting Power Calculator** - Calculate voting power and percentages with Reown wallet
-
-#### NFT Advanced Operations
-- **NFT Batch Approve All** - Approve all NFTs for operators with Reown wallet
-- **NFT Lazy Mint Batch** - Batch lazy mint NFTs with signatures via Reown wallet
-- **NFT Reveal Manager** - Manage NFT reveals and metadata updates with Reown wallet
-- **NFT Airdrop Creator** - Create NFT airdrops to multiple recipients with Reown wallet
-- **NFT Marketplace Listing Manager** - Create and manage marketplace listings with Reown wallet
-- **NFT Batch Sale Creator** - Create batch sales for multiple NFTs with Reown wallet
-- **NFT Collection Base URI Updater** - Update collection base URI with Reown wallet
-- **NFT Royalty Payment Tracker** - Track royalty payments in real-time with Reown wallet
-- **NFT Batch Transfer Validator** - Validate batch transfers before execution with Reown wallet
-
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
 - **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
@@ -433,26 +290,28 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Contract Function Args Decoder** - Decode function arguments with Reown wallet
 - **Contract Event Args Decoder** - Decode event arguments with Reown wallet
 - **Contract ABI Validator** - Validate contract ABIs with Reown wallet signatures
-- **Contract Code Coverage** - Calculate code coverage metrics with Reown wallet
-- **Contract Complexity Analyzer** - Analyze contract complexity with Reown wallet
-- **Contract Dead Code Detector** - Detect unused code with Reown wallet signatures
-- **Contract Gas Optimizer** - Optimize gas usage with Reown wallet
-- **Contract Slippage Calculator** - Calculate slippage with Reown wallet
-- **Contract Price Impact** - Calculate price impact with Reown wallet
-- **Contract Liquidity Checker** - Check liquidity pools with Reown wallet
-- **Contract Approval Checker** - Check token approvals with Reown wallet
-- **Contract Balance Tracker** - Track balances with Reown wallet
-- **Contract Nonce Tracker** - Track transaction nonces with Reown wallet
-- **Contract Timestamp Tracker** - Track block timestamps with Reown wallet
-- **Contract Event Indexer** - Index contract events with Reown wallet
-- **Contract Transaction History** - Track transaction history with Reown wallet
-- **Contract Log Analyzer** - Analyze contract logs with Reown wallet signatures
-- **Contract Trace Analyzer** - Analyze transaction traces with Reown wallet
-- **Contract Receipt Reader** - Read transaction receipts with Reown wallet
-- **Contract Block Scanner** - Scan blocks with Reown wallet
-- **Contract Address Validator** - Validate addresses with Reown wallet signatures
-- **Contract Signature Validator** - Validate signatures with Reown wallet
-- **Contract Calldata Decoder** - Decode calldata with Reown wallet signatures
+
+### Contract Execution & Management Tools (Reown Wallet Integrated)
+- **Contract Function Call Simulator** - Simulate function calls with Reown wallet signatures
+- **Contract Storage Slot Calculator** - Calculate storage slots with Reown wallet
+- **Contract Event Log Parser** - Parse event logs with Reown wallet monitoring
+- **Contract Transaction Builder** - Build transactions with Reown wallet signatures
+- **Contract Multi-Send Executor** - Execute multi-send operations with Reown wallet
+- **Contract Time Lock Manager** - Manage time locks with Reown wallet signatures
+- **Contract Whitelist Manager** - Manage whitelists with Reown wallet
+- **Contract Blacklist Manager** - Manage blacklists with Reown wallet
+- **Contract Rate Limiter** - Set rate limits with Reown wallet signatures
+- **Contract Circuit Breaker** - Manage circuit breakers with Reown wallet
+- **Contract Oracle Integration** - Integrate with oracles using Reown wallet
+- **Contract Price Feed Reader** - Read price feeds with Reown wallet
+- **Contract Token Swap Simulator** - Simulate token swaps with Reown wallet signatures
+- **Contract Liquidity Provider** - Provide liquidity with Reown wallet
+- **Contract Yield Farm Manager** - Manage yield farms with Reown wallet signatures
+- **Contract Staking Pool Manager** - Manage staking pools with Reown wallet
+- **Contract Reward Distributor** - Distribute rewards with Reown wallet signatures
+- **Contract Vesting Schedule Manager** - Manage vesting schedules with Reown wallet
+- **Contract Airdrop Claim Manager** - Claim airdrops with Reown wallet signatures
+- **Contract NFT Collection Manager** - Manage NFT collections with Reown wallet
 
 ## New Onchain Features (All Powered by Reown Wallet)
 
