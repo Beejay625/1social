@@ -328,6 +328,38 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Token Swap Simulator** - Simulate token swaps with price impact calculations via Reown wallet
 - **Gas Price Optimizer** - Optimize gas prices for transactions with Reown wallet
 
+### Newest 20 Onchain Features (All Powered by Reown Wallet)
+
+#### Token Management & Optimization
+- **Token Lock Manager** - Lock and unlock tokens with time-based restrictions using Reown wallet
+- **Token Vesting Scheduler** - Create and manage token vesting schedules with Reown wallet
+- **Token Reward Claim Optimizer** - Optimize reward claims for gas efficiency with Reown wallet
+- **Token Governance Vote Aggregator** - Aggregate and analyze governance votes with Reown wallet
+- **Token Staking Compound Scheduler** - Schedule automatic compound operations with Reown wallet
+- **Token Bridge Fee Calculator** - Calculate cross-chain bridge fees with Reown wallet
+- **Token Liquidity Pool Fee Optimizer** - Optimize liquidity pool fees with Reown wallet
+- **Token Governance Proposal Tracker V2** - Advanced proposal tracking with status updates via Reown wallet
+- **Token Staking Reward Booster V2** - Create reward boost multipliers with Reown wallet
+- **Token Burn Tax Distributor V2** - Distribute burn taxes to multiple recipients with Reown wallet
+- **Token Liquidity Migration Optimizer V2** - Optimize liquidity migrations between pools with Reown wallet
+- **Token Governance Quorum Tracker V2** - Track quorum requirements and progress with Reown wallet
+
+#### NFT Operations & Marketplace
+- **NFT Batch Burn Manager** - Batch burn multiple NFTs efficiently with Reown wallet
+- **NFT Metadata Batch Updater V2** - Update metadata for multiple NFTs in batch with Reown wallet
+- **NFT Collection Royalty Splitter** - Split royalties among multiple recipients with Reown wallet
+- **NFT Auction Time Extender** - Extend auction end times with Reown wallet
+- **NFT Marketplace Bulk Lister** - List multiple NFTs on marketplaces in bulk with Reown wallet
+- **NFT Rental Payment Tracker V2** - Track rental payments in real-time with Reown wallet
+- **NFT Collection Whitelist Manager V2** - Manage collection whitelists with Reown wallet
+- **NFT Marketplace Offer Aggregator** - Aggregate and compare marketplace offers with Reown wallet
+- **NFT Collection Supply Tracker** - Track collection supply and minting progress with Reown wallet
+- **NFT Auction Sniper Bot** - Configure automated auction sniping with Reown wallet
+- **NFT Metadata IPFS Pinner** - Pin NFT metadata to IPFS with Reown wallet verification
+- **NFT Collection Floor Price Monitor** - Monitor floor prices with alerts via Reown wallet
+
+All 20 features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
+
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
 - **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
