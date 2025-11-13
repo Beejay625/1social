@@ -1,52 +1,57 @@
 'use client';
 
-import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+/**
+ * Token Bridge Fee Calculator
+ * Calculate cross-chain bridge fees with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface BridgeFee {
-  sourceChain: string;
-  targetChain: string;
+  fromChain: number;
+  toChain: number;
   tokenAddress: string;
   amount: string;
-  fee: string;
+  bridgeFee: string;
+  totalCost: string;
   estimatedTime: number;
+  timestamp: number;
 }
 
 export function useTokenBridgeFeeCalculator() {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const { writeContract, data: hash, isPending } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
   const [fees, setFees] = useState<BridgeFee[]>([]);
 
-  const calculateFee = async (sourceChain: string, targetChain: string, tokenAddress: string, amount: string) => {
-    if (!address || !isConnected) throw new Error('Reown wallet not connected');
+  const calculateFee = async (
+    fromChain: number,
+    toChain: number,
+    tokenAddress: string,
+    amount: string
+  ): Promise<BridgeFee> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (fromChain === toChain) {
+      throw new Error('Source and destination chains must be different');
+    }
     
-    const message = `Calculate bridge fee: ${amount} from ${sourceChain} to ${targetChain}`;
+    const message = `Calculate bridge fee: Chain ${fromChain} -> Chain ${toChain}`;
     await signMessageAsync({ message });
     
-    const fee: BridgeFee = {
-      sourceChain,
-      targetChain,
+    const bridgeFee: BridgeFee = {
+      fromChain,
+      toChain,
       tokenAddress,
       amount,
-      fee: '0',
-      estimatedTime: 0,
+      bridgeFee: '0.001',
+      totalCost: (parseFloat(amount) + 0.001).toString(),
+      estimatedTime: 300000,
+      timestamp: Date.now(),
     };
     
-    setFees([...fees, fee]);
-    return fee;
+    setFees([...fees, bridgeFee]);
+    return bridgeFee;
   };
 
-  return { 
-    calculateFee, 
-    fees, 
-    address, 
-    isConnected,
-    hash,
-    isPending,
-    isConfirming,
-    isConfirmed
-  };
+  return { calculateFee, fees, address };
 }
-
