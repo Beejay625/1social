@@ -428,6 +428,34 @@ All features are fully integrated with **Reown AppKit** and use `useAccount`, `u
 
 All features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
 
+### Newest 20 Onchain Features (All Powered by Reown Wallet)
+
+#### Token Operations & Optimization
+- **Token Yield Optimizer** - Optimize token yields across multiple protocols with Reown wallet
+- **Token Holder Snapshot** - Create snapshots of token holders at specific blocks with Reown wallet
+- **Token Burn Scheduler V3** - Advanced burn scheduling with multiple strategies via Reown wallet
+- **Token Airdrop Creator V2** - Create token airdrops with enhanced features via Reown wallet
+- **Token Liquidity Calculator V2** - Calculate liquidity metrics with enhanced features via Reown wallet
+- **Token Governance Voter** - Cast votes on governance proposals with Reown wallet
+- **Token Staking Pool Manager V2** - Manage staking pools with enhanced features via Reown wallet
+- **Token Vesting Calculator V2** - Calculate vesting schedules with advanced features via Reown wallet
+- **Token Swap Router** - Route token swaps through optimal paths with Reown wallet
+- **Token Price Tracker V2** - Track token prices with historical data via Reown wallet
+
+#### NFT Operations & Marketplace
+- **NFT Marketplace Aggregator** - Aggregate listings from multiple NFT marketplaces with Reown wallet
+- **NFT Collection Deployer V2** - Deploy NFT collections with enhanced features via Reown wallet
+- **NFT Metadata Updater V3** - Update NFT metadata with advanced features via Reown wallet
+- **NFT Auction Creator V2** - Create NFT auctions with enhanced features via Reown wallet
+- **NFT Floor Price Tracker V2** - Track floor prices with historical data via Reown wallet
+- **NFT Collection Creator V2** - Create NFT collections with advanced features via Reown wallet
+- **NFT Marketplace Integrator** - Integrate with multiple NFT marketplaces via Reown wallet
+- **NFT Rarity Ranker** - Rank NFTs by rarity with Reown wallet
+- **NFT Collection Analytics V2** - Advanced collection analytics with Reown wallet
+- **NFT Marketplace Order Book** - Track buy and sell orders with Reown wallet
+
+All 20 features are fully integrated with **Reown AppKit** and use `useAccount` and `useSignMessage` hooks for seamless wallet connectivity and transaction signing.
+
 ### Latest 20 Onchain Features (All Powered by Reown Wallet)
 
 #### Token Operations & Management
