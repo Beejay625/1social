@@ -8,57 +8,62 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface Collection {
-  collectionId: string;
+export interface CollectionCreation {
+  creationId: string;
   name: string;
   symbol: string;
   maxSupply: number;
-  baseURI: string;
+  baseUri: string;
   royaltyPercentage: number;
-  contractAddress: string;
+  royaltyRecipient: string;
   createdBy: string;
+  contractAddress?: string;
   timestamp: number;
 }
 
 export function useNFTCollectionCreatorV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [collections, setCollections] = useState<Collection[]>([]);
+  const [creations, setCreations] = useState<CollectionCreation[]>([]);
 
-  const create = async (
+  const createCollection = async (
     name: string,
     symbol: string,
     maxSupply: number,
-    baseURI: string,
-    royaltyPercentage: number
-  ): Promise<Collection> => {
+    baseUri: string,
+    royaltyPercentage: number,
+    royaltyRecipient: string
+  ): Promise<CollectionCreation> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!name || name.trim() === '') {
-      throw new Error('Collection name is required');
+    if (maxSupply <= 0) {
+      throw new Error('Max supply must be greater than zero');
     }
     if (royaltyPercentage < 0 || royaltyPercentage > 100) {
       throw new Error('Royalty percentage must be between 0 and 100');
     }
+    if (!royaltyRecipient.startsWith('0x')) {
+      throw new Error('Invalid royalty recipient address format');
+    }
     
-    const message = `Create collection: ${name} (${symbol})`;
+    const message = `Create collection: ${name} (${symbol}) max supply ${maxSupply}`;
     await signMessageAsync({ message });
     
-    const collection: Collection = {
-      collectionId: `collection-${Date.now()}`,
+    const creation: CollectionCreation = {
+      creationId: `create-${Date.now()}`,
       name,
       symbol,
       maxSupply,
-      baseURI,
+      baseUri,
       royaltyPercentage,
-      contractAddress: `0x${Date.now().toString(16)}`,
+      royaltyRecipient,
       createdBy: address,
+      contractAddress: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
-    setCollections([...collections, collection]);
-    return collection;
+    setCreations([...creations, creation]);
+    return creation;
   };
 
-  return { create, collections, address };
+  return { createCollection, creations, address };
 }
-
