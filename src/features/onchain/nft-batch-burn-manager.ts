@@ -3,6 +3,9 @@
 import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { useState } from 'react';
 
+/**
+ * Batch burn information
+ */
 export interface BurnBatch {
   collectionAddress: string;
   tokenIds: string[];
@@ -10,6 +13,10 @@ export interface BurnBatch {
   timestamp: number;
 }
 
+/**
+ * Hook for batch burning NFTs with Reown wallet integration
+ * Efficiently burns multiple NFTs in a single operation
+ */
 export function useNFTBatchBurnManager() {
   const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
