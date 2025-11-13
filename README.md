@@ -433,6 +433,26 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Contract Function Args Decoder** - Decode function arguments with Reown wallet
 - **Contract Event Args Decoder** - Decode event arguments with Reown wallet
 - **Contract ABI Validator** - Validate contract ABIs with Reown wallet signatures
+- **Contract Code Coverage** - Calculate code coverage metrics with Reown wallet
+- **Contract Complexity Analyzer** - Analyze contract complexity with Reown wallet
+- **Contract Dead Code Detector** - Detect unused code with Reown wallet signatures
+- **Contract Gas Optimizer** - Optimize gas usage with Reown wallet
+- **Contract Slippage Calculator** - Calculate slippage with Reown wallet
+- **Contract Price Impact** - Calculate price impact with Reown wallet
+- **Contract Liquidity Checker** - Check liquidity pools with Reown wallet
+- **Contract Approval Checker** - Check token approvals with Reown wallet
+- **Contract Balance Tracker** - Track balances with Reown wallet
+- **Contract Nonce Tracker** - Track transaction nonces with Reown wallet
+- **Contract Timestamp Tracker** - Track block timestamps with Reown wallet
+- **Contract Event Indexer** - Index contract events with Reown wallet
+- **Contract Transaction History** - Track transaction history with Reown wallet
+- **Contract Log Analyzer** - Analyze contract logs with Reown wallet signatures
+- **Contract Trace Analyzer** - Analyze transaction traces with Reown wallet
+- **Contract Receipt Reader** - Read transaction receipts with Reown wallet
+- **Contract Block Scanner** - Scan blocks with Reown wallet
+- **Contract Address Validator** - Validate addresses with Reown wallet signatures
+- **Contract Signature Validator** - Validate signatures with Reown wallet
+- **Contract Calldata Decoder** - Decode calldata with Reown wallet signatures
 
 ## New Onchain Features (All Powered by Reown Wallet)
 
