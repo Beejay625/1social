@@ -456,6 +456,34 @@ All features are fully integrated with **Reown AppKit** and use `useAccount`, `u
 
 All 20 features are fully integrated with **Reown AppKit** and use `useAccount` and `useSignMessage` hooks for seamless wallet connectivity and transaction signing.
 
+### Additional 20 Onchain Features (All Powered by Reown Wallet)
+
+#### Token Operations & Optimization
+- **Token Yield Optimizer** - Optimize token yields across multiple protocols with Reown wallet
+- **Token Governance Voter** - Cast votes on governance proposals with Reown wallet
+- **Token Staking Pool Manager V2** - Manage staking pools with enhanced features via Reown wallet
+- **Token Vesting Calculator V2** - Calculate vesting schedules with advanced features via Reown wallet
+- **Token Swap Router** - Route token swaps through optimal paths with Reown wallet
+- **Token Price Tracker V2** - Track token prices with historical data via Reown wallet
+- **Token Burn Tracker V2** - Track token burns with enhanced features via Reown wallet
+- **Token Allowance Manager** - Manage token allowances with Reown wallet
+- **Token Transfer Fee Calculator** - Calculate transfer fees for token transactions with Reown wallet
+- **Token Reflection Tracker** - Track reflection rewards with Reown wallet
+
+#### NFT Operations & Marketplace
+- **NFT Collection Creator V2** - Create NFT collections with advanced features via Reown wallet
+- **NFT Marketplace Integrator** - Integrate with multiple NFT marketplaces via Reown wallet
+- **NFT Rarity Ranker** - Rank NFTs by rarity with Reown wallet
+- **NFT Collection Analytics V2** - Advanced collection analytics with Reown wallet
+- **NFT Marketplace Order Book** - Track buy and sell orders with Reown wallet
+- **NFT Lazy Mint Manager V2** - Manage lazy minting with enhanced features via Reown wallet
+- **NFT Batch Transfer Optimizer V3** - Optimize batch transfers with advanced features via Reown wallet
+- **NFT Collection Freeze Manager V2** - Freeze/unfreeze collections with enhanced features via Reown wallet
+- **NFT Rental Manager V2** - Manage NFT rentals with enhanced features via Reown wallet
+- **NFT Auction Bid Manager V2** - Manage auction bids with enhanced features via Reown wallet
+
+All 20 features are fully integrated with **Reown AppKit** and use `useAccount` and `useSignMessage` hooks for seamless wallet connectivity and transaction signing.
+
 ### Latest 20 Onchain Features (All Powered by Reown Wallet)
 
 #### Token Operations & Management
