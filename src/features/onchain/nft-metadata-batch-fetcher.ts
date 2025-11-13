@@ -23,6 +23,9 @@ export function useNFTMetadataBatchFetcher() {
 
   const fetchBatch = async (tokenIds: string[], collectionAddress: string): Promise<NFTMetadata[]> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (tokenIds.length === 0) {
+      throw new Error('At least one token ID is required');
+    }
     
     const message = `Fetch NFT metadata batch: ${collectionAddress} ${tokenIds.length} tokens`;
     await signMessageAsync({ message });
