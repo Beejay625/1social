@@ -10,11 +10,11 @@ import { useState } from 'react';
 
 export interface OfferAcceptance {
   acceptanceId: string;
+  offerId: string;
   tokenId: string;
   collectionAddress: string;
-  offerId: string;
   price: string;
-  currency: string;
+  acceptedBy: string;
   txHash: string;
   timestamp: number;
 }
@@ -25,27 +25,29 @@ export function useNFTMarketplaceOfferAcceptorV2() {
   const [acceptances, setAcceptances] = useState<OfferAcceptance[]>([]);
 
   const acceptOffer = async (
+    offerId: string,
     tokenId: string,
     collectionAddress: string,
-    offerId: string,
-    price: string,
-    currency: string
+    price: string
   ): Promise<OfferAcceptance> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
+    if (parseFloat(price) <= 0) {
+      throw new Error('Price must be greater than zero');
+    }
     
-    const message = `Accept offer: ${collectionAddress} #${tokenId} for ${price} ${currency}`;
+    const message = `Accept offer: ${offerId} for token ${tokenId}`;
     await signMessageAsync({ message });
     
     const acceptance: OfferAcceptance = {
       acceptanceId: `accept-${Date.now()}`,
+      offerId,
       tokenId,
       collectionAddress,
-      offerId,
       price,
-      currency,
+      acceptedBy: address,
       txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
@@ -56,4 +58,3 @@ export function useNFTMarketplaceOfferAcceptorV2() {
 
   return { acceptOffer, acceptances, address };
 }
-
