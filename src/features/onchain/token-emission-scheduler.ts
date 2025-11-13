@@ -11,12 +11,12 @@ import { useState } from 'react';
 export interface EmissionSchedule {
   scheduleId: string;
   tokenAddress: string;
-  emissionRate: string;
-  startTime: number;
-  endTime: number;
+  amount: string;
+  emissionTime: number;
   recipient: string;
-  createdBy: string;
+  interval?: number;
   active: boolean;
+  createdBy: string;
   timestamp: number;
 }
 
@@ -25,33 +25,33 @@ export function useTokenEmissionScheduler() {
   const { signMessageAsync } = useSignMessage();
   const [schedules, setSchedules] = useState<EmissionSchedule[]>([]);
 
-  const createSchedule = async (
+  const schedule = async (
     tokenAddress: string,
-    emissionRate: string,
-    startTime: number,
-    endTime: number,
-    recipient: string
+    amount: string,
+    emissionTime: number,
+    recipient: string,
+    interval?: number
   ): Promise<EmissionSchedule> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x') || !recipient.startsWith('0x')) {
-      throw new Error('Invalid address format');
+    if (!tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid token address format');
     }
-    if (endTime <= startTime) {
-      throw new Error('End time must be after start time');
+    if (!recipient.startsWith('0x')) {
+      throw new Error('Invalid recipient address format');
     }
     
-    const message = `Create emission schedule: ${tokenAddress} ${emissionRate}/second`;
+    const message = `Schedule emission: ${tokenAddress} ${amount} to ${recipient}`;
     await signMessageAsync({ message });
     
     const schedule: EmissionSchedule = {
-      scheduleId: `emission-${Date.now()}`,
+      scheduleId: `emit-${Date.now()}`,
       tokenAddress,
-      emissionRate,
-      startTime,
-      endTime,
+      amount,
+      emissionTime,
       recipient,
-      createdBy: address,
+      interval,
       active: true,
+      createdBy: address,
       timestamp: Date.now(),
     };
     
@@ -59,5 +59,5 @@ export function useTokenEmissionScheduler() {
     return schedule;
   };
 
-  return { createSchedule, schedules, address };
+  return { schedule, schedules, address };
 }
