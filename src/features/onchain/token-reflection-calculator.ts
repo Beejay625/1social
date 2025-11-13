@@ -11,9 +11,9 @@ import { useState } from 'react';
 export interface ReflectionCalculation {
   calculationId: string;
   tokenAddress: string;
-  holderBalance: string;
-  totalSupply: string;
-  reflectionPercentage: number;
+  holderAddress: string;
+  balance: string;
+  reflectionRate: number;
   reflectionAmount: string;
   timestamp: number;
 }
@@ -25,28 +25,30 @@ export function useTokenReflectionCalculator() {
 
   const calculate = async (
     tokenAddress: string,
-    holderBalance: string,
-    totalSupply: string,
-    reflectionPercentage: number
+    holderAddress: string,
+    balance: string,
+    reflectionRate: number
   ): Promise<ReflectionCalculation> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (reflectionPercentage < 0 || reflectionPercentage > 100) {
-      throw new Error('Reflection percentage must be between 0 and 100');
+    if (!tokenAddress.startsWith('0x') || !holderAddress.startsWith('0x')) {
+      throw new Error('Invalid address format');
+    }
+    if (reflectionRate < 0) {
+      throw new Error('Reflection rate cannot be negative');
     }
     
-    const message = `Calculate reflection: ${tokenAddress}`;
+    const message = `Calculate reflection: ${tokenAddress} for ${holderAddress}`;
     await signMessageAsync({ message });
     
-    const holderShare = (BigInt(holderBalance) * BigInt(10000)) / BigInt(totalSupply);
-    const reflectionAmount = (BigInt(totalSupply) * BigInt(Math.floor(reflectionPercentage * 100)) * holderShare) / BigInt(100000000);
+    const reflectionAmount = (parseFloat(balance) * reflectionRate / 100).toString();
     
     const calculation: ReflectionCalculation = {
-      calculationId: `calc-${Date.now()}`,
+      calculationId: `reflection-${Date.now()}`,
       tokenAddress,
-      holderBalance,
-      totalSupply,
-      reflectionPercentage,
-      reflectionAmount: reflectionAmount.toString(),
+      holderAddress,
+      balance,
+      reflectionRate,
+      reflectionAmount,
       timestamp: Date.now(),
     };
     
@@ -56,4 +58,3 @@ export function useTokenReflectionCalculator() {
 
   return { calculate, calculations, address };
 }
-
