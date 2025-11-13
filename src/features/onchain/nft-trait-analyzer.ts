@@ -12,8 +12,12 @@ export interface TraitAnalysis {
   analysisId: string;
   tokenId: string;
   collectionAddress: string;
-  traits: Record<string, any>;
-  rarityScore: number;
+  traits: Array<{
+    name: string;
+    value: string;
+    rarity: number;
+  }>;
+  overallRarity: number;
   timestamp: number;
 }
 
@@ -24,8 +28,7 @@ export function useNFTTraitAnalyzer() {
 
   const analyze = async (
     tokenId: string,
-    collectionAddress: string,
-    traits: Record<string, any>
+    collectionAddress: string
   ): Promise<TraitAnalysis> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
@@ -35,14 +38,12 @@ export function useNFTTraitAnalyzer() {
     const message = `Analyze traits: ${collectionAddress} #${tokenId}`;
     await signMessageAsync({ message });
     
-    const rarityScore = Math.random() * 100;
-    
     const analysis: TraitAnalysis = {
-      analysisId: `analysis-${Date.now()}`,
+      analysisId: `trait-${Date.now()}`,
       tokenId,
       collectionAddress,
-      traits,
-      rarityScore,
+      traits: [],
+      overallRarity: 0,
       timestamp: Date.now(),
     };
     
@@ -52,4 +53,3 @@ export function useNFTTraitAnalyzer() {
 
   return { analyze, analyses, address };
 }
-
