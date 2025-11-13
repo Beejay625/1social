@@ -29,6 +29,9 @@ export function useTokenSwapSimulator() {
     amountIn: string
   ): Promise<SwapSimulation> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (parseFloat(amountIn) <= 0) {
+      throw new Error('Amount must be greater than zero');
+    }
     
     const message = `Simulate swap: ${tokenIn} -> ${tokenOut}`;
     await signMessageAsync({ message });
