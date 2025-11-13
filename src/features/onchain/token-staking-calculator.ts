@@ -28,6 +28,9 @@ export function useTokenStakingCalculator() {
     durationDays: number
   ): Promise<StakingCalculation> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (parseFloat(principal) <= 0 || apy < 0 || durationDays <= 0) {
+      throw new Error('Principal, APY, and duration must be positive values');
+    }
     
     const message = `Calculate staking rewards: ${principal} at ${apy}% APY`;
     await signMessageAsync({ message });
