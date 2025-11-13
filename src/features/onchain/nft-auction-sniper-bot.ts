@@ -1,57 +1,58 @@
 'use client';
 
-import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+/**
+ * NFT Auction Sniper Bot
+ * Configure automated auction sniping with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface SnipeConfig {
+export interface SniperConfig {
+  configId: string;
   auctionId: string;
   tokenId: string;
-  collectionAddress: string;
   maxBid: string;
-  snipeAt: number;
-  active: boolean;
+  snipeTime: number;
+  enabled: boolean;
+  timestamp: number;
 }
 
 export function useNFTAuctionSniperBot() {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const { writeContract, data: hash, isPending } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
-  const [snipeConfigs, setSnipeConfigs] = useState<SnipeConfig[]>([]);
+  const [configs, setConfigs] = useState<SniperConfig[]>([]);
 
-  const createSnipe = async (auctionId: string, tokenId: string, collectionAddress: string, maxBid: string, snipeAt: number) => {
-    if (!address || !isConnected) throw new Error('Reown wallet not connected');
+  const configureSnipe = async (
+    auctionId: string,
+    tokenId: string,
+    maxBid: string,
+    snipeTime: number
+  ): Promise<SniperConfig> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (parseFloat(maxBid) <= 0) {
+      throw new Error('Max bid must be greater than zero');
+    }
+    if (snipeTime <= Date.now()) {
+      throw new Error('Snipe time must be in the future');
+    }
     
-    const message = `Create snipe config for auction ${auctionId} with max bid ${maxBid}`;
+    const message = `Configure snipe: Auction ${auctionId} max bid ${maxBid}`;
     await signMessageAsync({ message });
     
-    const config: SnipeConfig = {
+    const config: SniperConfig = {
+      configId: `snipe-${Date.now()}`,
       auctionId,
       tokenId,
-      collectionAddress,
       maxBid,
-      snipeAt,
-      active: true,
+      snipeTime,
+      enabled: true,
+      timestamp: Date.now(),
     };
     
-    setSnipeConfigs([...snipeConfigs, config]);
+    setConfigs([...configs, config]);
     return config;
   };
 
-  const toggleSnipe = (auctionId: string) => {
-    setSnipeConfigs(snipeConfigs.map(c => c.auctionId === auctionId ? { ...c, active: !c.active } : c));
-  };
-
-  return { 
-    createSnipe, 
-    toggleSnipe,
-    snipeConfigs, 
-    address, 
-    isConnected,
-    hash,
-    isPending,
-    isConfirming,
-    isConfirmed
-  };
+  return { configureSnipe, configs, address };
 }
-
