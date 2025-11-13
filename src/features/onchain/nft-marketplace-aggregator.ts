@@ -2,20 +2,20 @@
 
 /**
  * NFT Marketplace Aggregator
- * Aggregate listings from multiple NFT marketplaces with Reown wallet
+ * Aggregate listings from multiple marketplaces with Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface AggregatedListing {
+  aggregationId: string;
   tokenId: string;
   collectionAddress: string;
   listings: Array<{
     marketplace: string;
     price: string;
     currency: string;
-    seller: string;
   }>;
   bestPrice: {
     marketplace: string;
@@ -43,9 +43,8 @@ export function useNFTMarketplaceAggregator() {
     await signMessageAsync({ message });
     
     const listings = [
-      { marketplace: 'OpenSea', price: '1.5', currency: 'ETH', seller: '0x1' },
-      { marketplace: 'LooksRare', price: '1.4', currency: 'ETH', seller: '0x2' },
-      { marketplace: 'X2Y2', price: '1.45', currency: 'ETH', seller: '0x3' },
+      { marketplace: 'OpenSea', price: '1.5', currency: 'ETH' },
+      { marketplace: 'LooksRare', price: '1.4', currency: 'ETH' },
     ];
     
     const bestPrice = listings.reduce((best, listing) => 
@@ -53,6 +52,7 @@ export function useNFTMarketplaceAggregator() {
     );
     
     const aggregation: AggregatedListing = {
+      aggregationId: `agg-${Date.now()}`,
       tokenId,
       collectionAddress,
       listings,
@@ -70,4 +70,3 @@ export function useNFTMarketplaceAggregator() {
 
   return { aggregate, aggregations, address };
 }
-
