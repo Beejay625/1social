@@ -23,17 +23,20 @@ export function useTokenStakingLockManager() {
   const { signMessageAsync } = useSignMessage();
   const [locks, setLocks] = useState<StakingLock[]>([]);
 
-  const lockStake = async (
+  const createLock = async (
     stakingPool: string,
     amount: string,
     lockPeriod: number
   ): Promise<StakingLock> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!stakingPool.startsWith('0x')) {
+      throw new Error('Invalid staking pool address format');
+    }
     if (lockPeriod <= 0) {
       throw new Error('Lock period must be greater than zero');
     }
     
-    const message = `Lock stake: ${stakingPool} for ${lockPeriod}ms`;
+    const message = `Create staking lock: ${stakingPool} for ${lockPeriod} seconds`;
     await signMessageAsync({ message });
     
     const lock: StakingLock = {
@@ -41,7 +44,7 @@ export function useTokenStakingLockManager() {
       stakingPool,
       amount,
       lockPeriod,
-      unlockTime: Date.now() + lockPeriod,
+      unlockTime: Date.now() + (lockPeriod * 1000),
       lockedBy: address,
       timestamp: Date.now(),
     };
@@ -50,5 +53,5 @@ export function useTokenStakingLockManager() {
     return lock;
   };
 
-  return { lockStake, locks, address };
+  return { createLock, locks, address };
 }
