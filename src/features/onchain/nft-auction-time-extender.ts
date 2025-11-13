@@ -3,6 +3,9 @@
 import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { useState } from 'react';
 
+/**
+ * Auction extension information
+ */
 export interface AuctionExtension {
   auctionId: string;
   originalEndTime: number;
@@ -10,6 +13,10 @@ export interface AuctionExtension {
   extensionMinutes: number;
 }
 
+/**
+ * Hook for extending NFT auction end times with Reown wallet integration
+ * Allows extending auctions by specified minutes
+ */
 export function useNFTAuctionTimeExtender() {
   const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
