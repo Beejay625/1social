@@ -332,6 +332,32 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Social Content Analytics Onchain** - Record and track content analytics onchain
 - **Social Content Verification Onchain** - Verify content authenticity, copyright, fact-check, and source
 
+### Another 20 Onchain Social Features (All Powered by Reown Wallet)
+
+#### Token & Financial Features
+- **Social Token Liquidity Pools** - Create liquidity pools for token pairs with Reown wallet
+- **Social Token Reflections** - Claim reflection rewards with Reown wallet signatures
+- **Social Token Buybacks** - Execute token buybacks with Reown wallet
+- **Social Token Dividends** - Distribute dividends to token holders with Reown wallet
+- **Social Token Migration** - Migrate tokens between contracts with Reown wallet
+- **Social Token Tax Calculator** - Calculate buy/sell taxes with Reown wallet
+- **Social Token Freeze** - Freeze and unfreeze token addresses with Reown wallet
+- **Social Token Snapshot** - Create token holder snapshots at specific blocks
+- **Social Token Rewards Pool** - Create rewards pools for token holders
+- **Social Token Multisig** - Create multisig wallets for token management
+- **Social Token Price Oracle** - Update and track token prices onchain
+
+#### Content & Access Control Features
+- **Social Content Curation Voting** - Vote on content curation with weighted voting
+- **Social Content Collaboration** - Add collaborators with role and share management
+- **Social Content Auction** - Create auctions for content with bidding
+- **Social Content Subscription** - Subscribe to creators with recurring payments
+- **Social Content Whitelist** - Manage whitelisted addresses for content access
+- **Social Content Blacklist** - Manage blacklisted addresses for content access
+- **Social Content Timelock** - Create timelocked actions for content
+- **Social Content Escrow** - Create escrow accounts for content transactions
+- **Social Content Dispute Resolution** - Create and resolve content disputes
+
 #### Contract Management & Development
 - **Contract Upgrade Scheduler** - Schedule contract upgrades with Reown wallet
 - **Contract Rate Limiter** - Configure rate limits for contract calls with Reown wallet
