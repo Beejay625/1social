@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * Wallet Activity Monitor
+ * Monitors wallet activity including transfers, swaps, and mints using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState, useEffect } from 'react';
 
