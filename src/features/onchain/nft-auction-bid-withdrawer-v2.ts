@@ -11,8 +11,8 @@ import { useState } from 'react';
 export interface BidWithdrawal {
   withdrawalId: string;
   auctionId: string;
-  tokenId: string;
   bidAmount: string;
+  withdrawnBy: string;
   txHash: string;
   timestamp: number;
 }
@@ -24,7 +24,6 @@ export function useNFTAuctionBidWithdrawerV2() {
 
   const withdrawBid = async (
     auctionId: string,
-    tokenId: string,
     bidAmount: string
   ): Promise<BidWithdrawal> => {
     if (!address) throw new Error('Reown wallet not connected');
@@ -32,14 +31,14 @@ export function useNFTAuctionBidWithdrawerV2() {
       throw new Error('Bid amount must be greater than zero');
     }
     
-    const message = `Withdraw bid: Auction ${auctionId} for token ${tokenId}`;
+    const message = `Withdraw bid: Auction ${auctionId} amount ${bidAmount}`;
     await signMessageAsync({ message });
     
     const withdrawal: BidWithdrawal = {
       withdrawalId: `withdraw-${Date.now()}`,
       auctionId,
-      tokenId,
       bidAmount,
+      withdrawnBy: address,
       txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
@@ -50,4 +49,3 @@ export function useNFTAuctionBidWithdrawerV2() {
 
   return { withdrawBid, withdrawals, address };
 }
-
