@@ -11,9 +11,10 @@ import { useState } from 'react';
 export interface BatchMintOptimization {
   optimizationId: string;
   collectionAddress: string;
-  quantity: number;
-  optimizedGas: string;
-  estimatedSavings: string;
+  tokenCount: number;
+  optimizedBatchSize: number;
+  estimatedGasSavings: string;
+  recommendedStrategy: string;
   timestamp: number;
 }
 
@@ -24,25 +25,29 @@ export function useNFTBatchMintOptimizerV2() {
 
   const optimize = async (
     collectionAddress: string,
-    quantity: number
+    tokenCount: number
   ): Promise<BatchMintOptimization> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (quantity <= 0) {
-      throw new Error('Quantity must be greater than zero');
+    if (tokenCount <= 0) {
+      throw new Error('Token count must be greater than zero');
     }
     
-    const message = `Optimize batch mint: ${collectionAddress} ${quantity} NFTs`;
+    const message = `Optimize batch mint: ${collectionAddress} ${tokenCount} tokens`;
     await signMessageAsync({ message });
+    
+    const optimizedBatchSize = Math.min(tokenCount, 50);
+    const estimatedGasSavings = (tokenCount * 50000).toString();
     
     const optimization: BatchMintOptimization = {
       optimizationId: `opt-${Date.now()}`,
       collectionAddress,
-      quantity,
-      optimizedGas: '200000',
-      estimatedSavings: '50000',
+      tokenCount,
+      optimizedBatchSize,
+      estimatedGasSavings,
+      recommendedStrategy: 'batch',
       timestamp: Date.now(),
     };
     
