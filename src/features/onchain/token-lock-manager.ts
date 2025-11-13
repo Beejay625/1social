@@ -4,6 +4,9 @@ import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionRece
 import { useState } from 'react';
 import { parseAbi } from 'viem';
 
+/**
+ * Token lock information
+ */
 export interface TokenLock {
   tokenAddress: string;
   amount: string;
@@ -11,6 +14,10 @@ export interface TokenLock {
   lockId: string;
 }
 
+/**
+ * Hook for managing token locks with Reown wallet integration
+ * Allows locking and unlocking tokens with time-based restrictions
+ */
 export function useTokenLockManager() {
   const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
