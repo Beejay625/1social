@@ -40,3 +40,5 @@ export function useNFTTraitManager() {
 
   return { updateTraits, updates, address };
 }
+
+

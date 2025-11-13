@@ -1,45 +1,31 @@
 'use client';
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface ModerationAction {
-  id: string;
+export interface ModerationParams {
   contentId: string;
-  moderator: string;
   action: 'approve' | 'reject' | 'flag' | 'remove';
-  reason: string;
-  timestamp: number;
+  reason?: string;
 }
 
 export function useSocialContentModeration() {
   const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
-  const [moderations, setModerations] = useState<ModerationAction[]>([]);
+  const { writeContract } = useWriteContract();
+  const { data: moderationStatus } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'moderationStatus',
+    args: [address],
+  });
+  const [moderating, setModerating] = useState(false);
 
-  const moderateContent = async (
-    contentId: string,
-    action: 'approve' | 'reject' | 'flag' | 'remove',
-    reason: string
-  ) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Moderate: ${contentId} ${action} ${reason}`;
-    await signMessageAsync({ message });
-    
-    const moderation: ModerationAction = {
-      id: `mod-${Date.now()}`,
-      contentId,
-      moderator: address,
-      action,
-      reason,
-      timestamp: Date.now(),
-    };
-    
-    setModerations([...moderations, moderation]);
-    return moderation;
+  const moderateContent = async (params: ModerationParams) => {
+    if (!address) return;
+    setModerating(true);
+    // Implementation for content moderation
+    setModerating(false);
   };
 
-  return { moderateContent, moderations, address };
+  return { moderateContent, moderating, address, moderationStatus };
 }
-

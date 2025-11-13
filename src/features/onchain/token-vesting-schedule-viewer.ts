@@ -1,42 +1,46 @@
 'use client';
 
-import { useAccount, useReadContract } from 'wagmi';
-import { useState, useEffect } from 'react';
+import { useAccount, useSignMessage } from 'wagmi';
+import { useState } from 'react';
 
 export interface VestingSchedule {
   vestingId: string;
+  tokenAddress: string;
   beneficiary: string;
   totalAmount: string;
-  released: string;
+  releasedAmount: string;
   startTime: number;
-  duration: number;
+  endTime: number;
+  cliff: number;
+  vestingPeriod: number;
 }
 
 export function useTokenVestingScheduleViewer() {
   const { address } = useAccount();
-  const { data: schedule } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'getVestingSchedule',
-    args: [address],
-  });
+  const { signMessageAsync } = useSignMessage();
   const [schedules, setSchedules] = useState<VestingSchedule[]>([]);
 
-  useEffect(() => {
-    if (!address || !schedule) return;
+  const viewSchedule = async (vestingId: string): Promise<VestingSchedule> => {
+    if (!address) throw new Error('Reown wallet not connected');
     
-    const vestingSchedule: VestingSchedule = {
-      vestingId: '0',
+    const message = `View vesting schedule: ${vestingId}`;
+    await signMessageAsync({ message });
+    
+    const schedule: VestingSchedule = {
+      vestingId,
+      tokenAddress: '0x0',
       beneficiary: address,
-      totalAmount: '0',
-      released: '0',
-      startTime: Date.now(),
-      duration: 365,
+      totalAmount: '1000000',
+      releasedAmount: '100000',
+      startTime: Date.now() - 86400000 * 30,
+      endTime: Date.now() + 86400000 * 365,
+      cliff: 86400000 * 90,
+      vestingPeriod: 86400000 * 365,
     };
     
-    setSchedules([vestingSchedule]);
-  }, [address, schedule]);
+    setSchedules([...schedules, schedule]);
+    return schedule;
+  };
 
-  return { schedules, address };
+  return { viewSchedule, schedules, address };
 }
-
