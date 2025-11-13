@@ -27,6 +27,9 @@ export function useTokenBurnTracker() {
     txHash: string
   ): Promise<BurnRecord> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!tokenAddress.startsWith('0x') || !txHash.startsWith('0x')) {
+      throw new Error('Invalid address or transaction hash format');
+    }
     
     const message = `Track token burn: ${tokenAddress} ${amount}`;
     await signMessageAsync({ message });
