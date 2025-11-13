@@ -8,18 +8,18 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState, useEffect } from 'react';
 
-export interface Vote {
+export interface VoteStatus {
   proposalId: string;
   voter: string;
-  support: boolean;
-  weight: string;
+  vote: 'for' | 'against' | 'abstain';
+  votingPower: string;
   timestamp: number;
 }
 
 export function useTokenGovernanceVoteTracker(proposalId?: string) {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [votes, setVotes] = useState<Vote[]>([]);
+  const [votes, setVotes] = useState<VoteStatus[]>([]);
   const [isTracking, setIsTracking] = useState(false);
 
   const startTracking = async () => {
@@ -39,11 +39,11 @@ export function useTokenGovernanceVoteTracker(proposalId?: string) {
     if (!isTracking) return;
     
     const interval = setInterval(() => {
-      const vote: Vote = {
+      const vote: VoteStatus = {
         proposalId: proposalId || `prop-${Date.now()}`,
         voter: address || '0x0',
-        support: Math.random() > 0.5,
-        weight: '1000000',
+        vote: 'for',
+        votingPower: '1000000',
         timestamp: Date.now(),
       };
       
