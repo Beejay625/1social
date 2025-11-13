@@ -11,8 +11,8 @@ import { useState } from 'react';
 export interface ProposalExecution {
   executionId: string;
   proposalId: string;
-  txHash: string;
   executedBy: string;
+  txHash: string;
   timestamp: number;
 }
 
@@ -31,10 +31,10 @@ export function useTokenGovernanceProposalExecutor() {
     await signMessageAsync({ message });
     
     const execution: ProposalExecution = {
-      executionId: `exec-${Date.now()}`,
+      executionId: `execute-${Date.now()}`,
       proposalId,
-      txHash: `0x${Date.now().toString(16)}`,
       executedBy: address,
+      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
