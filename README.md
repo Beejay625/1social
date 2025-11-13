@@ -247,6 +247,30 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Wallet Activity Feed** - Get wallet activity feed with Reown wallet
 - **Token Swap Aggregator V2** - Advanced token swap routing with Reown wallet
 
+### New 20 Onchain Features (All Powered by Reown Wallet)
+
+#### Token Management & Fees
+- **Token Transfer Fee Manager** - Configure transfer fees with Reown wallet
+- **Token Staking Reward Booster** - Apply reward boost multipliers with Reown wallet
+- **Token Liquidity Pool Fee Collector** - Collect LP fees with Reown wallet
+- **Token Burn Tax Distributor** - Distribute burn tax to recipients with Reown wallet
+- **Token Staking Pool Reward Distributor** - Distribute staking pool rewards with Reown wallet
+- **Token Liquidity Pool Rebalancer** - Rebalance liquidity pools with Reown wallet
+- **Token Governance Quorum Calculator** - Calculate quorum requirements with Reown wallet
+- **Token Governance Proposal Executor** - Execute approved proposals with Reown wallet
+- **Token Vesting Early Release** - Early release with penalty via Reown wallet
+
+#### NFT Marketplace & Royalties
+- **NFT Rental Payment Tracker** - Track rental payments in real-time with Reown wallet
+- **NFT Batch Listing Optimizer** - Optimize batch listings for gas efficiency with Reown wallet
+- **NFT Royalty Payment Splitter** - Split royalty payments among recipients with Reown wallet
+- **NFT Collection Royalty Manager** - Manage collection-level royalties with Reown wallet
+- **NFT Marketplace Offer Acceptor** - Accept marketplace offers with Reown wallet
+- **NFT Batch Approval Revoker** - Batch revoke NFT approvals with Reown wallet
+- **NFT Auction Bid Withdrawer** - Withdraw auction bids with Reown wallet
+- **NFT Collection Supply Manager** - Manage collection max supply with Reown wallet
+- **NFT Marketplace Fee Collector** - Collect marketplace fees with Reown wallet
+
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
 - **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
@@ -290,28 +314,6 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **Contract Function Args Decoder** - Decode function arguments with Reown wallet
 - **Contract Event Args Decoder** - Decode event arguments with Reown wallet
 - **Contract ABI Validator** - Validate contract ABIs with Reown wallet signatures
-
-### Contract Execution & Management Tools (Reown Wallet Integrated)
-- **Contract Function Call Simulator** - Simulate function calls with Reown wallet signatures
-- **Contract Storage Slot Calculator** - Calculate storage slots with Reown wallet
-- **Contract Event Log Parser** - Parse event logs with Reown wallet monitoring
-- **Contract Transaction Builder** - Build transactions with Reown wallet signatures
-- **Contract Multi-Send Executor** - Execute multi-send operations with Reown wallet
-- **Contract Time Lock Manager** - Manage time locks with Reown wallet signatures
-- **Contract Whitelist Manager** - Manage whitelists with Reown wallet
-- **Contract Blacklist Manager** - Manage blacklists with Reown wallet
-- **Contract Rate Limiter** - Set rate limits with Reown wallet signatures
-- **Contract Circuit Breaker** - Manage circuit breakers with Reown wallet
-- **Contract Oracle Integration** - Integrate with oracles using Reown wallet
-- **Contract Price Feed Reader** - Read price feeds with Reown wallet
-- **Contract Token Swap Simulator** - Simulate token swaps with Reown wallet signatures
-- **Contract Liquidity Provider** - Provide liquidity with Reown wallet
-- **Contract Yield Farm Manager** - Manage yield farms with Reown wallet signatures
-- **Contract Staking Pool Manager** - Manage staking pools with Reown wallet
-- **Contract Reward Distributor** - Distribute rewards with Reown wallet signatures
-- **Contract Vesting Schedule Manager** - Manage vesting schedules with Reown wallet
-- **Contract Airdrop Claim Manager** - Claim airdrops with Reown wallet signatures
-- **Contract NFT Collection Manager** - Manage NFT collections with Reown wallet
 
 ## New Onchain Features (All Powered by Reown Wallet)
 
