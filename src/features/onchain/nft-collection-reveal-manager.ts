@@ -12,6 +12,7 @@ export interface Reveal {
   revealId: string;
   collectionAddress: string;
   revealTime: number;
+  baseUri: string;
   revealedBy: string;
   timestamp: number;
 }
@@ -23,7 +24,8 @@ export function useNFTCollectionRevealManager() {
 
   const scheduleReveal = async (
     collectionAddress: string,
-    revealTime: number
+    revealTime: number,
+    baseUri: string
   ): Promise<Reveal> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
@@ -40,6 +42,7 @@ export function useNFTCollectionRevealManager() {
       revealId: `reveal-${Date.now()}`,
       collectionAddress,
       revealTime,
+      baseUri,
       revealedBy: address,
       timestamp: Date.now(),
     };
@@ -50,4 +53,3 @@ export function useNFTCollectionRevealManager() {
 
   return { scheduleReveal, reveals, address };
 }
-
