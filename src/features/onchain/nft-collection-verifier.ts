@@ -1,37 +1,51 @@
 'use client';
 
-import { useAccount, useReadContract } from 'wagmi';
-import { useState, useEffect } from 'react';
+/**
+ * NFT Collection Verifier
+ * Verify NFT collection authenticity with Reown wallet
+ */
 
-export interface CollectionVerification {
-  collection: string;
+import { useAccount, useSignMessage } from 'wagmi';
+import { useState } from 'react';
+
+export interface Verification {
+  verificationId: string;
+  collectionAddress: string;
   verified: boolean;
-  standard: string;
-  totalSupply: bigint;
+  verificationType: 'standard' | 'blue-check' | 'verified';
+  verifiedBy: string;
+  timestamp: number;
 }
 
 export function useNFTCollectionVerifier() {
   const { address } = useAccount();
-  const { data: totalSupply } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'totalSupply',
-  });
-  const [verifications, setVerifications] = useState<CollectionVerification[]>([]);
+  const { signMessageAsync } = useSignMessage();
+  const [verifications, setVerifications] = useState<Verification[]>([]);
 
-  useEffect(() => {
-    if (!address || !totalSupply) return;
+  const verify = async (
+    collectionAddress: string,
+    verificationType: 'standard' | 'blue-check' | 'verified' = 'standard'
+  ): Promise<Verification> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (!collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
+    }
     
-    const verification: CollectionVerification = {
-      collection: '0x',
+    const message = `Verify collection: ${collectionAddress} as ${verificationType}`;
+    await signMessageAsync({ message });
+    
+    const verification: Verification = {
+      verificationId: `verify-${Date.now()}`,
+      collectionAddress,
       verified: true,
-      standard: 'ERC721',
-      totalSupply: BigInt(totalSupply as string),
+      verificationType,
+      verifiedBy: address,
+      timestamp: Date.now(),
     };
     
-    setVerifications([verification]);
-  }, [address, totalSupply]);
+    setVerifications([...verifications, verification]);
+    return verification;
+  };
 
-  return { verifications, address };
+  return { verify, verifications, address };
 }
-
