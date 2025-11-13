@@ -8,26 +8,26 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface DelegationStatus {
+export interface DelegationTracking {
+  trackingId: string;
   tokenAddress: string;
   delegator: string;
   delegatee: string;
-  amount: string;
-  expiresAt: number;
-  isActive: boolean;
+  votingPower: string;
   timestamp: number;
 }
 
 export function useTokenGovernanceDelegationTracker() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [delegations, setDelegations] = useState<DelegationStatus[]>([]);
+  const [trackings, setTrackings] = useState<DelegationTracking[]>([]);
 
   const trackDelegation = async (
     tokenAddress: string,
     delegator: string,
-    delegatee: string
-  ): Promise<DelegationStatus> => {
+    delegatee: string,
+    votingPower: string
+  ): Promise<DelegationTracking> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!tokenAddress.startsWith('0x') || !delegator.startsWith('0x') || !delegatee.startsWith('0x')) {
       throw new Error('Invalid address format');
@@ -36,20 +36,18 @@ export function useTokenGovernanceDelegationTracker() {
     const message = `Track delegation: ${tokenAddress} from ${delegator} to ${delegatee}`;
     await signMessageAsync({ message });
     
-    const delegation: DelegationStatus = {
+    const tracking: DelegationTracking = {
+      trackingId: `track-${Date.now()}`,
       tokenAddress,
       delegator,
       delegatee,
-      amount: '1000000',
-      expiresAt: Date.now() + 86400000 * 365,
-      isActive: true,
+      votingPower,
       timestamp: Date.now(),
     };
     
-    setDelegations([...delegations, delegation]);
-    return delegation;
+    setTrackings([...trackings, tracking]);
+    return tracking;
   };
 
-  return { trackDelegation, delegations, address };
+  return { trackDelegation, trackings, address };
 }
-
