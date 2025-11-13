@@ -25,6 +25,9 @@ export function useNFTCollectionStatsAggregator() {
 
   const aggregateStats = async (collectionAddress: string): Promise<CollectionStats> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
+    }
     
     const message = `Aggregate collection stats: ${collectionAddress}`;
     await signMessageAsync({ message });
