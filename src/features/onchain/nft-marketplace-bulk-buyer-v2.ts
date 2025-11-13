@@ -10,16 +10,15 @@ import { useState } from 'react';
 
 export interface BulkPurchase {
   purchaseId: string;
-  marketplace: string;
-  listings: Array<{
+  items: Array<{
     tokenId: string;
     collectionAddress: string;
     price: string;
+    currency: string;
   }>;
   totalPrice: string;
-  currency: string;
-  purchasedBy: string;
   txHash: string;
+  purchasedBy: string;
   timestamp: number;
 }
 
@@ -28,35 +27,30 @@ export function useNFTMarketplaceBulkBuyerV2() {
   const { signMessageAsync } = useSignMessage();
   const [purchases, setPurchases] = useState<BulkPurchase[]>([]);
 
-  const bulkBuy = async (
-    marketplace: string,
-    listings: Array<{
+  const buy = async (
+    items: Array<{
       tokenId: string;
       collectionAddress: string;
       price: string;
-    }>,
-    currency: string
+      currency: string;
+    }>
   ): Promise<BulkPurchase> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (listings.length === 0) {
-      throw new Error('At least one listing is required');
+    if (items.length === 0) {
+      throw new Error('At least one item is required');
     }
     
-    const totalPrice = listings.reduce((sum, listing) => 
-      (parseFloat(sum) + parseFloat(listing.price)).toString(), '0'
-    );
-    
-    const message = `Bulk buy: ${marketplace} ${listings.length} NFTs for ${totalPrice} ${currency}`;
+    const message = `Bulk buy: ${items.length} NFTs`;
     await signMessageAsync({ message });
+    
+    const totalPrice = items.reduce((sum, item) => sum + parseFloat(item.price), 0).toString();
     
     const purchase: BulkPurchase = {
       purchaseId: `buy-${Date.now()}`,
-      marketplace,
-      listings,
+      items,
       totalPrice,
-      currency,
-      purchasedBy: address,
       txHash: `0x${Date.now().toString(16)}`,
+      purchasedBy: address,
       timestamp: Date.now(),
     };
     
@@ -64,5 +58,5 @@ export function useNFTMarketplaceBulkBuyerV2() {
     return purchase;
   };
 
-  return { bulkBuy, purchases, address };
+  return { buy, purchases, address };
 }
