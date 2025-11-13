@@ -8,25 +8,29 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface RarityRank {
-  tokenId: string;
+export interface RarityRanking {
+  rankingId: string;
   collectionAddress: string;
+  tokenId: string;
   rarityScore: number;
   rank: number;
-  traits: Record<string, any>;
+  traits: Array<{
+    name: string;
+    value: string;
+    rarity: number;
+  }>;
   timestamp: number;
 }
 
 export function useNFTRarityRanker() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [ranks, setRanks] = useState<RarityRank[]>([]);
+  const [rankings, setRankings] = useState<RarityRanking[]>([]);
 
   const rank = async (
-    tokenId: string,
     collectionAddress: string,
-    traits: Record<string, any>
-  ): Promise<RarityRank> => {
+    tokenId: string
+  ): Promise<RarityRanking> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
@@ -35,22 +39,19 @@ export function useNFTRarityRanker() {
     const message = `Rank rarity: ${collectionAddress} #${tokenId}`;
     await signMessageAsync({ message });
     
-    const rarityScore = Math.random() * 100;
-    const rank = Math.floor(Math.random() * 10000) + 1;
-    
-    const rarityRank: RarityRank = {
-      tokenId,
+    const ranking: RarityRanking = {
+      rankingId: `rank-${Date.now()}`,
       collectionAddress,
-      rarityScore,
-      rank,
-      traits,
+      tokenId,
+      rarityScore: 0,
+      rank: 0,
+      traits: [],
       timestamp: Date.now(),
     };
     
-    setRanks([...ranks, rarityRank]);
-    return rarityRank;
+    setRankings([...rankings, ranking]);
+    return ranking;
   };
 
-  return { rank, ranks, address };
+  return { rank, rankings, address };
 }
-
