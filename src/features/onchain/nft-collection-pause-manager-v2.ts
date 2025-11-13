@@ -9,8 +9,9 @@ import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface PauseStatus {
+  statusId: string;
   collectionAddress: string;
-  isPaused: boolean;
+  paused: boolean;
   pausedBy: string;
   reason?: string;
   timestamp: number;
@@ -19,7 +20,7 @@ export interface PauseStatus {
 export function useNFTCollectionPauseManagerV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [pauseStatuses, setPauseStatuses] = useState<PauseStatus[]>([]);
+  const [statuses, setStatuses] = useState<PauseStatus[]>([]);
 
   const pause = async (collectionAddress: string, reason?: string): Promise<PauseStatus> => {
     if (!address) throw new Error('Reown wallet not connected');
@@ -31,14 +32,15 @@ export function useNFTCollectionPauseManagerV2() {
     await signMessageAsync({ message });
     
     const status: PauseStatus = {
+      statusId: `pause-${Date.now()}`,
       collectionAddress,
-      isPaused: true,
+      paused: true,
       pausedBy: address,
       reason,
       timestamp: Date.now(),
     };
     
-    setPauseStatuses([...pauseStatuses, status]);
+    setStatuses([...statuses, status]);
     return status;
   };
 
@@ -49,16 +51,16 @@ export function useNFTCollectionPauseManagerV2() {
     await signMessageAsync({ message });
     
     const status: PauseStatus = {
+      statusId: `unpause-${Date.now()}`,
       collectionAddress,
-      isPaused: false,
+      paused: false,
       pausedBy: address,
       timestamp: Date.now(),
     };
     
-    setPauseStatuses([...pauseStatuses, status]);
+    setStatuses([...statuses, status]);
     return status;
   };
 
-  return { pause, unpause, pauseStatuses, address };
+  return { pause, unpause, statuses, address };
 }
-
