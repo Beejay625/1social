@@ -10,10 +10,11 @@ import { useState } from 'react';
 
 export interface EarlyRelease {
   releaseId: string;
-  vestingId: string;
+  vestingScheduleId: string;
+  tokenAddress: string;
   amount: string;
   penalty: string;
-  netAmount: string;
+  releasedBy: string;
   timestamp: number;
 }
 
@@ -23,28 +24,29 @@ export function useTokenVestingEarlyRelease() {
   const [releases, setReleases] = useState<EarlyRelease[]>([]);
 
   const releaseEarly = async (
-    vestingId: string,
+    vestingScheduleId: string,
+    tokenAddress: string,
     amount: string,
-    penaltyPercentage: number
+    penalty: string
   ): Promise<EarlyRelease> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (penaltyPercentage < 0 || penaltyPercentage > 100) {
-      throw new Error('Penalty percentage must be between 0 and 100');
+    if (!tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid token address format');
+    }
+    if (parseFloat(penalty) < 0) {
+      throw new Error('Penalty cannot be negative');
     }
     
-    const message = `Early release: ${vestingId} with ${penaltyPercentage}% penalty`;
+    const message = `Early release: ${vestingScheduleId} with ${penalty} penalty`;
     await signMessageAsync({ message });
-    
-    const amountNum = parseFloat(amount);
-    const penalty = (amountNum * penaltyPercentage / 100).toString();
-    const netAmount = (amountNum - parseFloat(penalty)).toString();
     
     const release: EarlyRelease = {
       releaseId: `release-${Date.now()}`,
-      vestingId,
+      vestingScheduleId,
+      tokenAddress,
       amount,
       penalty,
-      netAmount,
+      releasedBy: address,
       timestamp: Date.now(),
     };
     
