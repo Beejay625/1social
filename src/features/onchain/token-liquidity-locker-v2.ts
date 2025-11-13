@@ -3,6 +3,9 @@
 import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { useState } from 'react';
 
+/**
+ * Liquidity lock information
+ */
 export interface LiquidityLock {
   poolAddress: string;
   tokenA: string;
@@ -13,6 +16,10 @@ export interface LiquidityLock {
   lockId: string;
 }
 
+/**
+ * Hook for locking liquidity in pools with Reown wallet integration
+ * Locks liquidity positions until a specified time
+ */
 export function useTokenLiquidityLockerV2() {
   const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
