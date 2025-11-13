@@ -1,33 +1,55 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+/**
+ * Token Emission Scheduler
+ * Schedule token emissions with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface EmissionSchedule {
+  scheduleId: string;
   tokenAddress: string;
+  amount: string;
   recipient: string;
-  amount: bigint;
-  startTime: number;
-  duration: number;
+  emissionTime: number;
+  completed: boolean;
+  timestamp: number;
 }
 
 export function useTokenEmissionScheduler() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const { data: emissionRate } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'emissionRate',
-  });
-  const [scheduling, setScheduling] = useState(false);
+  const { signMessageAsync } = useSignMessage();
+  const [schedules, setSchedules] = useState<EmissionSchedule[]>([]);
 
-  const scheduleEmission = async (schedule: EmissionSchedule) => {
-    if (!address) return;
-    setScheduling(true);
-    // Implementation for scheduling emissions
-    setScheduling(false);
+  const scheduleEmission = async (
+    tokenAddress: string,
+    amount: string,
+    recipient: string,
+    emissionTime: number
+  ): Promise<EmissionSchedule> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (!tokenAddress.startsWith('0x') || !recipient.startsWith('0x')) {
+      throw new Error('Invalid address format');
+    }
+    
+    const message = `Schedule emission: ${tokenAddress} to ${recipient}`;
+    await signMessageAsync({ message });
+    
+    const schedule: EmissionSchedule = {
+      scheduleId: `emit-${Date.now()}`,
+      tokenAddress,
+      amount,
+      recipient,
+      emissionTime,
+      completed: false,
+      timestamp: Date.now(),
+    };
+    
+    setSchedules([...schedules, schedule]);
+    return schedule;
   };
 
-  return { scheduleEmission, scheduling, address, emissionRate };
+  return { scheduleEmission, schedules, address };
 }
-
