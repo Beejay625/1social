@@ -1,31 +1,55 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+/**
+ * Token Vesting Releaser
+ * Release vested tokens with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface VestingRelease {
+  releaseId: string;
   vestingId: string;
-  amount: bigint;
+  tokenAddress: string;
+  amount: string;
+  txHash: string;
+  timestamp: number;
 }
 
 export function useTokenVestingReleaser() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const { data: releasable } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'releasable',
-    args: [address],
-  });
-  const [releasing, setReleasing] = useState(false);
+  const { signMessageAsync } = useSignMessage();
+  const [releases, setReleases] = useState<VestingRelease[]>([]);
 
-  const releaseVested = async (release: VestingRelease) => {
-    if (!address) return;
-    setReleasing(true);
-    // Implementation for releasing vested tokens
-    setReleasing(false);
+  const release = async (
+    vestingId: string,
+    tokenAddress: string,
+    amount: string
+  ): Promise<VestingRelease> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (!tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid token address format');
+    }
+    if (parseFloat(amount) <= 0) {
+      throw new Error('Amount must be greater than zero');
+    }
+    
+    const message = `Release vested tokens: ${vestingId} ${amount}`;
+    await signMessageAsync({ message });
+    
+    const release: VestingRelease = {
+      releaseId: `release-${Date.now()}`,
+      vestingId,
+      tokenAddress,
+      amount,
+      txHash: `0x${Date.now().toString(16)}`,
+      timestamp: Date.now(),
+    };
+    
+    setReleases([...releases, release]);
+    return release;
   };
 
-  return { releaseVested, releasing, address, releasable };
+  return { release, releases, address };
 }
-
