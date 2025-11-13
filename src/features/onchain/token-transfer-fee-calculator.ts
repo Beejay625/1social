@@ -27,6 +27,9 @@ export function useTokenTransferFeeCalculator() {
     feePercentage: number
   ): Promise<TransferFee> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (feePercentage < 0 || feePercentage > 100) {
+      throw new Error('Fee percentage must be between 0 and 100');
+    }
     
     const message = `Calculate transfer fee: ${tokenAddress} ${amount}`;
     await signMessageAsync({ message });
