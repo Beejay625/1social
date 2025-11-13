@@ -8,26 +8,27 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface RebalanceOperation {
+export interface Rebalance {
   rebalanceId: string;
   poolAddress: string;
   targetRatio: number;
   currentRatio: number;
-  tokenAAmount: string;
-  tokenBAmount: string;
+  tokenA: string;
+  tokenB: string;
   timestamp: number;
 }
 
 export function useTokenLiquidityPoolRebalancerV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [rebalances, setRebalances] = useState<RebalanceOperation[]>([]);
+  const [rebalances, setRebalances] = useState<Rebalance[]>([]);
 
   const rebalance = async (
     poolAddress: string,
     targetRatio: number,
-    currentRatio: number
-  ): Promise<RebalanceOperation> => {
+    tokenA: string,
+    tokenB: string
+  ): Promise<Rebalance> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!poolAddress.startsWith('0x')) {
       throw new Error('Invalid pool address format');
@@ -36,16 +37,16 @@ export function useTokenLiquidityPoolRebalancerV2() {
       throw new Error('Target ratio must be between 0 and 1');
     }
     
-    const message = `Rebalance pool: ${poolAddress} to ${targetRatio} ratio`;
+    const message = `Rebalance pool: ${poolAddress} to ${targetRatio * 100}% ratio`;
     await signMessageAsync({ message });
     
-    const rebalance: RebalanceOperation = {
-      rebalanceId: `rebal-${Date.now()}`,
+    const rebalance: Rebalance = {
+      rebalanceId: `rebalance-${Date.now()}`,
       poolAddress,
       targetRatio,
-      currentRatio,
-      tokenAAmount: '1000',
-      tokenBAmount: '2000',
+      currentRatio: 0.5,
+      tokenA,
+      tokenB,
       timestamp: Date.now(),
     };
     
@@ -55,4 +56,3 @@ export function useTokenLiquidityPoolRebalancerV2() {
 
   return { rebalance, rebalances, address };
 }
-
