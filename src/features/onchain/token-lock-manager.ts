@@ -1,42 +1,58 @@
 'use client';
 
-import { useAccount, useWriteContract } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { useState } from 'react';
+import { parseAbi } from 'viem';
 
-export interface Lock {
-  id: string;
-  token: string;
-  amount: bigint;
+export interface TokenLock {
+  tokenAddress: string;
+  amount: string;
   unlockTime: number;
-  locked: boolean;
+  lockId: string;
 }
 
 export function useTokenLockManager() {
-  const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const [locks, setLocks] = useState<Lock[]>([]);
+  const { address, isConnected } = useAccount();
+  const { signMessageAsync } = useSignMessage();
+  const { writeContract, data: hash, isPending } = useWriteContract();
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
+  const [locks, setLocks] = useState<TokenLock[]>([]);
 
-  const createLock = async (token: string, amount: string, unlockTime: number) => {
-    if (!address) throw new Error('Reown wallet not connected');
+  const lockTokens = async (tokenAddress: string, amount: string, unlockTime: number) => {
+    if (!address || !isConnected) throw new Error('Reown wallet not connected');
     
-    const txHash = await writeContract({
-      address: token as `0x${string}`,
-      abi: [],
-      functionName: 'lock',
-      args: [BigInt(amount), unlockTime],
-    });
-
-    const lock: Lock = {
-      id: txHash || '',
-      token,
-      amount: BigInt(amount),
+    const message = `Lock ${amount} tokens until ${new Date(unlockTime).toISOString()}`;
+    await signMessageAsync({ message });
+    
+    const lock: TokenLock = {
+      tokenAddress,
+      amount,
       unlockTime,
-      locked: true,
+      lockId: `lock_${Date.now()}`,
     };
-
+    
     setLocks([...locks, lock]);
-    return txHash;
+    return lock;
   };
 
-  return { createLock, locks, address };
+  const unlockTokens = async (lockId: string) => {
+    if (!address || !isConnected) throw new Error('Reown wallet not connected');
+    
+    const message = `Unlock tokens: ${lockId}`;
+    await signMessageAsync({ message });
+    
+    setLocks(locks.filter(lock => lock.lockId !== lockId));
+  };
+
+  return { 
+    lockTokens, 
+    unlockTokens, 
+    locks, 
+    address, 
+    isConnected,
+    hash,
+    isPending,
+    isConfirming,
+    isConfirmed
+  };
 }
