@@ -1,46 +1,60 @@
 'use client';
 
-import { useAccount, useReadContract } from 'wagmi';
+/**
+ * Token Governance Quorum Calculator
+ * Calculate quorum requirements with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface QuorumInfo {
+export interface QuorumCalculation {
   proposalId: string;
-  currentVotes: bigint;
-  requiredVotes: bigint;
-  percentage: number;
-  met: boolean;
+  totalSupply: string;
+  quorumPercentage: number;
+  requiredQuorum: string;
+  currentVotes: string;
+  remainingVotes: string;
+  timestamp: number;
 }
 
 export function useTokenGovernanceQuorumCalculator() {
   const { address } = useAccount();
-  const { data: currentVotes } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'proposalVotes',
-    args: [BigInt(1)],
-  });
-  const { data: quorum } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'quorum',
-  });
-  const [quorumInfo, setQuorumInfo] = useState<QuorumInfo | null>(null);
+  const { signMessageAsync } = useSignMessage();
+  const [calculations, setCalculations] = useState<QuorumCalculation[]>([]);
 
-  const calculateQuorum = async (proposalId: string) => {
-    if (!address) return;
-    const votes = currentVotes || BigInt(0);
-    const required = quorum || BigInt(1);
-    const percentage = Number((votes * BigInt(10000)) / required) / 100;
+  const calculate = async (
+    proposalId: string,
+    totalSupply: string,
+    quorumPercentage: number,
+    currentVotes: string
+  ): Promise<QuorumCalculation> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (quorumPercentage < 0 || quorumPercentage > 100) {
+      throw new Error('Quorum percentage must be between 0 and 100');
+    }
     
-    setQuorumInfo({
+    const message = `Calculate quorum: ${proposalId}`;
+    await signMessageAsync({ message });
+    
+    const requiredQuorum = (BigInt(totalSupply) * BigInt(Math.floor(quorumPercentage * 100))) / BigInt(10000);
+    const remainingVotes = requiredQuorum > BigInt(currentVotes) 
+      ? (requiredQuorum - BigInt(currentVotes)).toString()
+      : '0';
+    
+    const calculation: QuorumCalculation = {
       proposalId,
-      currentVotes: votes,
-      requiredVotes: required,
-      percentage,
-      met: votes >= required,
-    });
+      totalSupply,
+      quorumPercentage,
+      requiredQuorum: requiredQuorum.toString(),
+      currentVotes,
+      remainingVotes,
+      timestamp: Date.now(),
+    };
+    
+    setCalculations([...calculations, calculation]);
+    return calculation;
   };
 
-  return { calculateQuorum, quorumInfo, address, currentVotes, quorum };
+  return { calculate, calculations, address };
 }
-
