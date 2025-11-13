@@ -1,13 +1,49 @@
 'use client';
-import { useAccount, useWatchContractEvent } from 'wagmi';
+
+import { useAccount, useSignMessage } from 'wagmi';
+import { useState } from 'react';
+
+export interface BurnRecord {
+  tokenAddress: string;
+  amount: string;
+  txHash: string;
+  timestamp: number;
+  burner: string;
+}
+
 export function useTokenBurnTracker() {
-  const { address, isConnected } = useAccount();
-  useWatchContractEvent({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    eventName: 'Transfer',
-    onLogs: (logs) => console.log('Burn events:', logs),
-    enabled: isConnected && !!address,
-  });
-  return { isConnected, address };
+  const { address } = useAccount();
+  const { signMessageAsync } = useSignMessage();
+  const [burns, setBurns] = useState<BurnRecord[]>([]);
+
+  const trackBurn = async (
+    tokenAddress: string,
+    amount: string,
+    txHash: string
+  ): Promise<BurnRecord> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `Track token burn: ${tokenAddress} ${amount}`;
+    await signMessageAsync({ message });
+    
+    const burn: BurnRecord = {
+      tokenAddress,
+      amount,
+      txHash,
+      timestamp: Date.now(),
+      burner: address,
+    };
+    
+    setBurns([...burns, burn]);
+    return burn;
+  };
+
+  const getTotalBurned = (tokenAddress: string): string => {
+    return burns
+      .filter((b) => b.tokenAddress.toLowerCase() === tokenAddress.toLowerCase())
+      .reduce((sum, b) => sum + BigInt(b.amount), BigInt(0))
+      .toString();
+  };
+
+  return { trackBurn, burns, getTotalBurned, address };
 }

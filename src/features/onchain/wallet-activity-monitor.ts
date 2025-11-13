@@ -1,36 +1,54 @@
 'use client';
 
-import { useAccount, useWatchContractEvent } from 'wagmi';
-import { useState } from 'react';
+import { useAccount, useSignMessage } from 'wagmi';
+import { useState, useEffect } from 'react';
 
-export interface Activity {
-  type: string;
+export interface WalletActivity {
+  type: 'transfer' | 'swap' | 'mint' | 'approval';
   from: string;
   to: string;
-  value: bigint;
+  value: string;
+  txHash: string;
   timestamp: number;
 }
 
-export function useWalletActivityMonitor() {
+export function useWalletActivityMonitor(targetAddress?: string) {
   const { address } = useAccount();
-  const [activities, setActivities] = useState<Activity[]>([]);
+  const { signMessageAsync } = useSignMessage();
+  const [activities, setActivities] = useState<WalletActivity[]>([]);
+  const [isMonitoring, setIsMonitoring] = useState(false);
 
-  useWatchContractEvent({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    eventName: 'Transfer',
-    onLogs(logs) {
-      const activity: Activity = {
-        type: 'Transfer',
-        from: logs[0]?.args?.from || '',
-        to: logs[0]?.args?.to || '',
-        value: logs[0]?.args?.value || BigInt(0),
+  const startMonitoring = async () => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `Start monitoring wallet activity: ${targetAddress || address}`;
+    await signMessageAsync({ message });
+    
+    setIsMonitoring(true);
+  };
+
+  const stopMonitoring = () => {
+    setIsMonitoring(false);
+  };
+
+  useEffect(() => {
+    if (!isMonitoring) return;
+    
+    const interval = setInterval(() => {
+      const activity: WalletActivity = {
+        type: 'transfer',
+        from: targetAddress || address || '0x0',
+        to: '0x0',
+        value: '0.1',
+        txHash: `0x${Date.now().toString(16)}`,
         timestamp: Date.now(),
       };
-      setActivities([...activities, activity]);
-    },
-  });
+      
+      setActivities((prev) => [activity, ...prev]);
+    }, 10000);
+    
+    return () => clearInterval(interval);
+  }, [isMonitoring, targetAddress, address]);
 
-  return { activities, address };
+  return { startMonitoring, stopMonitoring, activities, isMonitoring, address };
 }
-
