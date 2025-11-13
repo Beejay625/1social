@@ -9,21 +9,26 @@ import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface WhitelistEntry {
-  tokenAddress: string;
-  addresses: string[];
+  address: string;
   addedBy: string;
+  timestamp: number;
+}
+
+export interface TokenWhitelist {
+  whitelistId: string;
+  tokenAddress: string;
+  addresses: WhitelistEntry[];
+  active: boolean;
+  createdBy: string;
   timestamp: number;
 }
 
 export function useTokenWhitelistManager() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [whitelists, setWhitelists] = useState<WhitelistEntry[]>([]);
+  const [whitelists, setWhitelists] = useState<TokenWhitelist[]>([]);
 
-  const addToWhitelist = async (
-    tokenAddress: string,
-    addresses: string[]
-  ): Promise<WhitelistEntry> => {
+  const createWhitelist = async (tokenAddress: string, addresses: string[]): Promise<TokenWhitelist> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!tokenAddress.startsWith('0x')) {
       throw new Error('Invalid token address format');
@@ -32,19 +37,27 @@ export function useTokenWhitelistManager() {
       throw new Error('All addresses must be valid Ethereum addresses');
     }
     
-    const message = `Add to whitelist: ${tokenAddress} ${addresses.length} addresses`;
+    const message = `Create whitelist: ${tokenAddress} with ${addresses.length} addresses`;
     await signMessageAsync({ message });
     
-    const entry: WhitelistEntry = {
-      tokenAddress,
-      addresses,
+    const entries: WhitelistEntry[] = addresses.map(addr => ({
+      address: addr,
       addedBy: address,
+      timestamp: Date.now(),
+    }));
+    
+    const whitelist: TokenWhitelist = {
+      whitelistId: `whitelist-${Date.now()}`,
+      tokenAddress,
+      addresses: entries,
+      active: true,
+      createdBy: address,
       timestamp: Date.now(),
     };
     
-    setWhitelists([...whitelists, entry]);
-    return entry;
+    setWhitelists([...whitelists, whitelist]);
+    return whitelist;
   };
 
-  return { addToWhitelist, whitelists, address };
+  return { createWhitelist, whitelists, address };
 }
