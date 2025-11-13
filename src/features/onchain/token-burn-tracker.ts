@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * Token Burn Tracker
+ * Tracks token burns and calculates total burned amounts using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
