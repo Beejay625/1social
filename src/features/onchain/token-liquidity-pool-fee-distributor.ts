@@ -14,6 +14,7 @@ export interface FeeDistribution {
   totalFees: string;
   recipients: string[];
   amounts: string[];
+  distributedBy: string;
   txHash: string;
   timestamp: number;
 }
@@ -30,6 +31,9 @@ export function useTokenLiquidityPoolFeeDistributor() {
     amounts: string[]
   ): Promise<FeeDistribution> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!poolAddress.startsWith('0x')) {
+      throw new Error('Invalid pool address format');
+    }
     if (recipients.length !== amounts.length) {
       throw new Error('Recipients and amounts arrays must have the same length');
     }
@@ -43,6 +47,7 @@ export function useTokenLiquidityPoolFeeDistributor() {
       totalFees,
       recipients,
       amounts,
+      distributedBy: address,
       txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
