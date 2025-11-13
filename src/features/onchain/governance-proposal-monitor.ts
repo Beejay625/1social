@@ -27,6 +27,9 @@ export function useGovernanceProposalMonitor(daoAddress?: string) {
 
   const startMonitoring = async () => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (daoAddress && !daoAddress.startsWith('0x')) {
+      throw new Error('Invalid DAO address format');
+    }
     
     const message = `Start monitoring governance proposals: ${daoAddress || 'all'}`;
     await signMessageAsync({ message });
