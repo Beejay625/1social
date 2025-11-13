@@ -296,6 +296,38 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **NFT Marketplace Offer Canceler** - Cancel marketplace offers with Reown wallet
 - **NFT Rental Extension Manager** - Extend NFT rental periods with Reown wallet
 
+### Latest 20 Onchain Features (All Powered by Reown Wallet)
+
+#### Token & Fee Management
+- **Token Transfer Fee Calculator** - Calculate transfer fees for token transactions with Reown wallet
+- **Token Vesting Schedule Viewer** - View and track token vesting schedules with Reown wallet
+- **Token Approval Manager** - Manage token approvals and revocations with Reown wallet
+- **Token Burn Tracker** - Track token burns and calculate total burned amounts with Reown wallet
+- **Token Staking Calculator** - Calculate staking rewards based on APY and duration with Reown wallet
+
+#### NFT Operations & Analytics
+- **NFT Collection Floor Price Aggregator** - Aggregate floor prices from multiple marketplaces with Reown wallet
+- **NFT Metadata Batch Fetcher** - Fetch metadata for multiple NFTs in batch with Reown wallet
+- **NFT Ownership Verifier** - Verify NFT ownership with cryptographic verification via Reown wallet
+- **NFT Collection Stats Aggregator** - Aggregate collection statistics including supply, owners, and volume with Reown wallet
+- **NFT Auction Monitor** - Monitor NFT auctions in real-time with Reown wallet
+- **NFT Rental Payment Processor** - Process rental payments for NFT rentals with Reown wallet
+
+#### Cross-Chain & Multi-Chain Features
+- **Cross-Chain Token Balance Aggregator** - Aggregate token balances across multiple chains with Reown wallet
+- **Multi-Chain Portfolio Tracker** - Track portfolio value across multiple blockchain networks with Reown wallet
+- **Cross-Protocol Message Sender** - Send messages across Farcaster, Lens, and Mirror protocols with Reown wallet
+
+#### Smart Contract & Monitoring
+- **Smart Contract Event Monitor** - Monitor smart contract events in real-time with Reown wallet
+- **Contract Interaction Logger** - Log and track all contract interactions with Reown wallet
+- **Wallet Activity Monitor** - Monitor wallet activity including transfers, swaps, and mints with Reown wallet
+- **Governance Proposal Monitor** - Monitor DAO governance proposals and voting status with Reown wallet
+
+#### Trading & Swaps
+- **Token Swap Simulator** - Simulate token swaps with price impact calculations via Reown wallet
+- **Gas Price Optimizer** - Optimize gas prices for transactions with Reown wallet
+
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
 - **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
