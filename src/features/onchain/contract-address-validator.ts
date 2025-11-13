@@ -1,39 +1,38 @@
 'use client';
 
-import { useAccount, useReadContract } from 'wagmi';
-import { useState, useEffect } from 'react';
+import { useAccount, useSignMessage } from 'wagmi';
+import { useState } from 'react';
 
 export interface AddressValidation {
   address: string;
-  isValid: boolean;
-  isContract: boolean;
-  codeHash: string;
+  valid: boolean;
+  checksum: string;
+  wallet: string;
+  timestamp: number;
 }
 
 export function useContractAddressValidator() {
   const { address } = useAccount();
+  const { signMessageAsync } = useSignMessage();
   const [validations, setValidations] = useState<AddressValidation[]>([]);
 
-  const { data: code } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'code',
-    args: [],
-    query: { enabled: !!address },
-  });
+  const validateAddress = async (addr: string, valid: boolean, checksum: string) => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `Validate Address: ${addr}`;
+    await signMessageAsync({ message });
+    
+    const validation: AddressValidation = {
+      address: addr,
+      valid,
+      checksum,
+      wallet: address,
+      timestamp: Date.now(),
+    };
+    
+    setValidations([...validations, validation]);
+    return validation;
+  };
 
-  useEffect(() => {
-    if (address) {
-      const validation: AddressValidation = {
-        address,
-        isValid: true,
-        isContract: !!code,
-        codeHash: code ? '0x' : '',
-      };
-      setValidations([validation]);
-    }
-  }, [address, code]);
-
-  return { validations, address };
+  return { validateAddress, validations, address };
 }
-
