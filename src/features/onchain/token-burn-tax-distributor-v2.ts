@@ -1,62 +1,58 @@
 'use client';
 
-import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+/**
+ * Token Burn Tax Distributor V2
+ * Distribute burn taxes to multiple recipients with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface TaxDistribution {
-  burnId: string;
+  distributionId: string;
   tokenAddress: string;
   burnAmount: string;
   taxAmount: string;
   recipients: string[];
   amounts: string[];
-  distributionId: string;
+  txHash: string;
+  timestamp: number;
 }
 
 export function useTokenBurnTaxDistributorV2() {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const { writeContract, data: hash, isPending } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
   const [distributions, setDistributions] = useState<TaxDistribution[]>([]);
 
-  const distributeTax = async (
-    burnId: string,
+  const distribute = async (
     tokenAddress: string,
     burnAmount: string,
     taxAmount: string,
     recipients: string[],
     amounts: string[]
-  ) => {
-    if (!address || !isConnected) throw new Error('Reown wallet not connected');
-    if (recipients.length !== amounts.length) throw new Error('Recipients and amounts must match');
+  ): Promise<TaxDistribution> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (recipients.length !== amounts.length) {
+      throw new Error('Recipients and amounts arrays must have the same length');
+    }
     
-    const message = `Distribute burn tax: ${taxAmount} to ${recipients.length} recipients`;
+    const message = `Distribute burn tax: ${tokenAddress} to ${recipients.length} recipients`;
     await signMessageAsync({ message });
     
     const distribution: TaxDistribution = {
-      burnId,
+      distributionId: `dist-${Date.now()}`,
       tokenAddress,
       burnAmount,
       taxAmount,
       recipients,
       amounts,
-      distributionId: `tax_dist_${Date.now()}`,
+      txHash: `0x${Date.now().toString(16)}`,
+      timestamp: Date.now(),
     };
     
     setDistributions([...distributions, distribution]);
     return distribution;
   };
 
-  return { 
-    distributeTax, 
-    distributions, 
-    address, 
-    isConnected,
-    hash,
-    isPending,
-    isConfirming,
-    isConfirmed
-  };
+  return { distribute, distributions, address };
 }
-
