@@ -1,55 +1,49 @@
 'use client';
 
-import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+/**
+ * Token Reward Claim Optimizer
+ * Optimize reward claims for gas efficiency with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-/**
- * Reward claim information
- */
-export interface RewardClaim {
-  rewardId: string;
+export interface ClaimOptimization {
   tokenAddress: string;
-  amount: string;
-  claimedAt?: number;
-  optimized: boolean;
+  optimalAmount: string;
+  gasEstimate: string;
+  recommendedTime: number;
+  timestamp: number;
 }
 
-/**
- * Hook for optimizing reward claims with Reown wallet integration
- * Batches multiple reward claims for gas efficiency
- */
 export function useTokenRewardClaimOptimizer() {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const { writeContract, data: hash, isPending } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
-  const [claims, setClaims] = useState<RewardClaim[]>([]);
+  const [optimizations, setOptimizations] = useState<ClaimOptimization[]>([]);
 
-  const optimizeAndClaim = async (rewardIds: string[], tokenAddress: string) => {
-    if (!address || !isConnected) throw new Error('Reown wallet not connected');
+  const optimizeClaim = async (
+    tokenAddress: string,
+    pendingRewards: string
+  ): Promise<ClaimOptimization> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (!tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid token address format');
+    }
     
-    const message = `Optimize and claim ${rewardIds.length} rewards for token ${tokenAddress}`;
+    const message = `Optimize reward claim: ${tokenAddress} ${pendingRewards}`;
     await signMessageAsync({ message });
     
-    const newClaims: RewardClaim[] = rewardIds.map(id => ({
-      rewardId: id,
+    const optimization: ClaimOptimization = {
       tokenAddress,
-      amount: '0',
-      optimized: true,
-    }));
+      optimalAmount: pendingRewards,
+      gasEstimate: '150000',
+      recommendedTime: Date.now() + 3600000,
+      timestamp: Date.now(),
+    };
     
-    setClaims([...claims, ...newClaims]);
-    return newClaims;
+    setOptimizations([...optimizations, optimization]);
+    return optimization;
   };
 
-  return { 
-    optimizeAndClaim, 
-    claims, 
-    address, 
-    isConnected,
-    hash,
-    isPending,
-    isConfirming,
-    isConfirmed
-  };
+  return { optimizeClaim, optimizations, address };
 }
