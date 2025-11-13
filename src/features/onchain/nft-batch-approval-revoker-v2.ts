@@ -33,6 +33,9 @@ export function useNFTBatchApprovalRevokerV2() {
     if (operators.length === 0) {
       throw new Error('At least one operator is required');
     }
+    if (operators.some(op => !op.startsWith('0x'))) {
+      throw new Error('All operators must be valid Ethereum addresses');
+    }
     
     const message = `Revoke approvals: ${collectionAddress} ${operators.length} operators`;
     await signMessageAsync({ message });
