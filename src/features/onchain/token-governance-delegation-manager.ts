@@ -12,8 +12,8 @@ export interface Delegation {
   delegationId: string;
   tokenAddress: string;
   delegatee: string;
-  amount: string;
-  expiresAt: number;
+  votingPower: string;
+  delegatedBy: string;
   timestamp: number;
 }
 
@@ -25,8 +25,7 @@ export function useTokenGovernanceDelegationManager() {
   const delegate = async (
     tokenAddress: string,
     delegatee: string,
-    amount: string,
-    expiresAt?: number
+    votingPower: string
   ): Promise<Delegation> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!tokenAddress.startsWith('0x') || !delegatee.startsWith('0x')) {
@@ -37,11 +36,11 @@ export function useTokenGovernanceDelegationManager() {
     await signMessageAsync({ message });
     
     const delegation: Delegation = {
-      delegationId: `deleg-${Date.now()}`,
+      delegationId: `delegate-${Date.now()}`,
       tokenAddress,
       delegatee,
-      amount,
-      expiresAt: expiresAt || Date.now() + 86400000 * 365,
+      votingPower,
+      delegatedBy: address,
       timestamp: Date.now(),
     };
     
