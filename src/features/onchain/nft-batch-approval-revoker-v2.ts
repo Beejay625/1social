@@ -11,8 +11,8 @@ import { useState } from 'react';
 export interface ApprovalRevocation {
   revocationId: string;
   collectionAddress: string;
-  tokenIds: string[];
   operators: string[];
+  revokedBy: string;
   txHash: string;
   timestamp: number;
 }
@@ -22,27 +22,26 @@ export function useNFTBatchApprovalRevokerV2() {
   const { signMessageAsync } = useSignMessage();
   const [revocations, setRevocations] = useState<ApprovalRevocation[]>([]);
 
-  const revokeBatch = async (
+  const revokeApprovals = async (
     collectionAddress: string,
-    tokenIds: string[],
     operators: string[]
   ): Promise<ApprovalRevocation> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (operators.some(op => !op.startsWith('0x'))) {
-      throw new Error('All operators must be valid Ethereum addresses');
+    if (operators.length === 0) {
+      throw new Error('At least one operator is required');
     }
     
-    const message = `Batch revoke approvals: ${collectionAddress} ${tokenIds.length} tokens`;
+    const message = `Revoke approvals: ${collectionAddress} ${operators.length} operators`;
     await signMessageAsync({ message });
     
     const revocation: ApprovalRevocation = {
       revocationId: `revoke-${Date.now()}`,
       collectionAddress,
-      tokenIds,
       operators,
+      revokedBy: address,
       txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
@@ -51,6 +50,5 @@ export function useNFTBatchApprovalRevokerV2() {
     return revocation;
   };
 
-  return { revokeBatch, revocations, address };
+  return { revokeApprovals, revocations, address };
 }
-
