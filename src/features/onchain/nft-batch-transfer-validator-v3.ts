@@ -13,7 +13,7 @@ export interface TransferValidation {
   collectionAddress: string;
   tokenIds: string[];
   recipients: string[];
-  valid: boolean;
+  isValid: boolean;
   errors: string[];
   timestamp: number;
 }
@@ -23,7 +23,7 @@ export function useNFTBatchTransferValidatorV3() {
   const { signMessageAsync } = useSignMessage();
   const [validations, setValidations] = useState<TransferValidation[]>([]);
 
-  const validate = async (
+  const validateTransfer = async (
     collectionAddress: string,
     tokenIds: string[],
     recipients: string[]
@@ -32,19 +32,22 @@ export function useNFTBatchTransferValidatorV3() {
     if (tokenIds.length !== recipients.length) {
       throw new Error('Token IDs and recipients arrays must have the same length');
     }
+    if (!collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
+    }
     
     const message = `Validate batch transfer: ${collectionAddress} ${tokenIds.length} tokens`;
     await signMessageAsync({ message });
     
     const errors: string[] = [];
-    const valid = errors.length === 0;
+    const isValid = errors.length === 0;
     
     const validation: TransferValidation = {
-      validationId: `val-${Date.now()}`,
+      validationId: `validate-${Date.now()}`,
       collectionAddress,
       tokenIds,
       recipients,
-      valid,
+      isValid,
       errors,
       timestamp: Date.now(),
     };
@@ -53,6 +56,5 @@ export function useNFTBatchTransferValidatorV3() {
     return validation;
   };
 
-  return { validate, validations, address };
+  return { validateTransfer, validations, address };
 }
-
