@@ -9,10 +9,10 @@ import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface RoyaltyConfig {
+  configId: string;
   collectionAddress: string;
   royaltyPercentage: number;
-  recipients: string[];
-  shares: number[];
+  recipient: string;
   updatedBy: string;
   timestamp: number;
 }
@@ -22,28 +22,27 @@ export function useNFTCollectionRoyaltyManagerV2() {
   const { signMessageAsync } = useSignMessage();
   const [configs, setConfigs] = useState<RoyaltyConfig[]>([]);
 
-  const updateRoyalties = async (
+  const updateRoyalty = async (
     collectionAddress: string,
     royaltyPercentage: number,
-    recipients: string[],
-    shares: number[]
+    recipient: string
   ): Promise<RoyaltyConfig> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!collectionAddress.startsWith('0x') || !recipient.startsWith('0x')) {
+      throw new Error('Invalid address format');
+    }
     if (royaltyPercentage < 0 || royaltyPercentage > 100) {
       throw new Error('Royalty percentage must be between 0 and 100');
     }
-    if (recipients.length !== shares.length) {
-      throw new Error('Recipients and shares arrays must have the same length');
-    }
     
-    const message = `Update royalties: ${collectionAddress} ${royaltyPercentage}%`;
+    const message = `Update royalty: ${collectionAddress} ${royaltyPercentage}%`;
     await signMessageAsync({ message });
     
     const config: RoyaltyConfig = {
+      configId: `royalty-${Date.now()}`,
       collectionAddress,
       royaltyPercentage,
-      recipients,
-      shares,
+      recipient,
       updatedBy: address,
       timestamp: Date.now(),
     };
@@ -52,6 +51,5 @@ export function useNFTCollectionRoyaltyManagerV2() {
     return config;
   };
 
-  return { updateRoyalties, configs, address };
+  return { updateRoyalty, configs, address };
 }
-
