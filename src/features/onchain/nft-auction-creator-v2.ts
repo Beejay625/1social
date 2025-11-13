@@ -14,10 +14,10 @@ export interface Auction {
   collectionAddress: string;
   startingPrice: string;
   reservePrice: string;
-  currency: string;
   startTime: number;
   endTime: number;
   createdBy: string;
+  active: boolean;
   timestamp: number;
 }
 
@@ -26,12 +26,11 @@ export function useNFTAuctionCreatorV2() {
   const { signMessageAsync } = useSignMessage();
   const [auctions, setAuctions] = useState<Auction[]>([]);
 
-  const create = async (
+  const createAuction = async (
     tokenId: string,
     collectionAddress: string,
     startingPrice: string,
     reservePrice: string,
-    currency: string,
     startTime: number,
     endTime: number
   ): Promise<Auction> => {
@@ -39,11 +38,11 @@ export function useNFTAuctionCreatorV2() {
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (parseFloat(reservePrice) > parseFloat(startingPrice)) {
-      throw new Error('Reserve price cannot be higher than starting price');
+    if (endTime <= startTime) {
+      throw new Error('End time must be after start time');
     }
     
-    const message = `Create auction: ${collectionAddress} #${tokenId} starting ${startingPrice} ${currency}`;
+    const message = `Create auction: ${collectionAddress} #${tokenId} starting ${startingPrice}`;
     await signMessageAsync({ message });
     
     const auction: Auction = {
@@ -52,10 +51,10 @@ export function useNFTAuctionCreatorV2() {
       collectionAddress,
       startingPrice,
       reservePrice,
-      currency,
       startTime,
       endTime,
       createdBy: address,
+      active: true,
       timestamp: Date.now(),
     };
     
@@ -63,6 +62,5 @@ export function useNFTAuctionCreatorV2() {
     return auction;
   };
 
-  return { create, auctions, address };
+  return { createAuction, auctions, address };
 }
-
