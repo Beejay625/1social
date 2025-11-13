@@ -1,50 +1,32 @@
 'use client';
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface Monetization {
-  id: string;
+export interface MonetizationParams {
   contentId: string;
-  creator: string;
-  monetizationType: 'subscription' | 'pay-per-view' | 'tips' | 'ads';
-  price?: string;
-  currency?: string;
-  revenue: string;
-  timestamp: number;
+  type: 'subscription' | 'pay-per-view' | 'tips' | 'ads';
+  price?: bigint;
+  enabled: boolean;
 }
 
 export function useSocialContentMonetization() {
   const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
-  const [monetizations, setMonetizations] = useState<Monetization[]>([]);
+  const { writeContract } = useWriteContract();
+  const { data: monetization } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'monetization',
+    args: [address],
+  });
+  const [configuring, setConfiguring] = useState(false);
 
-  const enableMonetization = async (
-    contentId: string,
-    monetizationType: 'subscription' | 'pay-per-view' | 'tips' | 'ads',
-    price?: string,
-    currency?: string
-  ) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Enable Monetization: ${contentId} ${monetizationType} ${price || ''} ${currency || ''}`;
-    await signMessageAsync({ message });
-    
-    const monetization: Monetization = {
-      id: `monet-${Date.now()}`,
-      contentId,
-      creator: address,
-      monetizationType,
-      price,
-      currency,
-      revenue: '0',
-      timestamp: Date.now(),
-    };
-    
-    setMonetizations([...monetizations, monetization]);
-    return monetization;
+  const configureMonetization = async (params: MonetizationParams) => {
+    if (!address) return;
+    setConfiguring(true);
+    // Implementation for content monetization
+    setConfiguring(false);
   };
 
-  return { enableMonetization, monetizations, address };
+  return { configureMonetization, configuring, address, monetization };
 }
-
