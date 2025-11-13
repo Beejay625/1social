@@ -12,10 +12,11 @@ export interface Listing {
   listingId: string;
   tokenId: string;
   collectionAddress: string;
-  marketplace: string;
   price: string;
   currency: string;
-  status: 'active' | 'sold' | 'cancelled';
+  marketplace: string;
+  listedBy: string;
+  active: boolean;
   timestamp: number;
 }
 
@@ -27,9 +28,9 @@ export function useNFTMarketplaceListingManager() {
   const createListing = async (
     tokenId: string,
     collectionAddress: string,
-    marketplace: string,
     price: string,
-    currency: string
+    currency: string,
+    marketplace: string
   ): Promise<Listing> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
@@ -39,17 +40,18 @@ export function useNFTMarketplaceListingManager() {
       throw new Error('Price must be greater than zero');
     }
     
-    const message = `Create listing: ${collectionAddress} #${tokenId} on ${marketplace}`;
+    const message = `Create listing: ${collectionAddress} #${tokenId} for ${price} ${currency}`;
     await signMessageAsync({ message });
     
     const listing: Listing = {
       listingId: `listing-${Date.now()}`,
       tokenId,
       collectionAddress,
-      marketplace,
       price,
       currency,
-      status: 'active',
+      marketplace,
+      listedBy: address,
+      active: true,
       timestamp: Date.now(),
     };
     
@@ -57,5 +59,9 @@ export function useNFTMarketplaceListingManager() {
     return listing;
   };
 
-  return { createListing, listings, address };
+  const cancelListing = (listingId: string) => {
+    setListings(listings.map(l => l.listingId === listingId ? { ...l, active: false } : l));
+  };
+
+  return { createListing, cancelListing, listings, address };
 }
