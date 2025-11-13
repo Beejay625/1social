@@ -11,9 +11,10 @@ import { useState } from 'react';
 export interface MarketplaceIntegration {
   integrationId: string;
   marketplace: string;
+  collectionAddress: string;
   apiKey?: string;
-  enabled: boolean;
-  configuredBy: string;
+  active: boolean;
+  integratedBy: string;
   timestamp: number;
 }
 
@@ -24,22 +25,24 @@ export function useNFTMarketplaceIntegrator() {
 
   const integrate = async (
     marketplace: string,
+    collectionAddress: string,
     apiKey?: string
   ): Promise<MarketplaceIntegration> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!marketplace || marketplace.trim() === '') {
-      throw new Error('Marketplace name is required');
+    if (!collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
     }
     
-    const message = `Integrate marketplace: ${marketplace}`;
+    const message = `Integrate marketplace: ${marketplace} for ${collectionAddress}`;
     await signMessageAsync({ message });
     
     const integration: MarketplaceIntegration = {
       integrationId: `integrate-${Date.now()}`,
       marketplace,
+      collectionAddress,
       apiKey,
-      enabled: true,
-      configuredBy: address,
+      active: true,
+      integratedBy: address,
       timestamp: Date.now(),
     };
     
@@ -49,4 +52,3 @@ export function useNFTMarketplaceIntegrator() {
 
   return { integrate, integrations, address };
 }
-
