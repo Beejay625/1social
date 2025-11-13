@@ -11,10 +11,10 @@ import { useState } from 'react';
 export interface LazyMintBatch {
   batchId: string;
   collectionAddress: string;
-  quantity: number;
-  metadataURIs: string[];
-  signatures: string[];
-  txHash: string;
+  tokenIds: string[];
+  metadataUris: string[];
+  signature: string;
+  mintedBy: string;
   timestamp: number;
 }
 
@@ -25,29 +25,27 @@ export function useNFTLazyMintBatchV2() {
 
   const lazyMintBatch = async (
     collectionAddress: string,
-    quantity: number,
-    metadataURIs: string[]
+    tokenIds: string[],
+    metadataUris: string[]
   ): Promise<LazyMintBatch> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (quantity !== metadataURIs.length) {
-      throw new Error('Quantity must match metadata URIs length');
+    if (tokenIds.length !== metadataUris.length) {
+      throw new Error('Token IDs and metadata URIs arrays must have the same length');
     }
     
-    const message = `Lazy mint batch: ${collectionAddress} ${quantity} NFTs`;
-    await signMessageAsync({ message });
-    
-    const signatures = metadataURIs.map(() => `0x${Date.now().toString(16)}`);
+    const message = `Lazy mint batch: ${collectionAddress} ${tokenIds.length} NFTs`;
+    const signature = await signMessageAsync({ message });
     
     const batch: LazyMintBatch = {
       batchId: `batch-${Date.now()}`,
       collectionAddress,
-      quantity,
-      metadataURIs,
-      signatures,
-      txHash: `0x${Date.now().toString(16)}`,
+      tokenIds,
+      metadataUris,
+      signature,
+      mintedBy: address,
       timestamp: Date.now(),
     };
     
@@ -57,4 +55,3 @@ export function useNFTLazyMintBatchV2() {
 
   return { lazyMintBatch, batches, address };
 }
-
