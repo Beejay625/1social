@@ -14,8 +14,6 @@ export interface Airdrop {
   recipients: string[];
   amounts: string[];
   merkleRoot?: string;
-  startTime: number;
-  endTime: number;
   createdBy: string;
   timestamp: number;
 }
@@ -25,20 +23,17 @@ export function useTokenAirdropCreatorV2() {
   const { signMessageAsync } = useSignMessage();
   const [airdrops, setAirdrops] = useState<Airdrop[]>([]);
 
-  const create = async (
+  const createAirdrop = async (
     tokenAddress: string,
     recipients: string[],
-    amounts: string[],
-    startTime: number,
-    endTime: number,
-    merkleRoot?: string
+    amounts: string[]
   ): Promise<Airdrop> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid token address format');
+    }
     if (recipients.length !== amounts.length) {
       throw new Error('Recipients and amounts arrays must have the same length');
-    }
-    if (endTime <= startTime) {
-      throw new Error('End time must be after start time');
     }
     
     const message = `Create airdrop: ${tokenAddress} to ${recipients.length} recipients`;
@@ -49,9 +44,6 @@ export function useTokenAirdropCreatorV2() {
       tokenAddress,
       recipients,
       amounts,
-      merkleRoot,
-      startTime,
-      endTime,
       createdBy: address,
       timestamp: Date.now(),
     };
@@ -60,6 +52,5 @@ export function useTokenAirdropCreatorV2() {
     return airdrop;
   };
 
-  return { create, airdrops, address };
+  return { createAirdrop, airdrops, address };
 }
-
