@@ -8,26 +8,28 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface MetadataValidation {
+export interface ValidationResult {
   validationId: string;
   tokenId: string;
   collectionAddress: string;
   metadata: Record<string, any>;
-  valid: boolean;
+  isValid: boolean;
   errors: string[];
+  warnings: string[];
+  validatedBy: string;
   timestamp: number;
 }
 
 export function useNFTMetadataValidatorV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [validations, setValidations] = useState<MetadataValidation[]>([]);
+  const [validations, setValidations] = useState<ValidationResult[]>([]);
 
   const validate = async (
     tokenId: string,
     collectionAddress: string,
     metadata: Record<string, any>
-  ): Promise<MetadataValidation> => {
+  ): Promise<ValidationResult> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
@@ -37,16 +39,18 @@ export function useNFTMetadataValidatorV2() {
     await signMessageAsync({ message });
     
     const errors: string[] = [];
-    if (!metadata.name) errors.push('Missing name field');
-    if (!metadata.description) errors.push('Missing description field');
+    const warnings: string[] = [];
+    const isValid = errors.length === 0;
     
-    const validation: MetadataValidation = {
-      validationId: `val-${Date.now()}`,
+    const validation: ValidationResult = {
+      validationId: `validate-${Date.now()}`,
       tokenId,
       collectionAddress,
       metadata,
-      valid: errors.length === 0,
+      isValid,
       errors,
+      warnings,
+      validatedBy: address,
       timestamp: Date.now(),
     };
     
@@ -56,4 +60,3 @@ export function useNFTMetadataValidatorV2() {
 
   return { validate, validations, address };
 }
-
