@@ -9,13 +9,12 @@ import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface BidOptimization {
+  optimizationId: string;
   auctionId: string;
   tokenId: string;
   currentBid: string;
-  recommendedBid: string;
+  optimalBid: string;
   maxBid: string;
-  bidIncrement: string;
-  optimalBidTime: number;
   timestamp: number;
 }
 
@@ -35,21 +34,18 @@ export function useNFTAuctionBidOptimizer() {
       throw new Error('Current bid must be less than max bid');
     }
     
-    const message = `Optimize bid: Auction ${auctionId} for token ${tokenId}`;
+    const message = `Optimize bid: Auction ${auctionId} token ${tokenId}`;
     await signMessageAsync({ message });
     
-    const currentBidNum = parseFloat(currentBid);
-    const recommendedBid = (currentBidNum * 1.05).toString();
-    const bidIncrement = (currentBidNum * 0.05).toString();
+    const optimalBid = (parseFloat(currentBid) * 1.05).toString();
     
     const optimization: BidOptimization = {
+      optimizationId: `bid-opt-${Date.now()}`,
       auctionId,
       tokenId,
       currentBid,
-      recommendedBid,
+      optimalBid,
       maxBid,
-      bidIncrement,
-      optimalBidTime: Date.now() + 300000,
       timestamp: Date.now(),
     };
     
@@ -59,4 +55,3 @@ export function useNFTAuctionBidOptimizer() {
 
   return { optimizeBid, optimizations, address };
 }
-
