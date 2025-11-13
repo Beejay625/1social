@@ -271,6 +271,31 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 - **NFT Collection Supply Manager** - Manage collection max supply with Reown wallet
 - **NFT Marketplace Fee Collector** - Collect marketplace fees with Reown wallet
 
+### Additional 20 Onchain Features (All Powered by Reown Wallet)
+
+#### Token & Liquidity Management
+- **Token Liquidity Pool Position Manager** - Manage LP positions with Reown wallet
+- **Token Staking Lock Manager** - Manage staking lock periods with Reown wallet
+- **Token Governance Delegation Manager** - Manage delegation with Reown wallet
+- **Token Reward Vesting Creator** - Create reward vesting schedules with Reown wallet
+- **Token Liquidity Migration Optimizer** - Optimize liquidity migrations with Reown wallet
+- **Token Staking Reward Claim Optimizer** - Optimize reward claims with Reown wallet
+- **Token Governance Vote Tracker** - Track governance votes in real-time with Reown wallet
+- **Token Burn Scheduler V2** - Advanced burn scheduling with recurring options via Reown wallet
+- **Token Liquidity Pool Fee Distributor** - Distribute LP fees to recipients with Reown wallet
+- **Token Governance Proposal Canceler** - Cancel governance proposals with Reown wallet
+
+#### NFT Operations & Management
+- **NFT Batch Mint Optimizer** - Optimize batch mints for gas efficiency with Reown wallet
+- **NFT Collection Pause Manager** - Pause/unpause NFT collections with Reown wallet
+- **NFT Marketplace Bulk Buyer** - Bulk buy NFTs from marketplaces with Reown wallet
+- **NFT Royalty Payment Collector** - Collect pending royalties with Reown wallet
+- **NFT Batch Transfer Validator V2** - Enhanced batch transfer validation with Reown wallet
+- **NFT Collection Whitelist Validator** - Validate whitelist addresses with Reown wallet
+- **NFT Auction End Time Manager** - Extend/reduce auction end times with Reown wallet
+- **NFT Marketplace Offer Canceler** - Cancel marketplace offers with Reown wallet
+- **NFT Rental Extension Manager** - Extend NFT rental periods with Reown wallet
+
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
 - **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
