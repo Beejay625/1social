@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * Contract Interaction Logger
+ * Logs and tracks all contract interactions using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
