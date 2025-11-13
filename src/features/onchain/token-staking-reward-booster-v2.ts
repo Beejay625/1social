@@ -1,51 +1,57 @@
 'use client';
 
-import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+/**
+ * Token Staking Reward Booster V2
+ * Create reward boost multipliers with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface RewardBoost {
-  stakingPoolAddress: string;
+  boostId: string;
+  stakingPool: string;
   multiplier: number;
   duration: number;
   startTime: number;
-  boostId: string;
+  endTime: number;
+  timestamp: number;
 }
 
 export function useTokenStakingRewardBoosterV2() {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const { writeContract, data: hash, isPending } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
   const [boosts, setBoosts] = useState<RewardBoost[]>([]);
 
-  const createBoost = async (stakingPoolAddress: string, multiplier: number, duration: number) => {
-    if (!address || !isConnected) throw new Error('Reown wallet not connected');
-    if (multiplier <= 0) throw new Error('Multiplier must be greater than 0');
+  const createBoost = async (
+    stakingPool: string,
+    multiplier: number,
+    duration: number
+  ): Promise<RewardBoost> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (multiplier <= 1) {
+      throw new Error('Multiplier must be greater than 1');
+    }
+    if (duration <= 0) {
+      throw new Error('Duration must be greater than zero');
+    }
     
-    const message = `Create reward boost: ${multiplier}x for ${duration} seconds`;
+    const message = `Create reward boost: ${stakingPool} ${multiplier}x for ${duration}ms`;
     await signMessageAsync({ message });
     
     const boost: RewardBoost = {
-      stakingPoolAddress,
+      boostId: `boost-${Date.now()}`,
+      stakingPool,
       multiplier,
       duration,
       startTime: Date.now(),
-      boostId: `boost_${Date.now()}`,
+      endTime: Date.now() + duration,
+      timestamp: Date.now(),
     };
     
     setBoosts([...boosts, boost]);
     return boost;
   };
 
-  return { 
-    createBoost, 
-    boosts, 
-    address, 
-    isConnected,
-    hash,
-    isPending,
-    isConfirming,
-    isConfirmed
-  };
+  return { createBoost, boosts, address };
 }
-
