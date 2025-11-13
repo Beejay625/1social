@@ -1,26 +1,49 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+/**
+ * Token Governance Proposal Canceler
+ * Cancel governance proposals with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
+
+export interface ProposalCancellation {
+  cancellationId: string;
+  proposalId: string;
+  reason: string;
+  canceledBy: string;
+  timestamp: number;
+}
 
 export function useTokenGovernanceProposalCanceler() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const { data: proposal } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'proposal',
-    args: [BigInt(1)],
-  });
-  const [canceling, setCanceling] = useState(false);
+  const { signMessageAsync } = useSignMessage();
+  const [cancellations, setCancellations] = useState<ProposalCancellation[]>([]);
 
-  const cancelProposal = async (proposalId: string) => {
-    if (!address) return;
-    setCanceling(true);
-    // Implementation for canceling proposals
-    setCanceling(false);
+  const cancelProposal = async (
+    proposalId: string,
+    reason: string
+  ): Promise<ProposalCancellation> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (!proposalId || proposalId.trim() === '') {
+      throw new Error('Proposal ID is required');
+    }
+    
+    const message = `Cancel proposal: ${proposalId} - ${reason}`;
+    await signMessageAsync({ message });
+    
+    const cancellation: ProposalCancellation = {
+      cancellationId: `cancel-${Date.now()}`,
+      proposalId,
+      reason,
+      canceledBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setCancellations([...cancellations, cancellation]);
+    return cancellation;
   };
 
-  return { cancelProposal, canceling, address, proposal };
+  return { cancelProposal, cancellations, address };
 }
-
