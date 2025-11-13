@@ -9,13 +9,13 @@ import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface CollectionAnalytics {
+  analyticsId: string;
   collectionAddress: string;
   totalVolume: string;
-  averagePrice: string;
   floorPrice: string;
-  salesCount: number;
+  averagePrice: string;
+  totalSales: number;
   uniqueOwners: number;
-  marketCap: string;
   timestamp: number;
 }
 
@@ -33,21 +33,20 @@ export function useNFTCollectionAnalyticsV2() {
     const message = `Analyze collection: ${collectionAddress}`;
     await signMessageAsync({ message });
     
-    const analytics: CollectionAnalytics = {
+    const analyticsData: CollectionAnalytics = {
+      analyticsId: `analytics-${Date.now()}`,
       collectionAddress,
-      totalVolume: '5000',
-      averagePrice: '0.5',
-      floorPrice: '0.4',
-      salesCount: 1250,
-      uniqueOwners: 2500,
-      marketCap: '10000',
+      totalVolume: '0',
+      floorPrice: '0',
+      averagePrice: '0',
+      totalSales: 0,
+      uniqueOwners: 0,
       timestamp: Date.now(),
     };
     
-    setAnalytics([...analytics, analytics]);
-    return analytics;
+    setAnalytics([...analytics, analyticsData]);
+    return analyticsData;
   };
 
   return { analyze, analytics, address };
 }
-
