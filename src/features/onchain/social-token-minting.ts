@@ -1,47 +1,30 @@
 'use client';
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface TokenMint {
-  id: string;
-  minter: string;
+export interface MintParams {
   tokenAddress: string;
-  amount: string;
   recipient: string;
-  timestamp: number;
-  transactionHash?: string;
+  amount: bigint;
 }
 
 export function useSocialTokenMinting() {
   const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
-  const [mints, setMints] = useState<TokenMint[]>([]);
+  const { writeContract } = useWriteContract();
+  const { data: totalSupply } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'totalSupply',
+  });
+  const [minting, setMinting] = useState(false);
 
-  const mintTokens = async (
-    tokenAddress: string,
-    amount: string,
-    recipient: string
-  ) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Mint Tokens: ${tokenAddress} ${amount} to ${recipient}`;
-    await signMessageAsync({ message });
-    
-    const mint: TokenMint = {
-      id: `mint-${Date.now()}`,
-      minter: address,
-      tokenAddress,
-      amount,
-      recipient,
-      timestamp: Date.now(),
-      transactionHash: `0x${Date.now().toString(16)}`,
-    };
-    
-    setMints([...mints, mint]);
-    return mint;
+  const mintTokens = async (params: MintParams) => {
+    if (!address) return;
+    setMinting(true);
+    // Implementation for minting tokens
+    setMinting(false);
   };
 
-  return { mintTokens, mints, address };
+  return { mintTokens, minting, address, totalSupply };
 }
-
