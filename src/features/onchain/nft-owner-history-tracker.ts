@@ -8,48 +8,48 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface OwnershipRecord {
+export interface OwnershipHistory {
+  historyId: string;
   tokenId: string;
   collectionAddress: string;
-  owner: string;
-  previousOwner: string;
-  transferTime: number;
-  txHash: string;
+  owners: Array<{
+    address: string;
+    fromBlock: number;
+    toBlock?: number;
+  }>;
+  currentOwner: string;
+  timestamp: number;
 }
 
 export function useNFTOwnerHistoryTracker() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [records, setRecords] = useState<OwnershipRecord[]>([]);
+  const [histories, setHistories] = useState<OwnershipHistory[]>([]);
 
-  const trackTransfer = async (
+  const trackHistory = async (
     tokenId: string,
-    collectionAddress: string,
-    owner: string,
-    previousOwner: string,
-    txHash: string
-  ): Promise<OwnershipRecord> => {
+    collectionAddress: string
+  ): Promise<OwnershipHistory> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x') || !owner.startsWith('0x') || !previousOwner.startsWith('0x')) {
-      throw new Error('Invalid address format');
+    if (!collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
     }
     
-    const message = `Track ownership: ${collectionAddress} #${tokenId}`;
+    const message = `Track ownership history: ${collectionAddress} #${tokenId}`;
     await signMessageAsync({ message });
     
-    const record: OwnershipRecord = {
+    const history: OwnershipHistory = {
+      historyId: `history-${Date.now()}`,
       tokenId,
       collectionAddress,
-      owner,
-      previousOwner,
-      transferTime: Date.now(),
-      txHash,
+      owners: [],
+      currentOwner: '0x0',
+      timestamp: Date.now(),
     };
     
-    setRecords([...records, record]);
-    return record;
+    setHistories([...histories, history]);
+    return history;
   };
 
-  return { trackTransfer, records, address };
+  return { trackHistory, histories, address };
 }
-
