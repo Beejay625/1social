@@ -8,22 +8,26 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface LiquidityMetrics {
+export interface LiquidityCalculation {
+  calculationId: string;
   poolAddress: string;
+  tokenA: string;
+  tokenB: string;
   totalLiquidity: string;
-  tokenAReserve: string;
-  tokenBReserve: string;
-  price: string;
-  liquidityProviderCount: number;
+  priceImpact: number;
   timestamp: number;
 }
 
 export function useTokenLiquidityCalculatorV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [metrics, setMetrics] = useState<LiquidityMetrics[]>([]);
+  const [calculations, setCalculations] = useState<LiquidityCalculation[]>([]);
 
-  const calculate = async (poolAddress: string): Promise<LiquidityMetrics> => {
+  const calculate = async (
+    poolAddress: string,
+    tokenA: string,
+    tokenB: string
+  ): Promise<LiquidityCalculation> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!poolAddress.startsWith('0x')) {
       throw new Error('Invalid pool address format');
@@ -32,20 +36,19 @@ export function useTokenLiquidityCalculatorV2() {
     const message = `Calculate liquidity: ${poolAddress}`;
     await signMessageAsync({ message });
     
-    const metrics: LiquidityMetrics = {
+    const calculation: LiquidityCalculation = {
+      calculationId: `calc-${Date.now()}`,
       poolAddress,
-      totalLiquidity: '1000000',
-      tokenAReserve: '500000',
-      tokenBReserve: '1000000',
-      price: '2.0',
-      liquidityProviderCount: 150,
+      tokenA,
+      tokenB,
+      totalLiquidity: '0',
+      priceImpact: 0,
       timestamp: Date.now(),
     };
     
-    setMetrics([...metrics, metrics]);
-    return metrics;
+    setCalculations([...calculations, calculation]);
+    return calculation;
   };
 
-  return { calculate, metrics, address };
+  return { calculate, calculations, address };
 }
-
