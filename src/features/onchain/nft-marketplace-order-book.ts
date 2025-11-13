@@ -9,18 +9,17 @@ import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface OrderBook {
-  tokenId: string;
+  orderBookId: string;
   collectionAddress: string;
+  tokenId: string;
   buyOrders: Array<{
     orderId: string;
     price: string;
-    currency: string;
     buyer: string;
   }>;
   sellOrders: Array<{
     orderId: string;
     price: string;
-    currency: string;
     seller: string;
   }>;
   timestamp: number;
@@ -32,8 +31,8 @@ export function useNFTMarketplaceOrderBook() {
   const [orderBooks, setOrderBooks] = useState<OrderBook[]>([]);
 
   const getOrderBook = async (
-    tokenId: string,
-    collectionAddress: string
+    collectionAddress: string,
+    tokenId: string
   ): Promise<OrderBook> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
@@ -44,16 +43,11 @@ export function useNFTMarketplaceOrderBook() {
     await signMessageAsync({ message });
     
     const orderBook: OrderBook = {
-      tokenId,
+      orderBookId: `book-${Date.now()}`,
       collectionAddress,
-      buyOrders: [
-        { orderId: 'buy-1', price: '1.3', currency: 'ETH', buyer: '0x1' },
-        { orderId: 'buy-2', price: '1.2', currency: 'ETH', buyer: '0x2' },
-      ],
-      sellOrders: [
-        { orderId: 'sell-1', price: '1.5', currency: 'ETH', seller: '0x3' },
-        { orderId: 'sell-2', price: '1.6', currency: 'ETH', seller: '0x4' },
-      ],
+      tokenId,
+      buyOrders: [],
+      sellOrders: [],
       timestamp: Date.now(),
     };
     
@@ -63,4 +57,3 @@ export function useNFTMarketplaceOrderBook() {
 
   return { getOrderBook, orderBooks, address };
 }
-
