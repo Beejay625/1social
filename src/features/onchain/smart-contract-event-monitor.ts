@@ -25,6 +25,9 @@ export function useSmartContractEventMonitor(contractAddress: string, eventNames
 
   const startMonitoring = async () => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!contractAddress || !contractAddress.startsWith('0x')) {
+      throw new Error('Invalid contract address');
+    }
     
     const message = `Start monitoring: ${contractAddress}`;
     await signMessageAsync({ message });
