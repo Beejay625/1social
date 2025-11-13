@@ -1,50 +1,31 @@
 'use client';
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface LicenseListing {
-  id: string;
+export interface LicensingParams {
   contentId: string;
-  licensor: string;
   licenseType: string;
-  price: string;
-  currency: string;
-  timestamp: number;
-  status: 'active' | 'sold' | 'cancelled';
+  price: bigint;
+  duration: number;
 }
 
 export function useSocialContentLicensingMarketplace() {
   const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
-  const [listings, setListings] = useState<LicenseListing[]>([]);
+  const { writeContract } = useWriteContract();
+  const { data: license } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'license',
+  });
+  const [listing, setListing] = useState(false);
 
-  const listLicense = async (
-    contentId: string,
-    licenseType: string,
-    price: string,
-    currency: string
-  ) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `List License: ${contentId} ${licenseType} ${price} ${currency}`;
-    await signMessageAsync({ message });
-    
-    const listing: LicenseListing = {
-      id: `license-${Date.now()}`,
-      contentId,
-      licensor: address,
-      licenseType,
-      price,
-      currency,
-      timestamp: Date.now(),
-      status: 'active',
-    };
-    
-    setListings([...listings, listing]);
-    return listing;
+  const listLicense = async (params: LicensingParams) => {
+    if (!address) return;
+    setListing(true);
+    // Implementation for content licensing
+    setListing(false);
   };
 
-  return { listLicense, listings, address };
+  return { listLicense, listing, address, license };
 }
-
