@@ -27,6 +27,9 @@ export function useCrossProtocolMessageSender() {
     content: string
   ): Promise<ProtocolMessage> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!content || content.trim() === '') {
+      throw new Error('Message content cannot be empty');
+    }
     
     const message = `Send ${protocol} message to ${recipient}`;
     await signMessageAsync({ message });
