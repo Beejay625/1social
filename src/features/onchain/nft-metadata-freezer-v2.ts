@@ -12,7 +12,7 @@ export interface MetadataFreeze {
   freezeId: string;
   tokenId: string;
   collectionAddress: string;
-  isFrozen: boolean;
+  frozen: boolean;
   frozenBy: string;
   timestamp: number;
 }
@@ -22,7 +22,7 @@ export function useNFTMetadataFreezerV2() {
   const { signMessageAsync } = useSignMessage();
   const [freezes, setFreezes] = useState<MetadataFreeze[]>([]);
 
-  const freeze = async (
+  const freezeMetadata = async (
     tokenId: string,
     collectionAddress: string
   ): Promise<MetadataFreeze> => {
@@ -38,7 +38,7 @@ export function useNFTMetadataFreezerV2() {
       freezeId: `freeze-${Date.now()}`,
       tokenId,
       collectionAddress,
-      isFrozen: true,
+      frozen: true,
       frozenBy: address,
       timestamp: Date.now(),
     };
@@ -47,28 +47,5 @@ export function useNFTMetadataFreezerV2() {
     return freeze;
   };
 
-  const unfreeze = async (
-    tokenId: string,
-    collectionAddress: string
-  ): Promise<MetadataFreeze> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Unfreeze metadata: ${collectionAddress} #${tokenId}`;
-    await signMessageAsync({ message });
-    
-    const freeze: MetadataFreeze = {
-      freezeId: `unfreeze-${Date.now()}`,
-      tokenId,
-      collectionAddress,
-      isFrozen: false,
-      frozenBy: address,
-      timestamp: Date.now(),
-    };
-    
-    setFreezes([...freezes, freeze]);
-    return freeze;
-  };
-
-  return { freeze, unfreeze, freezes, address };
+  return { freezeMetadata, freezes, address };
 }
-
