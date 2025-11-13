@@ -11,6 +11,7 @@ import { useState } from 'react';
 export interface YieldOptimization {
   optimizationId: string;
   tokenAddress: string;
+  protocols: string[];
   currentAPY: number;
   optimizedAPY: number;
   recommendedProtocol: string;
@@ -24,22 +25,26 @@ export function useTokenYieldOptimizer() {
 
   const optimize = async (
     tokenAddress: string,
-    currentAPY: number
+    protocols: string[]
   ): Promise<YieldOptimization> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!tokenAddress.startsWith('0x')) {
       throw new Error('Invalid token address format');
     }
+    if (protocols.length === 0) {
+      throw new Error('At least one protocol is required');
+    }
     
-    const message = `Optimize yield: ${tokenAddress} current ${currentAPY}% APY`;
+    const message = `Optimize yield: ${tokenAddress} across ${protocols.length} protocols`;
     await signMessageAsync({ message });
     
     const optimization: YieldOptimization = {
-      optimizationId: `opt-${Date.now()}`,
+      optimizationId: `yield-${Date.now()}`,
       tokenAddress,
-      currentAPY,
-      optimizedAPY: currentAPY * 1.2,
-      recommendedProtocol: 'Compound',
+      protocols,
+      currentAPY: 5.5,
+      optimizedAPY: 8.2,
+      recommendedProtocol: protocols[0],
       timestamp: Date.now(),
     };
     
@@ -49,4 +54,3 @@ export function useTokenYieldOptimizer() {
 
   return { optimize, optimizations, address };
 }
-
