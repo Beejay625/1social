@@ -8,44 +8,45 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface StakingLock {
+export interface LockManagement {
   lockId: string;
-  stakingPool: string;
+  poolAddress: string;
+  action: 'lock' | 'extend' | 'unlock';
   amount: string;
   lockPeriod: number;
-  unlockTime: number;
-  lockedBy: string;
+  txHash?: string;
   timestamp: number;
 }
 
 export function useTokenStakingLockManager() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [locks, setLocks] = useState<StakingLock[]>([]);
+  const [locks, setLocks] = useState<LockManagement[]>([]);
 
-  const createLock = async (
-    stakingPool: string,
+  const manage = async (
+    poolAddress: string,
+    action: 'lock' | 'extend' | 'unlock',
     amount: string,
-    lockPeriod: number
-  ): Promise<StakingLock> => {
+    lockPeriod?: number
+  ): Promise<LockManagement> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!stakingPool.startsWith('0x')) {
-      throw new Error('Invalid staking pool address format');
+    if (!poolAddress.startsWith('0x')) {
+      throw new Error('Invalid pool address format');
     }
-    if (lockPeriod <= 0) {
-      throw new Error('Lock period must be greater than zero');
+    if (action === 'lock' && (!lockPeriod || lockPeriod <= 0)) {
+      throw new Error('Lock period is required for lock action');
     }
     
-    const message = `Create staking lock: ${stakingPool} for ${lockPeriod} seconds`;
+    const message = `Manage staking lock: ${poolAddress} ${action} ${amount}`;
     await signMessageAsync({ message });
     
-    const lock: StakingLock = {
+    const lock: LockManagement = {
       lockId: `lock-${Date.now()}`,
-      stakingPool,
+      poolAddress,
+      action,
       amount,
-      lockPeriod,
-      unlockTime: Date.now() + (lockPeriod * 1000),
-      lockedBy: address,
+      lockPeriod: lockPeriod || 0,
+      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
@@ -53,5 +54,5 @@ export function useTokenStakingLockManager() {
     return lock;
   };
 
-  return { createLock, locks, address };
+  return { manage, locks, address };
 }
