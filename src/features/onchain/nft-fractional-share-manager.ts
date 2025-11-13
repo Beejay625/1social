@@ -38,7 +38,7 @@ export function useNFTFractionalShareManager() {
       throw new Error('Total shares must be greater than zero');
     }
     
-    const message = `Create fractional: ${collectionAddress} #${tokenId} into ${totalShares} shares`;
+    const message = `Create fractional: ${collectionAddress} #${tokenId} ${totalShares} shares`;
     await signMessageAsync({ message });
     
     const share: FractionalShare = {
@@ -58,4 +58,3 @@ export function useNFTFractionalShareManager() {
 
   return { createFractional, shares, address };
 }
-
