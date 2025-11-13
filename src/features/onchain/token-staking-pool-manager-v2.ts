@@ -9,50 +9,44 @@ import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface PoolManagement {
+  managementId: string;
   poolAddress: string;
-  action: 'create' | 'update' | 'pause' | 'resume' | 'close';
-  apy?: number;
-  lockPeriod?: number;
-  minStake?: string;
-  maxStake?: string;
+  action: 'update' | 'pause' | 'resume' | 'close';
+  parameters?: Record<string, any>;
+  managedBy: string;
   timestamp: number;
 }
 
 export function useTokenStakingPoolManagerV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [operations, setOperations] = useState<PoolManagement[]>([]);
+  const [managements, setManagements] = useState<PoolManagement[]>([]);
 
-  const manage = async (
+  const managePool = async (
     poolAddress: string,
-    action: 'create' | 'update' | 'pause' | 'resume' | 'close',
-    apy?: number,
-    lockPeriod?: number,
-    minStake?: string,
-    maxStake?: string
+    action: 'update' | 'pause' | 'resume' | 'close',
+    parameters?: Record<string, any>
   ): Promise<PoolManagement> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!poolAddress.startsWith('0x')) {
       throw new Error('Invalid pool address format');
     }
     
-    const message = `Manage pool: ${poolAddress} ${action}`;
+    const message = `Manage pool: ${poolAddress} action ${action}`;
     await signMessageAsync({ message });
     
-    const operation: PoolManagement = {
+    const management: PoolManagement = {
+      managementId: `manage-${Date.now()}`,
       poolAddress,
       action,
-      apy,
-      lockPeriod,
-      minStake,
-      maxStake,
+      parameters,
+      managedBy: address,
       timestamp: Date.now(),
     };
     
-    setOperations([...operations, operation]);
-    return operation;
+    setManagements([...managements, management]);
+    return management;
   };
 
-  return { manage, operations, address };
+  return { managePool, managements, address };
 }
-
