@@ -13,9 +13,9 @@ export interface QuorumCalculation {
   proposalId: string;
   totalSupply: string;
   quorumPercentage: number;
-  requiredQuorum: string;
+  requiredVotes: string;
   currentVotes: string;
-  remainingVotes: string;
+  quorumMet: boolean;
   timestamp: number;
 }
 
@@ -38,19 +38,17 @@ export function useTokenGovernanceQuorumCalculator() {
     const message = `Calculate quorum: ${proposalId} ${quorumPercentage}%`;
     await signMessageAsync({ message });
     
-    const requiredQuorum = (BigInt(totalSupply) * BigInt(Math.floor(quorumPercentage * 100)) / BigInt(10000)).toString();
-    const remainingVotes = (BigInt(requiredQuorum) > BigInt(currentVotes) 
-      ? (BigInt(requiredQuorum) - BigInt(currentVotes)).toString() 
-      : '0');
+    const requiredVotes = (BigInt(totalSupply) * BigInt(Math.floor(quorumPercentage * 100))) / BigInt(10000);
+    const quorumMet = BigInt(currentVotes) >= requiredVotes;
     
     const calculation: QuorumCalculation = {
       calculationId: `quorum-${Date.now()}`,
       proposalId,
       totalSupply,
       quorumPercentage,
-      requiredQuorum,
+      requiredVotes: requiredVotes.toString(),
       currentVotes,
-      remainingVotes,
+      quorumMet,
       timestamp: Date.now(),
     };
     
