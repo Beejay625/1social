@@ -11,10 +11,12 @@ import { useState } from 'react';
 export interface EmissionSchedule {
   scheduleId: string;
   tokenAddress: string;
-  amount: string;
+  emissionRate: string;
+  startTime: number;
+  endTime: number;
   recipient: string;
-  emissionTime: number;
-  completed: boolean;
+  createdBy: string;
+  active: boolean;
   timestamp: number;
 }
 
@@ -23,27 +25,33 @@ export function useTokenEmissionScheduler() {
   const { signMessageAsync } = useSignMessage();
   const [schedules, setSchedules] = useState<EmissionSchedule[]>([]);
 
-  const scheduleEmission = async (
+  const createSchedule = async (
     tokenAddress: string,
-    amount: string,
-    recipient: string,
-    emissionTime: number
+    emissionRate: string,
+    startTime: number,
+    endTime: number,
+    recipient: string
   ): Promise<EmissionSchedule> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!tokenAddress.startsWith('0x') || !recipient.startsWith('0x')) {
       throw new Error('Invalid address format');
     }
+    if (endTime <= startTime) {
+      throw new Error('End time must be after start time');
+    }
     
-    const message = `Schedule emission: ${tokenAddress} to ${recipient}`;
+    const message = `Create emission schedule: ${tokenAddress} ${emissionRate}/second`;
     await signMessageAsync({ message });
     
     const schedule: EmissionSchedule = {
-      scheduleId: `emit-${Date.now()}`,
+      scheduleId: `emission-${Date.now()}`,
       tokenAddress,
-      amount,
+      emissionRate,
+      startTime,
+      endTime,
       recipient,
-      emissionTime,
-      completed: false,
+      createdBy: address,
+      active: true,
       timestamp: Date.now(),
     };
     
@@ -51,5 +59,5 @@ export function useTokenEmissionScheduler() {
     return schedule;
   };
 
-  return { scheduleEmission, schedules, address };
+  return { createSchedule, schedules, address };
 }
