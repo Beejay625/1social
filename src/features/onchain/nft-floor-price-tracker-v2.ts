@@ -2,17 +2,17 @@
 
 /**
  * NFT Floor Price Tracker V2
- * Track floor prices with historical data via Reown wallet
+ * Track floor prices with enhanced features via Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState, useEffect } from 'react';
 
 export interface FloorPrice {
+  trackingId: string;
   collectionAddress: string;
   floorPrice: string;
   currency: string;
-  change24h: number;
   timestamp: number;
 }
 
@@ -43,10 +43,10 @@ export function useNFTFloorPriceTrackerV2(collectionAddress?: string) {
     
     const interval = setInterval(() => {
       const price: FloorPrice = {
+        trackingId: `track-${Date.now()}`,
         collectionAddress: collectionAddress || '0x0',
         floorPrice: '0.5',
         currency: 'ETH',
-        change24h: 5.2,
         timestamp: Date.now(),
       };
       
@@ -58,4 +58,3 @@ export function useNFTFloorPriceTrackerV2(collectionAddress?: string) {
 
   return { startTracking, stopTracking, prices, isTracking, address };
 }
-
