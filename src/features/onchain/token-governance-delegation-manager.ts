@@ -1,32 +1,53 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+/**
+ * Token Governance Delegation Manager
+ * Manage governance delegation with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface DelegationParams {
+export interface Delegation {
+  delegationId: string;
+  tokenAddress: string;
   delegatee: string;
-  amount: bigint;
-  undelegate: boolean;
+  amount: string;
+  expiresAt: number;
+  timestamp: number;
 }
 
 export function useTokenGovernanceDelegationManager() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const { data: delegatedTo } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'delegates',
-    args: [address],
-  });
-  const [managing, setManaging] = useState(false);
+  const { signMessageAsync } = useSignMessage();
+  const [delegations, setDelegations] = useState<Delegation[]>([]);
 
-  const manageDelegation = async (params: DelegationParams) => {
-    if (!address) return;
-    setManaging(true);
-    // Implementation for delegation management
-    setManaging(false);
+  const delegate = async (
+    tokenAddress: string,
+    delegatee: string,
+    amount: string,
+    expiresAt?: number
+  ): Promise<Delegation> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (!tokenAddress.startsWith('0x') || !delegatee.startsWith('0x')) {
+      throw new Error('Invalid address format');
+    }
+    
+    const message = `Delegate governance: ${tokenAddress} to ${delegatee}`;
+    await signMessageAsync({ message });
+    
+    const delegation: Delegation = {
+      delegationId: `deleg-${Date.now()}`,
+      tokenAddress,
+      delegatee,
+      amount,
+      expiresAt: expiresAt || Date.now() + 86400000 * 365,
+      timestamp: Date.now(),
+    };
+    
+    setDelegations([...delegations, delegation]);
+    return delegation;
   };
 
-  return { manageDelegation, managing, address, delegatedTo };
+  return { delegate, delegations, address };
 }
-
