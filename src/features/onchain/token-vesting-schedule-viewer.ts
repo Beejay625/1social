@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * Token Vesting Schedule Viewer
+ * Views and tracks token vesting schedules using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
