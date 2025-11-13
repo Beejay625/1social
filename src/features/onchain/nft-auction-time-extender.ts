@@ -1,58 +1,55 @@
 'use client';
 
-import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+/**
+ * NFT Auction Time Extender
+ * Extend auction end times with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-/**
- * Auction extension information
- */
 export interface AuctionExtension {
+  extensionId: string;
   auctionId: string;
+  tokenId: string;
   originalEndTime: number;
   newEndTime: number;
-  extensionMinutes: number;
+  extensionPeriod: number;
+  timestamp: number;
 }
 
-/**
- * Hook for extending NFT auction end times with Reown wallet integration
- * Allows extending auctions by specified minutes
- */
 export function useNFTAuctionTimeExtender() {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const { writeContract, data: hash, isPending } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
   const [extensions, setExtensions] = useState<AuctionExtension[]>([]);
 
-  const extendAuction = async (auctionId: string, extensionMinutes: number) => {
-    if (!address || !isConnected) throw new Error('Reown wallet not connected');
+  const extendAuction = async (
+    auctionId: string,
+    tokenId: string,
+    originalEndTime: number,
+    extensionPeriod: number
+  ): Promise<AuctionExtension> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (extensionPeriod <= 0) {
+      throw new Error('Extension period must be greater than zero');
+    }
     
-    const originalEndTime = Date.now();
-    const newEndTime = originalEndTime + (extensionMinutes * 60 * 1000);
-    
-    const message = `Extend auction ${auctionId} by ${extensionMinutes} minutes`;
+    const message = `Extend auction: ${auctionId} by ${extensionPeriod}ms`;
     await signMessageAsync({ message });
     
     const extension: AuctionExtension = {
+      extensionId: `extend-${Date.now()}`,
       auctionId,
+      tokenId,
       originalEndTime,
-      newEndTime,
-      extensionMinutes,
+      newEndTime: originalEndTime + extensionPeriod,
+      extensionPeriod,
+      timestamp: Date.now(),
     };
     
     setExtensions([...extensions, extension]);
     return extension;
   };
 
-  return { 
-    extendAuction, 
-    extensions, 
-    address, 
-    isConnected,
-    hash,
-    isPending,
-    isConfirming,
-    isConfirmed
-  };
+  return { extendAuction, extensions, address };
 }
-
