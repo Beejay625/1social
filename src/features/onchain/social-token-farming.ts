@@ -1,49 +1,32 @@
 'use client';
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface FarmingPool {
-  id: string;
-  creator: string;
-  tokenAddress: string;
+export interface FarmingParams {
+  poolAddress: string;
   rewardToken: string;
-  apy: number;
-  totalStaked: string;
-  totalRewards: string;
-  timestamp: number;
+  rewardRate: bigint;
+  lockPeriod: number;
 }
 
 export function useSocialTokenFarming() {
   const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
-  const [pools, setPools] = useState<FarmingPool[]>([]);
+  const { writeContract } = useWriteContract();
+  const { data: rewards } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'pendingRewards',
+    args: [address],
+  });
+  const [farming, setFarming] = useState(false);
 
-  const createFarmingPool = async (
-    tokenAddress: string,
-    rewardToken: string,
-    apy: number
-  ) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Create Farming Pool: ${tokenAddress} reward ${rewardToken} ${apy}%`;
-    await signMessageAsync({ message });
-    
-    const pool: FarmingPool = {
-      id: `farm-${Date.now()}`,
-      creator: address,
-      tokenAddress,
-      rewardToken,
-      apy,
-      totalStaked: '0',
-      totalRewards: '0',
-      timestamp: Date.now(),
-    };
-    
-    setPools([...pools, pool]);
-    return pool;
+  const createFarmingPool = async (params: FarmingParams) => {
+    if (!address) return;
+    setFarming(true);
+    // Implementation for farming pools
+    setFarming(false);
   };
 
-  return { createFarmingPool, pools, address };
+  return { createFarmingPool, farming, address, rewards };
 }
-
