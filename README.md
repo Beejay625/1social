@@ -428,6 +428,34 @@ All features are fully integrated with **Reown AppKit** and use `useAccount`, `u
 
 All features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
 
+### Latest 20 Onchain Features (All Powered by Reown Wallet)
+
+#### Token Operations & Management
+- **Token Multi-Send Executor** - Execute multiple token transfers in a single transaction with Reown wallet
+- **Token Staking Pool Creator** - Create new staking pools with Reown wallet
+- **Token Governance Delegation Manager** - Manage governance delegation with Reown wallet
+- **Token Liquidity Pool Rebalancer V2** - Rebalance liquidity pools with enhanced features using Reown wallet
+- **Token Multisig Proposal Creator** - Create multisig proposals with Reown wallet
+- **Token Vesting Early Release** - Early release of vested tokens with penalty via Reown wallet
+- **Token Governance Proposal Executor** - Execute approved governance proposals with Reown wallet
+- **Token Staking Reward Claim Optimizer V2** - Optimize reward claims with advanced features via Reown wallet
+- **Token Liquidity Position Manager** - Manage LP positions with Reown wallet
+- **Token Governance Vote Tracker** - Track governance votes in real-time with Reown wallet
+
+#### NFT Operations & Marketplace
+- **NFT Collection Freeze Manager** - Freeze and unfreeze NFT collections with Reown wallet
+- **NFT Marketplace Fee Collector V2** - Collect marketplace fees with enhanced features via Reown wallet
+- **NFT Collection Reveal Manager** - Manage NFT collection reveals with Reown wallet
+- **NFT Auction Bid Optimizer** - Optimize NFT auction bids for maximum efficiency with Reown wallet
+- **NFT Batch Transfer Validator V3** - Enhanced batch transfer validation with Reown wallet
+- **NFT Collection Royalty Manager V2** - Manage collection-level royalties with enhanced features via Reown wallet
+- **NFT Marketplace Offer Acceptor V2** - Accept marketplace offers with enhanced features via Reown wallet
+- **NFT Batch Approval Revoker V2** - Batch revoke NFT approvals with enhanced features via Reown wallet
+- **NFT Auction Bid Withdrawer V2** - Withdraw auction bids with enhanced features via Reown wallet
+- **NFT Royalty Payment Collector V2** - Collect pending royalties with enhanced features via Reown wallet
+
+All 20 features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
+
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
 - **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
