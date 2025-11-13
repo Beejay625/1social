@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * Multi-Chain Portfolio Tracker
+ * Tracks portfolio value across multiple blockchain networks using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
