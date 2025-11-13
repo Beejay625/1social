@@ -432,27 +432,27 @@ All features are fully integrated with **Reown AppKit** and use `useAccount`, `u
 
 #### Token Operations & Management
 - **Token Multi-Send Executor** - Execute multiple token transfers in a single transaction with Reown wallet
-- **Token Staking Pool Creator** - Create new staking pools with Reown wallet
-- **Token Governance Delegation Manager** - Manage governance delegation with Reown wallet
-- **Token Liquidity Pool Rebalancer V2** - Rebalance liquidity pools with enhanced features using Reown wallet
-- **Token Multisig Proposal Creator** - Create multisig proposals with Reown wallet
-- **Token Vesting Early Release** - Early release of vested tokens with penalty via Reown wallet
-- **Token Governance Proposal Executor** - Execute approved governance proposals with Reown wallet
-- **Token Staking Reward Claim Optimizer V2** - Optimize reward claims with advanced features via Reown wallet
-- **Token Liquidity Position Manager** - Manage LP positions with Reown wallet
-- **Token Governance Vote Tracker** - Track governance votes in real-time with Reown wallet
+- **Token Price Alert Manager** - Set and manage price alerts for tokens with Reown wallet
+- **Token Slippage Calculator** - Calculate slippage for token swaps with Reown wallet
+- **Token Whitelist Manager** - Manage token whitelists with Reown wallet
+- **Token Balance Tracker** - Track token balances across multiple addresses with Reown wallet
+- **Token Transfer Optimizer** - Optimize token transfers for gas efficiency with Reown wallet
+- **Token Tax Calculator** - Calculate taxes for token transactions with Reown wallet
+- **Token Liquidity Provider Tracker** - Track liquidity provider positions with Reown wallet
+- **Token Reflection Calculator** - Calculate reflection rewards with Reown wallet
+- **Token Dividend Distributor** - Distribute dividends to token holders with Reown wallet
+- **Token Holder Analyzer** - Analyze token holder distribution with Reown wallet
 
 #### NFT Operations & Marketplace
-- **NFT Collection Freeze Manager** - Freeze and unfreeze NFT collections with Reown wallet
-- **NFT Marketplace Fee Collector V2** - Collect marketplace fees with enhanced features via Reown wallet
-- **NFT Collection Reveal Manager** - Manage NFT collection reveals with Reown wallet
-- **NFT Auction Bid Optimizer** - Optimize NFT auction bids for maximum efficiency with Reown wallet
-- **NFT Batch Transfer Validator V3** - Enhanced batch transfer validation with Reown wallet
-- **NFT Collection Royalty Manager V2** - Manage collection-level royalties with enhanced features via Reown wallet
-- **NFT Marketplace Offer Acceptor V2** - Accept marketplace offers with enhanced features via Reown wallet
-- **NFT Batch Approval Revoker V2** - Batch revoke NFT approvals with enhanced features via Reown wallet
-- **NFT Auction Bid Withdrawer V2** - Withdraw auction bids with enhanced features via Reown wallet
-- **NFT Royalty Payment Collector V2** - Collect pending royalties with enhanced features via Reown wallet
+- **NFT Trait Analyzer** - Analyze NFT traits and rarity with Reown wallet
+- **NFT Collection Verifier** - Verify NFT collection authenticity with Reown wallet
+- **NFT Marketplace Listing Manager** - Manage NFT marketplace listings with Reown wallet
+- **NFT Approval Checker V2** - Check NFT approvals with enhanced features via Reown wallet
+- **NFT Staking Rewards** - Claim NFT staking rewards with Reown wallet
+- **NFT Order Matcher V2** - Match NFT buy and sell orders with enhanced features via Reown wallet
+- **NFT Collection Stats Tracker** - Track collection statistics over time with Reown wallet
+- **NFT Fractional Share Manager** - Manage fractional NFT shares with Reown wallet
+- **NFT Metadata Validator V2** - Validate NFT metadata with enhanced features via Reown wallet
 
 All 20 features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
 
