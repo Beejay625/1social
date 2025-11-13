@@ -346,17 +346,13 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 
 #### NFT Operations & Marketplace
 - **NFT Batch Burn Manager** - Batch burn multiple NFTs efficiently with Reown wallet
-- **NFT Metadata Batch Updater V2** - Update metadata for multiple NFTs in batch with Reown wallet
-- **NFT Collection Royalty Splitter** - Split royalties among multiple recipients with Reown wallet
-- **NFT Auction Time Extender** - Extend auction end times with Reown wallet
+- **NFT Metadata Batch Updater V2** - Batch update NFT metadata with enhanced features via Reown wallet
+- **NFT Collection Freeze Manager** - Freeze and unfreeze NFT collections with Reown wallet
 - **NFT Marketplace Bulk Lister** - List multiple NFTs on marketplaces in bulk with Reown wallet
-- **NFT Rental Payment Tracker V2** - Track rental payments in real-time with Reown wallet
-- **NFT Collection Whitelist Manager V2** - Manage collection whitelists with Reown wallet
-- **NFT Marketplace Offer Aggregator** - Aggregate and compare marketplace offers with Reown wallet
-- **NFT Collection Supply Tracker** - Track collection supply and minting progress with Reown wallet
-- **NFT Auction Sniper Bot** - Configure automated auction sniping with Reown wallet
-- **NFT Metadata IPFS Pinner** - Pin NFT metadata to IPFS with Reown wallet verification
-- **NFT Collection Floor Price Monitor** - Monitor floor prices with alerts via Reown wallet
+- **NFT Royalty Payment Splitter V2** - Split royalty payments among multiple recipients with Reown wallet
+- **NFT Auction Bid Optimizer** - Optimize NFT auction bids for maximum efficiency with Reown wallet
+- **NFT Rental Payment Tracker V2** - Track rental payments in real-time with enhanced features via Reown wallet
+- **NFT Collection Whitelist Manager** - Manage whitelist addresses for NFT collections with Reown wallet
 
 All 20 features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
 
