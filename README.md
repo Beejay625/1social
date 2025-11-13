@@ -356,6 +356,51 @@ All features below are fully integrated with **Reown AppKit** for seamless walle
 
 All 20 features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
 
+### Additional 20 Onchain Features (All Powered by Reown Wallet)
+
+#### Token Management & Distribution
+- **Token Airdrop Claim Optimizer** - Optimize airdrop claims for gas efficiency with Reown wallet
+- **Token Staking Pool Creator** - Create new staking pools with Reown wallet
+- **Token Governance Delegation Manager** - Manage governance delegation with Reown wallet
+- **Token Liquidity Locker V2** - Lock liquidity with enhanced features using Reown wallet
+- **Token Multisig Proposal Creator** - Create multisig proposals with Reown wallet
+- **Token Vesting Early Release** - Early release of vested tokens with penalty via Reown wallet
+- **Token Governance Proposal Executor** - Execute approved governance proposals with Reown wallet
+- **Token Liquidity Pool Rebalancer V2** - Rebalance liquidity pools with enhanced features using Reown wallet
+- **Token Staking Reward Claim Optimizer V2** - Optimize reward claims with advanced features via Reown wallet
+- **Token Governance Proposal Canceler** - Cancel governance proposals with Reown wallet
+- **Token Liquidity Pool Fee Distributor** - Distribute LP fees to recipients with Reown wallet
+- **Token Burn Scheduler V2** - Advanced burn scheduling with recurring options via Reown wallet
+- **Token Emission Scheduler** - Schedule token emissions with Reown wallet
+- **Token Staking Lock Manager** - Manage staking lock periods with Reown wallet
+- **Token Governance Quorum Calculator** - Calculate quorum requirements with Reown wallet
+- **Token Reward Vesting Creator** - Create reward vesting schedules with Reown wallet
+- **Token Liquidity Position Manager** - Manage LP positions with Reown wallet
+- **Token Governance Vote Tracker** - Track governance votes in real-time with Reown wallet
+- **Token Staking Pool Reward Distributor** - Distribute staking pool rewards with Reown wallet
+
+#### NFT Operations & Management
+- **NFT Collection Reveal Manager** - Manage NFT collection reveals with Reown wallet
+- **NFT Marketplace Offer Aggregator** - Aggregate and compare marketplace offers with Reown wallet
+- **NFT Collection Supply Tracker** - Track collection supply and minting progress with Reown wallet
+- **NFT Rental Extension Manager** - Extend NFT rental periods with Reown wallet
+- **NFT Auction Time Extender** - Extend auction end times with Reown wallet
+- **NFT Metadata IPFS Pinner** - Pin NFT metadata to IPFS with Reown wallet verification
+- **NFT Collection Floor Price Monitor** - Monitor floor prices with alerts via Reown wallet
+- **NFT Auction Sniper Bot** - Configure automated auction sniping with Reown wallet
+- **NFT Batch Transfer Validator V3** - Enhanced batch transfer validation with Reown wallet
+- **NFT Collection Royalty Manager V2** - Manage collection-level royalties with enhanced features via Reown wallet
+- **NFT Marketplace Offer Acceptor V2** - Accept marketplace offers with enhanced features via Reown wallet
+- **NFT Batch Approval Revoker V2** - Batch revoke NFT approvals with enhanced features via Reown wallet
+- **NFT Auction Bid Withdrawer V2** - Withdraw auction bids with enhanced features via Reown wallet
+- **NFT Marketplace Fee Collector V2** - Collect marketplace fees with enhanced features via Reown wallet
+- **NFT Batch Mint Optimizer V2** - Optimize batch mints for gas efficiency with enhanced features via Reown wallet
+- **NFT Collection Pause Manager V2** - Pause/unpause NFT collections with enhanced features via Reown wallet
+- **NFT Marketplace Bulk Buyer V2** - Bulk buy NFTs from marketplaces with enhanced features via Reown wallet
+- **NFT Royalty Payment Collector V2** - Collect pending royalties with enhanced features via Reown wallet
+
+All features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
+
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
 - **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
