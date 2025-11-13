@@ -29,6 +29,9 @@ export function useContractInteractionLogger() {
     txHash: string
   ): Promise<InteractionLog> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!contractAddress.startsWith('0x') || !txHash.startsWith('0x')) {
+      throw new Error('Invalid address or transaction hash format');
+    }
     
     const message = `Log contract interaction: ${contractAddress} ${functionName}`;
     await signMessageAsync({ message });
