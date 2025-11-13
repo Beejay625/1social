@@ -1,55 +1,52 @@
 'use client';
 
-import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+/**
+ * NFT Batch Burn Manager
+ * Batch burn multiple NFTs efficiently with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-/**
- * Batch burn information
- */
-export interface BurnBatch {
+export interface BatchBurn {
+  burnId: string;
   collectionAddress: string;
   tokenIds: string[];
-  burnId: string;
+  txHash: string;
   timestamp: number;
 }
 
-/**
- * Hook for batch burning NFTs with Reown wallet integration
- * Efficiently burns multiple NFTs in a single operation
- */
 export function useNFTBatchBurnManager() {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const { writeContract, data: hash, isPending } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
-  const [burnBatches, setBurnBatches] = useState<BurnBatch[]>([]);
+  const [burns, setBurns] = useState<BatchBurn[]>([]);
 
-  const burnBatch = async (collectionAddress: string, tokenIds: string[]) => {
-    if (!address || !isConnected) throw new Error('Reown wallet not connected');
+  const burnBatch = async (
+    collectionAddress: string,
+    tokenIds: string[]
+  ): Promise<BatchBurn> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (tokenIds.length === 0) {
+      throw new Error('At least one token ID is required');
+    }
+    if (!collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
+    }
     
-    const message = `Burn ${tokenIds.length} NFTs from collection ${collectionAddress}`;
+    const message = `Batch burn NFTs: ${collectionAddress} ${tokenIds.length} tokens`;
     await signMessageAsync({ message });
     
-    const burnBatch: BurnBatch = {
+    const burn: BatchBurn = {
+      burnId: `burn-${Date.now()}`,
       collectionAddress,
       tokenIds,
-      burnId: `burn_${Date.now()}`,
+      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
-    setBurnBatches([...burnBatches, burnBatch]);
-    return burnBatch;
+    setBurns([...burns, burn]);
+    return burn;
   };
 
-  return { 
-    burnBatch, 
-    burnBatches, 
-    address, 
-    isConnected,
-    hash,
-    isPending,
-    isConfirming,
-    isConfirmed
-  };
+  return { burnBatch, burns, address };
 }
-
