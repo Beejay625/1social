@@ -33,6 +33,9 @@ export function useCrossChainTokenBalanceAggregator() {
     chainIds: number[]
   ): Promise<AggregatedBalance> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (chainIds.length === 0) {
+      throw new Error('At least one chain ID is required');
+    }
     
     const message = `Aggregate cross-chain balances: ${tokenAddress}`;
     await signMessageAsync({ message });
