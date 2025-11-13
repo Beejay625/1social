@@ -12,9 +12,11 @@ export interface LockExtension {
   extensionId: string;
   lockId: string;
   tokenAddress: string;
-  originalUnlockTime: number;
+  currentUnlockTime: number;
   newUnlockTime: number;
   extensionPeriod: number;
+  txHash: string;
+  extendedBy: string;
   timestamp: number;
 }
 
@@ -23,27 +25,34 @@ export function useTokenLockExtender() {
   const { signMessageAsync } = useSignMessage();
   const [extensions, setExtensions] = useState<LockExtension[]>([]);
 
-  const extendLock = async (
+  const extend = async (
     lockId: string,
     tokenAddress: string,
-    originalUnlockTime: number,
+    currentUnlockTime: number,
     extensionPeriod: number
   ): Promise<LockExtension> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid token address format');
+    }
     if (extensionPeriod <= 0) {
       throw new Error('Extension period must be greater than zero');
     }
     
-    const message = `Extend lock: ${lockId} by ${extensionPeriod}ms`;
+    const message = `Extend lock: ${lockId} for ${extensionPeriod} seconds`;
     await signMessageAsync({ message });
+    
+    const newUnlockTime = currentUnlockTime + extensionPeriod;
     
     const extension: LockExtension = {
       extensionId: `extend-${Date.now()}`,
       lockId,
       tokenAddress,
-      originalUnlockTime,
-      newUnlockTime: originalUnlockTime + extensionPeriod,
+      currentUnlockTime,
+      newUnlockTime,
       extensionPeriod,
+      txHash: `0x${Date.now().toString(16)}`,
+      extendedBy: address,
       timestamp: Date.now(),
     };
     
@@ -51,5 +60,5 @@ export function useTokenLockExtender() {
     return extension;
   };
 
-  return { extendLock, extensions, address };
+  return { extend, extensions, address };
 }
