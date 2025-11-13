@@ -10,9 +10,10 @@ import { useState } from 'react';
 
 export interface FeeCollection {
   collectionId: string;
-  marketplace: string;
+  marketplaceAddress: string;
   totalFees: string;
   currency: string;
+  collectedBy: string;
   txHash: string;
   timestamp: number;
 }
@@ -23,23 +24,23 @@ export function useNFTMarketplaceFeeCollectorV2() {
   const [collections, setCollections] = useState<FeeCollection[]>([]);
 
   const collectFees = async (
-    marketplace: string,
-    totalFees: string,
+    marketplaceAddress: string,
     currency: string
   ): Promise<FeeCollection> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (parseFloat(totalFees) <= 0) {
-      throw new Error('Total fees must be greater than zero');
+    if (!marketplaceAddress.startsWith('0x')) {
+      throw new Error('Invalid marketplace address format');
     }
     
-    const message = `Collect marketplace fees: ${marketplace} ${totalFees} ${currency}`;
+    const message = `Collect marketplace fees: ${marketplaceAddress}`;
     await signMessageAsync({ message });
     
     const collection: FeeCollection = {
-      collectionId: `collect-${Date.now()}`,
-      marketplace,
-      totalFees,
+      collectionId: `fee-${Date.now()}`,
+      marketplaceAddress,
+      totalFees: '0',
       currency,
+      collectedBy: address,
       txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
@@ -50,4 +51,3 @@ export function useNFTMarketplaceFeeCollectorV2() {
 
   return { collectFees, collections, address };
 }
-
