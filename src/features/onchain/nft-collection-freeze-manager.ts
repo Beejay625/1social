@@ -10,7 +10,7 @@ import { useState } from 'react';
 
 export interface FreezeStatus {
   collectionAddress: string;
-  isFrozen: boolean;
+  frozen: boolean;
   frozenBy: string;
   timestamp: number;
 }
@@ -20,7 +20,7 @@ export function useNFTCollectionFreezeManager() {
   const { signMessageAsync } = useSignMessage();
   const [freezeStatuses, setFreezeStatuses] = useState<FreezeStatus[]>([]);
 
-  const freeze = async (collectionAddress: string): Promise<FreezeStatus> => {
+  const freezeCollection = async (collectionAddress: string): Promise<FreezeStatus> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
@@ -31,7 +31,7 @@ export function useNFTCollectionFreezeManager() {
     
     const status: FreezeStatus = {
       collectionAddress,
-      isFrozen: true,
+      frozen: true,
       frozenBy: address,
       timestamp: Date.now(),
     };
@@ -40,7 +40,7 @@ export function useNFTCollectionFreezeManager() {
     return status;
   };
 
-  const unfreeze = async (collectionAddress: string): Promise<FreezeStatus> => {
+  const unfreezeCollection = async (collectionAddress: string): Promise<FreezeStatus> => {
     if (!address) throw new Error('Reown wallet not connected');
     
     const message = `Unfreeze collection: ${collectionAddress}`;
@@ -48,7 +48,7 @@ export function useNFTCollectionFreezeManager() {
     
     const status: FreezeStatus = {
       collectionAddress,
-      isFrozen: false,
+      frozen: false,
       frozenBy: address,
       timestamp: Date.now(),
     };
@@ -57,5 +57,5 @@ export function useNFTCollectionFreezeManager() {
     return status;
   };
 
-  return { freeze, unfreeze, freezeStatuses, address };
+  return { freezeCollection, unfreezeCollection, freezeStatuses, address };
 }
