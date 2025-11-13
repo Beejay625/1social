@@ -1,47 +1,31 @@
 'use client';
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface BondingCurve {
-  id: string;
-  creator: string;
+export interface BondingCurveParams {
   tokenAddress: string;
-  curveType: 'linear' | 'exponential' | 'logarithmic';
-  reserveRatio: number;
-  virtualBalance: string;
-  virtualSupply: string;
+  reserveToken: string;
+  curveType: string;
+  initialPrice: bigint;
 }
 
 export function useSocialTokenBondingCurves() {
   const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
-  const [curves, setCurves] = useState<BondingCurve[]>([]);
+  const { writeContract } = useWriteContract();
+  const { data: currentPrice } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'currentPrice',
+  });
+  const [creating, setCreating] = useState(false);
 
-  const createBondingCurve = async (
-    tokenAddress: string,
-    curveType: 'linear' | 'exponential' | 'logarithmic',
-    reserveRatio: number
-  ) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Create Bonding Curve: ${tokenAddress} ${curveType} ${reserveRatio}`;
-    await signMessageAsync({ message });
-    
-    const curve: BondingCurve = {
-      id: `curve-${Date.now()}`,
-      creator: address,
-      tokenAddress,
-      curveType,
-      reserveRatio,
-      virtualBalance: '0',
-      virtualSupply: '0',
-    };
-    
-    setCurves([...curves, curve]);
-    return curve;
+  const createBondingCurve = async (params: BondingCurveParams) => {
+    if (!address) return;
+    setCreating(true);
+    // Implementation for bonding curves
+    setCreating(false);
   };
 
-  return { createBondingCurve, curves, address };
+  return { createBondingCurve, creating, address, currentPrice };
 }
-
