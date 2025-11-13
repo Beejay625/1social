@@ -10,10 +10,11 @@ import { useState } from 'react';
 
 export interface ApprovalRevocation {
   revocationId: string;
+  tokenIds: string[];
   collectionAddress: string;
-  operators: string[];
-  revokedBy: string;
+  operator: string;
   txHash: string;
+  revokedBy: string;
   timestamp: number;
 }
 
@@ -22,30 +23,32 @@ export function useNFTBatchApprovalRevokerV2() {
   const { signMessageAsync } = useSignMessage();
   const [revocations, setRevocations] = useState<ApprovalRevocation[]>([]);
 
-  const revokeApprovals = async (
+  const revoke = async (
+    tokenIds: string[],
     collectionAddress: string,
-    operators: string[]
+    operator: string
   ): Promise<ApprovalRevocation> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (operators.length === 0) {
-      throw new Error('At least one operator is required');
+    if (!operator.startsWith('0x')) {
+      throw new Error('Invalid operator address format');
     }
-    if (operators.some(op => !op.startsWith('0x'))) {
-      throw new Error('All operators must be valid Ethereum addresses');
+    if (tokenIds.length === 0) {
+      throw new Error('At least one token ID is required');
     }
     
-    const message = `Revoke approvals: ${collectionAddress} ${operators.length} operators`;
+    const message = `Revoke approvals: ${collectionAddress} ${tokenIds.length} tokens from ${operator}`;
     await signMessageAsync({ message });
     
     const revocation: ApprovalRevocation = {
       revocationId: `revoke-${Date.now()}`,
+      tokenIds,
       collectionAddress,
-      operators,
-      revokedBy: address,
+      operator,
       txHash: `0x${Date.now().toString(16)}`,
+      revokedBy: address,
       timestamp: Date.now(),
     };
     
@@ -53,5 +56,5 @@ export function useNFTBatchApprovalRevokerV2() {
     return revocation;
   };
 
-  return { revokeApprovals, revocations, address };
+  return { revoke, revocations, address };
 }
