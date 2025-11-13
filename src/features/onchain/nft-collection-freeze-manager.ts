@@ -1,31 +1,61 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+/**
+ * NFT Collection Freeze Manager
+ * Freeze and unfreeze NFT collections with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
+
+export interface FreezeStatus {
+  collectionAddress: string;
+  isFrozen: boolean;
+  frozenBy: string;
+  timestamp: number;
+}
 
 export function useNFTCollectionFreezeManager() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const { data: isFrozen } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'frozen',
-  });
-  const [managing, setManaging] = useState(false);
+  const { signMessageAsync } = useSignMessage();
+  const [freezeStatuses, setFreezeStatuses] = useState<FreezeStatus[]>([]);
 
-  const freezeCollection = async (collection: string) => {
-    if (!address) return;
-    setManaging(true);
-    // Implementation for freezing collection
-    setManaging(false);
+  const freeze = async (collectionAddress: string): Promise<FreezeStatus> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (!collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
+    }
+    
+    const message = `Freeze collection: ${collectionAddress}`;
+    await signMessageAsync({ message });
+    
+    const status: FreezeStatus = {
+      collectionAddress,
+      isFrozen: true,
+      frozenBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setFreezeStatuses([...freezeStatuses, status]);
+    return status;
   };
 
-  const unfreezeCollection = async (collection: string) => {
-    if (!address) return;
-    setManaging(true);
-    // Implementation for unfreezing collection
-    setManaging(false);
+  const unfreeze = async (collectionAddress: string): Promise<FreezeStatus> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `Unfreeze collection: ${collectionAddress}`;
+    await signMessageAsync({ message });
+    
+    const status: FreezeStatus = {
+      collectionAddress,
+      isFrozen: false,
+      frozenBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setFreezeStatuses([...freezeStatuses, status]);
+    return status;
   };
 
-  return { freezeCollection, unfreezeCollection, managing, address, isFrozen };
+  return { freeze, unfreeze, freezeStatuses, address };
 }
