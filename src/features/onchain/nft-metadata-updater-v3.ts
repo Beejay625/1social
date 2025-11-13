@@ -2,7 +2,7 @@
 
 /**
  * NFT Metadata Updater V3
- * Update NFT metadata with advanced features via Reown wallet
+ * Update NFT metadata with enhanced features via Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
@@ -13,8 +13,8 @@ export interface MetadataUpdate {
   tokenId: string;
   collectionAddress: string;
   metadata: Record<string, any>;
-  ipfsHash?: string;
-  txHash: string;
+  updatedBy: string;
+  txHash?: string;
   timestamp: number;
 }
 
@@ -23,21 +23,17 @@ export function useNFTMetadataUpdaterV3() {
   const { signMessageAsync } = useSignMessage();
   const [updates, setUpdates] = useState<MetadataUpdate[]>([]);
 
-  const update = async (
+  const updateMetadata = async (
     tokenId: string,
     collectionAddress: string,
-    metadata: Record<string, any>,
-    ipfsHash?: string
+    metadata: Record<string, any>
   ): Promise<MetadataUpdate> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (Object.keys(metadata).length === 0) {
-      throw new Error('Metadata cannot be empty');
-    }
     
-    const message = `Update metadata: ${collectionAddress} #${tokenId}${ipfsHash ? ` IPFS: ${ipfsHash}` : ''}`;
+    const message = `Update metadata: ${collectionAddress} #${tokenId}`;
     await signMessageAsync({ message });
     
     const update: MetadataUpdate = {
@@ -45,7 +41,7 @@ export function useNFTMetadataUpdaterV3() {
       tokenId,
       collectionAddress,
       metadata,
-      ipfsHash,
+      updatedBy: address,
       txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
@@ -54,6 +50,5 @@ export function useNFTMetadataUpdaterV3() {
     return update;
   };
 
-  return { update, updates, address };
+  return { updateMetadata, updates, address };
 }
-
