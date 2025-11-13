@@ -3,12 +3,18 @@
 import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { useState } from 'react';
 
+/**
+ * Metadata update for a single token
+ */
 export interface MetadataUpdate {
   tokenId: string;
   metadataUri: string;
   attributes?: Record<string, any>;
 }
 
+/**
+ * Batch metadata update information
+ */
 export interface BatchUpdate {
   collectionAddress: string;
   updates: MetadataUpdate[];
@@ -16,6 +22,10 @@ export interface BatchUpdate {
   timestamp: number;
 }
 
+/**
+ * Hook for batch updating NFT metadata with Reown wallet integration
+ * Updates metadata for multiple NFTs efficiently
+ */
 export function useNFTMetadataBatchUpdaterV2() {
   const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
