@@ -17,6 +17,7 @@ export interface HolderAnalysis {
     balance: string;
     percentage: number;
   }>;
+  averageBalance: string;
   timestamp: number;
 }
 
@@ -37,11 +38,9 @@ export function useTokenHolderAnalyzer() {
     const analysis: HolderAnalysis = {
       analysisId: `analysis-${Date.now()}`,
       tokenAddress,
-      totalHolders: 1000,
-      topHolders: [
-        { address: '0x1', balance: '1000000', percentage: 10 },
-        { address: '0x2', balance: '500000', percentage: 5 },
-      ],
+      totalHolders: 0,
+      topHolders: [],
+      averageBalance: '0',
       timestamp: Date.now(),
     };
     
@@ -51,4 +50,3 @@ export function useTokenHolderAnalyzer() {
 
   return { analyze, analyses, address };
 }
-
