@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * Smart Contract Event Monitor
+ * Monitors smart contract events in real-time using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState, useEffect } from 'react';
 
