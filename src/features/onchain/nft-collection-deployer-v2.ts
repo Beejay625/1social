@@ -13,9 +13,10 @@ export interface CollectionDeployment {
   name: string;
   symbol: string;
   maxSupply: number;
-  baseURI: string;
-  contractAddress: string;
+  baseUri: string;
   deployedBy: string;
+  contractAddress?: string;
+  txHash?: string;
   timestamp: number;
 }
 
@@ -28,17 +29,14 @@ export function useNFTCollectionDeployerV2() {
     name: string,
     symbol: string,
     maxSupply: number,
-    baseURI: string
+    baseUri: string
   ): Promise<CollectionDeployment> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!name || name.trim() === '') {
-      throw new Error('Collection name is required');
-    }
     if (maxSupply <= 0) {
       throw new Error('Max supply must be greater than zero');
     }
     
-    const message = `Deploy collection: ${name} (${symbol})`;
+    const message = `Deploy collection: ${name} (${symbol}) max supply ${maxSupply}`;
     await signMessageAsync({ message });
     
     const deployment: CollectionDeployment = {
@@ -46,9 +44,9 @@ export function useNFTCollectionDeployerV2() {
       name,
       symbol,
       maxSupply,
-      baseURI,
-      contractAddress: `0x${Date.now().toString(16)}`,
+      baseUri,
       deployedBy: address,
+      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
@@ -58,4 +56,3 @@ export function useNFTCollectionDeployerV2() {
 
   return { deploy, deployments, address };
 }
-
