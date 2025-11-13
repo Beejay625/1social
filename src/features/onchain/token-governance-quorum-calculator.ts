@@ -9,6 +9,7 @@ import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface QuorumCalculation {
+  calculationId: string;
   proposalId: string;
   totalSupply: string;
   quorumPercentage: number;
@@ -34,19 +35,20 @@ export function useTokenGovernanceQuorumCalculator() {
       throw new Error('Quorum percentage must be between 0 and 100');
     }
     
-    const message = `Calculate quorum: ${proposalId}`;
+    const message = `Calculate quorum: ${proposalId} ${quorumPercentage}%`;
     await signMessageAsync({ message });
     
-    const requiredQuorum = (BigInt(totalSupply) * BigInt(Math.floor(quorumPercentage * 100))) / BigInt(10000);
-    const remainingVotes = requiredQuorum > BigInt(currentVotes) 
-      ? (requiredQuorum - BigInt(currentVotes)).toString()
-      : '0';
+    const requiredQuorum = (BigInt(totalSupply) * BigInt(Math.floor(quorumPercentage * 100)) / BigInt(10000)).toString();
+    const remainingVotes = (BigInt(requiredQuorum) > BigInt(currentVotes) 
+      ? (BigInt(requiredQuorum) - BigInt(currentVotes)).toString() 
+      : '0');
     
     const calculation: QuorumCalculation = {
+      calculationId: `quorum-${Date.now()}`,
       proposalId,
       totalSupply,
       quorumPercentage,
-      requiredQuorum: requiredQuorum.toString(),
+      requiredQuorum,
       currentVotes,
       remainingVotes,
       timestamp: Date.now(),
