@@ -8,40 +8,41 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface ClaimOptimization {
+export interface RewardClaimOptimization {
   optimizationId: string;
   stakingPool: string;
-  pendingRewards: string;
-  optimalClaimAmount: string;
+  rewardIds: string[];
   gasEstimate: string;
-  recommendedTime: number;
+  optimizedBy: string;
   timestamp: number;
 }
 
 export function useTokenStakingRewardClaimOptimizerV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [optimizations, setOptimizations] = useState<ClaimOptimization[]>([]);
+  const [optimizations, setOptimizations] = useState<RewardClaimOptimization[]>([]);
 
-  const optimize = async (
+  const optimizeClaims = async (
     stakingPool: string,
-    pendingRewards: string
-  ): Promise<ClaimOptimization> => {
+    rewardIds: string[]
+  ): Promise<RewardClaimOptimization> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!stakingPool.startsWith('0x')) {
       throw new Error('Invalid staking pool address format');
     }
+    if (rewardIds.length === 0) {
+      throw new Error('At least one reward ID is required');
+    }
     
-    const message = `Optimize reward claim: ${stakingPool}`;
+    const message = `Optimize reward claims: ${stakingPool} ${rewardIds.length} rewards`;
     await signMessageAsync({ message });
     
-    const optimization: ClaimOptimization = {
+    const optimization: RewardClaimOptimization = {
       optimizationId: `opt-${Date.now()}`,
       stakingPool,
-      pendingRewards,
-      optimalClaimAmount: pendingRewards,
-      gasEstimate: '180000',
-      recommendedTime: Date.now() + 3600000,
+      rewardIds,
+      gasEstimate: '150000',
+      optimizedBy: address,
       timestamp: Date.now(),
     };
     
@@ -49,6 +50,5 @@ export function useTokenStakingRewardClaimOptimizerV2() {
     return optimization;
   };
 
-  return { optimize, optimizations, address };
+  return { optimizeClaims, optimizations, address };
 }
-
