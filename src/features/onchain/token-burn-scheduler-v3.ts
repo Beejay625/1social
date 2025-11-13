@@ -2,7 +2,7 @@
 
 /**
  * Token Burn Scheduler V3
- * Advanced burn scheduling with multiple strategies via Reown wallet
+ * Advanced burn scheduling with recurring options via Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
@@ -12,11 +12,11 @@ export interface BurnSchedule {
   scheduleId: string;
   tokenAddress: string;
   amount: string;
-  strategy: 'one-time' | 'recurring' | 'percentage' | 'threshold';
-  scheduleTime: number;
+  scheduleType: 'one-time' | 'recurring';
+  burnTime: number;
   interval?: number;
-  threshold?: string;
-  enabled: boolean;
+  active: boolean;
+  createdBy: string;
   timestamp: number;
 }
 
@@ -28,31 +28,30 @@ export function useTokenBurnSchedulerV3() {
   const createSchedule = async (
     tokenAddress: string,
     amount: string,
-    strategy: 'one-time' | 'recurring' | 'percentage' | 'threshold',
-    scheduleTime: number,
-    interval?: number,
-    threshold?: string
+    scheduleType: 'one-time' | 'recurring',
+    burnTime: number,
+    interval?: number
   ): Promise<BurnSchedule> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (strategy === 'recurring' && (!interval || interval <= 0)) {
-      throw new Error('Interval is required for recurring strategy');
+    if (!tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid token address format');
     }
-    if (strategy === 'threshold' && !threshold) {
-      throw new Error('Threshold is required for threshold strategy');
+    if (scheduleType === 'recurring' && (!interval || interval <= 0)) {
+      throw new Error('Interval is required for recurring schedules');
     }
     
-    const message = `Create burn schedule: ${tokenAddress} ${strategy} strategy`;
+    const message = `Create burn schedule: ${tokenAddress} ${scheduleType} ${amount}`;
     await signMessageAsync({ message });
     
     const schedule: BurnSchedule = {
       scheduleId: `burn-${Date.now()}`,
       tokenAddress,
       amount,
-      strategy,
-      scheduleTime,
+      scheduleType,
+      burnTime,
       interval,
-      threshold,
-      enabled: true,
+      active: true,
+      createdBy: address,
       timestamp: Date.now(),
     };
     
@@ -62,4 +61,3 @@ export function useTokenBurnSchedulerV3() {
 
   return { createSchedule, schedules, address };
 }
-
