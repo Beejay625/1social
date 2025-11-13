@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * Cross-Protocol Message Sender
+ * Sends messages across Farcaster, Lens, and Mirror protocols using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
