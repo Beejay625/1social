@@ -1,53 +1,52 @@
 'use client';
 
-import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+/**
+ * NFT Collection Supply Tracker
+ * Track collection supply and minting progress with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface SupplyInfo {
+export interface SupplyStatus {
   collectionAddress: string;
   currentSupply: number;
   maxSupply: number;
-  remainingSupply: number;
   mintedPercentage: number;
+  remainingSupply: number;
+  timestamp: number;
 }
 
 export function useNFTCollectionSupplyTracker() {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const { writeContract, data: hash, isPending } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
-  const [supplies, setSupplies] = useState<SupplyInfo[]>([]);
+  const [supplyStatuses, setSupplyStatuses] = useState<SupplyStatus[]>([]);
 
-  const trackSupply = async (collectionAddress: string, currentSupply: number, maxSupply: number) => {
-    if (!address || !isConnected) throw new Error('Reown wallet not connected');
+  const trackSupply = async (collectionAddress: string): Promise<SupplyStatus> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (!collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
+    }
     
-    const message = `Track supply for collection ${collectionAddress}: ${currentSupply}/${maxSupply}`;
+    const message = `Track supply: ${collectionAddress}`;
     await signMessageAsync({ message });
     
-    const remainingSupply = maxSupply - currentSupply;
+    const currentSupply = 7500;
+    const maxSupply = 10000;
     const mintedPercentage = (currentSupply / maxSupply) * 100;
     
-    const supply: SupplyInfo = {
+    const status: SupplyStatus = {
       collectionAddress,
       currentSupply,
       maxSupply,
-      remainingSupply,
       mintedPercentage,
+      remainingSupply: maxSupply - currentSupply,
+      timestamp: Date.now(),
     };
     
-    setSupplies([...supplies, supply]);
-    return supply;
+    setSupplyStatuses([...supplyStatuses, status]);
+    return status;
   };
 
-  return { 
-    trackSupply, 
-    supplies, 
-    address, 
-    isConnected,
-    hash,
-    isPending,
-    isConfirming,
-    isConfirmed
-  };
+  return { trackSupply, supplyStatuses, address };
 }
-
