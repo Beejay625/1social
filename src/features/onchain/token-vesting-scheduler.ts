@@ -1,68 +1,61 @@
 'use client';
 
-import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+/**
+ * Token Vesting Scheduler
+ * Create and manage token vesting schedules with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-/**
- * Vesting schedule configuration
- */
 export interface VestingSchedule {
-  beneficiary: string;
+  scheduleId: string;
   tokenAddress: string;
+  beneficiary: string;
   totalAmount: string;
   startTime: number;
   duration: number;
   cliff: number;
-  scheduleId: string;
+  createdBy: string;
+  timestamp: number;
 }
 
-/**
- * Hook for creating and managing token vesting schedules with Reown wallet
- * Supports custom start time, duration, and cliff periods
- */
 export function useTokenVestingScheduler() {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const { writeContract, data: hash, isPending } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
   const [schedules, setSchedules] = useState<VestingSchedule[]>([]);
 
   const createSchedule = async (
-    beneficiary: string,
     tokenAddress: string,
+    beneficiary: string,
     totalAmount: string,
     startTime: number,
     duration: number,
     cliff: number
-  ) => {
-    if (!address || !isConnected) throw new Error('Reown wallet not connected');
+  ): Promise<VestingSchedule> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (!tokenAddress.startsWith('0x') || !beneficiary.startsWith('0x')) {
+      throw new Error('Invalid address format');
+    }
     
-    const message = `Create vesting schedule: ${totalAmount} tokens for ${beneficiary}`;
+    const message = `Create vesting schedule: ${tokenAddress} for ${beneficiary}`;
     await signMessageAsync({ message });
     
     const schedule: VestingSchedule = {
-      beneficiary,
+      scheduleId: `vest-${Date.now()}`,
       tokenAddress,
+      beneficiary,
       totalAmount,
       startTime,
       duration,
       cliff,
-      scheduleId: `vest_${Date.now()}`,
+      createdBy: address,
+      timestamp: Date.now(),
     };
     
     setSchedules([...schedules, schedule]);
     return schedule;
   };
 
-  return { 
-    createSchedule, 
-    schedules, 
-    address, 
-    isConnected,
-    hash,
-    isPending,
-    isConfirming,
-    isConfirmed
-  };
+  return { createSchedule, schedules, address };
 }
-
