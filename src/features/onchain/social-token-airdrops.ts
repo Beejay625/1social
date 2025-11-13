@@ -1,51 +1,25 @@
 'use client';
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface Airdrop {
-  id: string;
-  creator: string;
+export interface AirdropParams {
   tokenAddress: string;
   recipients: string[];
-  amountPerRecipient: string;
-  totalAmount: string;
-  timestamp: number;
-  status: 'pending' | 'distributed' | 'failed';
+  amounts: bigint[];
 }
 
 export function useSocialTokenAirdrops() {
   const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
-  const [airdrops, setAirdrops] = useState<Airdrop[]>([]);
+  const { writeContract } = useWriteContract();
+  const [airdropping, setAirdropping] = useState(false);
 
-  const createAirdrop = async (
-    tokenAddress: string,
-    recipients: string[],
-    amountPerRecipient: string
-  ) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Create Airdrop: ${tokenAddress} ${recipients.length} recipients ${amountPerRecipient}`;
-    await signMessageAsync({ message });
-    
-    const totalAmount = (BigInt(amountPerRecipient) * BigInt(recipients.length)).toString();
-    
-    const airdrop: Airdrop = {
-      id: `airdrop-${Date.now()}`,
-      creator: address,
-      tokenAddress,
-      recipients,
-      amountPerRecipient,
-      totalAmount,
-      timestamp: Date.now(),
-      status: 'pending',
-    };
-    
-    setAirdrops([...airdrops, airdrop]);
-    return airdrop;
+  const createAirdrop = async (params: AirdropParams) => {
+    if (!address) return;
+    setAirdropping(true);
+    // Implementation for token airdrops
+    setAirdropping(false);
   };
 
-  return { createAirdrop, airdrops, address };
+  return { createAirdrop, airdropping, address };
 }
-
