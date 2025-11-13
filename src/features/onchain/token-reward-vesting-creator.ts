@@ -1,32 +1,64 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+/**
+ * Token Reward Vesting Creator
+ * Create reward vesting schedules with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface RewardVestingParams {
-  recipient: string;
-  amount: bigint;
+export interface RewardVesting {
+  vestingId: string;
+  tokenAddress: string;
+  beneficiary: string;
+  totalReward: string;
   startTime: number;
   duration: number;
+  cliff: number;
+  createdBy: string;
+  timestamp: number;
 }
 
 export function useTokenRewardVestingCreator() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const { data: vestingId } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'vestingId',
-  });
-  const [creating, setCreating] = useState(false);
+  const { signMessageAsync } = useSignMessage();
+  const [vestings, setVestings] = useState<RewardVesting[]>([]);
 
-  const createRewardVesting = async (params: RewardVestingParams) => {
-    if (!address) return;
-    setCreating(true);
-    // Implementation for creating reward vesting
-    setCreating(false);
+  const createVesting = async (
+    tokenAddress: string,
+    beneficiary: string,
+    totalReward: string,
+    startTime: number,
+    duration: number,
+    cliff: number
+  ): Promise<RewardVesting> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (!tokenAddress.startsWith('0x') || !beneficiary.startsWith('0x')) {
+      throw new Error('Invalid address format');
+    }
+    if (duration <= 0 || cliff < 0) {
+      throw new Error('Duration must be greater than zero and cliff must be non-negative');
+    }
+    
+    const message = `Create reward vesting: ${tokenAddress} for ${beneficiary}`;
+    await signMessageAsync({ message });
+    
+    const vesting: RewardVesting = {
+      vestingId: `vest-${Date.now()}`,
+      tokenAddress,
+      beneficiary,
+      totalReward,
+      startTime,
+      duration,
+      cliff,
+      createdBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setVestings([...vestings, vesting]);
+    return vesting;
   };
 
-  return { createRewardVesting, creating, address, vestingId };
+  return { createVesting, vestings, address };
 }
-
