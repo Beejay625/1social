@@ -1,32 +1,58 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+/**
+ * NFT Rental Extension Manager
+ * Extend NFT rental periods with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface RentalExtension {
+  extensionId: string;
   rentalId: string;
-  additionalTime: number;
-  additionalPayment: bigint;
+  tokenId: string;
+  collectionAddress: string;
+  originalEndTime: number;
+  newEndTime: number;
+  extensionPeriod: number;
+  timestamp: number;
 }
 
 export function useNFTRentalExtensionManager() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const { data: rentalInfo } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'rentalInfo',
-    args: [BigInt(1)],
-  });
-  const [extending, setExtending] = useState(false);
+  const { signMessageAsync } = useSignMessage();
+  const [extensions, setExtensions] = useState<RentalExtension[]>([]);
 
-  const extendRental = async (extension: RentalExtension) => {
-    if (!address) return;
-    setExtending(true);
-    // Implementation for extending rentals
-    setExtending(false);
+  const extendRental = async (
+    rentalId: string,
+    tokenId: string,
+    collectionAddress: string,
+    originalEndTime: number,
+    extensionPeriod: number
+  ): Promise<RentalExtension> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (extensionPeriod <= 0) {
+      throw new Error('Extension period must be greater than zero');
+    }
+    
+    const message = `Extend rental: ${rentalId} by ${extensionPeriod}ms`;
+    await signMessageAsync({ message });
+    
+    const extension: RentalExtension = {
+      extensionId: `extend-${Date.now()}`,
+      rentalId,
+      tokenId,
+      collectionAddress,
+      originalEndTime,
+      newEndTime: originalEndTime + extensionPeriod,
+      extensionPeriod,
+      timestamp: Date.now(),
+    };
+    
+    setExtensions([...extensions, extension]);
+    return extension;
   };
 
-  return { extendRental, extending, address, rentalInfo };
+  return { extendRental, extensions, address };
 }
-
