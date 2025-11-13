@@ -25,6 +25,9 @@ export function useWalletActivityMonitor(targetAddress?: string) {
 
   const startMonitoring = async () => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (targetAddress && !targetAddress.startsWith('0x')) {
+      throw new Error('Invalid target address format');
+    }
     
     const message = `Start monitoring wallet activity: ${targetAddress || address}`;
     await signMessageAsync({ message });
