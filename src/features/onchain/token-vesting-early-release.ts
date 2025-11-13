@@ -1,31 +1,56 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+/**
+ * Token Vesting Early Release
+ * Early release of vested tokens with penalty via Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface EarlyReleaseParams {
+export interface EarlyRelease {
+  releaseId: string;
   vestingId: string;
-  penaltyPercentage: number;
+  amount: string;
+  penalty: string;
+  netAmount: string;
+  timestamp: number;
 }
 
 export function useTokenVestingEarlyRelease() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const { data: vestingInfo } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'vestingInfo',
-    args: [address],
-  });
-  const [releasing, setReleasing] = useState(false);
+  const { signMessageAsync } = useSignMessage();
+  const [releases, setReleases] = useState<EarlyRelease[]>([]);
 
-  const earlyRelease = async (params: EarlyReleaseParams) => {
-    if (!address) return;
-    setReleasing(true);
-    // Implementation for early release with penalty
-    setReleasing(false);
+  const releaseEarly = async (
+    vestingId: string,
+    amount: string,
+    penaltyPercentage: number
+  ): Promise<EarlyRelease> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (penaltyPercentage < 0 || penaltyPercentage > 100) {
+      throw new Error('Penalty percentage must be between 0 and 100');
+    }
+    
+    const message = `Early release: ${vestingId} with ${penaltyPercentage}% penalty`;
+    await signMessageAsync({ message });
+    
+    const amountNum = parseFloat(amount);
+    const penalty = (amountNum * penaltyPercentage / 100).toString();
+    const netAmount = (amountNum - parseFloat(penalty)).toString();
+    
+    const release: EarlyRelease = {
+      releaseId: `release-${Date.now()}`,
+      vestingId,
+      amount,
+      penalty,
+      netAmount,
+      timestamp: Date.now(),
+    };
+    
+    setReleases([...releases, release]);
+    return release;
   };
 
-  return { earlyRelease, releasing, address, vestingInfo };
+  return { releaseEarly, releases, address };
 }
-
