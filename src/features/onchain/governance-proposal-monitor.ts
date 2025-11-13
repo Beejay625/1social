@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * Governance Proposal Monitor
+ * Monitors DAO governance proposals and voting status using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState, useEffect } from 'react';
 
