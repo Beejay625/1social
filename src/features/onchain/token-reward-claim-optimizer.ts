@@ -3,6 +3,9 @@
 import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { useState } from 'react';
 
+/**
+ * Reward claim information
+ */
 export interface RewardClaim {
   rewardId: string;
   tokenAddress: string;
@@ -11,6 +14,10 @@ export interface RewardClaim {
   optimized: boolean;
 }
 
+/**
+ * Hook for optimizing reward claims with Reown wallet integration
+ * Batches multiple reward claims for gas efficiency
+ */
 export function useTokenRewardClaimOptimizer() {
   const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
