@@ -11,9 +11,10 @@ import { useState } from 'react';
 export interface DividendDistribution {
   distributionId: string;
   tokenAddress: string;
-  totalDividend: string;
+  totalAmount: string;
   recipients: string[];
   amounts: string[];
+  distributedBy: string;
   txHash: string;
   timestamp: number;
 }
@@ -25,11 +26,14 @@ export function useTokenDividendDistributor() {
 
   const distribute = async (
     tokenAddress: string,
-    totalDividend: string,
+    totalAmount: string,
     recipients: string[],
     amounts: string[]
   ): Promise<DividendDistribution> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid token address format');
+    }
     if (recipients.length !== amounts.length) {
       throw new Error('Recipients and amounts arrays must have the same length');
     }
@@ -38,11 +42,12 @@ export function useTokenDividendDistributor() {
     await signMessageAsync({ message });
     
     const distribution: DividendDistribution = {
-      distributionId: `div-${Date.now()}`,
+      distributionId: `dividend-${Date.now()}`,
       tokenAddress,
-      totalDividend,
+      totalAmount,
       recipients,
       amounts,
+      distributedBy: address,
       txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
