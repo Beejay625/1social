@@ -11,11 +11,11 @@ import { useState } from 'react';
 export interface FeeDistribution {
   distributionId: string;
   poolAddress: string;
-  totalFees: string;
   recipients: string[];
   amounts: string[];
-  distributedBy: string;
+  totalFees: string;
   txHash: string;
+  distributedBy: string;
   timestamp: number;
 }
 
@@ -26,7 +26,6 @@ export function useTokenLiquidityPoolFeeDistributor() {
 
   const distribute = async (
     poolAddress: string,
-    totalFees: string,
     recipients: string[],
     amounts: string[]
   ): Promise<FeeDistribution> => {
@@ -41,14 +40,16 @@ export function useTokenLiquidityPoolFeeDistributor() {
     const message = `Distribute LP fees: ${poolAddress} to ${recipients.length} recipients`;
     await signMessageAsync({ message });
     
+    const totalFees = amounts.reduce((sum, amount) => sum + BigInt(amount), BigInt(0)).toString();
+    
     const distribution: FeeDistribution = {
       distributionId: `dist-${Date.now()}`,
       poolAddress,
-      totalFees,
       recipients,
       amounts,
-      distributedBy: address,
+      totalFees,
       txHash: `0x${Date.now().toString(16)}`,
+      distributedBy: address,
       timestamp: Date.now(),
     };
     
