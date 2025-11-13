@@ -12,9 +12,9 @@ export interface LiquidityPosition {
   positionId: string;
   poolAddress: string;
   lpTokenAmount: string;
-  tokenAAmount: string;
-  tokenBAmount: string;
-  owner: string;
+  tokenA: string;
+  tokenB: string;
+  ownedBy: string;
   timestamp: number;
 }
 
@@ -23,27 +23,27 @@ export function useTokenLiquidityPositionManager() {
   const { signMessageAsync } = useSignMessage();
   const [positions, setPositions] = useState<LiquidityPosition[]>([]);
 
-  const trackPosition = async (
+  const createPosition = async (
     poolAddress: string,
     lpTokenAmount: string,
-    tokenAAmount: string,
-    tokenBAmount: string
+    tokenA: string,
+    tokenB: string
   ): Promise<LiquidityPosition> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!poolAddress.startsWith('0x')) {
       throw new Error('Invalid pool address format');
     }
     
-    const message = `Track LP position: ${poolAddress}`;
+    const message = `Create LP position: ${poolAddress}`;
     await signMessageAsync({ message });
     
     const position: LiquidityPosition = {
-      positionId: `pos-${Date.now()}`,
+      positionId: `position-${Date.now()}`,
       poolAddress,
       lpTokenAmount,
-      tokenAAmount,
-      tokenBAmount,
-      owner: address,
+      tokenA,
+      tokenB,
+      ownedBy: address,
       timestamp: Date.now(),
     };
     
@@ -51,6 +51,5 @@ export function useTokenLiquidityPositionManager() {
     return position;
   };
 
-  return { trackPosition, positions, address };
+  return { createPosition, positions, address };
 }
-
