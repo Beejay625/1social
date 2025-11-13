@@ -13,7 +13,7 @@ export interface MultisigProposal {
   multisigAddress: string;
   target: string;
   value: string;
-  calldata: string;
+  data: string;
   description: string;
   createdBy: string;
   timestamp: number;
@@ -28,7 +28,7 @@ export function useTokenMultisigProposalCreator() {
     multisigAddress: string,
     target: string,
     value: string,
-    calldata: string,
+    data: string,
     description: string
   ): Promise<MultisigProposal> => {
     if (!address) throw new Error('Reown wallet not connected');
@@ -40,11 +40,11 @@ export function useTokenMultisigProposalCreator() {
     await signMessageAsync({ message });
     
     const proposal: MultisigProposal = {
-      proposalId: `prop-${Date.now()}`,
+      proposalId: `proposal-${Date.now()}`,
       multisigAddress,
       target,
       value,
-      calldata,
+      data,
       description,
       createdBy: address,
       timestamp: Date.now(),
@@ -56,4 +56,3 @@ export function useTokenMultisigProposalCreator() {
 
   return { createProposal, proposals, address };
 }
-
