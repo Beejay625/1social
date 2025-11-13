@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * NFT Auction Monitor
+ * Monitors NFT auctions in real-time using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState, useEffect } from 'react';
 
