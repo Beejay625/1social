@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * Token Approval Manager
+ * Manages token approvals and revocations using Reown wallet
+ */
+
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
