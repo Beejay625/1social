@@ -13,6 +13,7 @@ export interface ProposalCancellation {
   proposalId: string;
   reason: string;
   canceledBy: string;
+  txHash: string;
   timestamp: number;
 }
 
@@ -38,6 +39,7 @@ export function useTokenGovernanceProposalCanceler() {
       proposalId,
       reason,
       canceledBy: address,
+      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
