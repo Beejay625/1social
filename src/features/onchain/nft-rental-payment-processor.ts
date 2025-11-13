@@ -34,6 +34,12 @@ export function useNFTRentalPaymentProcessor() {
     recipient: string
   ): Promise<RentalPayment> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!collectionAddress.startsWith('0x') || !recipient.startsWith('0x')) {
+      throw new Error('Invalid address format');
+    }
+    if (parseFloat(amount) <= 0) {
+      throw new Error('Payment amount must be greater than zero');
+    }
     
     const message = `Process rental payment: ${rentalId} ${amount} ${currency}`;
     await signMessageAsync({ message });
