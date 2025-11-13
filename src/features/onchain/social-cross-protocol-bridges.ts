@@ -1,50 +1,30 @@
 'use client';
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface BridgeTransaction {
-  id: string;
-  user: string;
-  fromProtocol: string;
-  toProtocol: string;
-  asset: string;
-  amount: string;
-  timestamp: number;
-  status: 'pending' | 'bridging' | 'completed' | 'failed';
+export interface BridgeParams {
+  assetAddress: string;
+  targetProtocol: string;
+  amount: bigint;
 }
 
 export function useSocialCrossProtocolBridges() {
   const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
-  const [bridges, setBridges] = useState<BridgeTransaction[]>([]);
+  const { writeContract } = useWriteContract();
+  const { data: bridgeStatus } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'bridgeStatus',
+  });
+  const [bridging, setBridging] = useState(false);
 
-  const bridgeAsset = async (
-    fromProtocol: string,
-    toProtocol: string,
-    asset: string,
-    amount: string
-  ) => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Bridge Asset: ${asset} ${amount} from ${fromProtocol} to ${toProtocol}`;
-    await signMessageAsync({ message });
-    
-    const bridge: BridgeTransaction = {
-      id: `bridge-${Date.now()}`,
-      user: address,
-      fromProtocol,
-      toProtocol,
-      asset,
-      amount,
-      timestamp: Date.now(),
-      status: 'bridging',
-    };
-    
-    setBridges([...bridges, bridge]);
-    return bridge;
+  const bridgeAssets = async (params: BridgeParams) => {
+    if (!address) return;
+    setBridging(true);
+    // Implementation for cross-protocol bridging
+    setBridging(false);
   };
 
-  return { bridgeAsset, bridges, address };
+  return { bridgeAssets, bridging, address, bridgeStatus };
 }
-
