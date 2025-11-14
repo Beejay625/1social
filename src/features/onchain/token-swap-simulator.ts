@@ -2,19 +2,20 @@
 
 /**
  * Token Swap Simulator
- * Simulates token swaps with price impact calculations via Reown wallet
+ * Simulate token swaps with price impact calculations via Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface SwapSimulation {
+  simulationId: string;
   tokenIn: string;
   tokenOut: string;
   amountIn: string;
-  amountOut: string;
-  priceImpact: string;
-  route: string[];
+  expectedOut: string;
+  priceImpact: number;
+  simulatedBy: string;
   timestamp: number;
 }
 
@@ -23,26 +24,30 @@ export function useTokenSwapSimulator() {
   const { signMessageAsync } = useSignMessage();
   const [simulations, setSimulations] = useState<SwapSimulation[]>([]);
 
-  const simulate = async (
+  const simulateSwap = async (
     tokenIn: string,
     tokenOut: string,
     amountIn: string
   ): Promise<SwapSimulation> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (parseFloat(amountIn) <= 0) {
-      throw new Error('Amount must be greater than zero');
+    if (!tokenIn.startsWith('0x') || !tokenOut.startsWith('0x')) {
+      throw new Error('Invalid token address format');
     }
     
-    const message = `Simulate swap: ${tokenIn} -> ${tokenOut}`;
+    const message = `Simulate swap: ${tokenIn} to ${tokenOut} amount ${amountIn}`;
     await signMessageAsync({ message });
     
+    const expectedOut = (parseFloat(amountIn) * 0.98).toFixed(6);
+    const priceImpact = Math.random() * 2;
+    
     const simulation: SwapSimulation = {
+      simulationId: `simulate-${Date.now()}`,
       tokenIn,
       tokenOut,
       amountIn,
-      amountOut: (parseFloat(amountIn) * 0.95).toString(),
-      priceImpact: '5.0',
-      route: [tokenIn, tokenOut],
+      expectedOut,
+      priceImpact,
+      simulatedBy: address,
       timestamp: Date.now(),
     };
     
@@ -50,6 +55,5 @@ export function useTokenSwapSimulator() {
     return simulation;
   };
 
-  return { simulate, simulations, address };
+  return { simulateSwap, simulations, address };
 }
-
