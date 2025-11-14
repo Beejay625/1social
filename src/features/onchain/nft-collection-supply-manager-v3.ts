@@ -1,56 +1,102 @@
 'use client';
 
-/**
- * NFT Collection Supply Manager V3
- * Manage collection max supply with enhanced features via Reown wallet
- */
-
-import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface SupplyUpdate {
-  updateId: string;
-  collectionAddress: string;
-  newMaxSupply: number;
-  currentSupply: number;
-  updatedBy: string;
-  timestamp: number;
+export interface SupplyConfig {
+  maxSupply?: number;
+  reserveSupply?: number;
+  publicMintSupply?: number;
+  whitelistMintSupply?: number;
 }
 
 export function useNFTCollectionSupplyManagerV3() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
+  const { writeContract } = useWriteContract();
   const { signMessageAsync } = useSignMessage();
-  const { writeContractAsync } = useWriteContract();
-  const [updates, setUpdates] = useState<SupplyUpdate[]>([]);
+  const [managing, setManaging] = useState(false);
 
-  const updateMaxSupply = async (
-    collectionAddress: string,
-    newMaxSupply: number,
-    currentSupply: number
-  ): Promise<SupplyUpdate> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x')) {
-      throw new Error('Invalid collection address format');
+  const { data: totalSupply } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'totalSupply',
+  });
+
+  const { data: maxSupply } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'maxSupply',
+  });
+
+  const { data: isOwner } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'owner',
+  });
+
+  const updateSupply = async (collectionAddress: string, config: SupplyConfig) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    if (address?.toLowerCase() !== (isOwner as string)?.toLowerCase()) {
+      throw new Error('Only owner can update supply');
     }
-    if (newMaxSupply < currentSupply) {
-      throw new Error('New max supply cannot be less than current supply');
+    setManaging(true);
+
+    try {
+      const message = 'Update collection supply configuration';
+      await signMessageAsync({ message });
+
+      if (config.maxSupply !== undefined) {
+        await writeContract({
+          address: collectionAddress as `0x${string}`,
+          abi: [],
+          functionName: 'setMaxSupply',
+          args: [config.maxSupply],
+        });
+      }
+
+      if (config.reserveSupply !== undefined) {
+        await writeContract({
+          address: collectionAddress as `0x${string}`,
+          abi: [],
+          functionName: 'setReserveSupply',
+          args: [config.reserveSupply],
+        });
+      }
+    } finally {
+      setManaging(false);
     }
-    
-    const message = `Update max supply V3: ${collectionAddress} to ${newMaxSupply}`;
-    await signMessageAsync({ message });
-    
-    const update: SupplyUpdate = {
-      updateId: `supply-v3-${Date.now()}`,
-      collectionAddress,
-      newMaxSupply,
-      currentSupply,
-      updatedBy: address,
-      timestamp: Date.now(),
-    };
-    
-    setUpdates([...updates, update]);
-    return update;
   };
 
-  return { updateMaxSupply, updates, address };
+  const mintReserve = async (collectionAddress: string, to: string, amount: number) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    if (address?.toLowerCase() !== (isOwner as string)?.toLowerCase()) {
+      throw new Error('Only owner can mint reserve');
+    }
+    setManaging(true);
+
+    try {
+      const message = `Mint reserve: ${amount} tokens to ${to}`;
+      await signMessageAsync({ message });
+
+      await writeContract({
+        address: collectionAddress as `0x${string}`,
+        abi: [],
+        functionName: 'mintReserve',
+        args: [to, amount],
+      });
+    } finally {
+      setManaging(false);
+    }
+  };
+
+  return {
+    updateSupply,
+    mintReserve,
+    managing,
+    address,
+    isConnected,
+    totalSupply,
+    maxSupply,
+    isOwner: address?.toLowerCase() === (isOwner as string)?.toLowerCase(),
+  };
 }
