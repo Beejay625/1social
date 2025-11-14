@@ -5,57 +5,55 @@
  * Split royalty payments with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface RoyaltySplit {
   splitId: string;
-  collectionAddress: string;
   tokenId: string;
-  totalRoyalty: string;
+  collectionAddress: string;
   recipients: string[];
   shares: number[];
+  totalAmount: string;
   splitBy: string;
-  txHash: string;
   timestamp: number;
 }
 
 export function useNFTRoyaltyPaymentSplitterV3() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [splits, setSplits] = useState<RoyaltySplit[]>([]);
 
   const splitRoyalty = async (
-    collectionAddress: string,
     tokenId: string,
-    totalRoyalty: string,
+    collectionAddress: string,
     recipients: string[],
-    shares: number[]
+    shares: number[],
+    totalAmount: string
   ): Promise<RoyaltySplit> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
     if (recipients.length !== shares.length) {
-      throw new Error('Recipients and shares arrays must have the same length');
+      throw new Error('Recipients and shares arrays must have same length');
     }
-    const totalShares = shares.reduce((sum, share) => sum + share, 0);
-    if (totalShares !== 100) {
-      throw new Error('Total shares must equal 100');
+    if (shares.reduce((sum, share) => sum + share, 0) !== 100) {
+      throw new Error('Shares must sum to 100');
     }
     
-    const message = `Split royalty: ${collectionAddress} #${tokenId} to ${recipients.length} recipients`;
+    const message = `Split royalty V3: ${tokenId} in ${collectionAddress} amount ${totalAmount}`;
     await signMessageAsync({ message });
     
     const split: RoyaltySplit = {
-      splitId: `split-${Date.now()}`,
-      collectionAddress,
+      splitId: `split-v3-${Date.now()}`,
       tokenId,
-      totalRoyalty,
+      collectionAddress,
       recipients,
       shares,
+      totalAmount,
       splitBy: address,
-      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
@@ -65,4 +63,3 @@ export function useNFTRoyaltyPaymentSplitterV3() {
 
   return { splitRoyalty, splits, address };
 }
-
