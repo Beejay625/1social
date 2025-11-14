@@ -431,28 +431,25 @@ All features are fully integrated with **Reown AppKit** and use `useAccount`, `u
 ### Newest 20 Onchain Features (All Powered by Reown Wallet)
 
 #### Token Operations & Management
-- **Token Vesting Releaser** - Release vested tokens with Reown wallet
-- **Token Governance Delegation Tracker** - Track governance delegations with Reown wallet
-- **Token Liquidity Pool Creator V3** - Create liquidity pools with enhanced features via Reown wallet
-- **Token Multicall Executor** - Execute multiple contract calls in a single transaction with Reown wallet
-- **Token Multi-Send Executor V2** - Execute multiple token transfers with enhanced features via Reown wallet
-- **Token Price Alert Manager V2** - Set and manage price alerts with enhanced features via Reown wallet
-- **Token Slippage Calculator V2** - Calculate slippage for token swaps with enhanced features via Reown wallet
-- **Token Whitelist Manager V2** - Manage token whitelists with enhanced features via Reown wallet
-- **Token Balance Tracker V2** - Track token balances across multiple addresses with enhanced features via Reown wallet
-- **Token Transfer Optimizer V2** - Optimize token transfers for gas efficiency with enhanced features via Reown wallet
-- **Token Tax Calculator V2** - Calculate taxes for token transactions with enhanced features via Reown wallet
+- **Token Liquidity Provider Tracker V2** - Track liquidity provider positions with enhanced features via Reown wallet
+- **Token Reflection Calculator V2** - Calculate reflection rewards with enhanced features via Reown wallet
+- **Token Dividend Distributor V2** - Distribute dividends to token holders with enhanced features via Reown wallet
+- **Token Holder Analyzer V2** - Analyze token holder distribution with enhanced features via Reown wallet
+- **Token Governance Proposal Executor V2** - Execute governance proposals with enhanced features via Reown wallet
+- **Token Governance Proposal Canceler V2** - Cancel governance proposals with enhanced features via Reown wallet
+- **Token Liquidity Pool Rebalancer V3** - Rebalance liquidity pools with enhanced features via Reown wallet
+- **Token Staking Reward Claim Optimizer V3** - Optimize reward claims with enhanced features via Reown wallet
+- **Token Burn Scheduler V4** - Advanced burn scheduling with multiple strategies via Reown wallet
 
 #### NFT Operations & Marketplace
-- **NFT Attribute Updater V3** - Update NFT attributes with enhanced features via Reown wallet
-- **NFT Metadata Freezer V3** - Freeze NFT metadata with enhanced features via Reown wallet
-- **NFT Owner History Tracker V2** - Track NFT ownership history with enhanced features via Reown wallet
-- **NFT Lazy Mint Batch V3** - Lazy mint multiple NFTs in batch with enhanced features via Reown wallet
-- **NFT Trait Analyzer V2** - Analyze NFT traits and rarity with enhanced features via Reown wallet
-- **NFT Collection Verifier V2** - Verify NFT collection authenticity with enhanced features via Reown wallet
-- **NFT Marketplace Listing Manager V2** - Manage NFT marketplace listings with enhanced features via Reown wallet
-- **NFT Approval Checker V3** - Check NFT approvals with enhanced features via Reown wallet
-- **NFT Staking Rewards V2** - Claim NFT staking rewards with enhanced features via Reown wallet
+- **NFT Order Matcher V3** - Match NFT buy and sell orders with enhanced features via Reown wallet
+- **NFT Collection Stats Tracker V2** - Track collection statistics over time with enhanced features via Reown wallet
+- **NFT Fractional Share Manager V2** - Manage fractional NFT shares with enhanced features via Reown wallet
+- **NFT Metadata Validator V3** - Validate NFT metadata with enhanced features via Reown wallet
+- **NFT Auction Time Extender V2** - Extend auction time with enhanced features via Reown wallet
+- **NFT Metadata IPFS Pinner V2** - Pin NFT metadata to IPFS with enhanced features via Reown wallet
+- **NFT Collection Floor Price Monitor V2** - Monitor floor prices with enhanced features via Reown wallet
+- **NFT Auction Sniper Bot V2** - Automated auction bidding with enhanced features via Reown wallet
 
 All 20 features are fully integrated with **Reown AppKit** and use `useAccount` and `useSignMessage` hooks for seamless wallet connectivity and transaction signing.
 
