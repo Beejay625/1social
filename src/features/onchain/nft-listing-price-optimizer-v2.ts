@@ -12,13 +12,9 @@ export interface PriceOptimization {
   optimizationId: string;
   tokenId: string;
   collectionAddress: string;
-  currentPrice: string;
-  optimizedPrice: string;
-  marketData: {
-    floorPrice: string;
-    averagePrice: string;
-    volume24h: string;
-  };
+  suggestedPrice: string;
+  marketPrice: string;
+  optimizedBy: string;
   timestamp: number;
 }
 
@@ -27,30 +23,28 @@ export function useNFTListingPriceOptimizerV2() {
   const { signMessageAsync } = useSignMessage();
   const [optimizations, setOptimizations] = useState<PriceOptimization[]>([]);
 
-  const optimize = async (
+  const optimizePrice = async (
     tokenId: string,
-    collectionAddress: string,
-    currentPrice: string
+    collectionAddress: string
   ): Promise<PriceOptimization> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Optimize listing price: ${collectionAddress} #${tokenId}`;
+    const message = `Optimize listing price V2: ${tokenId} in ${collectionAddress}`;
     await signMessageAsync({ message });
     
+    const marketPrice = (Math.random() * 10 + 0.1).toFixed(4);
+    const suggestedPrice = (parseFloat(marketPrice) * 0.95).toFixed(4);
+    
     const optimization: PriceOptimization = {
-      optimizationId: `opt-${Date.now()}`,
+      optimizationId: `optimize-v2-${Date.now()}`,
       tokenId,
       collectionAddress,
-      currentPrice,
-      optimizedPrice: (parseFloat(currentPrice) * 0.95).toString(),
-      marketData: {
-        floorPrice: '1.0',
-        averagePrice: '1.2',
-        volume24h: '50000',
-      },
+      suggestedPrice,
+      marketPrice,
+      optimizedBy: address,
       timestamp: Date.now(),
     };
     
@@ -58,5 +52,5 @@ export function useNFTListingPriceOptimizerV2() {
     return optimization;
   };
 
-  return { optimize, optimizations, address };
+  return { optimizePrice, optimizations, address };
 }
