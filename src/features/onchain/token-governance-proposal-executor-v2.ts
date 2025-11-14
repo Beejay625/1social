@@ -11,7 +11,7 @@ import { useState } from 'react';
 export interface ProposalExecution {
   executionId: string;
   proposalId: string;
-  targetAddress: string;
+  executed: boolean;
   executedBy: string;
   timestamp: number;
 }
@@ -23,21 +23,17 @@ export function useTokenGovernanceProposalExecutorV2() {
   const [executions, setExecutions] = useState<ProposalExecution[]>([]);
 
   const executeProposal = async (
-    proposalId: string,
-    targetAddress: string
+    proposalId: string
   ): Promise<ProposalExecution> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!targetAddress.startsWith('0x')) {
-      throw new Error('Invalid target address format');
-    }
     
-    const message = `Execute proposal: ${proposalId} target ${targetAddress}`;
+    const message = `Execute proposal V2: ${proposalId}`;
     await signMessageAsync({ message });
     
     const execution: ProposalExecution = {
-      executionId: `execute-${Date.now()}`,
+      executionId: `execute-v2-${Date.now()}`,
       proposalId,
-      targetAddress,
+      executed: true,
       executedBy: address,
       timestamp: Date.now(),
     };
