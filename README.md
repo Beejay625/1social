@@ -1,6 +1,6 @@
 # 1Social - Onchain Social Media Command Center
 
-> **The first truly onchain social media management platform** - Compose once, publish everywhere. Built with Next.js and powered by Reown AppKit for seamless wallet integration.
+> **The Problem:** Traditional social media platforms lock creators into centralized ecosystems where content ownership is an illusion, analytics are opaque, and monetization is controlled by intermediaries. Web3 protocols like Farcaster, Lens, and Mirror offer true ownership and decentralization, but managing content across multiple onchain protocols requires complex wallet interactions, gas optimization, and deep technical knowledge. **1Social solves this** by providing the first truly onchain social media management platform where every action—from content creation to analytics—is executed directly on the blockchain through smart contracts, authenticated via Reown AppKit wallet signatures, and stored immutably onchain. No API wrappers, no centralized dependencies, no compromises. Compose once, publish everywhere, own everything—all verified and executed onchain.
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.0-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
