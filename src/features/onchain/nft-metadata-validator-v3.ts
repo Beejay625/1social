@@ -5,14 +5,14 @@
  * Validate NFT metadata with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface MetadataValidation {
+export interface ValidationResult {
   validationId: string;
-  tokenId: string;
   collectionAddress: string;
-  metadata: Record<string, any>;
+  tokenId: string;
+  metadataUri: string;
   isValid: boolean;
   errors: string[];
   validatedBy: string;
@@ -22,31 +22,29 @@ export interface MetadataValidation {
 export function useNFTMetadataValidatorV3() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [validations, setValidations] = useState<MetadataValidation[]>([]);
+  const { writeContractAsync } = useWriteContract();
+  const [validations, setValidations] = useState<ValidationResult[]>([]);
 
-  const validate = async (
-    tokenId: string,
+  const validateMetadata = async (
     collectionAddress: string,
-    metadata: Record<string, any>
-  ): Promise<MetadataValidation> => {
+    tokenId: string,
+    metadataUri: string
+  ): Promise<ValidationResult> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Validate metadata: ${collectionAddress} #${tokenId}`;
+    const message = `Validate metadata V3: ${collectionAddress} #${tokenId}`;
     await signMessageAsync({ message });
     
-    const errors: string[] = [];
-    const isValid = errors.length === 0;
-    
-    const validation: MetadataValidation = {
-      validationId: `validate-${Date.now()}`,
-      tokenId,
+    const validation: ValidationResult = {
+      validationId: `validate-v3-${Date.now()}`,
       collectionAddress,
-      metadata,
-      isValid,
-      errors,
+      tokenId,
+      metadataUri,
+      isValid: false,
+      errors: [],
       validatedBy: address,
       timestamp: Date.now(),
     };
@@ -55,6 +53,5 @@ export function useNFTMetadataValidatorV3() {
     return validation;
   };
 
-  return { validate, validations, address };
+  return { validateMetadata, validations, address };
 }
-
