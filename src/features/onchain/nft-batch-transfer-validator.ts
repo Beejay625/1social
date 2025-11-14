@@ -1,34 +1,59 @@
 'use client';
 
-import { useAccount, useReadContract } from 'wagmi';
+/**
+ * NFT Batch Transfer Validator
+ * Validate batch NFT transfers with Reown wallet
+ */
+
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface TransferValidation {
-  transfers: Array<{ to: string; tokenId: string }>;
+  validationId: string;
+  collectionAddress: string;
+  recipients: string[];
+  tokenIds: string[];
   valid: boolean;
-  errors: string[];
+  validatedBy: string;
+  timestamp: number;
 }
 
 export function useNFTBatchTransferValidator() {
   const { address } = useAccount();
-  const { data: balance } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'balanceOf',
-    args: [address],
-  });
-  const [validation, setValidation] = useState<TransferValidation | null>(null);
+  const { signMessageAsync } = useSignMessage();
+  const [validations, setValidations] = useState<TransferValidation[]>([]);
 
-  const validateTransfers = async (transfers: Array<{ to: string; tokenId: string }>) => {
-    if (!address) return;
-    // Implementation for transfer validation
-    setValidation({
-      transfers,
-      valid: true,
-      errors: [],
-    });
+  const validateBatchTransfer = async (
+    collectionAddress: string,
+    recipients: string[],
+    tokenIds: string[]
+  ): Promise<TransferValidation> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (!collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
+    }
+    if (recipients.length !== tokenIds.length) {
+      throw new Error('Recipients and tokenIds arrays must have same length');
+    }
+    
+    const message = `Validate batch transfer: ${collectionAddress} ${tokenIds.length} NFTs`;
+    await signMessageAsync({ message });
+    
+    const valid = recipients.every(r => r.startsWith('0x')) && tokenIds.length > 0;
+    
+    const validation: TransferValidation = {
+      validationId: `validate-${Date.now()}`,
+      collectionAddress,
+      recipients,
+      tokenIds,
+      valid,
+      validatedBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setValidations([...validations, validation]);
+    return validation;
   };
 
-  return { validateTransfers, validation, address, balance };
+  return { validateBatchTransfer, validations, address };
 }
-
