@@ -1,25 +1,53 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+/**
+ * NFT Collection Base URI Updater
+ * Update collection base URI with Reown wallet
+ */
+
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
+
+export interface URIUpdate {
+  updateId: string;
+  collectionAddress: string;
+  newBaseURI: string;
+  updatedBy: string;
+  timestamp: number;
+}
 
 export function useNFTCollectionBaseURIUpdater() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const { data: baseURI } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'baseURI',
-  });
-  const [updating, setUpdating] = useState(false);
+  const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
+  const [updates, setUpdates] = useState<URIUpdate[]>([]);
 
-  const updateBaseURI = async (collection: string, newBaseURI: string) => {
-    if (!address) return;
-    setUpdating(true);
-    // Implementation for updating base URI
-    setUpdating(false);
+  const updateBaseURI = async (
+    collectionAddress: string,
+    newBaseURI: string
+  ): Promise<URIUpdate> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (!collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
+    }
+    if (!newBaseURI.startsWith('http://') && !newBaseURI.startsWith('https://') && !newBaseURI.startsWith('ipfs://')) {
+      throw new Error('Invalid URI format');
+    }
+    
+    const message = `Update base URI: ${collectionAddress} to ${newBaseURI}`;
+    await signMessageAsync({ message });
+    
+    const update: URIUpdate = {
+      updateId: `uri-${Date.now()}`,
+      collectionAddress,
+      newBaseURI,
+      updatedBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setUpdates([...updates, update]);
+    return update;
   };
 
-  return { updateBaseURI, updating, address, baseURI };
+  return { updateBaseURI, updates, address };
 }
-
