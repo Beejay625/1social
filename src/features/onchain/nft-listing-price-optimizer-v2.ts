@@ -1,56 +1,41 @@
 'use client';
 
-/**
- * NFT Listing Price Optimizer V2
- * Optimize NFT listing prices with enhanced features via Reown wallet
- */
-
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useReadContract, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface PriceOptimization {
-  optimizationId: string;
-  tokenId: string;
-  collectionAddress: string;
-  suggestedPrice: string;
-  marketPrice: string;
-  optimizedBy: string;
-  timestamp: number;
+  currentPrice: bigint;
+  recommendedPrice: bigint;
+  marketFloor: bigint;
+  confidence: number;
 }
 
 export function useNFTListingPriceOptimizerV2() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [optimizations, setOptimizations] = useState<PriceOptimization[]>([]);
+  const [optimization, setOptimization] = useState<PriceOptimization | null>(null);
 
-  const optimizePrice = async (
-    tokenId: string,
-    collectionAddress: string
-  ): Promise<PriceOptimization> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x')) {
-      throw new Error('Invalid collection address format');
-    }
-    
-    const message = `Optimize listing price V2: ${tokenId} in ${collectionAddress}`;
+  const optimize = async (tokenId: bigint, currentPrice: bigint) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+
+    const message = `Optimize listing price for token ${tokenId}`;
     await signMessageAsync({ message });
-    
-    const marketPrice = (Math.random() * 10 + 0.1).toFixed(4);
-    const suggestedPrice = (parseFloat(marketPrice) * 0.95).toFixed(4);
-    
-    const optimization: PriceOptimization = {
-      optimizationId: `optimize-v2-${Date.now()}`,
-      tokenId,
-      collectionAddress,
-      suggestedPrice,
-      marketPrice,
-      optimizedBy: address,
-      timestamp: Date.now(),
+
+    const opt: PriceOptimization = {
+      currentPrice,
+      recommendedPrice: currentPrice * 95n / 100n,
+      marketFloor: currentPrice * 90n / 100n,
+      confidence: 0.85,
     };
-    
-    setOptimizations([...optimizations, optimization]);
-    return optimization;
+
+    setOptimization(opt);
+    return opt;
   };
 
-  return { optimizePrice, optimizations, address };
+  return {
+    optimize,
+    optimization,
+    address,
+    isConnected,
+  };
 }
