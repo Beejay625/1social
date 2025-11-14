@@ -8,48 +8,48 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface OwnershipHistory {
-  historyId: string;
+export interface OwnershipRecord {
+  recordId: string;
   tokenId: string;
   collectionAddress: string;
-  owners: Array<{
-    address: string;
-    fromBlock: number;
-    toBlock?: number;
-  }>;
-  currentOwner: string;
+  owner: string;
+  previousOwner: string;
+  transferredBy: string;
   timestamp: number;
 }
 
 export function useNFTOwnerHistoryTracker() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [histories, setHistories] = useState<OwnershipHistory[]>([]);
+  const [records, setRecords] = useState<OwnershipRecord[]>([]);
 
-  const trackHistory = async (
+  const trackOwnership = async (
     tokenId: string,
-    collectionAddress: string
-  ): Promise<OwnershipHistory> => {
+    collectionAddress: string,
+    owner: string,
+    previousOwner: string
+  ): Promise<OwnershipRecord> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x')) {
-      throw new Error('Invalid collection address format');
+    if (!collectionAddress.startsWith('0x') || !owner.startsWith('0x') || !previousOwner.startsWith('0x')) {
+      throw new Error('Invalid address format');
     }
     
-    const message = `Track ownership history: ${collectionAddress} #${tokenId}`;
+    const message = `Track ownership: ${tokenId} in ${collectionAddress} from ${previousOwner} to ${owner}`;
     await signMessageAsync({ message });
     
-    const history: OwnershipHistory = {
-      historyId: `history-${Date.now()}`,
+    const record: OwnershipRecord = {
+      recordId: `ownership-${Date.now()}`,
       tokenId,
       collectionAddress,
-      owners: [],
-      currentOwner: '0x0',
+      owner,
+      previousOwner,
+      transferredBy: address,
       timestamp: Date.now(),
     };
     
-    setHistories([...histories, history]);
-    return history;
+    setRecords([...records, record]);
+    return record;
   };
 
-  return { trackHistory, histories, address };
+  return { trackOwnership, records, address };
 }
