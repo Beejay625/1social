@@ -2,63 +2,50 @@
 
 /**
  * Smart Contract Event Monitor
- * Monitors smart contract events in real-time using Reown wallet
+ * Monitor smart contract events in real-time with Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-export interface ContractEvent {
+export interface EventMonitor {
+  monitorId: string;
   contractAddress: string;
   eventName: string;
-  eventData: Record<string, any>;
-  blockNumber: number;
-  transactionHash: string;
+  active: boolean;
+  monitoredBy: string;
   timestamp: number;
 }
 
-export function useSmartContractEventMonitor(contractAddress: string, eventNames: string[]) {
+export function useSmartContractEventMonitor() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [events, setEvents] = useState<ContractEvent[]>([]);
-  const [isMonitoring, setIsMonitoring] = useState(false);
+  const [monitors, setMonitors] = useState<EventMonitor[]>([]);
 
-  const startMonitoring = async () => {
+  const monitorEvent = async (
+    contractAddress: string,
+    eventName: string
+  ): Promise<EventMonitor> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!contractAddress || !contractAddress.startsWith('0x')) {
-      throw new Error('Invalid contract address');
+    if (!contractAddress.startsWith('0x')) {
+      throw new Error('Invalid contract address format');
     }
     
-    const message = `Start monitoring: ${contractAddress}`;
+    const message = `Monitor contract event: ${contractAddress} event ${eventName}`;
     await signMessageAsync({ message });
     
-    setIsMonitoring(true);
+    const monitor: EventMonitor = {
+      monitorId: `monitor-${Date.now()}`,
+      contractAddress,
+      eventName,
+      active: true,
+      monitoredBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setMonitors([...monitors, monitor]);
+    return monitor;
   };
 
-  const stopMonitoring = () => {
-    setIsMonitoring(false);
-  };
-
-  useEffect(() => {
-    if (!isMonitoring) return;
-    
-    // Simulated event monitoring - in production, this would use wagmi's watchContractEvent
-    const interval = setInterval(() => {
-      const event: ContractEvent = {
-        contractAddress,
-        eventName: eventNames[0] || 'Transfer',
-        eventData: { from: address, to: '0x0', value: '1000' },
-        blockNumber: Date.now(),
-        transactionHash: `0x${Date.now().toString(16)}`,
-        timestamp: Date.now(),
-      };
-      
-      setEvents((prev) => [event, ...prev]);
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  }, [isMonitoring, contractAddress, eventNames, address]);
-
-  return { startMonitoring, stopMonitoring, events, isMonitoring, address };
+  return { monitorEvent, monitors, address };
 }
-
