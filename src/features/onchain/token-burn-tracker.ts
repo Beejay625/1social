@@ -2,18 +2,19 @@
 
 /**
  * Token Burn Tracker
- * Tracks token burns and calculates total burned amounts using Reown wallet
+ * Track token burns and calculate total burned amounts with Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface BurnRecord {
+  burnId: string;
   tokenAddress: string;
   amount: string;
-  txHash: string;
+  totalBurned: string;
+  burnedBy: string;
   timestamp: number;
-  burner: string;
 }
 
 export function useTokenBurnTracker() {
@@ -23,35 +24,33 @@ export function useTokenBurnTracker() {
 
   const trackBurn = async (
     tokenAddress: string,
-    amount: string,
-    txHash: string
+    amount: string
   ): Promise<BurnRecord> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x') || !txHash.startsWith('0x')) {
-      throw new Error('Invalid address or transaction hash format');
+    if (!tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid token address format');
     }
     
-    const message = `Track token burn: ${tokenAddress} ${amount}`;
+    const message = `Track burn: ${tokenAddress} amount ${amount}`;
     await signMessageAsync({ message });
     
+    const totalBurned = burns
+      .filter(b => b.tokenAddress === tokenAddress)
+      .reduce((sum, b) => sum + parseFloat(b.amount), parseFloat(amount))
+      .toFixed(2);
+    
     const burn: BurnRecord = {
+      burnId: `burn-${Date.now()}`,
       tokenAddress,
       amount,
-      txHash,
+      totalBurned,
+      burnedBy: address,
       timestamp: Date.now(),
-      burner: address,
     };
     
     setBurns([...burns, burn]);
     return burn;
   };
 
-  const getTotalBurned = (tokenAddress: string): string => {
-    return burns
-      .filter((b) => b.tokenAddress.toLowerCase() === tokenAddress.toLowerCase())
-      .reduce((sum, b) => sum + BigInt(b.amount), BigInt(0))
-      .toString();
-  };
-
-  return { trackBurn, burns, getTotalBurned, address };
+  return { trackBurn, burns, address };
 }
