@@ -8,39 +8,48 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface Compounding {
+export interface CompoundOperation {
   compoundId: string;
-  poolAddress: string;
-  rewardsAmount: string;
+  stakingPool: string;
+  rewardAmount: string;
   compoundedAmount: string;
-  txHash: string;
+  apy: number;
   compoundedBy: string;
+  txHash: string;
   timestamp: number;
 }
 
 export function useTokenStakingCompounderV3() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [compounds, setCompounds] = useState<Compounding[]>([]);
+  const [compounds, setCompounds] = useState<CompoundOperation[]>([]);
 
   const compound = async (
-    poolAddress: string
-  ): Promise<Compounding> => {
+    stakingPool: string,
+    rewardAmount: string,
+    apy: number
+  ): Promise<CompoundOperation> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!poolAddress.startsWith('0x')) {
-      throw new Error('Invalid pool address format');
+    if (!stakingPool.startsWith('0x')) {
+      throw new Error('Invalid staking pool address format');
+    }
+    if (apy < 0) {
+      throw new Error('APY cannot be negative');
     }
     
-    const message = `Compound staking rewards: ${poolAddress}`;
+    const message = `Compound rewards: ${stakingPool} ${rewardAmount} at ${apy}% APY`;
     await signMessageAsync({ message });
     
-    const compound: Compounding = {
+    const compoundedAmount = (parseFloat(rewardAmount) * (1 + apy / 100)).toString();
+    
+    const compound: CompoundOperation = {
       compoundId: `compound-${Date.now()}`,
-      poolAddress,
-      rewardsAmount: '0',
-      compoundedAmount: '0',
-      txHash: `0x${Date.now().toString(16)}`,
+      stakingPool,
+      rewardAmount,
+      compoundedAmount,
+      apy,
       compoundedBy: address,
+      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
@@ -50,4 +59,3 @@ export function useTokenStakingCompounderV3() {
 
   return { compound, compounds, address };
 }
-
