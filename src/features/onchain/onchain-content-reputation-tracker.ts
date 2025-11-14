@@ -46,3 +46,41 @@ export function useOnchainContentReputationTracker() {
     }
   };
 
+  const upvoteContent = async (contentHash: string) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    setTracking(true);
+
+    try {
+      const message = `Upvote content onchain: ${contentHash}`;
+      await signMessageAsync({ message });
+
+      await writeContract({
+        address: '0x' as `0x${string}`,
+        abi: [],
+        functionName: 'upvoteContent',
+        args: [contentHash, address],
+      });
+    } finally {
+      setTracking(false);
+    }
+  };
+
+  const downvoteContent = async (contentHash: string) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    setTracking(true);
+
+    try {
+      const message = `Downvote content onchain: ${contentHash}`;
+      await signMessageAsync({ message });
+
+      await writeContract({
+        address: '0x' as `0x${string}`,
+        abi: [],
+        functionName: 'downvoteContent',
+        args: [contentHash, address],
+      });
+    } finally {
+      setTracking(false);
+    }
+  };
+
