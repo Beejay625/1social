@@ -1,55 +1,52 @@
 'use client';
 
-/**
- * Token Liquidity Locker V2
- * Lock liquidity with enhanced features using Reown wallet
- */
-
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface LiquidityLock {
-  lockId: string;
+export interface LockConfig {
   poolAddress: string;
-  lpTokenAmount: string;
-  unlockTime: number;
-  lockedBy: string;
-  timestamp: number;
+  amount: bigint;
+  duration: number;
 }
 
 export function useTokenLiquidityLockerV2() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
+  const { writeContract } = useWriteContract();
   const { signMessageAsync } = useSignMessage();
-  const [locks, setLocks] = useState<LiquidityLock[]>([]);
+  const [locking, setLocking] = useState(false);
 
-  const lockLiquidity = async (
-    poolAddress: string,
-    lpTokenAmount: string,
-    unlockTime: number
-  ): Promise<LiquidityLock> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    if (!poolAddress.startsWith('0x')) {
-      throw new Error('Invalid pool address format');
+  const { data: lockedAmount } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'lockedAmount',
+    args: address ? [address] : undefined,
+    query: { enabled: !!address && isConnected },
+  });
+
+  const lock = async (config: LockConfig) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    setLocking(true);
+
+    try {
+      const message = `Lock ${config.amount} liquidity for ${config.duration} days`;
+      await signMessageAsync({ message });
+
+      await writeContract({
+        address: config.poolAddress as `0x${string}`,
+        abi: [],
+        functionName: 'lockLiquidity',
+        args: [config.amount, config.duration],
+      });
+    } finally {
+      setLocking(false);
     }
-    if (unlockTime <= Date.now()) {
-      throw new Error('Unlock time must be in the future');
-    }
-    
-    const message = `Lock liquidity: ${poolAddress} until ${new Date(unlockTime).toISOString()}`;
-    await signMessageAsync({ message });
-    
-    const lock: LiquidityLock = {
-      lockId: `lock-${Date.now()}`,
-      poolAddress,
-      lpTokenAmount,
-      unlockTime,
-      lockedBy: address,
-      timestamp: Date.now(),
-    };
-    
-    setLocks([...locks, lock]);
-    return lock;
   };
 
-  return { lockLiquidity, locks, address };
+  return {
+    lock,
+    locking,
+    address,
+    isConnected,
+    lockedAmount,
+  };
 }
