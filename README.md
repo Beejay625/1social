@@ -939,6 +939,12 @@ Visit http://localhost:3000 in your browser to access the application.
 src/
   app/
     page.tsx          # Main dashboard component with all features
+  components/
+    contract/         # Contract interaction components
+  features/
+    onchain/         # Onchain feature implementations
+  hooks/             # Custom React hooks for wallet and contract interactions
+  config/            # Configuration files including Reown setup
 ```
 
 ## Core Features
