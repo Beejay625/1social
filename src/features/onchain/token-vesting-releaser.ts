@@ -11,9 +11,10 @@ import { useState } from 'react';
 export interface VestingRelease {
   releaseId: string;
   vestingId: string;
-  tokenAddress: string;
   amount: string;
+  recipient: string;
   txHash: string;
+  releasedBy: string;
   timestamp: number;
 }
 
@@ -24,26 +25,27 @@ export function useTokenVestingReleaser() {
 
   const release = async (
     vestingId: string,
-    tokenAddress: string,
-    amount: string
+    amount: string,
+    recipient: string
   ): Promise<VestingRelease> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x')) {
-      throw new Error('Invalid token address format');
+    if (!recipient.startsWith('0x')) {
+      throw new Error('Invalid recipient address format');
     }
     if (parseFloat(amount) <= 0) {
       throw new Error('Amount must be greater than zero');
     }
     
-    const message = `Release vested tokens: ${vestingId} ${amount}`;
+    const message = `Release vesting: ${vestingId} ${amount} to ${recipient}`;
     await signMessageAsync({ message });
     
     const release: VestingRelease = {
       releaseId: `release-${Date.now()}`,
       vestingId,
-      tokenAddress,
       amount,
+      recipient,
       txHash: `0x${Date.now().toString(16)}`,
+      releasedBy: address,
       timestamp: Date.now(),
     };
     
