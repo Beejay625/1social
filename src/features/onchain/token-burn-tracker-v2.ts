@@ -1,58 +1,57 @@
 'use client';
 
-/**
- * Token Burn Tracker V2
- * Track token burns with enhanced features via Reown wallet
- */
-
-import { useAccount, useSignMessage } from 'wagmi';
-import { useState } from 'react';
+import { useAccount, useReadContract, useSignMessage } from 'wagmi';
+import { useState, useEffect } from 'react';
 
 export interface BurnRecord {
-  recordId: string;
-  tokenAddress: string;
-  burnAmount: string;
-  totalBurned: string;
-  burnedBy: string;
-  txHash: string;
-  timestamp: number;
+  amount: bigint;
+  timestamp: bigint;
+  totalBurned: bigint;
 }
 
 export function useTokenBurnTrackerV2() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [records, setRecords] = useState<BurnRecord[]>([]);
+  const [burns, setBurns] = useState<BurnRecord[]>([]);
+  const [totalBurned, setTotalBurned] = useState<bigint>(0n);
 
-  const trackBurn = async (
-    tokenAddress: string,
-    burnAmount: string,
-    totalBurned: string
-  ): Promise<BurnRecord> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x')) {
-      throw new Error('Invalid token address format');
-    }
-    if (parseFloat(burnAmount) <= 0) {
-      throw new Error('Burn amount must be greater than zero');
-    }
-    
-    const message = `Track burn: ${tokenAddress} amount ${burnAmount}`;
+  const { data: totalSupply } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'totalSupply',
+    query: { enabled: isConnected },
+  });
+
+  const { data: burnedAmount } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'totalBurned',
+    query: { enabled: isConnected },
+  });
+
+  const trackBurns = async (tokenAddress: string) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+
+    const message = `Track burns for token: ${tokenAddress}`;
     await signMessageAsync({ message });
-    
-    const record: BurnRecord = {
-      recordId: `burn-${Date.now()}`,
-      tokenAddress,
-      burnAmount,
-      totalBurned,
-      burnedBy: address,
-      txHash: `0x${Date.now().toString(16)}`,
-      timestamp: Date.now(),
-    };
-    
-    setRecords([...records, record]);
-    return record;
+
+    if (burnedAmount) {
+      setTotalBurned(burnedAmount as bigint);
+    }
   };
 
-  return { trackBurn, records, address };
-}
+  useEffect(() => {
+    if (burnedAmount) {
+      setTotalBurned(burnedAmount as bigint);
+    }
+  }, [burnedAmount]);
 
+  return {
+    trackBurns,
+    burns,
+    totalBurned,
+    address,
+    isConnected,
+    totalSupply,
+  };
+}
