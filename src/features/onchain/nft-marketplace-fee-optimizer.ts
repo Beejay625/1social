@@ -11,11 +11,10 @@ import { useState } from 'react';
 export interface FeeOptimization {
   optimizationId: string;
   marketplace: string;
-  collectionAddress: string;
   currentFee: number;
   optimizedFee: number;
-  expectedVolume: string;
-  estimatedSavings: string;
+  profitIncrease: string;
+  optimizedBy: string;
   timestamp: number;
 }
 
@@ -24,33 +23,28 @@ export function useNFTMarketplaceFeeOptimizer() {
   const { signMessageAsync } = useSignMessage();
   const [optimizations, setOptimizations] = useState<FeeOptimization[]>([]);
 
-  const optimize = async (
+  const optimizeFee = async (
     marketplace: string,
-    collectionAddress: string,
     currentFee: number
   ): Promise<FeeOptimization> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x')) {
-      throw new Error('Invalid collection address format');
-    }
     if (currentFee < 0 || currentFee > 100) {
       throw new Error('Fee must be between 0 and 100');
     }
     
-    const message = `Optimize marketplace fees: ${marketplace} for ${collectionAddress}`;
+    const message = `Optimize marketplace fee: ${marketplace} current ${currentFee}%`;
     await signMessageAsync({ message });
     
-    const optimizedFee = currentFee * 0.9;
-    const estimatedSavings = '1000';
+    const optimizedFee = Math.max(0.1, currentFee * 0.9);
+    const profitIncrease = ((currentFee - optimizedFee) / currentFee * 100).toFixed(2);
     
     const optimization: FeeOptimization = {
-      optimizationId: `opt-${Date.now()}`,
+      optimizationId: `fee-optimize-${Date.now()}`,
       marketplace,
-      collectionAddress,
       currentFee,
       optimizedFee,
-      expectedVolume: '50000',
-      estimatedSavings,
+      profitIncrease,
+      optimizedBy: address,
       timestamp: Date.now(),
     };
     
@@ -58,6 +52,5 @@ export function useNFTMarketplaceFeeOptimizer() {
     return optimization;
   };
 
-  return { optimize, optimizations, address };
+  return { optimizeFee, optimizations, address };
 }
-
