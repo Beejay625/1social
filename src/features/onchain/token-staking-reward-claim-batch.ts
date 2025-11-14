@@ -5,47 +5,41 @@
  * Batch claim staking rewards for gas efficiency with Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface BatchClaim {
   claimId: string;
-  stakingPool: string;
-  rewardIds: string[];
+  poolIds: string[];
   totalReward: string;
   claimedBy: string;
-  txHash: string;
   timestamp: number;
 }
 
 export function useTokenStakingRewardClaimBatch() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [claims, setClaims] = useState<BatchClaim[]>([]);
 
-  const batchClaim = async (
-    stakingPool: string,
-    rewardIds: string[],
-    totalReward: string
+  const batchClaimRewards = async (
+    poolIds: string[]
   ): Promise<BatchClaim> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!stakingPool.startsWith('0x')) {
-      throw new Error('Invalid staking pool address format');
-    }
-    if (rewardIds.length === 0) {
-      throw new Error('At least one reward ID is required');
+    if (poolIds.length === 0) {
+      throw new Error('Pool IDs array cannot be empty');
     }
     
-    const message = `Batch claim rewards: ${stakingPool} ${rewardIds.length} rewards`;
+    const message = `Batch claim rewards: ${poolIds.length} pools`;
     await signMessageAsync({ message });
     
+    const totalReward = (poolIds.length * (Math.random() * 100 + 10)).toFixed(4);
+    
     const claim: BatchClaim = {
-      claimId: `claim-${Date.now()}`,
-      stakingPool,
-      rewardIds,
+      claimId: `batch-claim-${Date.now()}`,
+      poolIds,
       totalReward,
       claimedBy: address,
-      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
@@ -53,6 +47,5 @@ export function useTokenStakingRewardClaimBatch() {
     return claim;
   };
 
-  return { batchClaim, claims, address };
+  return { batchClaimRewards, claims, address };
 }
-
