@@ -1,27 +1,55 @@
 'use client';
 
-import { useAccount, useWriteContract, useSignMessage } from 'wagmi';
+/**
+ * NFT Lazy Mint Batch
+ * Lazy mint multiple NFTs in batch with Reown wallet
+ */
+
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface LazyMintBatchParams {
-  collection: string;
+export interface LazyMintBatch {
+  batchId: string;
+  collectionAddress: string;
   metadataURIs: string[];
-  signatures: string[];
+  quantity: number;
+  mintedBy: string;
+  timestamp: number;
 }
 
 export function useNFTLazyMintBatch() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const { signMessage } = useSignMessage();
-  const [minting, setMinting] = useState(false);
+  const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
+  const [batches, setBatches] = useState<LazyMintBatch[]>([]);
 
-  const batchLazyMint = async (params: LazyMintBatchParams) => {
-    if (!address) return;
-    setMinting(true);
-    // Implementation for batch lazy minting
-    setMinting(false);
+  const lazyMintBatch = async (
+    collectionAddress: string,
+    metadataURIs: string[]
+  ): Promise<LazyMintBatch> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (!collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
+    }
+    if (metadataURIs.length === 0) {
+      throw new Error('Metadata URIs array cannot be empty');
+    }
+    
+    const message = `Lazy mint batch: ${collectionAddress} ${metadataURIs.length} NFTs`;
+    await signMessageAsync({ message });
+    
+    const batch: LazyMintBatch = {
+      batchId: `batch-${Date.now()}`,
+      collectionAddress,
+      metadataURIs,
+      quantity: metadataURIs.length,
+      mintedBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setBatches([...batches, batch]);
+    return batch;
   };
 
-  return { batchLazyMint, minting, address, signMessage };
+  return { lazyMintBatch, batches, address };
 }
-
