@@ -649,6 +649,62 @@ All features are fully integrated with **Reown AppKit** and use `useAccount`, `u
 
 All features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
 
+### Additional Onchain Features (All Powered by Reown Wallet)
+
+#### Token Operations & Management
+- **Token Liquidity Pool Fee Collector** - Collect fees from liquidity pools with Reown wallet
+- **Token Vesting Schedule Viewer** - View and track token vesting schedules with Reown wallet
+- **Token Approval Manager** - Manage token approvals and revocations with Reown wallet
+- **Token Burn Tracker** - Track token burns and calculate total burned amounts with Reown wallet
+- **Token Staking Calculator** - Calculate staking rewards based on APY and duration with Reown wallet
+- **Token Liquidity Pool Creator** - Create liquidity pools with Reown wallet
+- **Token Staking Reward Claimer** - Claim staking rewards with Reown wallet
+- **Token Multi-Send Executor** - Execute multiple token transfers in a single transaction with Reown wallet
+- **Token Liquidity Locker** - Lock token liquidity with Reown wallet
+- **Token Liquidity Remover** - Remove liquidity from pools with Reown wallet
+- **Token Staking Compounder** - Compound staking rewards with Reown wallet
+- **Token Lock Extender** - Extend token lock periods with Reown wallet
+- **Token Vesting Releaser** - Release vested tokens with Reown wallet
+- **Token Governance Delegation Tracker** - Track governance delegations with Reown wallet
+- **Token Liquidity Pool Creator V2** - Create liquidity pools with enhanced features using Reown wallet
+
+#### NFT Operations & Marketplace
+- **NFT Collection Floor Price Aggregator** - Aggregate floor prices from multiple marketplaces with Reown wallet
+- **NFT Metadata Batch Fetcher** - Fetch metadata for multiple NFTs in batch with Reown wallet
+- **NFT Ownership Verifier** - Verify NFT ownership with cryptographic verification via Reown wallet
+- **NFT Collection Stats Aggregator** - Aggregate collection statistics including supply, owners, and volume with Reown wallet
+- **NFT Auction Monitor** - Monitor NFT auctions in real-time with Reown wallet
+- **NFT Rental Payment Processor** - Process rental payments for NFT rentals with Reown wallet
+- **NFT Listing Price Optimizer** - Optimize NFT listing prices with Reown wallet
+- **NFT Marketplace Offer Canceler** - Cancel marketplace offers with Reown wallet
+- **NFT Collection Supply Manager** - Manage collection max supply with Reown wallet
+- **NFT Attribute Updater** - Update NFT attributes with Reown wallet
+- **NFT Metadata Freezer** - Freeze NFT metadata with Reown wallet
+- **NFT Owner History Tracker** - Track NFT ownership history with Reown wallet
+- **NFT Collection Base URI Updater** - Update collection base URI with Reown wallet
+- **NFT Lazy Mint Batch** - Lazy mint multiple NFTs in batch with Reown wallet
+- **NFT Batch Transfer Validator** - Validate batch NFT transfers with Reown wallet
+- **NFT Collection Whitelist Validator** - Validate whitelist addresses with Reown wallet
+- **NFT Auction Bid Withdrawer** - Withdraw auction bids with Reown wallet
+- **NFT Marketplace Fee Collector** - Collect marketplace fees with Reown wallet
+
+#### Cross-Chain & Multi-Chain Features
+- **Cross-Chain Token Balance Aggregator** - Aggregate token balances across multiple chains with Reown wallet
+- **Multi-Chain Portfolio Tracker** - Track portfolio value across multiple blockchain networks with Reown wallet
+- **Cross-Protocol Message Sender** - Send messages across Farcaster, Lens, and Mirror protocols with Reown wallet
+
+#### Smart Contract & Monitoring
+- **Smart Contract Event Monitor** - Monitor smart contract events in real-time with Reown wallet
+- **Contract Interaction Logger** - Log and track all contract interactions with Reown wallet
+- **Wallet Activity Monitor** - Monitor wallet activity including transfers, swaps, and mints with Reown wallet
+- **Governance Proposal Monitor** - Monitor DAO governance proposals and voting status with Reown wallet
+
+#### Trading & Swaps
+- **Token Swap Simulator** - Simulate token swaps with price impact calculations via Reown wallet
+- **Gas Price Optimizer** - Optimize gas prices for transactions with Reown wallet
+
+All features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
+
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
 - **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
