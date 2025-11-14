@@ -8,15 +8,12 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface CollectionVerification {
+export interface VerificationResult {
   verificationId: string;
   collectionAddress: string;
-  verified: boolean;
-  verificationData: {
-    contractVerified: boolean;
-    metadataValid: boolean;
-    standardsCompliant: boolean;
-  };
+  creatorAddress: string;
+  isVerified: boolean;
+  verificationScore: number;
   verifiedBy: string;
   timestamp: number;
 }
@@ -24,28 +21,26 @@ export interface CollectionVerification {
 export function useNFTCollectionVerifierV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [verifications, setVerifications] = useState<CollectionVerification[]>([]);
+  const [verifications, setVerifications] = useState<VerificationResult[]>([]);
 
   const verify = async (
-    collectionAddress: string
-  ): Promise<CollectionVerification> => {
+    collectionAddress: string,
+    creatorAddress: string
+  ): Promise<VerificationResult> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x')) {
-      throw new Error('Invalid collection address format');
+    if (!collectionAddress.startsWith('0x') || !creatorAddress.startsWith('0x')) {
+      throw new Error('Invalid address format');
     }
     
-    const message = `Verify collection: ${collectionAddress}`;
+    const message = `Verify collection: ${collectionAddress} creator ${creatorAddress}`;
     await signMessageAsync({ message });
     
-    const verification: CollectionVerification = {
+    const verification: VerificationResult = {
       verificationId: `verify-${Date.now()}`,
       collectionAddress,
-      verified: true,
-      verificationData: {
-        contractVerified: true,
-        metadataValid: true,
-        standardsCompliant: true,
-      },
+      creatorAddress,
+      isVerified: false,
+      verificationScore: 0,
       verifiedBy: address,
       timestamp: Date.now(),
     };
@@ -56,4 +51,3 @@ export function useNFTCollectionVerifierV2() {
 
   return { verify, verifications, address };
 }
-
