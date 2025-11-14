@@ -5,30 +5,29 @@
  * Manage collection royalties with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface RoyaltyManagement {
-  managementId: string;
+export interface RoyaltyConfig {
+  configId: string;
   collectionAddress: string;
   royaltyPercentage: number;
   royaltyRecipient: string;
-  action: 'set' | 'update';
-  managedBy: string;
+  configuredBy: string;
   timestamp: number;
 }
 
 export function useNFTCollectionRoyaltyManagerV3() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [managements, setManagements] = useState<RoyaltyManagement[]>([]);
+  const { writeContractAsync } = useWriteContract();
+  const [configs, setConfigs] = useState<RoyaltyConfig[]>([]);
 
-  const manageRoyalty = async (
+  const configureRoyalty = async (
     collectionAddress: string,
     royaltyPercentage: number,
-    royaltyRecipient: string,
-    action: 'set' | 'update'
-  ): Promise<RoyaltyManagement> => {
+    royaltyRecipient: string
+  ): Promise<RoyaltyConfig> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x') || !royaltyRecipient.startsWith('0x')) {
       throw new Error('Invalid address format');
@@ -37,23 +36,21 @@ export function useNFTCollectionRoyaltyManagerV3() {
       throw new Error('Royalty percentage must be between 0 and 100');
     }
     
-    const message = `Manage royalty: ${collectionAddress} ${action} ${royaltyPercentage}% to ${royaltyRecipient}`;
+    const message = `Configure royalty V3: ${collectionAddress} ${royaltyPercentage}% to ${royaltyRecipient}`;
     await signMessageAsync({ message });
     
-    const management: RoyaltyManagement = {
-      managementId: `royalty-${Date.now()}`,
+    const config: RoyaltyConfig = {
+      configId: `royalty-v3-${Date.now()}`,
       collectionAddress,
       royaltyPercentage,
       royaltyRecipient,
-      action,
-      managedBy: address,
+      configuredBy: address,
       timestamp: Date.now(),
     };
     
-    setManagements([...managements, management]);
-    return management;
+    setConfigs([...configs, config]);
+    return config;
   };
 
-  return { manageRoyalty, managements, address };
+  return { configureRoyalty, configs, address };
 }
-
