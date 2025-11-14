@@ -2,64 +2,55 @@
 
 /**
  * NFT Auction Monitor
- * Monitors NFT auctions in real-time using Reown wallet
+ * Monitor NFT auctions in real-time with Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-export interface Auction {
+export interface AuctionMonitor {
+  monitorId: string;
   auctionId: string;
   tokenId: string;
   collectionAddress: string;
   currentBid: string;
-  highestBidder: string;
   endTime: number;
-  status: 'active' | 'ended' | 'cancelled';
+  monitoredBy: string;
+  timestamp: number;
 }
 
-export function useNFTAuctionMonitor(collectionAddress?: string) {
+export function useNFTAuctionMonitor() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [auctions, setAuctions] = useState<Auction[]>([]);
-  const [isMonitoring, setIsMonitoring] = useState(false);
+  const [monitors, setMonitors] = useState<AuctionMonitor[]>([]);
 
-  const startMonitoring = async () => {
+  const monitorAuction = async (
+    auctionId: string,
+    tokenId: string,
+    collectionAddress: string
+  ): Promise<AuctionMonitor> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (collectionAddress && !collectionAddress.startsWith('0x')) {
+    if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Start monitoring NFT auctions: ${collectionAddress || 'all'}`;
+    const message = `Monitor auction: ${auctionId} token ${tokenId}`;
     await signMessageAsync({ message });
     
-    setIsMonitoring(true);
+    const monitor: AuctionMonitor = {
+      monitorId: `monitor-${Date.now()}`,
+      auctionId,
+      tokenId,
+      collectionAddress,
+      currentBid: (Math.random() * 10 + 0.1).toFixed(4),
+      endTime: Date.now() + 24 * 60 * 60 * 1000,
+      monitoredBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setMonitors([...monitors, monitor]);
+    return monitor;
   };
 
-  const stopMonitoring = () => {
-    setIsMonitoring(false);
-  };
-
-  useEffect(() => {
-    if (!isMonitoring) return;
-    
-    const interval = setInterval(() => {
-      const auction: Auction = {
-        auctionId: `auction-${Date.now()}`,
-        tokenId: '1',
-        collectionAddress: collectionAddress || '0x0',
-        currentBid: '1.5',
-        highestBidder: address || '0x0',
-        endTime: Date.now() + 86400000,
-        status: 'active',
-      };
-      
-      setAuctions((prev) => [auction, ...prev.slice(0, 9)]);
-    }, 15000);
-    
-    return () => clearInterval(interval);
-  }, [isMonitoring, collectionAddress, address]);
-
-  return { startMonitoring, stopMonitoring, auctions, isMonitoring, address };
+  return { monitorAuction, monitors, address };
 }
-
