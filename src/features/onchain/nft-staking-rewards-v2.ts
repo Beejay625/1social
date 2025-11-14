@@ -10,12 +10,13 @@ import { useState } from 'react';
 
 export interface StakingReward {
   rewardId: string;
+  stakingContractAddress: string;
   tokenId: string;
   collectionAddress: string;
   rewardAmount: string;
   rewardToken: string;
-  txHash: string;
   claimedBy: string;
+  txHash: string;
   timestamp: number;
 }
 
@@ -24,27 +25,30 @@ export function useNFTStakingRewardsV2() {
   const { signMessageAsync } = useSignMessage();
   const [rewards, setRewards] = useState<StakingReward[]>([]);
 
-  const claim = async (
+  const claimRewards = async (
+    stakingContractAddress: string,
     tokenId: string,
     collectionAddress: string,
+    rewardAmount: string,
     rewardToken: string
   ): Promise<StakingReward> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x')) {
-      throw new Error('Invalid collection address format');
+    if (!stakingContractAddress.startsWith('0x') || !collectionAddress.startsWith('0x') || !rewardToken.startsWith('0x')) {
+      throw new Error('Invalid address format');
     }
     
-    const message = `Claim staking reward: ${collectionAddress} #${tokenId}`;
+    const message = `Claim staking rewards: ${collectionAddress} #${tokenId} ${rewardAmount}`;
     await signMessageAsync({ message });
     
     const reward: StakingReward = {
       rewardId: `reward-${Date.now()}`,
+      stakingContractAddress,
       tokenId,
       collectionAddress,
-      rewardAmount: '0',
+      rewardAmount,
       rewardToken,
-      txHash: `0x${Date.now().toString(16)}`,
       claimedBy: address,
+      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
@@ -52,6 +56,5 @@ export function useNFTStakingRewardsV2() {
     return reward;
   };
 
-  return { claim, rewards, address };
+  return { claimRewards, rewards, address };
 }
-
