@@ -5,54 +5,49 @@
  * Manage collection base URI with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface BaseURIManagement {
-  managementId: string;
+export interface URIUpdate {
+  updateId: string;
   collectionAddress: string;
-  baseUri: string;
-  action: 'set' | 'update';
-  managedBy: string;
-  txHash: string;
+  newBaseURI: string;
+  updatedBy: string;
   timestamp: number;
 }
 
 export function useNFTCollectionBaseURIManagerV3() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [managements, setManagements] = useState<BaseURIManagement[]>([]);
+  const { writeContractAsync } = useWriteContract();
+  const [updates, setUpdates] = useState<URIUpdate[]>([]);
 
-  const manageBaseURI = async (
+  const updateBaseURI = async (
     collectionAddress: string,
-    baseUri: string,
-    action: 'set' | 'update'
-  ): Promise<BaseURIManagement> => {
+    newBaseURI: string
+  ): Promise<URIUpdate> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (!baseUri.startsWith('http://') && !baseUri.startsWith('https://') && !baseUri.startsWith('ipfs://')) {
-      throw new Error('Base URI must be a valid HTTP, HTTPS, or IPFS URL');
+    if (!newBaseURI.startsWith('http://') && !newBaseURI.startsWith('https://') && !newBaseURI.startsWith('ipfs://')) {
+      throw new Error('Invalid URI format');
     }
     
-    const message = `Manage base URI: ${collectionAddress} ${action} to ${baseUri}`;
+    const message = `Update base URI V3: ${collectionAddress} to ${newBaseURI}`;
     await signMessageAsync({ message });
     
-    const management: BaseURIManagement = {
-      managementId: `uri-${Date.now()}`,
+    const update: URIUpdate = {
+      updateId: `uri-v3-${Date.now()}`,
       collectionAddress,
-      baseUri,
-      action,
-      managedBy: address,
-      txHash: `0x${Date.now().toString(16)}`,
+      newBaseURI,
+      updatedBy: address,
       timestamp: Date.now(),
     };
     
-    setManagements([...managements, management]);
-    return management;
+    setUpdates([...updates, update]);
+    return update;
   };
 
-  return { manageBaseURI, managements, address };
+  return { updateBaseURI, updates, address };
 }
-
