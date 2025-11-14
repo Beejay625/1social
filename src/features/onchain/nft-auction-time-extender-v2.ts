@@ -8,14 +8,10 @@
 import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface AuctionExtension {
+export interface TimeExtension {
   extensionId: string;
   auctionId: string;
-  tokenId: string;
-  collectionAddress: string;
-  originalEndTime: number;
   newEndTime: number;
-  extensionPeriod: number;
   extendedBy: string;
   timestamp: number;
 }
@@ -24,36 +20,24 @@ export function useNFTAuctionTimeExtenderV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
   const { writeContractAsync } = useWriteContract();
-  const [extensions, setExtensions] = useState<AuctionExtension[]>([]);
+  const [extensions, setExtensions] = useState<TimeExtension[]>([]);
 
-  const extendAuction = async (
+  const extendAuctionTime = async (
     auctionId: string,
-    tokenId: string,
-    collectionAddress: string,
-    extensionPeriod: number
-  ): Promise<AuctionExtension> => {
+    newEndTime: number
+  ): Promise<TimeExtension> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x')) {
-      throw new Error('Invalid collection address format');
-    }
-    if (extensionPeriod <= 0) {
-      throw new Error('Extension period must be greater than zero');
+    if (newEndTime <= Date.now()) {
+      throw new Error('New end time must be in the future');
     }
     
-    const message = `Extend auction V2: ${auctionId} extend ${extensionPeriod} seconds`;
+    const message = `Extend auction time V2: ${auctionId} to ${newEndTime}`;
     await signMessageAsync({ message });
     
-    const originalEndTime = Date.now();
-    const newEndTime = originalEndTime + (extensionPeriod * 1000);
-    
-    const extension: AuctionExtension = {
+    const extension: TimeExtension = {
       extensionId: `extend-v2-${Date.now()}`,
       auctionId,
-      tokenId,
-      collectionAddress,
-      originalEndTime,
       newEndTime,
-      extensionPeriod,
       extendedBy: address,
       timestamp: Date.now(),
     };
@@ -62,5 +46,5 @@ export function useNFTAuctionTimeExtenderV2() {
     return extension;
   };
 
-  return { extendAuction, extensions, address };
+  return { extendAuctionTime, extensions, address };
 }
