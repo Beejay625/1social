@@ -13,8 +13,8 @@ export interface OfferCancellation {
   offerId: string;
   tokenId: string;
   collectionAddress: string;
+  canceledBy: string;
   txHash: string;
-  cancelledBy: string;
   timestamp: number;
 }
 
@@ -23,7 +23,7 @@ export function useNFTMarketplaceOfferCancelerV3() {
   const { signMessageAsync } = useSignMessage();
   const [cancellations, setCancellations] = useState<OfferCancellation[]>([]);
 
-  const cancel = async (
+  const cancelOffer = async (
     offerId: string,
     tokenId: string,
     collectionAddress: string
@@ -41,8 +41,8 @@ export function useNFTMarketplaceOfferCancelerV3() {
       offerId,
       tokenId,
       collectionAddress,
+      canceledBy: address,
       txHash: `0x${Date.now().toString(16)}`,
-      cancelledBy: address,
       timestamp: Date.now(),
     };
     
@@ -50,6 +50,5 @@ export function useNFTMarketplaceOfferCancelerV3() {
     return cancellation;
   };
 
-  return { cancel, cancellations, address };
+  return { cancelOffer, cancellations, address };
 }
-
