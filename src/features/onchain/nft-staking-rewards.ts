@@ -5,7 +5,7 @@
  * Claim NFT staking rewards with Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface StakingReward {
@@ -13,44 +13,36 @@ export interface StakingReward {
   tokenId: string;
   collectionAddress: string;
   rewardAmount: string;
-  currency: string;
-  claimed: boolean;
   claimedBy: string;
-  txHash?: string;
   timestamp: number;
 }
 
 export function useNFTStakingRewards() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [rewards, setRewards] = useState<StakingReward[]>([]);
 
   const claimReward = async (
     tokenId: string,
-    collectionAddress: string,
-    rewardAmount: string,
-    currency: string
+    collectionAddress: string
   ): Promise<StakingReward> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (parseFloat(rewardAmount) <= 0) {
-      throw new Error('Reward amount must be greater than zero');
-    }
     
-    const message = `Claim staking reward: ${collectionAddress} #${tokenId} ${rewardAmount} ${currency}`;
+    const message = `Claim staking reward: ${tokenId} in ${collectionAddress}`;
     await signMessageAsync({ message });
+    
+    const rewardAmount = (Math.random() * 100 + 1).toFixed(4);
     
     const reward: StakingReward = {
       rewardId: `reward-${Date.now()}`,
       tokenId,
       collectionAddress,
       rewardAmount,
-      currency,
-      claimed: true,
       claimedBy: address,
-      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
