@@ -162,6 +162,7 @@ Publish to **Farcaster**, **Lens Protocol**, **Mirror**, and traditional platfor
 - **Onchain Content Reputation Tracker** - Track content reputation scores onchain with upvote/downvote functionality
 - **Onchain Content Syndication Manager** - Syndicate content across multiple protocols with onchain automation
 - **Onchain Tip Distribution Optimizer** - Optimize and distribute tips onchain with gas-efficient batching
+- **Onchain Content Royalty Manager** - Manage content royalties onchain with split distribution
 
 ---
 
