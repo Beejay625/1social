@@ -2,61 +2,51 @@
 
 /**
  * Wallet Activity Monitor
- * Monitors wallet activity including transfers, swaps, and mints using Reown wallet
+ * Monitor wallet activity including transfers, swaps, and mints with Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-export interface WalletActivity {
-  type: 'transfer' | 'swap' | 'mint' | 'approval';
-  from: string;
-  to: string;
-  value: string;
-  txHash: string;
+export interface ActivityRecord {
+  recordId: string;
+  walletAddress: string;
+  activityType: 'transfer' | 'swap' | 'mint' | 'burn';
+  details: string;
+  monitoredBy: string;
   timestamp: number;
 }
 
-export function useWalletActivityMonitor(targetAddress?: string) {
+export function useWalletActivityMonitor() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [activities, setActivities] = useState<WalletActivity[]>([]);
-  const [isMonitoring, setIsMonitoring] = useState(false);
+  const [records, setRecords] = useState<ActivityRecord[]>([]);
 
-  const startMonitoring = async () => {
+  const monitorActivity = async (
+    walletAddress: string,
+    activityType: 'transfer' | 'swap' | 'mint' | 'burn',
+    details: string
+  ): Promise<ActivityRecord> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (targetAddress && !targetAddress.startsWith('0x')) {
-      throw new Error('Invalid target address format');
+    if (!walletAddress.startsWith('0x')) {
+      throw new Error('Invalid wallet address format');
     }
     
-    const message = `Start monitoring wallet activity: ${targetAddress || address}`;
+    const message = `Monitor activity: ${walletAddress} type ${activityType}`;
     await signMessageAsync({ message });
     
-    setIsMonitoring(true);
+    const record: ActivityRecord = {
+      recordId: `activity-${Date.now()}`,
+      walletAddress,
+      activityType,
+      details,
+      monitoredBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setRecords([...records, record]);
+    return record;
   };
 
-  const stopMonitoring = () => {
-    setIsMonitoring(false);
-  };
-
-  useEffect(() => {
-    if (!isMonitoring) return;
-    
-    const interval = setInterval(() => {
-      const activity: WalletActivity = {
-        type: 'transfer',
-        from: targetAddress || address || '0x0',
-        to: '0x0',
-        value: '0.1',
-        txHash: `0x${Date.now().toString(16)}`,
-        timestamp: Date.now(),
-      };
-      
-      setActivities((prev) => [activity, ...prev]);
-    }, 10000);
-    
-    return () => clearInterval(interval);
-  }, [isMonitoring, targetAddress, address]);
-
-  return { startMonitoring, stopMonitoring, activities, isMonitoring, address };
+  return { monitorActivity, records, address };
 }
