@@ -168,6 +168,7 @@ Publish to **Farcaster**, **Lens Protocol**, **Mirror**, and traditional platfor
 - **Onchain Content Engagement Booster** - Boost content engagement onchain across multiple protocols
 - **Onchain Content Moderator** - Moderate content onchain with DAO-governed decisions
 - **Onchain Content Verification Badge** - Issue verification badges onchain with metadata
+- **Onchain Content Performance Predictor** - Predict content performance using onchain historical data
 
 ---
 
