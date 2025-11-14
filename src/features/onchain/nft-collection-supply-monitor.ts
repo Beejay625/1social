@@ -6,58 +6,51 @@
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-export interface SupplyData {
-  dataId: string;
+export interface SupplyMonitor {
+  monitorId: string;
   collectionAddress: string;
   currentSupply: number;
   maxSupply: number;
-  mintedPercentage: number;
+  supplyPercentage: number;
+  monitoredBy: string;
   timestamp: number;
 }
 
-export function useNFTCollectionSupplyMonitor(collectionAddress?: string) {
+export function useNFTCollectionSupplyMonitor() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [supplies, setSupplies] = useState<SupplyData[]>([]);
-  const [isMonitoring, setIsMonitoring] = useState(false);
+  const [monitors, setMonitors] = useState<SupplyMonitor[]>([]);
 
-  const startMonitoring = async () => {
+  const monitorSupply = async (
+    collectionAddress: string
+  ): Promise<SupplyMonitor> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (collectionAddress && !collectionAddress.startsWith('0x')) {
+    if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Start monitoring supply: ${collectionAddress || 'all'}`;
+    const message = `Monitor supply: ${collectionAddress}`;
     await signMessageAsync({ message });
     
-    setIsMonitoring(true);
+    const maxSupply = Math.floor(Math.random() * 10000) + 1000;
+    const currentSupply = Math.floor(maxSupply * Math.random());
+    const supplyPercentage = (currentSupply / maxSupply) * 100;
+    
+    const monitor: SupplyMonitor = {
+      monitorId: `monitor-${Date.now()}`,
+      collectionAddress,
+      currentSupply,
+      maxSupply,
+      supplyPercentage,
+      monitoredBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setMonitors([...monitors, monitor]);
+    return monitor;
   };
 
-  const stopMonitoring = () => {
-    setIsMonitoring(false);
-  };
-
-  useEffect(() => {
-    if (!isMonitoring) return;
-    
-    const interval = setInterval(() => {
-      const supply: SupplyData = {
-        dataId: `supply-${Date.now()}`,
-        collectionAddress: collectionAddress || '0x0',
-        currentSupply: 7500,
-        maxSupply: 10000,
-        mintedPercentage: 75,
-        timestamp: Date.now(),
-      };
-      
-      setSupplies((prev) => [supply, ...prev.slice(0, 9)]);
-    }, 60000);
-    
-    return () => clearInterval(interval);
-  }, [isMonitoring, collectionAddress, address]);
-
-  return { startMonitoring, stopMonitoring, supplies, isMonitoring, address };
+  return { monitorSupply, monitors, address };
 }
-
