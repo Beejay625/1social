@@ -895,7 +895,9 @@ Get your Project ID from [reown.com](https://reown.com/). Sign up for free and c
 npm run dev
 ```
 
-Visit http://localhost:3000
+The development server will start on http://localhost:3000
+
+Visit http://localhost:3000 in your browser to access the application.
 
 ## Supported Protocols & Platforms
 
