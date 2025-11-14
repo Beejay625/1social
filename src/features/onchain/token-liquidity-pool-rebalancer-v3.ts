@@ -8,13 +8,12 @@
 import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface RebalanceEvent {
+export interface Rebalance {
   rebalanceId: string;
   poolAddress: string;
   tokenA: string;
   tokenB: string;
-  targetRatioA: number;
-  targetRatioB: number;
+  newRatio: number;
   rebalancedBy: string;
   timestamp: number;
 }
@@ -23,33 +22,28 @@ export function useTokenLiquidityPoolRebalancerV3() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
   const { writeContractAsync } = useWriteContract();
-  const [rebalances, setRebalances] = useState<RebalanceEvent[]>([]);
+  const [rebalances, setRebalances] = useState<Rebalance[]>([]);
 
   const rebalancePool = async (
     poolAddress: string,
     tokenA: string,
     tokenB: string,
-    targetRatioA: number,
-    targetRatioB: number
-  ): Promise<RebalanceEvent> => {
+    newRatio: number
+  ): Promise<Rebalance> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!poolAddress.startsWith('0x') || !tokenA.startsWith('0x') || !tokenB.startsWith('0x')) {
       throw new Error('Invalid address format');
     }
-    if (targetRatioA + targetRatioB !== 100) {
-      throw new Error('Target ratios must sum to 100');
-    }
     
-    const message = `Rebalance pool: ${poolAddress} ratio ${targetRatioA}/${targetRatioB}`;
+    const message = `Rebalance pool V3: ${poolAddress} ratio ${newRatio}`;
     await signMessageAsync({ message });
     
-    const rebalance: RebalanceEvent = {
-      rebalanceId: `rebalance-${Date.now()}`,
+    const rebalance: Rebalance = {
+      rebalanceId: `rebalance-v3-${Date.now()}`,
       poolAddress,
       tokenA,
       tokenB,
-      targetRatioA,
-      targetRatioB,
+      newRatio,
       rebalancedBy: address,
       timestamp: Date.now(),
     };
