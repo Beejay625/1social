@@ -6,60 +6,58 @@
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export interface BalanceTracking {
-  trackingId: string;
+export interface BalanceData {
+  dataId: string;
   tokenAddress: string;
-  addresses: string[];
-  balances: Array<{
-    address: string;
-    balance: string;
-  }>;
-  totalBalance: string;
+  walletAddress: string;
+  balance: string;
   timestamp: number;
 }
 
-export function useTokenBalanceTrackerV2() {
+export function useTokenBalanceTrackerV2(tokenAddress?: string, walletAddresses?: string[]) {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [trackings, setTrackings] = useState<BalanceTracking[]>([]);
+  const [balances, setBalances] = useState<BalanceData[]>([]);
+  const [isTracking, setIsTracking] = useState(false);
 
-  const track = async (
-    tokenAddress: string,
-    addresses: string[]
-  ): Promise<BalanceTracking> => {
+  const startTracking = async () => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x')) {
+    if (tokenAddress && !tokenAddress.startsWith('0x')) {
       throw new Error('Invalid token address format');
     }
-    if (addresses.length === 0) {
-      throw new Error('At least one address is required');
-    }
     
-    const message = `Track balances: ${tokenAddress} for ${addresses.length} addresses`;
+    const message = `Start tracking balances: ${tokenAddress || 'all'}`;
     await signMessageAsync({ message });
     
-    const balances = addresses.map(addr => ({
-      address: addr,
-      balance: '0',
-    }));
-    
-    const totalBalance = '0';
-    
-    const tracking: BalanceTracking = {
-      trackingId: `balance-${Date.now()}`,
-      tokenAddress,
-      addresses,
-      balances,
-      totalBalance,
-      timestamp: Date.now(),
-    };
-    
-    setTrackings([...trackings, tracking]);
-    return tracking;
+    setIsTracking(true);
   };
 
-  return { track, trackings, address };
-}
+  const stopTracking = () => {
+    setIsTracking(false);
+  };
 
+  useEffect(() => {
+    if (!isTracking) return;
+    
+    const interval = setInterval(() => {
+      const addresses = walletAddresses || [address || '0x0'];
+      addresses.forEach(walletAddr => {
+        const balance: BalanceData = {
+          dataId: `balance-${Date.now()}-${walletAddr}`,
+          tokenAddress: tokenAddress || '0x0',
+          walletAddress: walletAddr,
+          balance: '1000',
+          timestamp: Date.now(),
+        };
+        
+        setBalances((prev) => [balance, ...prev.slice(0, 19)]);
+      });
+    }, 30000);
+    
+    return () => clearInterval(interval);
+  }, [isTracking, tokenAddress, walletAddresses, address]);
+
+  return { startTracking, stopTracking, balances, isTracking, address };
+}
