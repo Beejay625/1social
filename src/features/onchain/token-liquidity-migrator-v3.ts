@@ -5,53 +5,43 @@
  * Migrate liquidity between pools with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface LiquidityMigration {
   migrationId: string;
   sourcePool: string;
-  destinationPool: string;
-  tokenA: string;
-  tokenB: string;
+  targetPool: string;
   lpTokenAmount: string;
   migratedBy: string;
-  txHash: string;
   timestamp: number;
 }
 
 export function useTokenLiquidityMigratorV3() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [migrations, setMigrations] = useState<LiquidityMigration[]>([]);
 
   const migrateLiquidity = async (
     sourcePool: string,
-    destinationPool: string,
-    tokenA: string,
-    tokenB: string,
+    targetPool: string,
     lpTokenAmount: string
   ): Promise<LiquidityMigration> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!sourcePool.startsWith('0x') || !destinationPool.startsWith('0x') || !tokenA.startsWith('0x') || !tokenB.startsWith('0x')) {
-      throw new Error('Invalid address format');
-    }
-    if (sourcePool === destinationPool) {
-      throw new Error('Source and destination pools must be different');
+    if (!sourcePool.startsWith('0x') || !targetPool.startsWith('0x')) {
+      throw new Error('Invalid pool address format');
     }
     
-    const message = `Migrate liquidity: ${sourcePool} to ${destinationPool} ${lpTokenAmount} LP tokens`;
+    const message = `Migrate liquidity V3: ${sourcePool} to ${targetPool} amount ${lpTokenAmount}`;
     await signMessageAsync({ message });
     
     const migration: LiquidityMigration = {
-      migrationId: `migrate-${Date.now()}`,
+      migrationId: `migrate-v3-${Date.now()}`,
       sourcePool,
-      destinationPool,
-      tokenA,
-      tokenB,
+      targetPool,
       lpTokenAmount,
       migratedBy: address,
-      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
@@ -61,4 +51,3 @@ export function useTokenLiquidityMigratorV3() {
 
   return { migrateLiquidity, migrations, address };
 }
-
