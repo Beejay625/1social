@@ -11,10 +11,9 @@ import { useState } from 'react';
 export interface SupplyManagement {
   managementId: string;
   collectionAddress: string;
-  action: 'set' | 'increase' | 'decrease';
-  newSupply: number;
   currentSupply: number;
-  txHash: string;
+  maxSupply: number;
+  action: 'set' | 'increase' | 'decrease';
   managedBy: string;
   timestamp: number;
 }
@@ -24,30 +23,32 @@ export function useNFTCollectionSupplyManagerV3() {
   const { signMessageAsync } = useSignMessage();
   const [managements, setManagements] = useState<SupplyManagement[]>([]);
 
-  const manage = async (
+  const manageSupply = async (
     collectionAddress: string,
-    action: 'set' | 'increase' | 'decrease',
-    newSupply: number,
-    currentSupply: number
+    currentSupply: number,
+    maxSupply: number,
+    action: 'set' | 'increase' | 'decrease'
   ): Promise<SupplyManagement> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (newSupply <= 0) {
-      throw new Error('Supply must be greater than zero');
+    if (maxSupply <= 0) {
+      throw new Error('Max supply must be greater than zero');
+    }
+    if (maxSupply < currentSupply) {
+      throw new Error('Max supply cannot be less than current supply');
     }
     
-    const message = `${action} supply: ${collectionAddress} to ${newSupply}`;
+    const message = `Manage supply: ${collectionAddress} ${action} to ${maxSupply}`;
     await signMessageAsync({ message });
     
     const management: SupplyManagement = {
       managementId: `supply-${Date.now()}`,
       collectionAddress,
-      action,
-      newSupply,
       currentSupply,
-      txHash: `0x${Date.now().toString(16)}`,
+      maxSupply,
+      action,
       managedBy: address,
       timestamp: Date.now(),
     };
@@ -56,6 +57,5 @@ export function useNFTCollectionSupplyManagerV3() {
     return management;
   };
 
-  return { manage, managements, address };
+  return { manageSupply, managements, address };
 }
-
