@@ -10,12 +10,11 @@ import { useState } from 'react';
 
 export interface FractionalShare {
   shareId: string;
-  collectionAddress: string;
   tokenId: string;
+  collectionAddress: string;
   totalShares: number;
   sharePrice: string;
-  owner: string;
-  createdBy: string;
+  managedBy: string;
   timestamp: number;
 }
 
@@ -26,8 +25,8 @@ export function useNFTFractionalShareManagerV2() {
   const [shares, setShares] = useState<FractionalShare[]>([]);
 
   const createFractionalShares = async (
-    collectionAddress: string,
     tokenId: string,
+    collectionAddress: string,
     totalShares: number,
     sharePrice: string
   ): Promise<FractionalShare> => {
@@ -36,20 +35,19 @@ export function useNFTFractionalShareManagerV2() {
       throw new Error('Invalid collection address format');
     }
     if (totalShares <= 0) {
-      throw new Error('Total shares must be greater than zero');
+      throw new Error('Total shares must be greater than 0');
     }
     
-    const message = `Create fractional shares V2: ${collectionAddress} #${tokenId} ${totalShares} shares`;
+    const message = `Create fractional shares V2: ${tokenId} in ${collectionAddress} ${totalShares} shares at ${sharePrice}`;
     await signMessageAsync({ message });
     
     const share: FractionalShare = {
       shareId: `share-v2-${Date.now()}`,
-      collectionAddress,
       tokenId,
+      collectionAddress,
       totalShares,
       sharePrice,
-      owner: address,
-      createdBy: address,
+      managedBy: address,
       timestamp: Date.now(),
     };
     
