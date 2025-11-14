@@ -1,73 +1,96 @@
 'use client';
 
-/**
- * NFT Collection Freeze Manager V3
- * Advanced freeze management with Reown wallet
- */
-
-import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface FreezeStatus {
-  freezeId: string;
+export interface FreezeConfig {
   collectionAddress: string;
-  frozen: boolean;
-  reason?: string;
-  managedBy: string;
-  timestamp: number;
+  freezeType: 'metadata' | 'transfers' | 'all';
+  duration?: number;
 }
 
 export function useNFTCollectionFreezeManagerV3() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
+  const { writeContract } = useWriteContract();
   const { signMessageAsync } = useSignMessage();
-  const { writeContractAsync } = useWriteContract();
-  const [freezes, setFreezes] = useState<FreezeStatus[]>([]);
+  const [freezing, setFreezing] = useState(false);
 
-  const freezeCollection = async (
-    collectionAddress: string,
-    reason?: string
-  ): Promise<FreezeStatus> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x')) {
-      throw new Error('Invalid collection address format');
+  const { data: isOwner } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'owner',
+  });
+
+  const { data: isFrozen } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'isFrozen',
+  });
+
+  const freeze = async (config: FreezeConfig) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    if (address?.toLowerCase() !== (isOwner as string)?.toLowerCase()) {
+      throw new Error('Only owner can freeze');
     }
-    
-    const message = `Freeze collection: ${collectionAddress}${reason ? ` reason: ${reason}` : ''}`;
-    await signMessageAsync({ message });
-    
-    const freeze: FreezeStatus = {
-      freezeId: `freeze-${Date.now()}`,
-      collectionAddress,
-      frozen: true,
-      reason,
-      managedBy: address,
-      timestamp: Date.now(),
-    };
-    
-    setFreezes([...freezes, freeze]);
-    return freeze;
+    setFreezing(true);
+
+    try {
+      const message = `Freeze collection: ${config.freezeType}`;
+      await signMessageAsync({ message });
+
+      if (config.freezeType === 'metadata') {
+        await writeContract({
+          address: config.collectionAddress as `0x${string}`,
+          abi: [],
+          functionName: 'freezeMetadata',
+          args: [],
+        });
+      } else if (config.freezeType === 'transfers') {
+        await writeContract({
+          address: config.collectionAddress as `0x${string}`,
+          abi: [],
+          functionName: 'freezeTransfers',
+          args: [config.duration || 0],
+        });
+      } else {
+        await writeContract({
+          address: config.collectionAddress as `0x${string}`,
+          abi: [],
+          functionName: 'freezeAll',
+          args: [config.duration || 0],
+        });
+      }
+    } finally {
+      setFreezing(false);
+    }
   };
 
-  const unfreezeCollection = async (
-    collectionAddress: string
-  ): Promise<FreezeStatus> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Unfreeze collection: ${collectionAddress}`;
-    await signMessageAsync({ message });
-    
-    const freeze: FreezeStatus = {
-      freezeId: `unfreeze-${Date.now()}`,
-      collectionAddress,
-      frozen: false,
-      managedBy: address,
-      timestamp: Date.now(),
-    };
-    
-    setFreezes([...freezes, freeze]);
-    return freeze;
+  const unfreeze = async (collectionAddress: string) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    setFreezing(true);
+
+    try {
+      const message = 'Unfreeze collection';
+      await signMessageAsync({ message });
+
+      await writeContract({
+        address: collectionAddress as `0x${string}`,
+        abi: [],
+        functionName: 'unfreeze',
+        args: [],
+      });
+    } finally {
+      setFreezing(false);
+    }
   };
 
-  return { freezeCollection, unfreezeCollection, freezes, address };
+  return {
+    freeze,
+    unfreeze,
+    freezing,
+    address,
+    isConnected,
+    isOwner: address?.toLowerCase() === (isOwner as string)?.toLowerCase(),
+    isFrozen,
+  };
 }
-
