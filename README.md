@@ -103,6 +103,7 @@ Publish to **Farcaster**, **Lens Protocol**, **Mirror**, and traditional platfor
 ### 📝 **Content Publishing & Management**
 - **Multi-Protocol Publishing** - One-click publishing across decentralized protocols
 - **Blockchain-Timestamped Scheduling** - Schedule posts with onchain verification
+- **Onchain Content Scheduler V2** - Advanced content scheduling with multi-protocol support and NFT minting options, all executed onchain via smart contracts with Reown wallet authentication
 - **NFT Content Minting** - Mint social posts as NFTs with wallet-signed metadata
 - **IPFS/Arweave Storage** - Permanent decentralized storage with cryptographic verification
 - **Content Verification** - Cryptographically verify content authenticity
