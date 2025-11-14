@@ -8,13 +8,10 @@
 import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface OptimizedClaim {
-  claimId: string;
-  stakingPoolAddress: string;
-  claimerAddress: string;
-  rewardAmount: string;
-  gasOptimized: string;
-  savings: string;
+export interface ClaimOptimization {
+  optimizationId: string;
+  poolId: string;
+  gasSaved: string;
   optimizedBy: string;
   timestamp: number;
 }
@@ -23,38 +20,29 @@ export function useTokenStakingRewardClaimOptimizerV3() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
   const { writeContractAsync } = useWriteContract();
-  const [claims, setClaims] = useState<OptimizedClaim[]>([]);
+  const [optimizations, setOptimizations] = useState<ClaimOptimization[]>([]);
 
   const optimizeClaim = async (
-    stakingPoolAddress: string,
-    claimerAddress: string,
-    rewardAmount: string
-  ): Promise<OptimizedClaim> => {
+    poolId: string
+  ): Promise<ClaimOptimization> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!stakingPoolAddress.startsWith('0x') || !claimerAddress.startsWith('0x')) {
-      throw new Error('Invalid address format');
-    }
     
-    const message = `Optimize claim: ${stakingPoolAddress} claimer ${claimerAddress}`;
+    const message = `Optimize claim V3: ${poolId}`;
     await signMessageAsync({ message });
     
-    const gasOptimized = '45000';
-    const savings = '20000';
+    const gasSaved = (Math.random() * 50000 + 10000).toFixed(0);
     
-    const claim: OptimizedClaim = {
-      claimId: `claim-${Date.now()}`,
-      stakingPoolAddress,
-      claimerAddress,
-      rewardAmount,
-      gasOptimized,
-      savings,
+    const optimization: ClaimOptimization = {
+      optimizationId: `optimize-v3-${Date.now()}`,
+      poolId,
+      gasSaved,
       optimizedBy: address,
       timestamp: Date.now(),
     };
     
-    setClaims([...claims, claim]);
-    return claim;
+    setOptimizations([...optimizations, optimization]);
+    return optimization;
   };
 
-  return { optimizeClaim, claims, address };
+  return { optimizeClaim, optimizations, address };
 }
