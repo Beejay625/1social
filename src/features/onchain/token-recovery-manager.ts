@@ -5,47 +5,43 @@
  * Recover tokens from contracts with Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface TokenRecovery {
+export interface Recovery {
   recoveryId: string;
-  tokenAddress: string;
   contractAddress: string;
+  tokenAddress: string;
   amount: string;
   recoveredBy: string;
-  txHash: string;
   timestamp: number;
 }
 
 export function useTokenRecoveryManager() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [recoveries, setRecoveries] = useState<TokenRecovery[]>([]);
+  const { writeContractAsync } = useWriteContract();
+  const [recoveries, setRecoveries] = useState<Recovery[]>([]);
 
   const recoverTokens = async (
-    tokenAddress: string,
     contractAddress: string,
+    tokenAddress: string,
     amount: string
-  ): Promise<TokenRecovery> => {
+  ): Promise<Recovery> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x') || !contractAddress.startsWith('0x')) {
+    if (!contractAddress.startsWith('0x') || !tokenAddress.startsWith('0x')) {
       throw new Error('Invalid address format');
-    }
-    if (parseFloat(amount) <= 0) {
-      throw new Error('Amount must be greater than zero');
     }
     
     const message = `Recover tokens: ${tokenAddress} from ${contractAddress} amount ${amount}`;
     await signMessageAsync({ message });
     
-    const recovery: TokenRecovery = {
+    const recovery: Recovery = {
       recoveryId: `recover-${Date.now()}`,
-      tokenAddress,
       contractAddress,
+      tokenAddress,
       amount,
       recoveredBy: address,
-      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
