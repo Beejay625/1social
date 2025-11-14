@@ -11,11 +11,8 @@ import { useState } from 'react';
 export interface SniperConfig {
   configId: string;
   auctionId: string;
-  tokenId: string;
-  collectionAddress: string;
   maxBid: string;
-  snipeTime: number;
-  active: boolean;
+  autoBid: boolean;
   configuredBy: string;
   timestamp: number;
 }
@@ -26,32 +23,21 @@ export function useNFTAuctionSniperBotV2() {
   const { writeContractAsync } = useWriteContract();
   const [configs, setConfigs] = useState<SniperConfig[]>([]);
 
-  const configureSnipe = async (
+  const configureSniper = async (
     auctionId: string,
-    tokenId: string,
-    collectionAddress: string,
     maxBid: string,
-    snipeTime: number
+    autoBid: boolean
   ): Promise<SniperConfig> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x')) {
-      throw new Error('Invalid collection address format');
-    }
-    if (parseFloat(maxBid) <= 0) {
-      throw new Error('Max bid must be greater than zero');
-    }
     
-    const message = `Configure sniper bot V2: ${auctionId} max bid ${maxBid}`;
+    const message = `Configure sniper bot V2: ${auctionId} max bid ${maxBid} auto ${autoBid}`;
     await signMessageAsync({ message });
     
     const config: SniperConfig = {
       configId: `sniper-v2-${Date.now()}`,
       auctionId,
-      tokenId,
-      collectionAddress,
       maxBid,
-      snipeTime,
-      active: true,
+      autoBid,
       configuredBy: address,
       timestamp: Date.now(),
     };
@@ -60,5 +46,5 @@ export function useNFTAuctionSniperBotV2() {
     return config;
   };
 
-  return { configureSnipe, configs, address };
+  return { configureSniper, configs, address };
 }
