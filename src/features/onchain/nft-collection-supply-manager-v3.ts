@@ -5,57 +5,52 @@
  * Manage collection max supply with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface SupplyManagement {
-  managementId: string;
+export interface SupplyUpdate {
+  updateId: string;
   collectionAddress: string;
+  newMaxSupply: number;
   currentSupply: number;
-  maxSupply: number;
-  action: 'set' | 'increase' | 'decrease';
-  managedBy: string;
+  updatedBy: string;
   timestamp: number;
 }
 
 export function useNFTCollectionSupplyManagerV3() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [managements, setManagements] = useState<SupplyManagement[]>([]);
+  const { writeContractAsync } = useWriteContract();
+  const [updates, setUpdates] = useState<SupplyUpdate[]>([]);
 
-  const manageSupply = async (
+  const updateMaxSupply = async (
     collectionAddress: string,
-    currentSupply: number,
-    maxSupply: number,
-    action: 'set' | 'increase' | 'decrease'
-  ): Promise<SupplyManagement> => {
+    newMaxSupply: number,
+    currentSupply: number
+  ): Promise<SupplyUpdate> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (maxSupply <= 0) {
-      throw new Error('Max supply must be greater than zero');
-    }
-    if (maxSupply < currentSupply) {
-      throw new Error('Max supply cannot be less than current supply');
+    if (newMaxSupply < currentSupply) {
+      throw new Error('New max supply cannot be less than current supply');
     }
     
-    const message = `Manage supply: ${collectionAddress} ${action} to ${maxSupply}`;
+    const message = `Update max supply V3: ${collectionAddress} to ${newMaxSupply}`;
     await signMessageAsync({ message });
     
-    const management: SupplyManagement = {
-      managementId: `supply-${Date.now()}`,
+    const update: SupplyUpdate = {
+      updateId: `supply-v3-${Date.now()}`,
       collectionAddress,
+      newMaxSupply,
       currentSupply,
-      maxSupply,
-      action,
-      managedBy: address,
+      updatedBy: address,
       timestamp: Date.now(),
     };
     
-    setManagements([...managements, management]);
-    return management;
+    setUpdates([...updates, update]);
+    return update;
   };
 
-  return { manageSupply, managements, address };
+  return { updateMaxSupply, updates, address };
 }
