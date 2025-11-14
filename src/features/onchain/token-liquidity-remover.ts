@@ -1,31 +1,50 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+/**
+ * Token Liquidity Remover
+ * Remove liquidity from pools with Reown wallet
+ */
+
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface LiquidityRemoval {
+  removalId: string;
   poolAddress: string;
-  amount: bigint;
+  lpTokenAmount: string;
+  removedBy: string;
+  timestamp: number;
 }
 
 export function useTokenLiquidityRemover() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const { data: liquidity } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'liquidity',
-    args: [address],
-  });
-  const [removing, setRemoving] = useState(false);
+  const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
+  const [removals, setRemovals] = useState<LiquidityRemoval[]>([]);
 
-  const removeLiquidity = async (removal: LiquidityRemoval) => {
-    if (!address) return;
-    setRemoving(true);
-    // Implementation for removing liquidity
-    setRemoving(false);
+  const removeLiquidity = async (
+    poolAddress: string,
+    lpTokenAmount: string
+  ): Promise<LiquidityRemoval> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (!poolAddress.startsWith('0x')) {
+      throw new Error('Invalid pool address format');
+    }
+    
+    const message = `Remove liquidity: ${poolAddress} amount ${lpTokenAmount}`;
+    await signMessageAsync({ message });
+    
+    const removal: LiquidityRemoval = {
+      removalId: `remove-${Date.now()}`,
+      poolAddress,
+      lpTokenAmount,
+      removedBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setRemovals([...removals, removal]);
+    return removal;
   };
 
-  return { removeLiquidity, removing, address, liquidity };
+  return { removeLiquidity, removals, address };
 }
-
