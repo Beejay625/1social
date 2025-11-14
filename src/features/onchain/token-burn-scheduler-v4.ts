@@ -12,12 +12,8 @@ export interface BurnSchedule {
   scheduleId: string;
   tokenAddress: string;
   amount: string;
-  scheduleType: 'one-time' | 'recurring' | 'conditional';
-  burnTime: number;
-  interval?: number;
-  condition?: string;
-  active: boolean;
-  createdBy: string;
+  strategy: 'one-time' | 'recurring' | 'threshold';
+  scheduledBy: string;
   timestamp: number;
 }
 
@@ -27,35 +23,25 @@ export function useTokenBurnSchedulerV4() {
   const { writeContractAsync } = useWriteContract();
   const [schedules, setSchedules] = useState<BurnSchedule[]>([]);
 
-  const createSchedule = async (
+  const scheduleBurn = async (
     tokenAddress: string,
     amount: string,
-    scheduleType: 'one-time' | 'recurring' | 'conditional',
-    burnTime: number,
-    interval?: number,
-    condition?: string
+    strategy: 'one-time' | 'recurring' | 'threshold'
   ): Promise<BurnSchedule> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!tokenAddress.startsWith('0x')) {
       throw new Error('Invalid token address format');
     }
-    if (scheduleType === 'recurring' && (!interval || interval <= 0)) {
-      throw new Error('Interval is required for recurring schedules');
-    }
     
-    const message = `Create burn schedule V4: ${tokenAddress} ${scheduleType} ${amount}`;
+    const message = `Schedule burn V4: ${tokenAddress} amount ${amount} strategy ${strategy}`;
     await signMessageAsync({ message });
     
     const schedule: BurnSchedule = {
       scheduleId: `burn-v4-${Date.now()}`,
       tokenAddress,
       amount,
-      scheduleType,
-      burnTime,
-      interval,
-      condition,
-      active: true,
-      createdBy: address,
+      strategy,
+      scheduledBy: address,
       timestamp: Date.now(),
     };
     
@@ -63,5 +49,5 @@ export function useTokenBurnSchedulerV4() {
     return schedule;
   };
 
-  return { createSchedule, schedules, address };
+  return { scheduleBurn, schedules, address };
 }
