@@ -5,16 +5,17 @@
  * Extend auction time with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface AuctionExtension {
   extensionId: string;
   auctionId: string;
-  currentEndTime: number;
+  tokenId: string;
+  collectionAddress: string;
+  originalEndTime: number;
   newEndTime: number;
   extensionPeriod: number;
-  txHash: string;
   extendedBy: string;
   timestamp: number;
 }
@@ -22,30 +23,37 @@ export interface AuctionExtension {
 export function useNFTAuctionTimeExtenderV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [extensions, setExtensions] = useState<AuctionExtension[]>([]);
 
-  const extend = async (
+  const extendAuction = async (
     auctionId: string,
-    currentEndTime: number,
+    tokenId: string,
+    collectionAddress: string,
     extensionPeriod: number
   ): Promise<AuctionExtension> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
+    }
     if (extensionPeriod <= 0) {
       throw new Error('Extension period must be greater than zero');
     }
     
-    const message = `Extend auction: ${auctionId} by ${extensionPeriod} seconds`;
+    const message = `Extend auction V2: ${auctionId} extend ${extensionPeriod} seconds`;
     await signMessageAsync({ message });
     
-    const newEndTime = currentEndTime + extensionPeriod;
+    const originalEndTime = Date.now();
+    const newEndTime = originalEndTime + (extensionPeriod * 1000);
     
     const extension: AuctionExtension = {
-      extensionId: `extend-${Date.now()}`,
+      extensionId: `extend-v2-${Date.now()}`,
       auctionId,
-      currentEndTime,
+      tokenId,
+      collectionAddress,
+      originalEndTime,
       newEndTime,
       extensionPeriod,
-      txHash: `0x${Date.now().toString(16)}`,
       extendedBy: address,
       timestamp: Date.now(),
     };
@@ -54,6 +62,5 @@ export function useNFTAuctionTimeExtenderV2() {
     return extension;
   };
 
-  return { extend, extensions, address };
+  return { extendAuction, extensions, address };
 }
-
