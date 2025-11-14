@@ -14,7 +14,7 @@ export interface PriceOptimization {
   collectionAddress: string;
   currentPrice: string;
   optimizedPrice: string;
-  marketAverage: string;
+  optimizedBy: string;
   timestamp: number;
 }
 
@@ -23,7 +23,7 @@ export function useNFTListingPriceOptimizer() {
   const { signMessageAsync } = useSignMessage();
   const [optimizations, setOptimizations] = useState<PriceOptimization[]>([]);
 
-  const optimize = async (
+  const optimizePrice = async (
     tokenId: string,
     collectionAddress: string,
     currentPrice: string
@@ -33,20 +33,18 @@ export function useNFTListingPriceOptimizer() {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Optimize listing price: ${collectionAddress} #${tokenId}`;
+    const message = `Optimize listing price: ${tokenId} in ${collectionAddress}`;
     await signMessageAsync({ message });
     
-    const currentPriceNum = parseFloat(currentPrice);
-    const marketAverage = (currentPriceNum * 0.95).toString();
-    const optimizedPrice = (currentPriceNum * 0.98).toString();
+    const optimizedPrice = (parseFloat(currentPrice) * 0.95).toFixed(4);
     
     const optimization: PriceOptimization = {
-      optimizationId: `opt-${Date.now()}`,
+      optimizationId: `optimize-${Date.now()}`,
       tokenId,
       collectionAddress,
       currentPrice,
       optimizedPrice,
-      marketAverage,
+      optimizedBy: address,
       timestamp: Date.now(),
     };
     
@@ -54,6 +52,5 @@ export function useNFTListingPriceOptimizer() {
     return optimization;
   };
 
-  return { optimize, optimizations, address };
+  return { optimizePrice, optimizations, address };
 }
-
