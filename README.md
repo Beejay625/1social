@@ -988,19 +988,19 @@ src/
 ## Why Choose 1Social?
 
 ### 🔗 True Web3 Integration
-Built natively for decentralized protocols with onchain verification, not just API wrappers.
+Built natively for decentralized protocols with onchain verification, not just API wrappers. Every interaction is authenticated via Reown wallet.
 
 ### ⚡ Gas Efficient
-Smart scheduling and batching to minimize transaction costs across all operations.
+Smart scheduling and batching to minimize transaction costs across all operations. Dynamic gas optimization based on network conditions.
 
 ### 🎯 Token-Native
-Everything from access control to analytics leverages tokens and NFTs for enhanced functionality.
+Everything from access control to analytics leverages tokens and NFTs for enhanced functionality. Full token ecosystem support.
 
 ### 🌍 Decentralized First
-Permanent storage on IPFS/Arweave with blockchain-verified analytics and attribution.
+Permanent storage on IPFS/Arweave with blockchain-verified analytics and attribution. No centralized dependencies.
 
 ### 🛡️ DAO-Ready
-Built for communities with token-gated access, multi-sig support, and onchain governance.
+Built for communities with token-gated access, multi-sig support, and onchain governance. Full DAO tooling integration.
 
 ## Contributing
 
