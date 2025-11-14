@@ -5,7 +5,7 @@
  * Cancel multiple listings in bulk with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface BulkCancellation {
@@ -13,16 +13,16 @@ export interface BulkCancellation {
   listingIds: string[];
   collectionAddress: string;
   canceledBy: string;
-  txHash: string;
   timestamp: number;
 }
 
 export function useNFTMarketplaceBulkCancelerV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [cancellations, setCancellations] = useState<BulkCancellation[]>([]);
 
-  const cancelBulk = async (
+  const cancelBulkListings = async (
     listingIds: string[],
     collectionAddress: string
   ): Promise<BulkCancellation> => {
@@ -31,18 +31,17 @@ export function useNFTMarketplaceBulkCancelerV2() {
       throw new Error('Invalid collection address format');
     }
     if (listingIds.length === 0) {
-      throw new Error('At least one listing ID is required');
+      throw new Error('Listing IDs array cannot be empty');
     }
     
-    const message = `Cancel bulk listings: ${collectionAddress} ${listingIds.length} listings`;
+    const message = `Cancel bulk listings V2: ${collectionAddress} ${listingIds.length} listings`;
     await signMessageAsync({ message });
     
     const cancellation: BulkCancellation = {
-      cancellationId: `bulk-cancel-${Date.now()}`,
+      cancellationId: `bulk-cancel-v2-${Date.now()}`,
       listingIds,
       collectionAddress,
       canceledBy: address,
-      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
@@ -50,6 +49,5 @@ export function useNFTMarketplaceBulkCancelerV2() {
     return cancellation;
   };
 
-  return { cancelBulk, cancellations, address };
+  return { cancelBulkListings, cancellations, address };
 }
-
