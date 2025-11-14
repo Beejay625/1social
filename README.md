@@ -162,6 +162,10 @@ Publish to **Farcaster**, **Lens Protocol**, **Mirror**, and traditional platfor
 - **Gas Price Monitor** - Real-time gas price tracking for optimal timing
 - **Contract Interaction Logger** - Log and track all contract interactions
 
+### 🎁 **Airdrop Finder**
+
+A comprehensive onchain dashboard that helps users check whether their wallet might be eligible for ongoing or upcoming airdrops. Users connect their wallet via Reown AppKit and instantly see a summary of protocols they've interacted with, activity patterns, and how closely they match known airdrop eligibility criteria. The platform includes 40+ onchain transaction and query features, all powered by Reown AppKit for secure, decentralized access. Every eligibility check is performed onchain by analyzing smart contract interactions, token holdings, NFT ownership, and historical transaction patterns directly from the blockchain. Users can track their airdrop eligibility scores across multiple chains, receive onchain notifications when new airdrop opportunities match their wallet activity, and claim eligible airdrops directly through the platform with wallet-signed transactions. All airdrop data, eligibility calculations, and claim records are stored onchain, ensuring transparency and verifiability of every airdrop opportunity and claim.
+
 ---
 
 ## 🔧 Advanced Onchain Features
