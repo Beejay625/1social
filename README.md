@@ -160,6 +160,7 @@ Publish to **Farcaster**, **Lens Protocol**, **Mirror**, and traditional platfor
 - **Gas Price Monitor** - Real-time gas price tracking for optimal timing
 - **Contract Interaction Logger** - Log and track all contract interactions
 - **Onchain Content Reputation Tracker** - Track content reputation scores onchain with upvote/downvote functionality
+- **Onchain Content Syndication Manager** - Syndicate content across multiple protocols with onchain automation
 
 ---
 
