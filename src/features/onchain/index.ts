@@ -1,5 +1,6 @@
 export * from './wallet-signed-composer';
 export * from './scheduling-queue';
+export * from './onchain-content-scheduler-v2';
 export * from './gas-optimizer';
 export * from './cross-chain-router';
 export * from './token-gated-campaigns';
