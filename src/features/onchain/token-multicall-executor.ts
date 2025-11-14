@@ -12,10 +12,11 @@ export interface MulticallExecution {
   executionId: string;
   calls: Array<{
     target: string;
-    data: string;
+    calldata: string;
+    value?: string;
   }>;
-  txHash: string;
   executedBy: string;
+  txHash: string;
   timestamp: number;
 }
 
@@ -27,12 +28,16 @@ export function useTokenMulticallExecutor() {
   const execute = async (
     calls: Array<{
       target: string;
-      data: string;
+      calldata: string;
+      value?: string;
     }>
   ): Promise<MulticallExecution> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (calls.length === 0) {
       throw new Error('At least one call is required');
+    }
+    if (calls.some(call => !call.target.startsWith('0x'))) {
+      throw new Error('All target addresses must be valid Ethereum addresses');
     }
     
     const message = `Execute multicall: ${calls.length} calls`;
@@ -41,8 +46,8 @@ export function useTokenMulticallExecutor() {
     const execution: MulticallExecution = {
       executionId: `multicall-${Date.now()}`,
       calls,
-      txHash: `0x${Date.now().toString(16)}`,
       executedBy: address,
+      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
