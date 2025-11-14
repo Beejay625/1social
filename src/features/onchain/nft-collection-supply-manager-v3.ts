@@ -61,7 +61,7 @@ export function useNFTCollectionSupplyManagerV3() {
           functionName: 'setReserveSupply',
           args: [config.reserveSupply],
         });
-      }
+    }
     } finally {
       setManaging(false);
     }
@@ -76,8 +76,8 @@ export function useNFTCollectionSupplyManagerV3() {
 
     try {
       const message = `Mint reserve: ${amount} tokens to ${to}`;
-      await signMessageAsync({ message });
-
+    await signMessageAsync({ message });
+    
       await writeContract({
         address: collectionAddress as `0x${string}`,
         abi: [],

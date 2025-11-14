@@ -64,8 +64,8 @@ export function useNFTCollectionWhitelistManagerV3() {
 
     try {
       const message = `Remove ${addresses.length} addresses from whitelist`;
-      await signMessageAsync({ message });
-
+    await signMessageAsync({ message });
+    
       await writeContract({
         address: collectionAddress as `0x${string}`,
         abi: [],

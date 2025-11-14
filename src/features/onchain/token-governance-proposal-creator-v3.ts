@@ -38,8 +38,8 @@ export function useTokenGovernanceProposalCreatorV3() {
 
     try {
       const message = `Create proposal: ${data.title}`;
-      await signMessageAsync({ message });
-
+    await signMessageAsync({ message });
+    
       await writeContract({
         address: '0x' as `0x${string}`,
         abi: [],
