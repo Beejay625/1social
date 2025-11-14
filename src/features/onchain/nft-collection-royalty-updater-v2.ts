@@ -5,15 +5,14 @@
  * Update collection royalties with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface RoyaltyUpdate {
   updateId: string;
   collectionAddress: string;
-  oldPercentage: number;
-  newPercentage: number;
-  recipient: string;
+  newRoyaltyPercentage: number;
+  royaltyRecipient: string;
   updatedBy: string;
   timestamp: number;
 }
@@ -21,31 +20,30 @@ export interface RoyaltyUpdate {
 export function useNFTCollectionRoyaltyUpdaterV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [updates, setUpdates] = useState<RoyaltyUpdate[]>([]);
 
   const updateRoyalty = async (
     collectionAddress: string,
-    newPercentage: number,
-    recipient: string,
-    oldPercentage: number
+    newRoyaltyPercentage: number,
+    royaltyRecipient: string
   ): Promise<RoyaltyUpdate> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x') || !recipient.startsWith('0x')) {
+    if (!collectionAddress.startsWith('0x') || !royaltyRecipient.startsWith('0x')) {
       throw new Error('Invalid address format');
     }
-    if (newPercentage < 0 || newPercentage > 100) {
+    if (newRoyaltyPercentage < 0 || newRoyaltyPercentage > 100) {
       throw new Error('Royalty percentage must be between 0 and 100');
     }
     
-    const message = `Update royalty: ${collectionAddress} to ${newPercentage}%`;
+    const message = `Update royalty V2: ${collectionAddress} to ${newRoyaltyPercentage}%`;
     await signMessageAsync({ message });
     
     const update: RoyaltyUpdate = {
-      updateId: `royalty-${Date.now()}`,
+      updateId: `royalty-update-v2-${Date.now()}`,
       collectionAddress,
-      oldPercentage,
-      newPercentage,
-      recipient,
+      newRoyaltyPercentage,
+      royaltyRecipient,
       updatedBy: address,
       timestamp: Date.now(),
     };
@@ -56,4 +54,3 @@ export function useNFTCollectionRoyaltyUpdaterV2() {
 
   return { updateRoyalty, updates, address };
 }
-
