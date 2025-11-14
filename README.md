@@ -856,12 +856,12 @@ All features are built with **Reown AppKit** and **Wagmi** for seamless wallet i
 
 ## Tech Stack
 
-- **Next.js** (App Router) - React framework
-- **Tailwind CSS** - Styling
+- **Next.js** (App Router) - React framework with server-side rendering
+- **Tailwind CSS** - Utility-first CSS framework for styling
 - **Reown AppKit** + **Wagmi** + **Viem** - Web3 wallet integration (Primary wallet solution)
-- **TypeScript** - Type safety
-- **IPFS/Arweave** - Decentralized storage
-- **The Graph** - Blockchain indexing
+- **TypeScript** - Type safety and enhanced developer experience
+- **IPFS/Arweave** - Decentralized storage solutions
+- **The Graph** - Blockchain indexing and querying
 
 ## Environment Setup
 
