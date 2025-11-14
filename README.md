@@ -623,6 +623,32 @@ All features are fully integrated with **Reown AppKit** and use `useAccount`, `u
 
 All features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
 
+### Latest Onchain Features (All Powered by Reown Wallet)
+
+#### Token Operations & Management
+- **Token Liquidity Pool Slippage Calculator** - Calculate slippage for liquidity pool swaps with Reown wallet
+- **Token Governance Proposal Timelock Manager** - Manage timelocks for governance proposals with Reown wallet
+- **Token Staking Pool Emergency Withdraw Manager** - Manage emergency withdrawals from staking pools with Reown wallet
+- **Token Liquidity Pool Fee Collector** - Collect fees from liquidity pools with Reown wallet
+- **Token Governance Proposal Vote Tracker** - Track votes on governance proposals with Reown wallet
+- **Token Staking Pool Reward Claim Batch** - Batch claim rewards from multiple staking pools with Reown wallet
+- **Token Liquidity Pool Price Impact Calculator** - Calculate price impact for liquidity pool swaps with Reown wallet
+- **Token Governance Proposal Execution Scheduler** - Schedule automatic execution of approved proposals with Reown wallet
+- **Token Staking Pool Compound Scheduler** - Schedule automatic compounding of staking rewards with Reown wallet
+
+#### NFT Operations & Marketplace
+- **NFT Collection Royalty Distributor** - Distribute royalties to collection creators with Reown wallet
+- **NFT Marketplace Listing Batch Canceler** - Cancel multiple listings in batch with Reown wallet
+- **NFT Auction Reserve Price Manager** - Manage reserve prices for NFT auctions with Reown wallet
+- **NFT Collection Mint Price Manager** - Manage mint prices for NFT collections with Reown wallet
+- **NFT Marketplace Offer Batch Creator** - Create multiple offers in batch with Reown wallet
+- **NFT Collection Transfer Lock Manager** - Manage transfer locks for NFT collections with Reown wallet
+- **NFT Auction Bid Increment Manager** - Manage bid increments for NFT auctions with Reown wallet
+- **NFT Marketplace Listing Auto-Renewal Manager** - Manage automatic renewal of marketplace listings with Reown wallet
+- **NFT Collection Royalty Payment Tracker** - Track royalty payments for NFT collections with Reown wallet
+
+All features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
+
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
 - **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
