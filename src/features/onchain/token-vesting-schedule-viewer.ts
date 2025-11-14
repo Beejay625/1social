@@ -2,22 +2,22 @@
 
 /**
  * Token Vesting Schedule Viewer
- * Views and tracks token vesting schedules using Reown wallet
+ * View and track token vesting schedules with Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface VestingSchedule {
-  vestingId: string;
+  scheduleId: string;
   tokenAddress: string;
   beneficiary: string;
   totalAmount: string;
   releasedAmount: string;
   startTime: number;
   endTime: number;
-  cliff: number;
-  vestingPeriod: number;
+  viewedBy: string;
+  timestamp: number;
 }
 
 export function useTokenVestingScheduleViewer() {
@@ -25,25 +25,31 @@ export function useTokenVestingScheduleViewer() {
   const { signMessageAsync } = useSignMessage();
   const [schedules, setSchedules] = useState<VestingSchedule[]>([]);
 
-  const viewSchedule = async (vestingId: string): Promise<VestingSchedule> => {
+  const viewSchedule = async (
+    tokenAddress: string,
+    beneficiary: string
+  ): Promise<VestingSchedule> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!vestingId || vestingId.trim() === '') {
-      throw new Error('Vesting ID is required');
+    if (!tokenAddress.startsWith('0x') || !beneficiary.startsWith('0x')) {
+      throw new Error('Invalid address format');
     }
     
-    const message = `View vesting schedule: ${vestingId}`;
+    const message = `View vesting schedule: ${tokenAddress} beneficiary ${beneficiary}`;
     await signMessageAsync({ message });
     
+    const totalAmount = (Math.random() * 1000000 + 10000).toFixed(2);
+    const releasedAmount = (parseFloat(totalAmount) * Math.random() * 0.5).toFixed(2);
+    
     const schedule: VestingSchedule = {
-      vestingId,
-      tokenAddress: '0x0',
-      beneficiary: address,
-      totalAmount: '1000000',
-      releasedAmount: '100000',
-      startTime: Date.now() - 86400000 * 30,
-      endTime: Date.now() + 86400000 * 365,
-      cliff: 86400000 * 90,
-      vestingPeriod: 86400000 * 365,
+      scheduleId: `vesting-${Date.now()}`,
+      tokenAddress,
+      beneficiary,
+      totalAmount,
+      releasedAmount,
+      startTime: Date.now() - 30 * 24 * 60 * 60 * 1000,
+      endTime: Date.now() + 365 * 24 * 60 * 60 * 1000,
+      viewedBy: address,
+      timestamp: Date.now(),
     };
     
     setSchedules([...schedules, schedule]);
