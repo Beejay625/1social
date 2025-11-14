@@ -43,3 +43,32 @@ export function useOnchainContentSyndicationManager() {
     }
   };
 
+  const enableAutoSyndication = async (contentHash: string) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    setSyndicating(true);
+
+    try {
+      const message = `Enable auto-syndication onchain for content: ${contentHash}`;
+      await signMessageAsync({ message });
+
+      await writeContract({
+        address: '0x' as `0x${string}`,
+        abi: [],
+        functionName: 'enableAutoSyndication',
+        args: [contentHash, address],
+      });
+    } finally {
+      setSyndicating(false);
+    }
+  };
+
+  return {
+    syndicateContent,
+    enableAutoSyndication,
+    syndicating,
+    address,
+    isConnected,
+    syndicationStatus,
+  };
+}
+
