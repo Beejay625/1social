@@ -12,6 +12,7 @@ export interface FeeCollection {
   collectionId: string;
   poolAddress: string;
   feeAmount: string;
+  tokenAddress: string;
   collectedBy: string;
   timestamp: number;
 }
@@ -23,22 +24,22 @@ export function useTokenLiquidityPoolFeeCollector() {
   const [collections, setCollections] = useState<FeeCollection[]>([]);
 
   const collectFees = async (
-    poolAddress: string
+    poolAddress: string,
+    tokenAddress: string
   ): Promise<FeeCollection> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!poolAddress.startsWith('0x')) {
-      throw new Error('Invalid pool address format');
+    if (!poolAddress.startsWith('0x') || !tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid address format');
     }
     
-    const message = `Collect LP fees: ${poolAddress}`;
+    const message = `Collect fees: ${poolAddress} token ${tokenAddress}`;
     await signMessageAsync({ message });
     
-    const feeAmount = (Math.random() * 1000 + 10).toFixed(4);
-    
     const collection: FeeCollection = {
-      collectionId: `fee-collect-${Date.now()}`,
+      collectionId: `fee-${Date.now()}`,
       poolAddress,
-      feeAmount,
+      feeAmount: '0',
+      tokenAddress,
       collectedBy: address,
       timestamp: Date.now(),
     };
