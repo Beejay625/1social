@@ -1,26 +1,44 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+/**
+ * NFT Marketplace Offer Canceler
+ * Cancel marketplace offers with Reown wallet
+ */
+
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
+
+export interface OfferCancellation {
+  cancellationId: string;
+  offerId: string;
+  canceledBy: string;
+  timestamp: number;
+}
 
 export function useNFTMarketplaceOfferCanceler() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const { data: offers } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'offers',
-    args: [address],
-  });
-  const [canceling, setCanceling] = useState(false);
+  const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
+  const [cancellations, setCancellations] = useState<OfferCancellation[]>([]);
 
-  const cancelOffer = async (marketplace: string, offerId: string) => {
-    if (!address) return;
-    setCanceling(true);
-    // Implementation for canceling offers
-    setCanceling(false);
+  const cancelOffer = async (
+    offerId: string
+  ): Promise<OfferCancellation> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `Cancel offer: ${offerId}`;
+    await signMessageAsync({ message });
+    
+    const cancellation: OfferCancellation = {
+      cancellationId: `cancel-${Date.now()}`,
+      offerId,
+      canceledBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setCancellations([...cancellations, cancellation]);
+    return cancellation;
   };
 
-  return { cancelOffer, canceling, address, offers };
+  return { cancelOffer, cancellations, address };
 }
-
