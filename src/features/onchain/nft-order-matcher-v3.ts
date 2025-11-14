@@ -10,7 +10,6 @@ import { useState } from 'react';
 
 export interface OrderMatch {
   matchId: string;
-  collectionAddress: string;
   buyOrderId: string;
   sellOrderId: string;
   tokenId: string;
@@ -26,23 +25,18 @@ export function useNFTOrderMatcherV3() {
   const [matches, setMatches] = useState<OrderMatch[]>([]);
 
   const matchOrders = async (
-    collectionAddress: string,
     buyOrderId: string,
     sellOrderId: string,
     tokenId: string,
     price: string
   ): Promise<OrderMatch> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x')) {
-      throw new Error('Invalid collection address format');
-    }
     
-    const message = `Match orders V3: ${collectionAddress} buy ${buyOrderId} sell ${sellOrderId}`;
+    const message = `Match orders V3: ${buyOrderId} and ${sellOrderId} for token ${tokenId}`;
     await signMessageAsync({ message });
     
     const match: OrderMatch = {
       matchId: `match-v3-${Date.now()}`,
-      collectionAddress,
       buyOrderId,
       sellOrderId,
       tokenId,
