@@ -10,10 +10,10 @@ import { useState } from 'react';
 
 export interface DelegationTracking {
   trackingId: string;
-  tokenAddress: string;
   delegator: string;
   delegatee: string;
-  votingPower: string;
+  amount: string;
+  blockNumber: number;
   timestamp: number;
 }
 
@@ -22,26 +22,29 @@ export function useTokenGovernanceDelegationTracker() {
   const { signMessageAsync } = useSignMessage();
   const [trackings, setTrackings] = useState<DelegationTracking[]>([]);
 
-  const trackDelegation = async (
-    tokenAddress: string,
+  const track = async (
     delegator: string,
     delegatee: string,
-    votingPower: string
+    amount: string,
+    blockNumber: number
   ): Promise<DelegationTracking> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x') || !delegator.startsWith('0x') || !delegatee.startsWith('0x')) {
-      throw new Error('Invalid address format');
+    if (!delegator.startsWith('0x')) {
+      throw new Error('Invalid delegator address format');
+    }
+    if (!delegatee.startsWith('0x')) {
+      throw new Error('Invalid delegatee address format');
     }
     
-    const message = `Track delegation: ${tokenAddress} from ${delegator} to ${delegatee}`;
+    const message = `Track delegation: ${delegator} -> ${delegatee} ${amount}`;
     await signMessageAsync({ message });
     
     const tracking: DelegationTracking = {
-      trackingId: `track-${Date.now()}`,
-      tokenAddress,
+      trackingId: `delegate-${Date.now()}`,
       delegator,
       delegatee,
-      votingPower,
+      amount,
+      blockNumber,
       timestamp: Date.now(),
     };
     
@@ -49,5 +52,5 @@ export function useTokenGovernanceDelegationTracker() {
     return tracking;
   };
 
-  return { trackDelegation, trackings, address };
+  return { track, trackings, address };
 }
