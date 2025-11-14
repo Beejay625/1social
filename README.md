@@ -956,10 +956,10 @@ src/
 - NFT content minting and tracking with full metadata support
 
 ### 📊 Onchain Analytics
-- Blockchain-verified performance metrics
-- Cross-chain analytics dashboards
-- Token-weighted engagement tracking
-- Protocol-specific insights (casts, mirrors, collects)
+- Blockchain-verified performance metrics with real-time updates
+- Cross-chain analytics dashboards with comprehensive data visualization
+- Token-weighted engagement tracking with wallet-based prioritization
+- Protocol-specific insights (casts, mirrors, collects) with detailed breakdowns
 
 ### 🏛️ DAO Collaboration
 - Token-gated access control
