@@ -5,18 +5,13 @@
  * Execute governance proposals with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface ProposalExecution {
   executionId: string;
   proposalId: string;
-  actions: Array<{
-    target: string;
-    value: string;
-    data: string;
-  }>;
-  txHash: string;
+  targetAddress: string;
   executedBy: string;
   timestamp: number;
 }
@@ -24,29 +19,25 @@ export interface ProposalExecution {
 export function useTokenGovernanceProposalExecutorV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [executions, setExecutions] = useState<ProposalExecution[]>([]);
 
-  const execute = async (
+  const executeProposal = async (
     proposalId: string,
-    actions: Array<{
-      target: string;
-      value: string;
-      data: string;
-    }>
+    targetAddress: string
   ): Promise<ProposalExecution> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (actions.length === 0) {
-      throw new Error('At least one action is required');
+    if (!targetAddress.startsWith('0x')) {
+      throw new Error('Invalid target address format');
     }
     
-    const message = `Execute proposal: ${proposalId} with ${actions.length} actions`;
+    const message = `Execute proposal: ${proposalId} target ${targetAddress}`;
     await signMessageAsync({ message });
     
     const execution: ProposalExecution = {
       executionId: `execute-${Date.now()}`,
       proposalId,
-      actions,
-      txHash: `0x${Date.now().toString(16)}`,
+      targetAddress,
       executedBy: address,
       timestamp: Date.now(),
     };
@@ -55,6 +46,5 @@ export function useTokenGovernanceProposalExecutorV2() {
     return execution;
   };
 
-  return { execute, executions, address };
+  return { executeProposal, executions, address };
 }
-
