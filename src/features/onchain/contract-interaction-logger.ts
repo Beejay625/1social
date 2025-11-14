@@ -2,19 +2,19 @@
 
 /**
  * Contract Interaction Logger
- * Logs and tracks all contract interactions using Reown wallet
+ * Log and track all contract interactions with Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface InteractionLog {
+  logId: string;
   contractAddress: string;
   functionName: string;
-  args: any[];
-  txHash: string;
+  parameters: Record<string, string>;
+  loggedBy: string;
   timestamp: number;
-  status: 'pending' | 'success' | 'failed';
 }
 
 export function useContractInteractionLogger() {
@@ -25,24 +25,23 @@ export function useContractInteractionLogger() {
   const logInteraction = async (
     contractAddress: string,
     functionName: string,
-    args: any[],
-    txHash: string
+    parameters: Record<string, string>
   ): Promise<InteractionLog> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!contractAddress.startsWith('0x') || !txHash.startsWith('0x')) {
-      throw new Error('Invalid address or transaction hash format');
+    if (!contractAddress.startsWith('0x')) {
+      throw new Error('Invalid contract address format');
     }
     
-    const message = `Log contract interaction: ${contractAddress} ${functionName}`;
+    const message = `Log interaction: ${contractAddress} function ${functionName}`;
     await signMessageAsync({ message });
     
     const log: InteractionLog = {
+      logId: `log-${Date.now()}`,
       contractAddress,
       functionName,
-      args,
-      txHash,
+      parameters,
+      loggedBy: address,
       timestamp: Date.now(),
-      status: 'success',
     };
     
     setLogs([...logs, log]);
