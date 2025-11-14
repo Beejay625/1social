@@ -166,6 +166,7 @@ Publish to **Farcaster**, **Lens Protocol**, **Mirror**, and traditional platfor
 - **Onchain Content Licensing Manager** - Create and manage content licenses onchain with smart contracts
 - **Onchain Collaboration Revenue Splitter** - Split collaboration revenue onchain with automatic distribution
 - **Onchain Content Engagement Booster** - Boost content engagement onchain across multiple protocols
+- **Onchain Content Moderator** - Moderate content onchain with DAO-governed decisions
 
 ---
 
