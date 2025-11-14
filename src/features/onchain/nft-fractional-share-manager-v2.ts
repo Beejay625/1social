@@ -5,32 +5,31 @@
  * Manage fractional NFT shares with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface FractionalShare {
   shareId: string;
-  tokenId: string;
   collectionAddress: string;
+  tokenId: string;
   totalShares: number;
   sharePrice: string;
-  currency: string;
-  txHash: string;
-  managedBy: string;
+  owner: string;
+  createdBy: string;
   timestamp: number;
 }
 
 export function useNFTFractionalShareManagerV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [shares, setShares] = useState<FractionalShare[]>([]);
 
-  const manage = async (
-    tokenId: string,
+  const createFractionalShares = async (
     collectionAddress: string,
+    tokenId: string,
     totalShares: number,
-    sharePrice: string,
-    currency: string
+    sharePrice: string
   ): Promise<FractionalShare> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
@@ -40,18 +39,17 @@ export function useNFTFractionalShareManagerV2() {
       throw new Error('Total shares must be greater than zero');
     }
     
-    const message = `Manage fractional shares: ${collectionAddress} #${tokenId} ${totalShares} shares`;
+    const message = `Create fractional shares V2: ${collectionAddress} #${tokenId} ${totalShares} shares`;
     await signMessageAsync({ message });
     
     const share: FractionalShare = {
-      shareId: `share-${Date.now()}`,
-      tokenId,
+      shareId: `share-v2-${Date.now()}`,
       collectionAddress,
+      tokenId,
       totalShares,
       sharePrice,
-      currency,
-      txHash: `0x${Date.now().toString(16)}`,
-      managedBy: address,
+      owner: address,
+      createdBy: address,
       timestamp: Date.now(),
     };
     
@@ -59,6 +57,5 @@ export function useNFTFractionalShareManagerV2() {
     return share;
   };
 
-  return { manage, shares, address };
+  return { createFractionalShares, shares, address };
 }
-
