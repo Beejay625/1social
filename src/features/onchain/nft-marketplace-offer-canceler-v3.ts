@@ -5,7 +5,7 @@
  * Cancel marketplace offers with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface OfferCancellation {
@@ -14,13 +14,13 @@ export interface OfferCancellation {
   tokenId: string;
   collectionAddress: string;
   canceledBy: string;
-  txHash: string;
   timestamp: number;
 }
 
 export function useNFTMarketplaceOfferCancelerV3() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [cancellations, setCancellations] = useState<OfferCancellation[]>([]);
 
   const cancelOffer = async (
@@ -33,16 +33,15 @@ export function useNFTMarketplaceOfferCancelerV3() {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Cancel offer: ${offerId} for ${collectionAddress} #${tokenId}`;
+    const message = `Cancel offer V3: ${offerId} for token ${tokenId} in ${collectionAddress}`;
     await signMessageAsync({ message });
     
     const cancellation: OfferCancellation = {
-      cancellationId: `cancel-${Date.now()}`,
+      cancellationId: `cancel-v3-${Date.now()}`,
       offerId,
       tokenId,
       collectionAddress,
       canceledBy: address,
-      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
