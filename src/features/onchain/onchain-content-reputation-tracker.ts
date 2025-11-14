@@ -19,3 +19,11 @@ export function useOnchainContentReputationTracker() {
   const [tracking, setTracking] = useState(false);
   const [reputations, setReputations] = useState<ContentReputation[]>([]);
 
+  const { data: reputationData } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'getContentReputation',
+    args: address ? [address] : undefined,
+    query: { enabled: !!address && isConnected },
+  });
+
