@@ -596,6 +596,31 @@ All 20 features are fully integrated with **Reown AppKit** and use `useAccount`,
 
 All features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
 
+### More Onchain Features (All Powered by Reown Wallet)
+
+#### Token Operations & Management
+- **Token Liquidity Position Tracker** - Track liquidity positions with Reown wallet
+- **Token Governance Proposal Creator V3** - Create governance proposals with enhanced features via Reown wallet
+- **Token Staking Reward Claim Batch** - Batch claim staking rewards for gas efficiency with Reown wallet
+- **Token Governance Delegation Tracker** - Track governance delegations with Reown wallet
+- **Token Burn Tax Calculator** - Calculate burn taxes for token transactions with Reown wallet
+- **Token Staking APY Calculator** - Calculate staking APY with Reown wallet
+- **Token Governance Proposal Status Tracker** - Track proposal status changes with Reown wallet
+
+#### NFT Operations & Marketplace
+- **NFT Metadata Freezer V2** - Freeze NFT metadata with enhanced features via Reown wallet
+- **NFT Owner History Tracker** - Track NFT ownership history with Reown wallet
+- **NFT Lazy Mint Batch V2** - Lazy mint multiple NFTs in batch with enhanced features via Reown wallet
+- **NFT Marketplace Listing Optimizer** - Optimize marketplace listings for maximum visibility with Reown wallet
+- **NFT Collection Royalty Updater V2** - Update collection royalties with enhanced features via Reown wallet
+- **NFT Marketplace Offer Manager V2** - Manage marketplace offers with enhanced features via Reown wallet
+- **NFT Auction Time Manager V2** - Manage auction timing with enhanced features via Reown wallet
+- **NFT Collection Whitelist Validator V2** - Validate whitelist addresses with enhanced features via Reown wallet
+- **NFT Marketplace Fee Optimizer** - Optimize marketplace fees for maximum profit with Reown wallet
+- **NFT Collection Supply Monitor** - Monitor collection supply in real-time with Reown wallet
+
+All features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
+
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
 - **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
