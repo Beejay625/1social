@@ -5,7 +5,7 @@
  * Manage marketplace offers with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface Offer {
@@ -13,45 +13,39 @@ export interface Offer {
   tokenId: string;
   collectionAddress: string;
   price: string;
-  currency: string;
   offerer: string;
-  expiresAt: number;
-  active: boolean;
+  status: 'active' | 'accepted' | 'rejected' | 'expired';
+  managedBy: string;
   timestamp: number;
 }
 
 export function useNFTMarketplaceOfferManagerV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [offers, setOffers] = useState<Offer[]>([]);
 
   const createOffer = async (
     tokenId: string,
     collectionAddress: string,
-    price: string,
-    currency: string,
-    expiresAt: number
+    price: string
   ): Promise<Offer> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (expiresAt <= Date.now()) {
-      throw new Error('Expiration time must be in the future');
-    }
     
-    const message = `Create offer: ${collectionAddress} #${tokenId} ${price} ${currency}`;
+    const message = `Create offer V2: ${tokenId} in ${collectionAddress} at ${price}`;
     await signMessageAsync({ message });
     
     const offer: Offer = {
-      offerId: `offer-${Date.now()}`,
+      offerId: `offer-v2-${Date.now()}`,
       tokenId,
       collectionAddress,
       price,
-      currency,
       offerer: address,
-      expiresAt,
-      active: true,
+      status: 'active',
+      managedBy: address,
       timestamp: Date.now(),
     };
     
@@ -61,4 +55,3 @@ export function useNFTMarketplaceOfferManagerV2() {
 
   return { createOffer, offers, address };
 }
-
