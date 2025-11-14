@@ -8,58 +8,46 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface BalanceInfo {
+export interface BalanceRecord {
+  recordId: string;
+  tokenAddress: string;
   address: string;
-  tokenAddress: string;
   balance: string;
-  symbol: string;
-  timestamp: number;
-}
-
-export interface BalanceTracking {
-  trackingId: string;
-  tokenAddress: string;
-  addresses: string[];
-  balances: BalanceInfo[];
+  trackedBy: string;
   timestamp: number;
 }
 
 export function useTokenBalanceTracker() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [trackings, setTrackings] = useState<BalanceTracking[]>([]);
+  const [records, setRecords] = useState<BalanceRecord[]>([]);
 
-  const trackBalances = async (tokenAddress: string, addresses: string[]): Promise<BalanceTracking> => {
+  const trackBalance = async (
+    tokenAddress: string,
+    addressToTrack: string
+  ): Promise<BalanceRecord> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x')) {
-      throw new Error('Invalid token address format');
-    }
-    if (addresses.length === 0) {
-      throw new Error('At least one address is required');
+    if (!tokenAddress.startsWith('0x') || !addressToTrack.startsWith('0x')) {
+      throw new Error('Invalid address format');
     }
     
-    const message = `Track balances: ${tokenAddress} for ${addresses.length} addresses`;
+    const message = `Track balance: ${tokenAddress} for ${addressToTrack}`;
     await signMessageAsync({ message });
     
-    const balances: BalanceInfo[] = addresses.map(addr => ({
-      address: addr,
-      tokenAddress,
-      balance: '0',
-      symbol: 'TOKEN',
-      timestamp: Date.now(),
-    }));
+    const balance = (Math.random() * 1000000).toFixed(2);
     
-    const tracking: BalanceTracking = {
-      trackingId: `track-${Date.now()}`,
+    const record: BalanceRecord = {
+      recordId: `balance-${Date.now()}`,
       tokenAddress,
-      addresses,
-      balances,
+      address: addressToTrack,
+      balance,
+      trackedBy: address,
       timestamp: Date.now(),
     };
     
-    setTrackings([...trackings, tracking]);
-    return tracking;
+    setRecords([...records, record]);
+    return record;
   };
 
-  return { trackBalances, trackings, address };
+  return { trackBalance, records, address };
 }
