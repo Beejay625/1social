@@ -13,9 +13,9 @@ export interface SlippageCalculation {
   tokenIn: string;
   tokenOut: string;
   amountIn: string;
-  expectedAmountOut: string;
-  minAmountOut: string;
+  expectedOut: string;
   slippage: number;
+  calculatedBy: string;
   timestamp: number;
 }
 
@@ -24,34 +24,31 @@ export function useTokenSlippageCalculator() {
   const { signMessageAsync } = useSignMessage();
   const [calculations, setCalculations] = useState<SlippageCalculation[]>([]);
 
-  const calculate = async (
+  const calculateSlippage = async (
     tokenIn: string,
     tokenOut: string,
     amountIn: string,
-    slippageTolerance: number
+    expectedOut: string
   ): Promise<SlippageCalculation> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!tokenIn.startsWith('0x') || !tokenOut.startsWith('0x')) {
       throw new Error('Invalid token address format');
     }
-    if (slippageTolerance < 0 || slippageTolerance > 100) {
-      throw new Error('Slippage tolerance must be between 0 and 100');
-    }
     
-    const message = `Calculate slippage: ${tokenIn} -> ${tokenOut}`;
+    const message = `Calculate slippage: ${tokenIn} to ${tokenOut} amount ${amountIn}`;
     await signMessageAsync({ message });
     
-    const expectedAmountOut = (parseFloat(amountIn) * 0.95).toString();
-    const minAmountOut = (parseFloat(expectedAmountOut) * (1 - slippageTolerance / 100)).toString();
+    const actualOut = parseFloat(expectedOut) * (1 - Math.random() * 0.05);
+    const slippage = ((parseFloat(expectedOut) - actualOut) / parseFloat(expectedOut)) * 100;
     
     const calculation: SlippageCalculation = {
-      calculationId: `calc-${Date.now()}`,
+      calculationId: `slippage-${Date.now()}`,
       tokenIn,
       tokenOut,
       amountIn,
-      expectedAmountOut,
-      minAmountOut,
-      slippage: slippageTolerance,
+      expectedOut,
+      slippage,
+      calculatedBy: address,
       timestamp: Date.now(),
     };
     
@@ -59,5 +56,5 @@ export function useTokenSlippageCalculator() {
     return calculation;
   };
 
-  return { calculate, calculations, address };
+  return { calculateSlippage, calculations, address };
 }
