@@ -1,76 +1,66 @@
 'use client';
 
-/**
- * NFT Metadata Freezer V3
- * Freeze NFT metadata with enhanced features via Reown wallet
- */
-
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface MetadataFreeze {
-  freezeId: string;
-  tokenId: string;
-  collectionAddress: string;
-  frozen: boolean;
-  reason?: string;
-  frozenBy: string;
-  timestamp: number;
-}
-
 export function useNFTMetadataFreezerV3() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
+  const { writeContract } = useWriteContract();
   const { signMessageAsync } = useSignMessage();
-  const [freezes, setFreezes] = useState<MetadataFreeze[]>([]);
+  const [freezing, setFreezing] = useState(false);
 
-  const freezeMetadata = async (
-    tokenId: string,
-    collectionAddress: string,
-    reason?: string
-  ): Promise<MetadataFreeze> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x')) {
-      throw new Error('Invalid collection address format');
+  const { data: isFrozen } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'isFrozen',
+    args: [0n],
+    query: { enabled: isConnected },
+  });
+
+  const freeze = async (collectionAddress: string, tokenId: bigint) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    setFreezing(true);
+
+    try {
+      const message = `Freeze metadata for token ${tokenId}`;
+      await signMessageAsync({ message });
+
+      await writeContract({
+        address: collectionAddress as `0x${string}`,
+        abi: [],
+        functionName: 'freezeMetadata',
+        args: [tokenId],
+      });
+    } finally {
+      setFreezing(false);
     }
-    
-    const message = `Freeze metadata: ${collectionAddress} #${tokenId}${reason ? ` - ${reason}` : ''}`;
-    await signMessageAsync({ message });
-    
-    const freeze: MetadataFreeze = {
-      freezeId: `freeze-${Date.now()}`,
-      tokenId,
-      collectionAddress,
-      frozen: true,
-      reason,
-      frozenBy: address,
-      timestamp: Date.now(),
-    };
-    
-    setFreezes([...freezes, freeze]);
-    return freeze;
   };
 
-  const unfreezeMetadata = async (
-    tokenId: string,
-    collectionAddress: string
-  ): Promise<MetadataFreeze> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Unfreeze metadata: ${collectionAddress} #${tokenId}`;
-    await signMessageAsync({ message });
-    
-    const freeze: MetadataFreeze = {
-      freezeId: `unfreeze-${Date.now()}`,
-      tokenId,
-      collectionAddress,
-      frozen: false,
-      frozenBy: address,
-      timestamp: Date.now(),
-    };
-    
-    setFreezes([...freezes, freeze]);
-    return freeze;
+  const unfreeze = async (collectionAddress: string, tokenId: bigint) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    setFreezing(true);
+
+    try {
+      const message = `Unfreeze metadata for token ${tokenId}`;
+      await signMessageAsync({ message });
+
+      await writeContract({
+        address: collectionAddress as `0x${string}`,
+        abi: [],
+        functionName: 'unfreezeMetadata',
+        args: [tokenId],
+      });
+    } finally {
+      setFreezing(false);
+    }
   };
 
-  return { freezeMetadata, unfreezeMetadata, freezes, address };
+  return {
+    freeze,
+    unfreeze,
+    freezing,
+    address,
+    isConnected,
+    isFrozen,
+  };
 }

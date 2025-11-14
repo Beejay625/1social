@@ -1,63 +1,42 @@
 'use client';
 
-/**
- * NFT Attribute Updater V3
- * Update NFT attributes with enhanced features via Reown wallet
- */
-
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useWriteContract, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface AttributeUpdate {
-  updateId: string;
-  tokenId: string;
-  collectionAddress: string;
-  attributes: Array<{
-    trait_type: string;
-    value: string | number;
-  }>;
-  updatedBy: string;
-  txHash: string;
-  timestamp: number;
+  tokenId: bigint;
+  attributes: Record<string, string>;
 }
 
 export function useNFTAttributeUpdaterV3() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
+  const { writeContract } = useWriteContract();
   const { signMessageAsync } = useSignMessage();
-  const [updates, setUpdates] = useState<AttributeUpdate[]>([]);
+  const [updating, setUpdating] = useState(false);
 
-  const updateAttributes = async (
-    tokenId: string,
-    collectionAddress: string,
-    attributes: Array<{
-      trait_type: string;
-      value: string | number;
-    }>
-  ): Promise<AttributeUpdate> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x')) {
-      throw new Error('Invalid collection address format');
+  const update = async (collectionAddress: string, update: AttributeUpdate) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    setUpdating(true);
+
+    try {
+      const message = `Update attributes for token ${update.tokenId}`;
+      await signMessageAsync({ message });
+
+      await writeContract({
+        address: collectionAddress as `0x${string}`,
+        abi: [],
+        functionName: 'updateAttributes',
+        args: [update.tokenId, JSON.stringify(update.attributes)],
+      });
+    } finally {
+      setUpdating(false);
     }
-    if (attributes.length === 0) {
-      throw new Error('At least one attribute is required');
-    }
-    
-    const message = `Update attributes: ${collectionAddress} #${tokenId}`;
-    await signMessageAsync({ message });
-    
-    const update: AttributeUpdate = {
-      updateId: `attr-${Date.now()}`,
-      tokenId,
-      collectionAddress,
-      attributes,
-      updatedBy: address,
-      txHash: `0x${Date.now().toString(16)}`,
-      timestamp: Date.now(),
-    };
-    
-    setUpdates([...updates, update]);
-    return update;
   };
 
-  return { updateAttributes, updates, address };
+  return {
+    update,
+    updating,
+    address,
+    isConnected,
+  };
 }
