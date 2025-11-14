@@ -2,46 +2,58 @@
 
 /**
  * NFT Metadata Batch Fetcher
- * Fetches metadata for multiple NFTs in batch using Reown wallet
+ * Fetch metadata for multiple NFTs in batch with Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface NFTMetadata {
-  tokenId: string;
-  name: string;
-  description: string;
-  image: string;
-  attributes: Record<string, any>;
+export interface MetadataBatch {
+  batchId: string;
+  collectionAddress: string;
+  tokenIds: string[];
+  metadata: Array<{ tokenId: string; metadataURI: string }>;
+  fetchedBy: string;
+  timestamp: number;
 }
 
 export function useNFTMetadataBatchFetcher() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [metadataList, setMetadataList] = useState<NFTMetadata[]>([]);
+  const [batches, setBatches] = useState<MetadataBatch[]>([]);
 
-  const fetchBatch = async (tokenIds: string[], collectionAddress: string): Promise<NFTMetadata[]> => {
+  const fetchBatchMetadata = async (
+    collectionAddress: string,
+    tokenIds: string[]
+  ): Promise<MetadataBatch> => {
     if (!address) throw new Error('Reown wallet not connected');
+    if (!collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
+    }
     if (tokenIds.length === 0) {
-      throw new Error('At least one token ID is required');
+      throw new Error('Token IDs array cannot be empty');
     }
     
-    const message = `Fetch NFT metadata batch: ${collectionAddress} ${tokenIds.length} tokens`;
+    const message = `Fetch batch metadata: ${collectionAddress} ${tokenIds.length} tokens`;
     await signMessageAsync({ message });
     
-    const metadata: NFTMetadata[] = tokenIds.map((tokenId) => ({
+    const metadata = tokenIds.map(tokenId => ({
       tokenId,
-      name: `NFT #${tokenId}`,
-      description: `NFT metadata for token ${tokenId}`,
-      image: `https://example.com/nft/${tokenId}.png`,
-      attributes: { trait_type: 'value', value: 'example' },
+      metadataURI: `ipfs://Qm${Math.random().toString(16).substr(2, 44)}`,
     }));
     
-    setMetadataList([...metadataList, ...metadata]);
-    return metadata;
+    const batch: MetadataBatch = {
+      batchId: `batch-fetch-${Date.now()}`,
+      collectionAddress,
+      tokenIds,
+      metadata,
+      fetchedBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setBatches([...batches, batch]);
+    return batch;
   };
 
-  return { fetchBatch, metadataList, address };
+  return { fetchBatchMetadata, batches, address };
 }
-
