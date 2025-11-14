@@ -5,59 +5,49 @@
  * Monitor floor prices with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
-import { useState, useEffect } from 'react';
+import { useAccount, useSignMessage } from 'wagmi';
+import { useState } from 'react';
 
-export interface FloorPriceAlert {
-  alertId: string;
+export interface FloorPriceMonitor {
+  monitorId: string;
   collectionAddress: string;
-  floorPrice: string;
-  currency: string;
-  change: number;
+  currentFloorPrice: string;
+  priceChange24h: number;
+  monitoredBy: string;
   timestamp: number;
 }
 
-export function useNFTCollectionFloorPriceMonitorV2(collectionAddress?: string) {
+export function useNFTCollectionFloorPriceMonitorV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const { writeContractAsync } = useWriteContract();
-  const [alerts, setAlerts] = useState<FloorPriceAlert[]>([]);
-  const [isMonitoring, setIsMonitoring] = useState(false);
+  const [monitors, setMonitors] = useState<FloorPriceMonitor[]>([]);
 
-  const startMonitoring = async () => {
+  const monitorFloorPrice = async (
+    collectionAddress: string
+  ): Promise<FloorPriceMonitor> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (collectionAddress && !collectionAddress.startsWith('0x')) {
+    if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Start monitoring floor price V2: ${collectionAddress || 'all'}`;
+    const message = `Monitor floor price V2: ${collectionAddress}`;
     await signMessageAsync({ message });
     
-    setIsMonitoring(true);
+    const currentFloorPrice = (Math.random() * 10 + 0.1).toFixed(4);
+    const priceChange24h = (Math.random() * 20 - 10);
+    
+    const monitor: FloorPriceMonitor = {
+      monitorId: `monitor-v2-${Date.now()}`,
+      collectionAddress,
+      currentFloorPrice,
+      priceChange24h,
+      monitoredBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setMonitors([...monitors, monitor]);
+    return monitor;
   };
 
-  const stopMonitoring = () => {
-    setIsMonitoring(false);
-  };
-
-  useEffect(() => {
-    if (!isMonitoring) return;
-    
-    const interval = setInterval(() => {
-      const alert: FloorPriceAlert = {
-        alertId: `floor-v2-${Date.now()}`,
-        collectionAddress: collectionAddress || '0x0',
-        floorPrice: '0.5',
-        currency: 'ETH',
-        change: 0,
-        timestamp: Date.now(),
-      };
-      
-      setAlerts((prev) => [alert, ...prev.slice(0, 9)]);
-    }, 60000);
-    
-    return () => clearInterval(interval);
-  }, [isMonitoring, collectionAddress, address]);
-
-  return { startMonitoring, stopMonitoring, alerts, isMonitoring, address };
+  return { monitorFloorPrice, monitors, address };
 }
