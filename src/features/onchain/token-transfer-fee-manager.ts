@@ -5,54 +5,49 @@
  * Manage transfer fees for tokens with Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface FeeManagement {
-  managementId: string;
+export interface FeeConfig {
+  configId: string;
   tokenAddress: string;
-  feeRate: number;
+  feePercentage: number;
   feeRecipient: string;
-  action: 'set' | 'update' | 'remove';
-  managedBy: string;
+  configuredBy: string;
   timestamp: number;
 }
 
 export function useTokenTransferFeeManager() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [managements, setManagements] = useState<FeeManagement[]>([]);
+  const { writeContractAsync } = useWriteContract();
+  const [configs, setConfigs] = useState<FeeConfig[]>([]);
 
-  const manageFee = async (
+  const configureFee = async (
     tokenAddress: string,
-    feeRate: number,
-    feeRecipient: string,
-    action: 'set' | 'update' | 'remove'
-  ): Promise<FeeManagement> => {
+    feePercentage: number,
+    feeRecipient: string
+  ): Promise<FeeConfig> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!tokenAddress.startsWith('0x') || !feeRecipient.startsWith('0x')) {
       throw new Error('Invalid address format');
     }
-    if (action !== 'remove' && (feeRate < 0 || feeRate > 100)) {
-      throw new Error('Fee rate must be between 0 and 100');
-    }
     
-    const message = `Manage transfer fee: ${tokenAddress} ${action} ${feeRate}%`;
+    const message = `Configure transfer fee: ${tokenAddress} ${feePercentage}% to ${feeRecipient}`;
     await signMessageAsync({ message });
     
-    const management: FeeManagement = {
-      managementId: `fee-${Date.now()}`,
+    const config: FeeConfig = {
+      configId: `fee-config-${Date.now()}`,
       tokenAddress,
-      feeRate: action === 'remove' ? 0 : feeRate,
+      feePercentage,
       feeRecipient,
-      action,
-      managedBy: address,
+      configuredBy: address,
       timestamp: Date.now(),
     };
     
-    setManagements([...managements, management]);
-    return management;
+    setConfigs([...configs, config]);
+    return config;
   };
 
-  return { manageFee, managements, address };
+  return { configureFee, configs, address };
 }
