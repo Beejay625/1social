@@ -5,15 +5,14 @@
  * Lazy mint multiple NFTs in batch with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface LazyMintBatch {
   batchId: string;
   collectionAddress: string;
-  tokenIds: string[];
-  metadataUris: string[];
-  signature: string;
+  metadataURIs: string[];
+  quantity: number;
   mintedBy: string;
   timestamp: number;
 }
@@ -21,30 +20,29 @@ export interface LazyMintBatch {
 export function useNFTLazyMintBatchV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [batches, setBatches] = useState<LazyMintBatch[]>([]);
 
   const lazyMintBatch = async (
     collectionAddress: string,
-    tokenIds: string[],
-    metadataUris: string[]
+    metadataURIs: string[]
   ): Promise<LazyMintBatch> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (tokenIds.length !== metadataUris.length) {
-      throw new Error('Token IDs and metadata URIs arrays must have the same length');
+    if (metadataURIs.length === 0) {
+      throw new Error('Metadata URIs array cannot be empty');
     }
     
-    const message = `Lazy mint batch: ${collectionAddress} ${tokenIds.length} NFTs`;
-    const signature = await signMessageAsync({ message });
+    const message = `Lazy mint batch V2: ${collectionAddress} ${metadataURIs.length} NFTs`;
+    await signMessageAsync({ message });
     
     const batch: LazyMintBatch = {
-      batchId: `batch-${Date.now()}`,
+      batchId: `batch-v2-${Date.now()}`,
       collectionAddress,
-      tokenIds,
-      metadataUris,
-      signature,
+      metadataURIs,
+      quantity: metadataURIs.length,
       mintedBy: address,
       timestamp: Date.now(),
     };
