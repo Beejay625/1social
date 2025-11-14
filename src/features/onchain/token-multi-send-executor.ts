@@ -5,7 +5,7 @@
  * Execute multiple token transfers in a single transaction with Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface MultiSend {
@@ -13,16 +13,17 @@ export interface MultiSend {
   tokenAddress: string;
   recipients: string[];
   amounts: string[];
-  txHash: string;
+  executedBy: string;
   timestamp: number;
 }
 
 export function useTokenMultiSendExecutor() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [sends, setSends] = useState<MultiSend[]>([]);
 
-  const execute = async (
+  const executeMultiSend = async (
     tokenAddress: string,
     recipients: string[],
     amounts: string[]
@@ -32,24 +33,18 @@ export function useTokenMultiSendExecutor() {
       throw new Error('Invalid token address format');
     }
     if (recipients.length !== amounts.length) {
-      throw new Error('Recipients and amounts arrays must have the same length');
-    }
-    if (recipients.length === 0) {
-      throw new Error('At least one recipient is required');
-    }
-    if (recipients.some(addr => !addr.startsWith('0x'))) {
-      throw new Error('All recipients must be valid Ethereum addresses');
+      throw new Error('Recipients and amounts arrays must have same length');
     }
     
-    const message = `Multi-send: ${tokenAddress} to ${recipients.length} recipients`;
+    const message = `Execute multi-send: ${tokenAddress} to ${recipients.length} recipients`;
     await signMessageAsync({ message });
     
     const send: MultiSend = {
-      sendId: `send-${Date.now()}`,
+      sendId: `multisend-${Date.now()}`,
       tokenAddress,
       recipients,
       amounts,
-      txHash: `0x${Date.now().toString(16)}`,
+      executedBy: address,
       timestamp: Date.now(),
     };
     
@@ -57,5 +52,5 @@ export function useTokenMultiSendExecutor() {
     return send;
   };
 
-  return { execute, sends, address };
+  return { executeMultiSend, sends, address };
 }
