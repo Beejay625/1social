@@ -11,10 +11,9 @@ import { useState } from 'react';
 export interface FeeManagement {
   managementId: string;
   tokenAddress: string;
-  action: 'set' | 'update' | 'remove';
-  feePercentage: number;
+  feeRate: number;
   feeRecipient: string;
-  txHash: string;
+  action: 'set' | 'update' | 'remove';
   managedBy: string;
   timestamp: number;
 }
@@ -24,30 +23,29 @@ export function useTokenTransferFeeManager() {
   const { signMessageAsync } = useSignMessage();
   const [managements, setManagements] = useState<FeeManagement[]>([]);
 
-  const manage = async (
+  const manageFee = async (
     tokenAddress: string,
-    action: 'set' | 'update' | 'remove',
-    feePercentage: number,
-    feeRecipient: string
+    feeRate: number,
+    feeRecipient: string,
+    action: 'set' | 'update' | 'remove'
   ): Promise<FeeManagement> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x')) {
-      throw new Error('Invalid token address format');
+    if (!tokenAddress.startsWith('0x') || !feeRecipient.startsWith('0x')) {
+      throw new Error('Invalid address format');
     }
-    if (action !== 'remove' && (feePercentage < 0 || feePercentage > 100)) {
-      throw new Error('Fee percentage must be between 0 and 100');
+    if (action !== 'remove' && (feeRate < 0 || feeRate > 100)) {
+      throw new Error('Fee rate must be between 0 and 100');
     }
     
-    const message = `${action} transfer fee: ${tokenAddress} ${feePercentage}%`;
+    const message = `Manage transfer fee: ${tokenAddress} ${action} ${feeRate}%`;
     await signMessageAsync({ message });
     
     const management: FeeManagement = {
       managementId: `fee-${Date.now()}`,
       tokenAddress,
-      action,
-      feePercentage,
+      feeRate: action === 'remove' ? 0 : feeRate,
       feeRecipient,
-      txHash: `0x${Date.now().toString(16)}`,
+      action,
       managedBy: address,
       timestamp: Date.now(),
     };
@@ -56,5 +54,5 @@ export function useTokenTransferFeeManager() {
     return management;
   };
 
-  return { manage, managements, address };
+  return { manageFee, managements, address };
 }
