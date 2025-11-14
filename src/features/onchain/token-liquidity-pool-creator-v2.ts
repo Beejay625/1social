@@ -5,16 +5,15 @@
  * Create liquidity pools with enhanced features using Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface PoolCreation {
+export interface LiquidityPoolV2 {
   poolId: string;
   tokenA: string;
   tokenB: string;
   fee: number;
-  initialAmountA: string;
-  initialAmountB: string;
+  tickSpacing: number;
   createdBy: string;
   timestamp: number;
 }
@@ -22,33 +21,29 @@ export interface PoolCreation {
 export function useTokenLiquidityPoolCreatorV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [pools, setPools] = useState<PoolCreation[]>([]);
+  const { writeContractAsync } = useWriteContract();
+  const [pools, setPools] = useState<LiquidityPoolV2[]>([]);
 
   const createPool = async (
     tokenA: string,
     tokenB: string,
     fee: number,
-    initialAmountA: string,
-    initialAmountB: string
-  ): Promise<PoolCreation> => {
+    tickSpacing: number
+  ): Promise<LiquidityPoolV2> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!tokenA.startsWith('0x') || !tokenB.startsWith('0x')) {
       throw new Error('Invalid token address format');
     }
-    if (fee < 0 || fee > 10000) {
-      throw new Error('Fee must be between 0 and 10000 (basis points)');
-    }
     
-    const message = `Create LP pool: ${tokenA}/${tokenB} with ${fee} bps fee`;
+    const message = `Create liquidity pool V2: ${tokenA} / ${tokenB} fee ${fee} tick ${tickSpacing}`;
     await signMessageAsync({ message });
     
-    const pool: PoolCreation = {
-      poolId: `pool-${Date.now()}`,
+    const pool: LiquidityPoolV2 = {
+      poolId: `pool-v2-${Date.now()}`,
       tokenA,
       tokenB,
       fee,
-      initialAmountA,
-      initialAmountB,
+      tickSpacing,
       createdBy: address,
       timestamp: Date.now(),
     };
