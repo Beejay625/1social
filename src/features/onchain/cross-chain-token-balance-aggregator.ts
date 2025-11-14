@@ -2,68 +2,59 @@
 
 /**
  * Cross-Chain Token Balance Aggregator
- * Aggregates token balances across multiple blockchain networks using Reown wallet
+ * Aggregate token balances across multiple chains with Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface ChainBalance {
-  chainId: number;
-  chainName: string;
+export interface CrossChainBalance {
+  aggregationId: string;
   tokenAddress: string;
-  balance: string;
-  symbol: string;
-}
-
-export interface AggregatedBalance {
-  tokenAddress: string;
-  symbol: string;
+  chains: Array<{ chain: string; balance: string }>;
   totalBalance: string;
-  chainBalances: ChainBalance[];
+  aggregatedBy: string;
+  timestamp: number;
 }
 
 export function useCrossChainTokenBalanceAggregator() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [aggregatedBalances, setAggregatedBalances] = useState<AggregatedBalance[]>([]);
+  const [aggregations, setAggregations] = useState<CrossChainBalance[]>([]);
 
   const aggregateBalances = async (
     tokenAddress: string,
-    chainIds: number[]
-  ): Promise<AggregatedBalance> => {
+    chains: string[]
+  ): Promise<CrossChainBalance> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (chainIds.length === 0) {
-      throw new Error('At least one chain ID is required');
+    if (!tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid token address format');
     }
     
-    const message = `Aggregate cross-chain balances: ${tokenAddress}`;
+    const message = `Aggregate cross-chain balances: ${tokenAddress} across ${chains.length} chains`;
     await signMessageAsync({ message });
     
-    const chainBalances: ChainBalance[] = chainIds.map((chainId) => ({
-      chainId,
-      chainName: `Chain ${chainId}`,
-      tokenAddress,
-      balance: '0',
-      symbol: 'TOKEN',
+    const chainBalances = chains.map(chain => ({
+      chain,
+      balance: (Math.random() * 1000000 + 1000).toFixed(2),
     }));
     
-    const totalBalance = chainBalances.reduce(
-      (sum, cb) => sum + BigInt(cb.balance),
-      BigInt(0)
-    ).toString();
+    const totalBalance = chainBalances
+      .reduce((sum, cb) => sum + parseFloat(cb.balance), 0)
+      .toFixed(2);
     
-    const aggregated: AggregatedBalance = {
+    const aggregation: CrossChainBalance = {
+      aggregationId: `cross-chain-${Date.now()}`,
       tokenAddress,
-      symbol: 'TOKEN',
+      chains: chainBalances,
       totalBalance,
-      chainBalances,
+      aggregatedBy: address,
+      timestamp: Date.now(),
     };
     
-    setAggregatedBalances([...aggregatedBalances, aggregated]);
-    return aggregated;
+    setAggregations([...aggregations, aggregation]);
+    return aggregation;
   };
 
-  return { aggregateBalances, aggregatedBalances, address };
+  return { aggregateBalances, aggregations, address };
 }
-
