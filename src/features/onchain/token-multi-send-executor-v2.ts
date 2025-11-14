@@ -11,13 +11,10 @@ import { useState } from 'react';
 export interface MultiSendExecution {
   executionId: string;
   tokenAddress: string;
-  transfers: Array<{
-    recipient: string;
-    amount: string;
-  }>;
-  totalAmount: string;
-  txHash: string;
+  recipients: string[];
+  amounts: string[];
   executedBy: string;
+  txHash: string;
   timestamp: number;
 }
 
@@ -28,31 +25,30 @@ export function useTokenMultiSendExecutorV2() {
 
   const execute = async (
     tokenAddress: string,
-    transfers: Array<{
-      recipient: string;
-      amount: string;
-    }>
+    recipients: string[],
+    amounts: string[]
   ): Promise<MultiSendExecution> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!tokenAddress.startsWith('0x')) {
       throw new Error('Invalid token address format');
     }
-    if (transfers.length === 0) {
-      throw new Error('At least one transfer is required');
+    if (recipients.length !== amounts.length) {
+      throw new Error('Recipients and amounts arrays must have the same length');
+    }
+    if (recipients.some(recipient => !recipient.startsWith('0x'))) {
+      throw new Error('All recipient addresses must be valid Ethereum addresses');
     }
     
-    const message = `Multi-send: ${tokenAddress} to ${transfers.length} recipients`;
+    const message = `Execute multi-send: ${tokenAddress} to ${recipients.length} recipients`;
     await signMessageAsync({ message });
-    
-    const totalAmount = transfers.reduce((sum, transfer) => sum + BigInt(transfer.amount), BigInt(0)).toString();
     
     const execution: MultiSendExecution = {
       executionId: `multisend-${Date.now()}`,
       tokenAddress,
-      transfers,
-      totalAmount,
-      txHash: `0x${Date.now().toString(16)}`,
+      recipients,
+      amounts,
       executedBy: address,
+      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
@@ -62,4 +58,3 @@ export function useTokenMultiSendExecutorV2() {
 
   return { execute, executions, address };
 }
-
