@@ -12,9 +12,9 @@ export interface BurnTaxCalculation {
   calculationId: string;
   tokenAddress: string;
   amount: string;
-  burnTaxRate: number;
+  burnTax: number;
   burnAmount: string;
-  remainingAmount: string;
+  calculatedBy: string;
   timestamp: number;
 }
 
@@ -23,32 +23,28 @@ export function useTokenBurnTaxCalculator() {
   const { signMessageAsync } = useSignMessage();
   const [calculations, setCalculations] = useState<BurnTaxCalculation[]>([]);
 
-  const calculate = async (
+  const calculateBurnTax = async (
     tokenAddress: string,
-    amount: string,
-    burnTaxRate: number
+    amount: string
   ): Promise<BurnTaxCalculation> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!tokenAddress.startsWith('0x')) {
       throw new Error('Invalid token address format');
     }
-    if (burnTaxRate < 0 || burnTaxRate > 100) {
-      throw new Error('Burn tax rate must be between 0 and 100');
-    }
     
-    const message = `Calculate burn tax: ${tokenAddress} ${amount} at ${burnTaxRate}%`;
+    const message = `Calculate burn tax: ${tokenAddress} amount ${amount}`;
     await signMessageAsync({ message });
     
-    const burnAmount = (parseFloat(amount) * burnTaxRate / 100).toString();
-    const remainingAmount = (parseFloat(amount) - parseFloat(burnAmount)).toString();
+    const burnTax = Math.random() * 5;
+    const burnAmount = (parseFloat(amount) * (burnTax / 100)).toFixed(6);
     
     const calculation: BurnTaxCalculation = {
       calculationId: `burn-tax-${Date.now()}`,
       tokenAddress,
       amount,
-      burnTaxRate,
+      burnTax,
       burnAmount,
-      remainingAmount,
+      calculatedBy: address,
       timestamp: Date.now(),
     };
     
@@ -56,5 +52,5 @@ export function useTokenBurnTaxCalculator() {
     return calculation;
   };
 
-  return { calculate, calculations, address };
+  return { calculateBurnTax, calculations, address };
 }
