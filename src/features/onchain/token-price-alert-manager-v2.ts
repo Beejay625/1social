@@ -1,60 +1,72 @@
 'use client';
 
-/**
- * Token Price Alert Manager V2
- * Set and manage price alerts with enhanced features via Reown wallet
- */
-
-import { useAccount, useSignMessage } from 'wagmi';
-import { useState } from 'react';
+import { useAccount, useReadContract, useSignMessage } from 'wagmi';
+import { useState, useEffect } from 'react';
 
 export interface PriceAlert {
-  alertId: string;
   tokenAddress: string;
-  targetPrice: string;
-  alertType: 'above' | 'below';
-  currency: string;
-  active: boolean;
-  createdBy: string;
-  timestamp: number;
+  targetPrice: bigint;
+  direction: 'above' | 'below';
+  alertId: string;
 }
 
 export function useTokenPriceAlertManagerV2() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
   const [alerts, setAlerts] = useState<PriceAlert[]>([]);
+  const [triggered, setTriggered] = useState<string[]>([]);
 
-  const createAlert = async (
-    tokenAddress: string,
-    targetPrice: string,
-    alertType: 'above' | 'below',
-    currency: string
-  ): Promise<PriceAlert> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x')) {
-      throw new Error('Invalid token address format');
+  const { data: currentPrice } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'getPrice',
+  });
+
+  useEffect(() => {
+    if (address && isConnected && alerts.length > 0 && currentPrice) {
+      checkAlerts();
     }
-    if (parseFloat(targetPrice) <= 0) {
-      throw new Error('Target price must be greater than zero');
-    }
-    
-    const message = `Create price alert: ${tokenAddress} ${alertType} ${targetPrice} ${currency}`;
+  }, [address, isConnected, alerts, currentPrice]);
+
+  const createAlert = async (alert: PriceAlert) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+
+    const message = `Create price alert for ${alert.tokenAddress}`;
     await signMessageAsync({ message });
-    
-    const alert: PriceAlert = {
-      alertId: `alert-${Date.now()}`,
-      tokenAddress,
-      targetPrice,
-      alertType,
-      currency,
-      active: true,
-      createdBy: address,
-      timestamp: Date.now(),
-    };
-    
+
     setAlerts([...alerts, alert]);
-    return alert;
   };
 
-  return { createAlert, alerts, address };
+  const removeAlert = async (alertId: string) => {
+    setAlerts(alerts.filter(a => a.alertId !== alertId));
+  };
+
+  const checkAlerts = async () => {
+    const price = currentPrice as bigint || BigInt(0);
+    const newTriggered: string[] = [];
+
+    for (const alert of alerts) {
+      const shouldTrigger = alert.direction === 'above' 
+        ? price >= alert.targetPrice 
+        : price <= alert.targetPrice;
+
+      if (shouldTrigger && !triggered.includes(alert.alertId)) {
+        newTriggered.push(alert.alertId);
+      }
+    }
+
+    if (newTriggered.length > 0) {
+      setTriggered([...triggered, ...newTriggered]);
+    }
+  };
+
+  return {
+    createAlert,
+    removeAlert,
+    alerts,
+    triggered,
+    address,
+    isConnected,
+    currentPrice,
+  };
 }
