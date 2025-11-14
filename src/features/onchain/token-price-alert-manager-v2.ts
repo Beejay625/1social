@@ -12,7 +12,7 @@ export interface PriceAlert {
   alertId: string;
   tokenAddress: string;
   targetPrice: string;
-  condition: 'above' | 'below';
+  alertType: 'above' | 'below';
   currency: string;
   active: boolean;
   createdBy: string;
@@ -24,10 +24,10 @@ export function useTokenPriceAlertManagerV2() {
   const { signMessageAsync } = useSignMessage();
   const [alerts, setAlerts] = useState<PriceAlert[]>([]);
 
-  const create = async (
+  const createAlert = async (
     tokenAddress: string,
     targetPrice: string,
-    condition: 'above' | 'below',
+    alertType: 'above' | 'below',
     currency: string
   ): Promise<PriceAlert> => {
     if (!address) throw new Error('Reown wallet not connected');
@@ -38,14 +38,14 @@ export function useTokenPriceAlertManagerV2() {
       throw new Error('Target price must be greater than zero');
     }
     
-    const message = `Create price alert: ${tokenAddress} ${condition} ${targetPrice} ${currency}`;
+    const message = `Create price alert: ${tokenAddress} ${alertType} ${targetPrice} ${currency}`;
     await signMessageAsync({ message });
     
     const alert: PriceAlert = {
       alertId: `alert-${Date.now()}`,
       tokenAddress,
       targetPrice,
-      condition,
+      alertType,
       currency,
       active: true,
       createdBy: address,
@@ -56,6 +56,5 @@ export function useTokenPriceAlertManagerV2() {
     return alert;
   };
 
-  return { create, alerts, address };
+  return { createAlert, alerts, address };
 }
-
