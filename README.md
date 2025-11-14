@@ -912,26 +912,26 @@ Visit http://localhost:3000 in your browser to access the application.
 
 ## Key Web3 Capabilities
 
-- **🔗 Multi-Protocol Publishing** - One-click to Farcaster, Lens, Mirror + traditional platforms
-- **⛓️ Blockchain-Verified Analytics** - Immutable, transparent performance tracking
-- **💎 NFT Content Management** - Create and track social NFTs
-- **🏛️ DAO Collaboration** - Token-gated workflows with onchain governance
-- **🔐 Wallet-Based Auth** - Secure access via Web3 wallets
-- **💰 Web3 Commerce** - Sell NFTs and accept crypto payments
-- **📊 Cross-Chain Analytics** - Unified metrics across blockchains
-- **🎯 Token-Weighted Engagement** - Prioritize high-value wallet interactions
-- **🌐 Decentralized Storage** - IPFS/Arweave integration
-- **⚡ Gas Optimization** - Smart scheduling to minimize costs
-- **🎨 Social NFT Minting** - Mint posts as collectibles
-- **📈 Protocol Benchmarking** - Compare against onchain averages
-- **🗳️ Community Moderation** - DAO-based governance
-- **💼 Treasury Management** - Multi-sig wallet integration
-- **🎁 Token Rewards** - Distribute tokens/NFTs for engagement
-- **📱 Farcaster Frames** - Create interactive frames
-- **🌟 Reputation System** - Onchain reputation tracking
-- **🔄 Automated NFT Recycling** - Repost as limited editions
-- **📡 Smart Contract Webhooks** - Blockchain event automation
-- **🎪 Creator Collaboration** - Wallet-to-wallet partnerships
+- **🔗 Multi-Protocol Publishing** - One-click publishing to Farcaster, Lens, Mirror + traditional platforms
+- **⛓️ Blockchain-Verified Analytics** - Immutable, transparent performance tracking with onchain verification
+- **💎 NFT Content Management** - Create and track social NFTs with full metadata support
+- **🏛️ DAO Collaboration** - Token-gated workflows with onchain governance and voting
+- **🔐 Wallet-Based Auth** - Secure access via Web3 wallets using Reown AppKit
+- **💰 Web3 Commerce** - Sell NFTs and accept crypto payments with multiple payment methods
+- **📊 Cross-Chain Analytics** - Unified metrics across multiple blockchain networks
+- **🎯 Token-Weighted Engagement** - Prioritize high-value wallet interactions and engagements
+- **🌐 Decentralized Storage** - IPFS/Arweave integration for permanent content storage
+- **⚡ Gas Optimization** - Smart scheduling to minimize transaction costs
+- **🎨 Social NFT Minting** - Mint posts as collectibles with customizable metadata
+- **📈 Protocol Benchmarking** - Compare performance against onchain averages and metrics
+- **🗳️ Community Moderation** - DAO-based governance and content moderation
+- **💼 Treasury Management** - Multi-sig wallet integration for secure fund management
+- **🎁 Token Rewards** - Distribute tokens/NFTs for engagement and participation
+- **📱 Farcaster Frames** - Create interactive frames for enhanced user engagement
+- **🌟 Reputation System** - Onchain reputation tracking based on wallet activity
+- **🔄 Automated NFT Recycling** - Repost top-performing content as limited edition NFTs
+- **📡 Smart Contract Webhooks** - Blockchain event automation and triggers
+- **🎪 Creator Collaboration** - Wallet-to-wallet partnerships and collaborations
 
 ## Project Structure
 
