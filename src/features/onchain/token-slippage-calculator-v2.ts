@@ -14,8 +14,8 @@ export interface SlippageCalculation {
   tokenOut: string;
   amountIn: string;
   expectedAmountOut: string;
-  minAmountOut: string;
-  slippagePercentage: number;
+  actualAmountOut: string;
+  slippage: number;
   timestamp: number;
 }
 
@@ -28,18 +28,18 @@ export function useTokenSlippageCalculatorV2() {
     tokenIn: string,
     tokenOut: string,
     amountIn: string,
-    expectedAmountOut: string,
-    slippagePercentage: number
+    expectedAmountOut: string
   ): Promise<SlippageCalculation> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (slippagePercentage < 0 || slippagePercentage > 100) {
-      throw new Error('Slippage percentage must be between 0 and 100');
+    if (!tokenIn.startsWith('0x') || !tokenOut.startsWith('0x')) {
+      throw new Error('Invalid token address format');
     }
     
-    const message = `Calculate slippage: ${tokenIn} -> ${tokenOut} ${slippagePercentage}%`;
+    const message = `Calculate slippage: ${tokenIn} -> ${tokenOut} amount ${amountIn}`;
     await signMessageAsync({ message });
     
-    const minAmountOut = (BigInt(expectedAmountOut) * BigInt(Math.floor((100 - slippagePercentage) * 100))) / BigInt(10000);
+    const actualAmountOut = (parseFloat(expectedAmountOut) * 0.98).toString();
+    const slippage = ((parseFloat(expectedAmountOut) - parseFloat(actualAmountOut)) / parseFloat(expectedAmountOut)) * 100;
     
     const calculation: SlippageCalculation = {
       calculationId: `slippage-${Date.now()}`,
@@ -47,8 +47,8 @@ export function useTokenSlippageCalculatorV2() {
       tokenOut,
       amountIn,
       expectedAmountOut,
-      minAmountOut: minAmountOut.toString(),
-      slippagePercentage,
+      actualAmountOut,
+      slippage,
       timestamp: Date.now(),
     };
     
@@ -58,4 +58,3 @@ export function useTokenSlippageCalculatorV2() {
 
   return { calculate, calculations, address };
 }
-
