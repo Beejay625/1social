@@ -23,8 +23,8 @@ export function useTokenLiquidityPoolCreatorV3() {
 
     try {
       const message = `Create liquidity pool: ${config.tokenA}/${config.tokenB}`;
-      await signMessageAsync({ message });
-
+    await signMessageAsync({ message });
+    
       await writeContract({
         address: '0x' as `0x${string}`,
         abi: [],
