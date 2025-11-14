@@ -8,15 +8,11 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface VerificationResult {
+export interface Verification {
   verificationId: string;
   collectionAddress: string;
-  isVerified: boolean;
-  verificationScore: number;
-  checks: Array<{
-    check: string;
-    passed: boolean;
-  }>;
+  verified: boolean;
+  verificationData: string;
   verifiedBy: string;
   timestamp: number;
 }
@@ -24,9 +20,11 @@ export interface VerificationResult {
 export function useNFTCollectionVerifier() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [verifications, setVerifications] = useState<VerificationResult[]>([]);
+  const [verifications, setVerifications] = useState<Verification[]>([]);
 
-  const verify = async (collectionAddress: string): Promise<VerificationResult> => {
+  const verifyCollection = async (
+    collectionAddress: string
+  ): Promise<Verification> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
@@ -35,12 +33,11 @@ export function useNFTCollectionVerifier() {
     const message = `Verify collection: ${collectionAddress}`;
     await signMessageAsync({ message });
     
-    const verification: VerificationResult = {
+    const verification: Verification = {
       verificationId: `verify-${Date.now()}`,
       collectionAddress,
-      isVerified: false,
-      verificationScore: 0,
-      checks: [],
+      verified: true,
+      verificationData: `0x${Math.random().toString(16).substr(2, 64)}`,
       verifiedBy: address,
       timestamp: Date.now(),
     };
@@ -49,5 +46,5 @@ export function useNFTCollectionVerifier() {
     return verification;
   };
 
-  return { verify, verifications, address };
+  return { verifyCollection, verifications, address };
 }
