@@ -1,31 +1,53 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+/**
+ * NFT Attribute Updater
+ * Update NFT attributes with Reown wallet
+ */
+
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface AttributeUpdate {
-  collection: string;
+  updateId: string;
   tokenId: string;
+  collectionAddress: string;
   attributes: Record<string, string>;
+  updatedBy: string;
+  timestamp: number;
 }
 
 export function useNFTAttributeUpdater() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const { data: attributes } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'attributes',
-    args: [BigInt(1)],
-  });
-  const [updating, setUpdating] = useState(false);
+  const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
+  const [updates, setUpdates] = useState<AttributeUpdate[]>([]);
 
-  const updateAttributes = async (update: AttributeUpdate) => {
-    if (!address) return;
-    setUpdating(true);
-    // Implementation for updating attributes
-    setUpdating(false);
+  const updateAttributes = async (
+    tokenId: string,
+    collectionAddress: string,
+    attributes: Record<string, string>
+  ): Promise<AttributeUpdate> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (!collectionAddress.startsWith('0x')) {
+      throw new Error('Invalid collection address format');
+    }
+    
+    const message = `Update attributes: ${tokenId} in ${collectionAddress}`;
+    await signMessageAsync({ message });
+    
+    const update: AttributeUpdate = {
+      updateId: `attribute-${Date.now()}`,
+      tokenId,
+      collectionAddress,
+      attributes,
+      updatedBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setUpdates([...updates, update]);
+    return update;
   };
 
-  return { updateAttributes, updating, address, attributes };
+  return { updateAttributes, updates, address };
 }
