@@ -5,50 +5,43 @@
  * Extend token lock periods with Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface LockExtension {
   extensionId: string;
   lockId: string;
   tokenAddress: string;
-  originalUnlockTime: number;
-  newUnlockTime: number;
+  newEndDate: number;
   extendedBy: string;
-  txHash: string;
   timestamp: number;
 }
 
 export function useTokenLockPeriodExtender() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [extensions, setExtensions] = useState<LockExtension[]>([]);
 
-  const extendLock = async (
+  const extendLockPeriod = async (
     lockId: string,
     tokenAddress: string,
-    originalUnlockTime: number,
-    newUnlockTime: number
+    newEndDate: number
   ): Promise<LockExtension> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!tokenAddress.startsWith('0x')) {
       throw new Error('Invalid token address format');
     }
-    if (newUnlockTime <= originalUnlockTime) {
-      throw new Error('New unlock time must be after original unlock time');
-    }
     
-    const message = `Extend lock: ${lockId} from ${originalUnlockTime} to ${newUnlockTime}`;
+    const message = `Extend lock period: ${lockId} for ${tokenAddress} until ${newEndDate}`;
     await signMessageAsync({ message });
     
     const extension: LockExtension = {
       extensionId: `extend-${Date.now()}`,
       lockId,
       tokenAddress,
-      originalUnlockTime,
-      newUnlockTime,
+      newEndDate,
       extendedBy: address,
-      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
@@ -56,6 +49,5 @@ export function useTokenLockPeriodExtender() {
     return extension;
   };
 
-  return { extendLock, extensions, address };
+  return { extendLockPeriod, extensions, address };
 }
-
