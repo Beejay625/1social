@@ -14,9 +14,10 @@ export interface PoolCreation {
   tokenB: string;
   amountA: string;
   amountB: string;
-  poolAddress: string;
-  txHash: string;
+  fee: number;
   createdBy: string;
+  poolAddress?: string;
+  txHash: string;
   timestamp: number;
 }
 
@@ -25,21 +26,22 @@ export function useTokenLiquidityPoolCreatorV3() {
   const { signMessageAsync } = useSignMessage();
   const [creations, setCreations] = useState<PoolCreation[]>([]);
 
-  const create = async (
+  const createPool = async (
     tokenA: string,
     tokenB: string,
     amountA: string,
-    amountB: string
+    amountB: string,
+    fee: number
   ): Promise<PoolCreation> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!tokenA.startsWith('0x') || !tokenB.startsWith('0x')) {
       throw new Error('Invalid token address format');
     }
-    if (parseFloat(amountA) <= 0 || parseFloat(amountB) <= 0) {
-      throw new Error('Amounts must be greater than zero');
+    if (fee < 0 || fee > 10000) {
+      throw new Error('Fee must be between 0 and 10000 (basis points)');
     }
     
-    const message = `Create pool: ${tokenA}/${tokenB} with ${amountA}/${amountB}`;
+    const message = `Create liquidity pool: ${tokenA}/${tokenB} fee ${fee}`;
     await signMessageAsync({ message });
     
     const creation: PoolCreation = {
@@ -48,9 +50,10 @@ export function useTokenLiquidityPoolCreatorV3() {
       tokenB,
       amountA,
       amountB,
+      fee,
+      createdBy: address,
       poolAddress: `0x${Date.now().toString(16)}`,
       txHash: `0x${Date.now().toString(16)}`,
-      createdBy: address,
       timestamp: Date.now(),
     };
     
@@ -58,6 +61,5 @@ export function useTokenLiquidityPoolCreatorV3() {
     return creation;
   };
 
-  return { create, creations, address };
+  return { createPool, creations, address };
 }
-
