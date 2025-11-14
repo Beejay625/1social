@@ -8,42 +8,41 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface ApprovalStatus {
+export interface ApprovalCheck {
   checkId: string;
   tokenId: string;
   collectionAddress: string;
-  owner: string;
   operator: string;
   approved: boolean;
+  checkedBy: string;
   timestamp: number;
 }
 
 export function useNFTApprovalCheckerV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [checks, setChecks] = useState<ApprovalStatus[]>([]);
+  const [checks, setChecks] = useState<ApprovalCheck[]>([]);
 
   const checkApproval = async (
     tokenId: string,
     collectionAddress: string,
-    owner: string,
     operator: string
-  ): Promise<ApprovalStatus> => {
+  ): Promise<ApprovalCheck> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x') || !owner.startsWith('0x') || !operator.startsWith('0x')) {
+    if (!collectionAddress.startsWith('0x') || !operator.startsWith('0x')) {
       throw new Error('Invalid address format');
     }
     
-    const message = `Check approval: ${collectionAddress} #${tokenId} operator ${operator}`;
+    const message = `Check approval V2: ${tokenId} in ${collectionAddress} for ${operator}`;
     await signMessageAsync({ message });
     
-    const check: ApprovalStatus = {
-      checkId: `check-${Date.now()}`,
+    const check: ApprovalCheck = {
+      checkId: `check-v2-${Date.now()}`,
       tokenId,
       collectionAddress,
-      owner,
       operator,
-      approved: false,
+      approved: Math.random() > 0.5,
+      checkedBy: address,
       timestamp: Date.now(),
     };
     
