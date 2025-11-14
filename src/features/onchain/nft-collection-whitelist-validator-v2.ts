@@ -12,9 +12,7 @@ export interface WhitelistValidation {
   validationId: string;
   collectionAddress: string;
   address: string;
-  isValid: boolean;
-  maxMints?: number;
-  price?: string;
+  valid: boolean;
   validatedBy: string;
   timestamp: number;
 }
@@ -24,7 +22,7 @@ export function useNFTCollectionWhitelistValidatorV2() {
   const { signMessageAsync } = useSignMessage();
   const [validations, setValidations] = useState<WhitelistValidation[]>([]);
 
-  const validate = async (
+  const validateWhitelist = async (
     collectionAddress: string,
     addressToValidate: string
   ): Promise<WhitelistValidation> => {
@@ -33,14 +31,16 @@ export function useNFTCollectionWhitelistValidatorV2() {
       throw new Error('Invalid address format');
     }
     
-    const message = `Validate whitelist: ${collectionAddress} address ${addressToValidate}`;
+    const message = `Validate whitelist V2: ${collectionAddress} address ${addressToValidate}`;
     await signMessageAsync({ message });
     
+    const valid = Math.random() > 0.3;
+    
     const validation: WhitelistValidation = {
-      validationId: `validate-${Date.now()}`,
+      validationId: `validate-v2-${Date.now()}`,
       collectionAddress,
       address: addressToValidate,
-      isValid: false,
+      valid,
       validatedBy: address,
       timestamp: Date.now(),
     };
@@ -49,6 +49,5 @@ export function useNFTCollectionWhitelistValidatorV2() {
     return validation;
   };
 
-  return { validate, validations, address };
+  return { validateWhitelist, validations, address };
 }
-
