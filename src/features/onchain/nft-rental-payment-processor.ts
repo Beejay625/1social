@@ -2,57 +2,43 @@
 
 /**
  * NFT Rental Payment Processor
- * Processes rental payments for NFT rentals using Reown wallet
+ * Process rental payments for NFT rentals with Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface RentalPayment {
+  paymentId: string;
   rentalId: string;
   tokenId: string;
-  collectionAddress: string;
   amount: string;
-  currency: string;
-  payer: string;
-  recipient: string;
-  txHash: string;
+  processedBy: string;
   timestamp: number;
 }
 
 export function useNFTRentalPaymentProcessor() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [payments, setPayments] = useState<RentalPayment[]>([]);
 
   const processPayment = async (
     rentalId: string,
     tokenId: string,
-    collectionAddress: string,
-    amount: string,
-    currency: string,
-    recipient: string
+    amount: string
   ): Promise<RentalPayment> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x') || !recipient.startsWith('0x')) {
-      throw new Error('Invalid address format');
-    }
-    if (parseFloat(amount) <= 0) {
-      throw new Error('Payment amount must be greater than zero');
-    }
     
-    const message = `Process rental payment: ${rentalId} ${amount} ${currency}`;
+    const message = `Process rental payment: ${rentalId} token ${tokenId} amount ${amount}`;
     await signMessageAsync({ message });
     
     const payment: RentalPayment = {
+      paymentId: `payment-${Date.now()}`,
       rentalId,
       tokenId,
-      collectionAddress,
       amount,
-      currency,
-      payer: address,
-      recipient,
-      txHash: `0x${Date.now().toString(16)}`,
+      processedBy: address,
       timestamp: Date.now(),
     };
     
@@ -62,4 +48,3 @@ export function useNFTRentalPaymentProcessor() {
 
   return { processPayment, payments, address };
 }
-
