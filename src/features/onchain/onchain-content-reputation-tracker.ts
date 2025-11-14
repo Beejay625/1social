@@ -84,3 +84,25 @@ export function useOnchainContentReputationTracker() {
     }
   };
 
+  useEffect(() => {
+    if (reputationData) {
+      const reputation = reputationData as ContentReputation;
+      setReputations(prev => {
+        const filtered = prev.filter(r => r.contentHash !== reputation.contentHash);
+        return [...filtered, reputation];
+      });
+    }
+  }, [reputationData]);
+
+  return {
+    trackReputation,
+    upvoteContent,
+    downvoteContent,
+    tracking,
+    reputations,
+    address,
+    isConnected,
+    reputationData,
+  };
+}
+
