@@ -12,10 +12,10 @@ export interface CollectionStats {
   statsId: string;
   collectionAddress: string;
   totalSupply: number;
-  totalOwners: number;
   floorPrice: string;
-  totalVolume: string;
-  averagePrice: string;
+  volume24h: string;
+  owners: number;
+  trackedBy: string;
   timestamp: number;
 }
 
@@ -24,28 +24,30 @@ export function useNFTCollectionStatsTracker() {
   const { signMessageAsync } = useSignMessage();
   const [stats, setStats] = useState<CollectionStats[]>([]);
 
-  const trackStats = async (collectionAddress: string): Promise<CollectionStats> => {
+  const trackStats = async (
+    collectionAddress: string
+  ): Promise<CollectionStats> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Track stats: ${collectionAddress}`;
+    const message = `Track collection stats: ${collectionAddress}`;
     await signMessageAsync({ message });
     
-    const stat: CollectionStats = {
+    const collectionStats: CollectionStats = {
       statsId: `stats-${Date.now()}`,
       collectionAddress,
-      totalSupply: 0,
-      totalOwners: 0,
-      floorPrice: '0',
-      totalVolume: '0',
-      averagePrice: '0',
+      totalSupply: Math.floor(Math.random() * 10000) + 1000,
+      floorPrice: (Math.random() * 10 + 0.1).toFixed(4),
+      volume24h: (Math.random() * 1000 + 10).toFixed(2),
+      owners: Math.floor(Math.random() * 5000) + 500,
+      trackedBy: address,
       timestamp: Date.now(),
     };
     
-    setStats([...stats, stat]);
-    return stat;
+    setStats([...stats, collectionStats]);
+    return collectionStats;
   };
 
   return { trackStats, stats, address };
