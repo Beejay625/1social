@@ -12,7 +12,7 @@ export interface PriceAlert {
   alertId: string;
   tokenAddress: string;
   targetPrice: string;
-  direction: 'above' | 'below';
+  condition: 'above' | 'below';
   active: boolean;
   createdBy: string;
   timestamp: number;
@@ -26,24 +26,21 @@ export function useTokenPriceAlertManager() {
   const createAlert = async (
     tokenAddress: string,
     targetPrice: string,
-    direction: 'above' | 'below'
+    condition: 'above' | 'below'
   ): Promise<PriceAlert> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!tokenAddress.startsWith('0x')) {
       throw new Error('Invalid token address format');
     }
-    if (parseFloat(targetPrice) <= 0) {
-      throw new Error('Target price must be greater than zero');
-    }
     
-    const message = `Create price alert: ${tokenAddress} ${direction} ${targetPrice}`;
+    const message = `Create price alert: ${tokenAddress} ${condition} ${targetPrice}`;
     await signMessageAsync({ message });
     
     const alert: PriceAlert = {
       alertId: `alert-${Date.now()}`,
       tokenAddress,
       targetPrice,
-      direction,
+      condition,
       active: true,
       createdBy: address,
       timestamp: Date.now(),
@@ -53,9 +50,5 @@ export function useTokenPriceAlertManager() {
     return alert;
   };
 
-  const toggleAlert = (alertId: string) => {
-    setAlerts(alerts.map(a => a.alertId === alertId ? { ...a, active: !a.active } : a));
-  };
-
-  return { createAlert, toggleAlert, alerts, address };
+  return { createAlert, alerts, address };
 }
