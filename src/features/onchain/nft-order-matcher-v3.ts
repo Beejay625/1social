@@ -5,18 +5,16 @@
  * Match NFT buy and sell orders with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface OrderMatch {
   matchId: string;
+  collectionAddress: string;
   buyOrderId: string;
   sellOrderId: string;
   tokenId: string;
-  collectionAddress: string;
   price: string;
-  currency: string;
-  txHash: string;
   matchedBy: string;
   timestamp: number;
 }
@@ -24,33 +22,31 @@ export interface OrderMatch {
 export function useNFTOrderMatcherV3() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [matches, setMatches] = useState<OrderMatch[]>([]);
 
-  const match = async (
+  const matchOrders = async (
+    collectionAddress: string,
     buyOrderId: string,
     sellOrderId: string,
     tokenId: string,
-    collectionAddress: string,
-    price: string,
-    currency: string
+    price: string
   ): Promise<OrderMatch> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Match orders: ${buyOrderId} <-> ${sellOrderId} for ${collectionAddress} #${tokenId}`;
+    const message = `Match orders V3: ${collectionAddress} buy ${buyOrderId} sell ${sellOrderId}`;
     await signMessageAsync({ message });
     
     const match: OrderMatch = {
-      matchId: `match-${Date.now()}`,
+      matchId: `match-v3-${Date.now()}`,
+      collectionAddress,
       buyOrderId,
       sellOrderId,
       tokenId,
-      collectionAddress,
       price,
-      currency,
-      txHash: `0x${Date.now().toString(16)}`,
       matchedBy: address,
       timestamp: Date.now(),
     };
@@ -59,6 +55,5 @@ export function useNFTOrderMatcherV3() {
     return match;
   };
 
-  return { match, matches, address };
+  return { matchOrders, matches, address };
 }
-
