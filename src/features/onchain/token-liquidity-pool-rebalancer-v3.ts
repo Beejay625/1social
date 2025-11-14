@@ -5,19 +5,16 @@
  * Rebalance liquidity pools with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface PoolRebalancing {
+export interface RebalanceEvent {
   rebalanceId: string;
   poolAddress: string;
-  targetRatio: number;
-  currentRatio: number;
-  adjustments: {
-    tokenA: string;
-    tokenB: string;
-  };
-  txHash: string;
+  tokenA: string;
+  tokenB: string;
+  targetRatioA: number;
+  targetRatioB: number;
   rebalancedBy: string;
   timestamp: number;
 }
@@ -25,34 +22,34 @@ export interface PoolRebalancing {
 export function useTokenLiquidityPoolRebalancerV3() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [rebalances, setRebalances] = useState<PoolRebalancing[]>([]);
+  const { writeContractAsync } = useWriteContract();
+  const [rebalances, setRebalances] = useState<RebalanceEvent[]>([]);
 
-  const rebalance = async (
+  const rebalancePool = async (
     poolAddress: string,
-    targetRatio: number,
-    currentRatio: number
-  ): Promise<PoolRebalancing> => {
+    tokenA: string,
+    tokenB: string,
+    targetRatioA: number,
+    targetRatioB: number
+  ): Promise<RebalanceEvent> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!poolAddress.startsWith('0x')) {
-      throw new Error('Invalid pool address format');
+    if (!poolAddress.startsWith('0x') || !tokenA.startsWith('0x') || !tokenB.startsWith('0x')) {
+      throw new Error('Invalid address format');
     }
-    if (targetRatio <= 0) {
-      throw new Error('Target ratio must be greater than zero');
+    if (targetRatioA + targetRatioB !== 100) {
+      throw new Error('Target ratios must sum to 100');
     }
     
-    const message = `Rebalance pool: ${poolAddress} to ${targetRatio} ratio`;
+    const message = `Rebalance pool: ${poolAddress} ratio ${targetRatioA}/${targetRatioB}`;
     await signMessageAsync({ message });
     
-    const rebalance: PoolRebalancing = {
+    const rebalance: RebalanceEvent = {
       rebalanceId: `rebalance-${Date.now()}`,
       poolAddress,
-      targetRatio,
-      currentRatio,
-      adjustments: {
-        tokenA: '0',
-        tokenB: '0',
-      },
-      txHash: `0x${Date.now().toString(16)}`,
+      tokenA,
+      tokenB,
+      targetRatioA,
+      targetRatioB,
       rebalancedBy: address,
       timestamp: Date.now(),
     };
@@ -61,6 +58,5 @@ export function useTokenLiquidityPoolRebalancerV3() {
     return rebalance;
   };
 
-  return { rebalance, rebalances, address };
+  return { rebalancePool, rebalances, address };
 }
-
