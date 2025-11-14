@@ -12,8 +12,8 @@ export interface AllowanceRevocation {
   revocationId: string;
   tokenAddress: string;
   spender: string;
-  txHash: string;
   revokedBy: string;
+  txHash: string;
   timestamp: number;
 }
 
@@ -22,27 +22,24 @@ export function useTokenAllowanceRevoker() {
   const { signMessageAsync } = useSignMessage();
   const [revocations, setRevocations] = useState<AllowanceRevocation[]>([]);
 
-  const revoke = async (
+  const revokeAllowance = async (
     tokenAddress: string,
     spender: string
   ): Promise<AllowanceRevocation> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x')) {
-      throw new Error('Invalid token address format');
-    }
-    if (!spender.startsWith('0x')) {
-      throw new Error('Invalid spender address format');
+    if (!tokenAddress.startsWith('0x') || !spender.startsWith('0x')) {
+      throw new Error('Invalid address format');
     }
     
-    const message = `Revoke allowance: ${tokenAddress} for ${spender}`;
+    const message = `Revoke allowance: ${tokenAddress} spender ${spender}`;
     await signMessageAsync({ message });
     
     const revocation: AllowanceRevocation = {
       revocationId: `revoke-${Date.now()}`,
       tokenAddress,
       spender,
-      txHash: `0x${Date.now().toString(16)}`,
       revokedBy: address,
+      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
@@ -50,5 +47,5 @@ export function useTokenAllowanceRevoker() {
     return revocation;
   };
 
-  return { revoke, revocations, address };
+  return { revokeAllowance, revocations, address };
 }
