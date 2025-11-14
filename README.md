@@ -875,11 +875,13 @@ npm install
 
 ### 2. Configure Environment Variables
 
-Create a `.env.local` file in the root directory:
+Create a `.env.local` file in the root directory with the following:
 
 ```bash
 NEXT_PUBLIC_PROJECT_ID=your_reown_project_id_here
 ```
+
+Make sure to replace `your_reown_project_id_here` with your actual Reown Project ID.
 
 ### 3. Add your Reown AppKit Project ID (required for wallet connection)
 
