@@ -8,49 +8,45 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface DelegationTracking {
-  trackingId: string;
+export interface Delegation {
+  delegationId: string;
   delegator: string;
   delegatee: string;
-  amount: string;
-  blockNumber: number;
+  votingPower: string;
+  trackedBy: string;
   timestamp: number;
 }
 
 export function useTokenGovernanceDelegationTracker() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [trackings, setTrackings] = useState<DelegationTracking[]>([]);
+  const [delegations, setDelegations] = useState<Delegation[]>([]);
 
-  const track = async (
+  const trackDelegation = async (
     delegator: string,
     delegatee: string,
-    amount: string,
-    blockNumber: number
-  ): Promise<DelegationTracking> => {
+    votingPower: string
+  ): Promise<Delegation> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!delegator.startsWith('0x')) {
-      throw new Error('Invalid delegator address format');
-    }
-    if (!delegatee.startsWith('0x')) {
-      throw new Error('Invalid delegatee address format');
+    if (!delegator.startsWith('0x') || !delegatee.startsWith('0x')) {
+      throw new Error('Invalid address format');
     }
     
-    const message = `Track delegation: ${delegator} -> ${delegatee} ${amount}`;
+    const message = `Track delegation: ${delegator} to ${delegatee} power ${votingPower}`;
     await signMessageAsync({ message });
     
-    const tracking: DelegationTracking = {
-      trackingId: `delegate-${Date.now()}`,
+    const delegation: Delegation = {
+      delegationId: `delegation-${Date.now()}`,
       delegator,
       delegatee,
-      amount,
-      blockNumber,
+      votingPower,
+      trackedBy: address,
       timestamp: Date.now(),
     };
     
-    setTrackings([...trackings, tracking]);
-    return tracking;
+    setDelegations([...delegations, delegation]);
+    return delegation;
   };
 
-  return { track, trackings, address };
+  return { trackDelegation, delegations, address };
 }
