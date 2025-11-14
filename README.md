@@ -962,10 +962,10 @@ src/
 - Protocol-specific insights (casts, mirrors, collects) with detailed breakdowns
 
 ### 🏛️ DAO Collaboration
-- Token-gated access control
-- Smart contract approval workflows
-- Multi-sig treasury management
-- Onchain contributor attribution
+- Token-gated access control with flexible permission systems
+- Smart contract approval workflows with multi-step processes
+- Multi-sig treasury management with Reown wallet integration
+- Onchain contributor attribution with transparent records
 
 ### 🤖 Smart Automation
 - Gas-optimized scheduling
