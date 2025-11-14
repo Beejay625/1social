@@ -13,3 +13,4 @@ export const SOCIAL_MEDIA_CONTRACT_ADDRESS = '0x00000000000000000000000000000000
 // Update this address after deploying the contract
 // Example: export const SOCIAL_MEDIA_CONTRACT_ADDRESS = '0x1234567890123456789012345678901234567890' as const;
 
+

@@ -29,3 +29,4 @@ export function useTokenAntiWhaleProtection() {
   return { configureAntiWhale, configuring, address, maxAmount };
 }
 
+

@@ -39,3 +39,4 @@ export function useContractEventArgsDecoder() {
   return { decodeArgs, decodedArgs, address };
 }
 
+

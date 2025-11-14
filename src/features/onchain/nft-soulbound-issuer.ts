@@ -30,3 +30,4 @@ export function useNFTSoulboundIssuer() {
   return { issueSoulbound, issuing, address, isSoulbound };
 }
 
+

@@ -31,3 +31,4 @@ export function useNFTRentalManager() {
   return { createRental, renting, address, rentalStatus };
 }
 
+

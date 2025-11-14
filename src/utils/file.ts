@@ -11,3 +11,4 @@ export function isValidFileType(filename: string, allowedTypes: string[]): boole
   return allowedTypes.includes(extension);
 }
 
+

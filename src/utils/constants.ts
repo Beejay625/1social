@@ -10,3 +10,4 @@ export const CONTRACT_EVENTS = {
   PROFILE_UPDATED: 'ProfileUpdated',
 } as const;
 
+

@@ -19,3 +19,4 @@ export function calculateAirdropCost(
   return (gasPriceBigInt * totalGas).toString();
 }
 
+

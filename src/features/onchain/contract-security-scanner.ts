@@ -37,3 +37,4 @@ export function useContractSecurityScanner() {
   return { scanContract, scans, address };
 }
 
+

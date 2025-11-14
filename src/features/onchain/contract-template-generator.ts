@@ -37,3 +37,4 @@ export function useContractTemplateGenerator() {
   return { generateTemplate, templates, address };
 }
 
+

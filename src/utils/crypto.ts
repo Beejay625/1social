@@ -12,3 +12,4 @@ export function hashString(str: string): string {
   return hash.toString(36);
 }
 
+

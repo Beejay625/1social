@@ -24,3 +24,4 @@ export function useNFTTraitBatchUpdater() {
   return { batchUpdateTraits, updating, address };
 }
 
+

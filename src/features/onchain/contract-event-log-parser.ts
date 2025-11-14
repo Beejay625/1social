@@ -37,3 +37,4 @@ export function useContractEventLogParser() {
   return { logs, address };
 }
 
+

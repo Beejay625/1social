@@ -37,3 +37,4 @@ export function useContractBytecodeAnalyzer() {
   return { analyzeBytecode, analyses, address };
 }
 
+

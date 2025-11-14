@@ -64,3 +64,4 @@ export function useNFTCollectionRoyaltyPaymentTracker(collectionAddress?: string
   return { startTracking, stopTracking, trackings, isTracking, address };
 }
 
+

@@ -19,3 +19,4 @@ export function getRelativeTime(timestamp: bigint | number): string {
   return `${seconds}s ago`;
 }
 
+

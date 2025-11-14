@@ -17,3 +17,4 @@ export interface OracleFeed {
   active: boolean;
 }
 
+

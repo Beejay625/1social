@@ -19,3 +19,4 @@ export function getMultisigQuorum(
   return approvals >= threshold ? 100 : Math.round((approvals / threshold) * 100);
 }
 
+

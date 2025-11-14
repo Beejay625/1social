@@ -20,3 +20,4 @@ export interface Bid {
   status: 'pending' | 'accepted' | 'rejected';
 }
 
+

@@ -17,3 +17,4 @@ export function useContractRead(functionName: string, args: any[] = []) {
   return { data, isLoading, error };
 }
 
+

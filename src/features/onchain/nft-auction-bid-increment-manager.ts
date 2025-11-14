@@ -55,3 +55,4 @@ export function useNFTAuctionBidIncrementManager() {
   return { manageBidIncrement, managements, address };
 }
 
+

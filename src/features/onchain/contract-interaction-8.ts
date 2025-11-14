@@ -16,3 +16,4 @@ export function useContractInteraction8(contractAddress: string) {
   return { totalPosts: data, address };
 }
 
+

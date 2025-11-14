@@ -18,3 +18,4 @@ export function useContractInteraction20(contractAddress: string) {
   return { profile: data, address };
 }
 
+

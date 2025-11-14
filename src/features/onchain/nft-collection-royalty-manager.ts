@@ -30,3 +30,4 @@ export function useNFTCollectionRoyaltyManager() {
   return { setCollectionRoyalty, managing, address, royaltyInfo };
 }
 
+

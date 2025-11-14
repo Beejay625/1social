@@ -7,3 +7,4 @@ export const BADGE_TYPES = {
 
 export type BadgeType = typeof BADGE_TYPES[keyof typeof BADGE_TYPES];
 
+

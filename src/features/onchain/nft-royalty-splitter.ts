@@ -31,3 +31,4 @@ export function useNFTRoyaltySplitter() {
   return { splitRoyalties, splitting, address, royaltyInfo };
 }
 
+

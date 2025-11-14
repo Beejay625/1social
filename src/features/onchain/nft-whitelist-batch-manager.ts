@@ -24,3 +24,4 @@ export function useNFTWhitelistBatchManager() {
   return { batchManageWhitelist, managing, address };
 }
 
+

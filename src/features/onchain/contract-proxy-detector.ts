@@ -37,3 +37,4 @@ export function useContractProxyDetector() {
   return { detectProxy, detections, address };
 }
 
+

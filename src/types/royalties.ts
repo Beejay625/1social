@@ -16,3 +16,4 @@ export interface RoyaltyDistribution {
   timestamp: number;
 }
 
+

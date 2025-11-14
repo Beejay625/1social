@@ -26,3 +26,4 @@ export function PostCard({ id, author, content, timestamp, likes, comments }: Po
   );
 }
 
+

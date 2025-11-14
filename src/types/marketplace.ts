@@ -19,3 +19,4 @@ export interface MarketplaceOffer {
   status: 'pending' | 'accepted' | 'rejected' | 'expired';
 }
 
+

@@ -30,3 +30,4 @@ export function useTokenStakingRewardBooster() {
   return { applyBoost, boosting, address, currentBoost };
 }
 
+

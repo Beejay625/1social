@@ -55,3 +55,4 @@ export function useNFTCollectionMintPriceManager() {
   return { manageMintPrice, managements, address };
 }
 
+

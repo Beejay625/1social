@@ -36,3 +36,4 @@ export function useContractOracleIntegration() {
   return { oracleData, address };
 }
 
+

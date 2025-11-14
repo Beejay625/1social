@@ -36,3 +36,4 @@ export function useNFTRoyaltyChecker() {
   return { royalties, address };
 }
 
+

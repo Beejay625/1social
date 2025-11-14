@@ -37,3 +37,4 @@ export function useContractStackAnalyzer() {
   return { analyzeStack, analyses, address };
 }
 
+

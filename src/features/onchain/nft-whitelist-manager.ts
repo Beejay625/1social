@@ -37,3 +37,4 @@ export function useNFTWhitelistManager() {
   return { addToWhitelist, entries, address };
 }
 
+

@@ -37,3 +37,4 @@ export function useContractMemoryAnalyzer() {
   return { analyzeMemory, analyses, address };
 }
 
+

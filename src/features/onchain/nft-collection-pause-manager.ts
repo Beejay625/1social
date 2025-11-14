@@ -30,3 +30,4 @@ export function useNFTCollectionPauseManager() {
   return { pauseCollection, unpauseCollection, managing, address, paused };
 }
 
+

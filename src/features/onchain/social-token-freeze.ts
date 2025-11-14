@@ -65,3 +65,4 @@ export function useSocialTokenFreeze() {
   return { freezeToken, unfreezeToken, freezeActions, address };
 }
 
+

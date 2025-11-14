@@ -15,3 +15,4 @@ export function isWalletError(error: unknown): boolean {
   return false;
 }
 
+

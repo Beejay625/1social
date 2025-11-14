@@ -12,3 +12,4 @@ export function useSmartContractVerifier() {
   return { verifyContract, isConnected, address };
 }
 
+

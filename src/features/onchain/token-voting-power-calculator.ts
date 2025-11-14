@@ -42,3 +42,4 @@ export function useTokenVotingPowerCalculator() {
   return { calculateVotingPower, powerInfo, address, votingPower, totalSupply };
 }
 
+

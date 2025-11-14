@@ -37,3 +37,4 @@ export function useZKProofs() {
   return { generateProof, proofs, address };
 }
 
+

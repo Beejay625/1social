@@ -41,3 +41,4 @@ export function useContractCodeAnalyzer() {
   return { analyzeCode, analyses, address };
 }
 
+

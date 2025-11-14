@@ -37,3 +37,4 @@ export function useContractStructReader() {
   return { structs, address };
 }
 
+

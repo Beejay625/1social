@@ -22,3 +22,4 @@ export function useContractInteraction17(contractAddress: string) {
   return { interact, address };
 }
 
+

@@ -43,3 +43,4 @@ export function useNFTBidManager() {
   return { placeBid, bids, address };
 }
 
+

@@ -16,3 +16,4 @@ export function useContractInteraction9(contractAddress: string) {
   return { totalComments: data, address };
 }
 
+

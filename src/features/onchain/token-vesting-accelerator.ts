@@ -24,3 +24,4 @@ export function useTokenVestingAccelerator() {
   return { accelerateVesting, accelerating, address, vestingSchedule };
 }
 
+

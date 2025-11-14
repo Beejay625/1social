@@ -19,3 +19,4 @@ export interface AnalyticsReport {
   generatedAt: number;
 }
 
+

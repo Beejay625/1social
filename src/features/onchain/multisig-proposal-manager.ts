@@ -12,3 +12,4 @@ export function useMultiSigProposalManager() {
   return { createProposal, isConnected, address };
 }
 
+

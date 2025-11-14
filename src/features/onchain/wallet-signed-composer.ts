@@ -37,3 +37,4 @@ export function useWalletSignedComposer() {
   return { signContent, signedContent, isConnected, address };
 }
 
+

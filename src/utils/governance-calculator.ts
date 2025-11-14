@@ -20,3 +20,4 @@ export function calculateQuorum(
   return quorum;
 }
 
+

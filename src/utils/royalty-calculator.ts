@@ -16,3 +16,4 @@ export function calculateRemainingAmount(
   return (totalBigInt - royaltyBigInt).toString();
 }
 
+

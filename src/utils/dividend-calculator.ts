@@ -21,3 +21,4 @@ export function calculateDividendShare(
   return share.toString();
 }
 
+

@@ -7,3 +7,4 @@ export function formatGasCost(cost: bigint): string {
   return `${eth.toFixed(6)} ETH`;
 }
 
+

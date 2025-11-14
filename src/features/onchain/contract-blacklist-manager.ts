@@ -37,3 +37,4 @@ export function useContractBlacklistManager() {
   return { addToBlacklist, blacklists, address };
 }
 
+

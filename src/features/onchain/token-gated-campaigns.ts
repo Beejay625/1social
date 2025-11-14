@@ -42,3 +42,4 @@ export function useTokenGatedCampaigns() {
   return { checkAccess, hasAccess, balance };
 }
 
+

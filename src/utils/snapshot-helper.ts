@@ -25,3 +25,4 @@ export function getSnapshotBalance(
   return snapshot.balances[address] || '0';
 }
 
+

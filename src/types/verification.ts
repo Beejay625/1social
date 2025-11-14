@@ -16,3 +16,4 @@ export interface VerificationProof {
   timestamp: number;
 }
 
+

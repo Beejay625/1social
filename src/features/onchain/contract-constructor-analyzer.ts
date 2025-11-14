@@ -37,3 +37,4 @@ export function useContractConstructorAnalyzer() {
   return { analyzeConstructor, analyses, address };
 }
 
+

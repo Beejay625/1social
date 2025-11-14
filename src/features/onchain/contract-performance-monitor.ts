@@ -39,3 +39,4 @@ export function useContractPerformanceMonitor() {
   return { metrics, address };
 }
 
+

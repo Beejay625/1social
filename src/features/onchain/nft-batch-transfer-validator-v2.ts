@@ -34,3 +34,4 @@ export function useNFTBatchTransferValidatorV2() {
   return { validateTransfers, validation, address, balance };
 }
 
+

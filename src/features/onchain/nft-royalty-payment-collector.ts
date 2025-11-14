@@ -24,3 +24,4 @@ export function useNFTRoyaltyPaymentCollector() {
   return { collectRoyalties, collecting, address, pendingRoyalties };
 }
 
+

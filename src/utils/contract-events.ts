@@ -14,3 +14,4 @@ export function parseContractEvent(event: any): ContractEvent {
   };
 }
 
+

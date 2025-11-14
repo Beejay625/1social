@@ -24,3 +24,4 @@ export function useNFTMarketplaceOfferAcceptor() {
   return { acceptOffer, accepting, address, offers };
 }
 
+

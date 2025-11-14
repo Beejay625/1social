@@ -31,3 +31,4 @@ export function useNFTRoyaltyPaymentSplitter() {
   return { splitRoyaltyPayments, splitting, address, royaltyAmount };
 }
 
+

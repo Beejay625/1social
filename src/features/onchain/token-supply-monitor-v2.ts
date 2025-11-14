@@ -11,3 +11,4 @@ export function useTokenSupplyMonitorV2() {
   return { totalSupply, isConnected, address };
 }
 
+
