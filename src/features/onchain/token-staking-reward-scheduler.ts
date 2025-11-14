@@ -5,47 +5,40 @@
  * Schedule automatic reward claims with Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface RewardSchedule {
   scheduleId: string;
-  stakingPool: string;
+  poolId: string;
   claimInterval: number;
-  autoCompound: boolean;
-  active: boolean;
-  createdBy: string;
+  autoClaim: boolean;
+  scheduledBy: string;
   timestamp: number;
 }
 
 export function useTokenStakingRewardScheduler() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [schedules, setSchedules] = useState<RewardSchedule[]>([]);
 
-  const createSchedule = async (
-    stakingPool: string,
+  const scheduleRewards = async (
+    poolId: string,
     claimInterval: number,
-    autoCompound: boolean
+    autoClaim: boolean
   ): Promise<RewardSchedule> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!stakingPool.startsWith('0x')) {
-      throw new Error('Invalid staking pool address format');
-    }
-    if (claimInterval <= 0) {
-      throw new Error('Claim interval must be greater than zero');
-    }
     
-    const message = `Create reward schedule: ${stakingPool} interval ${claimInterval} seconds`;
+    const message = `Schedule rewards: ${poolId} interval ${claimInterval} auto ${autoClaim}`;
     await signMessageAsync({ message });
     
     const schedule: RewardSchedule = {
       scheduleId: `schedule-${Date.now()}`,
-      stakingPool,
+      poolId,
       claimInterval,
-      autoCompound,
-      active: true,
-      createdBy: address,
+      autoClaim,
+      scheduledBy: address,
       timestamp: Date.now(),
     };
     
@@ -53,6 +46,5 @@ export function useTokenStakingRewardScheduler() {
     return schedule;
   };
 
-  return { createSchedule, schedules, address };
+  return { scheduleRewards, schedules, address };
 }
-
