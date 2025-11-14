@@ -5,42 +5,54 @@
  * Track proposal status changes with Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
-import { useState } from 'react';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
+import { useState, useEffect } from 'react';
 
-export interface ProposalStatus {
-  statusId: string;
+export interface StatusTracking {
+  trackingId: string;
   proposalId: string;
-  status: 'pending' | 'active' | 'succeeded' | 'defeated' | 'executed';
-  trackedBy: string;
+  status: 'pending' | 'active' | 'succeeded' | 'defeated' | 'executed' | 'canceled';
+  previousStatus: string;
   timestamp: number;
 }
 
-export function useTokenGovernanceProposalStatusTracker() {
+export function useTokenGovernanceProposalStatusTracker(proposalId?: string) {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [statuses, setStatuses] = useState<ProposalStatus[]>([]);
+  const { writeContractAsync } = useWriteContract();
+  const [trackings, setTrackings] = useState<StatusTracking[]>([]);
+  const [isTracking, setIsTracking] = useState(false);
 
-  const trackStatus = async (
-    proposalId: string,
-    status: 'pending' | 'active' | 'succeeded' | 'defeated' | 'executed'
-  ): Promise<ProposalStatus> => {
+  const startTracking = async () => {
     if (!address) throw new Error('Reown wallet not connected');
     
-    const message = `Track proposal status: ${proposalId} status ${status}`;
+    const message = `Start tracking status: ${proposalId || 'all'}`;
     await signMessageAsync({ message });
     
-    const proposalStatus: ProposalStatus = {
-      statusId: `status-${Date.now()}`,
-      proposalId,
-      status,
-      trackedBy: address,
-      timestamp: Date.now(),
-    };
-    
-    setStatuses([...statuses, proposalStatus]);
-    return proposalStatus;
+    setIsTracking(true);
   };
 
-  return { trackStatus, statuses, address };
+  const stopTracking = () => {
+    setIsTracking(false);
+  };
+
+  useEffect(() => {
+    if (!isTracking) return;
+    
+    const interval = setInterval(() => {
+      const tracking: StatusTracking = {
+        trackingId: `status-${Date.now()}`,
+        proposalId: proposalId || '0',
+        status: 'pending',
+        previousStatus: 'pending',
+        timestamp: Date.now(),
+      };
+      
+      setTrackings((prev) => [tracking, ...prev.slice(0, 9)]);
+    }, 30000);
+    
+    return () => clearInterval(interval);
+  }, [isTracking, proposalId, address]);
+
+  return { startTracking, stopTracking, trackings, isTracking, address };
 }
