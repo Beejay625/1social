@@ -27,3 +27,22 @@ export function useOnchainContentReputationTracker() {
     query: { enabled: !!address && isConnected },
   });
 
+  const trackReputation = async (contentHash: string) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    setTracking(true);
+
+    try {
+      const message = `Track onchain reputation for content: ${contentHash}`;
+      await signMessageAsync({ message });
+
+      await writeContract({
+        address: '0x' as `0x${string}`,
+        abi: [],
+        functionName: 'trackContentReputation',
+        args: [contentHash, address],
+      });
+    } finally {
+      setTracking(false);
+    }
+  };
+
