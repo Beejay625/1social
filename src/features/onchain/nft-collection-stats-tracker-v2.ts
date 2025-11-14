@@ -5,49 +5,65 @@
  * Track collection statistics over time with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
-import { useState } from 'react';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
+import { useState, useEffect } from 'react';
 
 export interface CollectionStats {
   statsId: string;
   collectionAddress: string;
+  timeframe: string;
   totalVolume: string;
   floorPrice: string;
   averagePrice: string;
-  salesCount: number;
+  totalSales: number;
   uniqueOwners: number;
   timestamp: number;
 }
 
-export function useNFTCollectionStatsTrackerV2() {
+export function useNFTCollectionStatsTrackerV2(collectionAddress?: string) {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [stats, setStats] = useState<CollectionStats[]>([]);
+  const [isTracking, setIsTracking] = useState(false);
 
-  const track = async (collectionAddress: string): Promise<CollectionStats> => {
+  const startTracking = async (timeframe: string) => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x')) {
+    if (collectionAddress && !collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Track collection stats: ${collectionAddress}`;
+    const message = `Start tracking stats: ${collectionAddress || 'all'} timeframe ${timeframe}`;
     await signMessageAsync({ message });
     
-    const stats: CollectionStats = {
-      statsId: `stats-${Date.now()}`,
-      collectionAddress,
-      totalVolume: '0',
-      floorPrice: '0',
-      averagePrice: '0',
-      salesCount: 0,
-      uniqueOwners: 0,
-      timestamp: Date.now(),
-    };
-    
-    setStats([...stats, stats]);
-    return stats;
+    setIsTracking(true);
   };
 
-  return { track, stats, address };
-}
+  const stopTracking = () => {
+    setIsTracking(false);
+  };
 
+  useEffect(() => {
+    if (!isTracking) return;
+    
+    const interval = setInterval(() => {
+      const stat: CollectionStats = {
+        statsId: `stats-${Date.now()}`,
+        collectionAddress: collectionAddress || '0x0',
+        timeframe: '24h',
+        totalVolume: '0',
+        floorPrice: '0',
+        averagePrice: '0',
+        totalSales: 0,
+        uniqueOwners: 0,
+        timestamp: Date.now(),
+      };
+      
+      setStats((prev) => [stat, ...prev.slice(0, 9)]);
+    }, 60000);
+    
+    return () => clearInterval(interval);
+  }, [isTracking, collectionAddress, address]);
+
+  return { startTracking, stopTracking, stats, isTracking, address };
+}
