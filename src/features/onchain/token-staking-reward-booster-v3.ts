@@ -10,7 +10,7 @@ import { useState } from 'react';
 
 export interface RewardBoost {
   boostId: string;
-  stakingPool: string;
+  poolId: string;
   multiplier: number;
   duration: number;
   boostedBy: string;
@@ -23,28 +23,22 @@ export function useTokenStakingRewardBoosterV3() {
   const { writeContractAsync } = useWriteContract();
   const [boosts, setBoosts] = useState<RewardBoost[]>([]);
 
-  const createBoost = async (
-    stakingPool: string,
+  const boostRewards = async (
+    poolId: string,
     multiplier: number,
     duration: number
   ): Promise<RewardBoost> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!stakingPool.startsWith('0x')) {
-      throw new Error('Invalid staking pool address format');
-    }
     if (multiplier <= 0) {
-      throw new Error('Multiplier must be greater than zero');
-    }
-    if (duration <= 0) {
-      throw new Error('Duration must be greater than zero');
+      throw new Error('Multiplier must be greater than 0');
     }
     
-    const message = `Create reward boost V3: ${stakingPool} multiplier ${multiplier}x`;
+    const message = `Boost rewards V3: ${poolId} multiplier ${multiplier}x duration ${duration}`;
     await signMessageAsync({ message });
     
     const boost: RewardBoost = {
       boostId: `boost-v3-${Date.now()}`,
-      stakingPool,
+      poolId,
       multiplier,
       duration,
       boostedBy: address,
@@ -55,6 +49,5 @@ export function useTokenStakingRewardBoosterV3() {
     return boost;
   };
 
-  return { createBoost, boosts, address };
+  return { boostRewards, boosts, address };
 }
-
