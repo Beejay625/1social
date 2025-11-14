@@ -950,10 +950,10 @@ src/
 ## Core Features
 
 ### 🌐 Web3-Native Publishing
-- One-click cross-protocol publishing (Farcaster, Lens, Mirror)
-- Blockchain-timestamped scheduling
-- IPFS/Arweave permanent storage
-- NFT content minting and tracking
+- One-click cross-protocol publishing (Farcaster, Lens, Mirror) with Reown wallet integration
+- Blockchain-timestamped scheduling with gas optimization
+- IPFS/Arweave permanent storage with cryptographic verification
+- NFT content minting and tracking with full metadata support
 
 ### 📊 Onchain Analytics
 - Blockchain-verified performance metrics
