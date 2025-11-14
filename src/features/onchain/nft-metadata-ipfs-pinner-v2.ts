@@ -5,14 +5,14 @@
  * Pin NFT metadata to IPFS with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface IPFSPinning {
+export interface IPFSPin {
   pinId: string;
-  tokenId: string;
   collectionAddress: string;
-  metadata: Record<string, any>;
+  tokenId: string;
+  metadataUri: string;
   ipfsHash: string;
   pinnedBy: string;
   timestamp: number;
@@ -21,35 +21,37 @@ export interface IPFSPinning {
 export function useNFTMetadataIPFSPinnerV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [pinnings, setPinnings] = useState<IPFSPinning[]>([]);
+  const { writeContractAsync } = useWriteContract();
+  const [pins, setPins] = useState<IPFSPin[]>([]);
 
-  const pin = async (
-    tokenId: string,
+  const pinMetadata = async (
     collectionAddress: string,
-    metadata: Record<string, any>
-  ): Promise<IPFSPinning> => {
+    tokenId: string,
+    metadataUri: string
+  ): Promise<IPFSPin> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Pin metadata to IPFS: ${collectionAddress} #${tokenId}`;
+    const message = `Pin metadata V2: ${collectionAddress} #${tokenId} to IPFS`;
     await signMessageAsync({ message });
     
-    const pinning: IPFSPinning = {
-      pinId: `pin-${Date.now()}`,
-      tokenId,
+    const ipfsHash = `Qm${Date.now().toString(36)}`;
+    
+    const pin: IPFSPin = {
+      pinId: `pin-v2-${Date.now()}`,
       collectionAddress,
-      metadata,
-      ipfsHash: `Qm${Date.now().toString(36)}`,
+      tokenId,
+      metadataUri,
+      ipfsHash,
       pinnedBy: address,
       timestamp: Date.now(),
     };
     
-    setPinnings([...pinnings, pinning]);
-    return pinning;
+    setPins([...pins, pin]);
+    return pin;
   };
 
-  return { pin, pinnings, address };
+  return { pinMetadata, pins, address };
 }
-
