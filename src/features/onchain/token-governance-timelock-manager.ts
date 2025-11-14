@@ -5,14 +5,13 @@
  * Manage governance timelocks with Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface TimelockManagement {
-  managementId: string;
+export interface Timelock {
+  timelockId: string;
   proposalId: string;
-  timelockDuration: number;
-  action: 'set' | 'extend' | 'reduce';
+  unlockTime: number;
   managedBy: string;
   timestamp: number;
 }
@@ -20,34 +19,29 @@ export interface TimelockManagement {
 export function useTokenGovernanceTimelockManager() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [managements, setManagements] = useState<TimelockManagement[]>([]);
+  const { writeContractAsync } = useWriteContract();
+  const [timelocks, setTimelocks] = useState<Timelock[]>([]);
 
-  const manageTimelock = async (
+  const createTimelock = async (
     proposalId: string,
-    timelockDuration: number,
-    action: 'set' | 'extend' | 'reduce'
-  ): Promise<TimelockManagement> => {
+    unlockTime: number
+  ): Promise<Timelock> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (timelockDuration < 0) {
-      throw new Error('Timelock duration cannot be negative');
-    }
     
-    const message = `Manage timelock: ${proposalId} ${action} to ${timelockDuration} seconds`;
+    const message = `Create timelock: ${proposalId} unlock at ${unlockTime}`;
     await signMessageAsync({ message });
     
-    const management: TimelockManagement = {
-      managementId: `timelock-${Date.now()}`,
+    const timelock: Timelock = {
+      timelockId: `timelock-${Date.now()}`,
       proposalId,
-      timelockDuration,
-      action,
+      unlockTime,
       managedBy: address,
       timestamp: Date.now(),
     };
     
-    setManagements([...managements, management]);
-    return management;
+    setTimelocks([...timelocks, timelock]);
+    return timelock;
   };
 
-  return { manageTimelock, managements, address };
+  return { createTimelock, timelocks, address };
 }
-
