@@ -12,9 +12,12 @@ export interface AttributeUpdate {
   updateId: string;
   tokenId: string;
   collectionAddress: string;
-  attributes: Record<string, any>;
-  txHash: string;
+  attributes: Array<{
+    trait_type: string;
+    value: string | number;
+  }>;
   updatedBy: string;
+  txHash: string;
   timestamp: number;
 }
 
@@ -23,17 +26,20 @@ export function useNFTAttributeUpdaterV3() {
   const { signMessageAsync } = useSignMessage();
   const [updates, setUpdates] = useState<AttributeUpdate[]>([]);
 
-  const update = async (
+  const updateAttributes = async (
     tokenId: string,
     collectionAddress: string,
-    attributes: Record<string, any>
+    attributes: Array<{
+      trait_type: string;
+      value: string | number;
+    }>
   ): Promise<AttributeUpdate> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (Object.keys(attributes).length === 0) {
-      throw new Error('Attributes cannot be empty');
+    if (attributes.length === 0) {
+      throw new Error('At least one attribute is required');
     }
     
     const message = `Update attributes: ${collectionAddress} #${tokenId}`;
@@ -44,8 +50,8 @@ export function useNFTAttributeUpdaterV3() {
       tokenId,
       collectionAddress,
       attributes,
-      txHash: `0x${Date.now().toString(16)}`,
       updatedBy: address,
+      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
@@ -53,6 +59,5 @@ export function useNFTAttributeUpdaterV3() {
     return update;
   };
 
-  return { update, updates, address };
+  return { updateAttributes, updates, address };
 }
-
