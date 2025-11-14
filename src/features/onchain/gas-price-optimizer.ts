@@ -2,43 +2,52 @@
 
 /**
  * Gas Price Optimizer
- * Optimizes gas prices for transactions using Reown wallet
+ * Optimize gas prices for transactions with Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface GasPriceRecommendation {
-  slow: string;
-  standard: string;
-  fast: string;
-  recommended: string;
+export interface GasOptimization {
+  optimizationId: string;
+  transactionType: string;
+  currentGasPrice: string;
+  optimizedGasPrice: string;
+  savings: string;
+  optimizedBy: string;
   timestamp: number;
 }
 
 export function useGasPriceOptimizer() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [recommendations, setRecommendations] = useState<GasPriceRecommendation[]>([]);
+  const [optimizations, setOptimizations] = useState<GasOptimization[]>([]);
 
-  const optimize = async (priority: 'slow' | 'standard' | 'fast' = 'standard'): Promise<GasPriceRecommendation> => {
+  const optimizeGasPrice = async (
+    transactionType: string,
+    currentGasPrice: string
+  ): Promise<GasOptimization> => {
     if (!address) throw new Error('Reown wallet not connected');
     
-    const message = `Optimize gas price: ${priority}`;
+    const message = `Optimize gas price: ${transactionType} current ${currentGasPrice}`;
     await signMessageAsync({ message });
     
-    const recommendation: GasPriceRecommendation = {
-      slow: '20000000000',
-      standard: '30000000000',
-      fast: '50000000000',
-      recommended: '30000000000',
+    const optimizedGasPrice = (parseFloat(currentGasPrice) * 0.9).toFixed(0);
+    const savings = (parseFloat(currentGasPrice) - parseFloat(optimizedGasPrice)).toFixed(0);
+    
+    const optimization: GasOptimization = {
+      optimizationId: `gas-optimize-${Date.now()}`,
+      transactionType,
+      currentGasPrice,
+      optimizedGasPrice,
+      savings,
+      optimizedBy: address,
       timestamp: Date.now(),
     };
     
-    setRecommendations([...recommendations, recommendation]);
-    return recommendation;
+    setOptimizations([...optimizations, optimization]);
+    return optimization;
   };
 
-  return { optimize, recommendations, address };
+  return { optimizeGasPrice, optimizations, address };
 }
-
