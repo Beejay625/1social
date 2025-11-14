@@ -5,7 +5,7 @@
  * Grant batch approvals with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface BatchApproval {
@@ -13,42 +13,38 @@ export interface BatchApproval {
   collectionAddress: string;
   operator: string;
   tokenIds: string[];
-  approved: boolean;
   grantedBy: string;
-  txHash: string;
   timestamp: number;
 }
 
 export function useNFTBatchApprovalGranterV3() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [approvals, setApprovals] = useState<BatchApproval[]>([]);
 
   const grantBatchApproval = async (
     collectionAddress: string,
     operator: string,
-    tokenIds: string[],
-    approved: boolean
+    tokenIds: string[]
   ): Promise<BatchApproval> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x') || !operator.startsWith('0x')) {
       throw new Error('Invalid address format');
     }
     if (tokenIds.length === 0) {
-      throw new Error('At least one token ID is required');
+      throw new Error('Token IDs array cannot be empty');
     }
     
-    const message = `Grant batch approval: ${collectionAddress} operator ${operator} ${tokenIds.length} tokens`;
+    const message = `Grant batch approval V3: ${collectionAddress} to ${operator} for ${tokenIds.length} tokens`;
     await signMessageAsync({ message });
     
     const approval: BatchApproval = {
-      approvalId: `approval-${Date.now()}`,
+      approvalId: `approval-v3-${Date.now()}`,
       collectionAddress,
       operator,
       tokenIds,
-      approved,
       grantedBy: address,
-      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
@@ -58,4 +54,3 @@ export function useNFTBatchApprovalGranterV3() {
 
   return { grantBatchApproval, approvals, address };
 }
-
