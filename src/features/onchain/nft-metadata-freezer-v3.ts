@@ -12,8 +12,8 @@ export interface MetadataFreeze {
   freezeId: string;
   tokenId: string;
   collectionAddress: string;
-  action: 'freeze' | 'unfreeze';
-  txHash: string;
+  frozen: boolean;
+  reason?: string;
   frozenBy: string;
   timestamp: number;
 }
@@ -23,25 +23,25 @@ export function useNFTMetadataFreezerV3() {
   const { signMessageAsync } = useSignMessage();
   const [freezes, setFreezes] = useState<MetadataFreeze[]>([]);
 
-  const freeze = async (
+  const freezeMetadata = async (
     tokenId: string,
     collectionAddress: string,
-    action: 'freeze' | 'unfreeze'
+    reason?: string
   ): Promise<MetadataFreeze> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `${action} metadata: ${collectionAddress} #${tokenId}`;
+    const message = `Freeze metadata: ${collectionAddress} #${tokenId}${reason ? ` - ${reason}` : ''}`;
     await signMessageAsync({ message });
     
     const freeze: MetadataFreeze = {
       freezeId: `freeze-${Date.now()}`,
       tokenId,
       collectionAddress,
-      action,
-      txHash: `0x${Date.now().toString(16)}`,
+      frozen: true,
+      reason,
       frozenBy: address,
       timestamp: Date.now(),
     };
@@ -50,6 +50,27 @@ export function useNFTMetadataFreezerV3() {
     return freeze;
   };
 
-  return { freeze, freezes, address };
-}
+  const unfreezeMetadata = async (
+    tokenId: string,
+    collectionAddress: string
+  ): Promise<MetadataFreeze> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `Unfreeze metadata: ${collectionAddress} #${tokenId}`;
+    await signMessageAsync({ message });
+    
+    const freeze: MetadataFreeze = {
+      freezeId: `unfreeze-${Date.now()}`,
+      tokenId,
+      collectionAddress,
+      frozen: false,
+      frozenBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setFreezes([...freezes, freeze]);
+    return freeze;
+  };
 
+  return { freezeMetadata, unfreezeMetadata, freezes, address };
+}
