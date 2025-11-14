@@ -980,10 +980,10 @@ src/
 - Revenue tracking (tokens, NFTs, tips) with detailed analytics
 
 ### 🔐 Security & Compliance
-- Wallet-based authentication
-- DAO-governed moderation
-- Onchain reputation system
-- Smart contract compliance checks
+- Wallet-based authentication using Reown AppKit
+- DAO-governed moderation with token-weighted voting
+- Onchain reputation system with transparent scoring
+- Smart contract compliance checks with automated verification
 
 ## Why Choose 1Social?
 
