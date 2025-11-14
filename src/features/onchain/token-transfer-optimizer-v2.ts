@@ -13,9 +13,9 @@ export interface TransferOptimization {
   tokenAddress: string;
   recipient: string;
   amount: string;
+  originalGas: string;
   optimizedGas: string;
-  estimatedSavings: string;
-  strategy: string;
+  savings: string;
   timestamp: number;
 }
 
@@ -30,24 +30,25 @@ export function useTokenTransferOptimizerV2() {
     amount: string
   ): Promise<TransferOptimization> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x')) {
-      throw new Error('Invalid token address format');
-    }
-    if (!recipient.startsWith('0x')) {
-      throw new Error('Invalid recipient address format');
+    if (!tokenAddress.startsWith('0x') || !recipient.startsWith('0x')) {
+      throw new Error('Invalid address format');
     }
     
-    const message = `Optimize transfer: ${tokenAddress} to ${recipient}`;
+    const message = `Optimize transfer: ${tokenAddress} ${amount} to ${recipient}`;
     await signMessageAsync({ message });
+    
+    const originalGas = '65000';
+    const optimizedGas = '45000';
+    const savings = (parseInt(originalGas) - parseInt(optimizedGas)).toString();
     
     const optimization: TransferOptimization = {
       optimizationId: `opt-${Date.now()}`,
       tokenAddress,
       recipient,
       amount,
-      optimizedGas: '21000',
-      estimatedSavings: '5000',
-      strategy: 'batch',
+      originalGas,
+      optimizedGas,
+      savings,
       timestamp: Date.now(),
     };
     
@@ -57,4 +58,3 @@ export function useTokenTransferOptimizerV2() {
 
   return { optimize, optimizations, address };
 }
-
