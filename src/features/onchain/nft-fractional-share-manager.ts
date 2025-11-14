@@ -5,7 +5,7 @@
  * Manage fractional NFT shares with Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface FractionalShare {
@@ -14,17 +14,17 @@ export interface FractionalShare {
   collectionAddress: string;
   totalShares: number;
   sharePrice: string;
-  owner: string;
-  sharesOwned: number;
+  managedBy: string;
   timestamp: number;
 }
 
 export function useNFTFractionalShareManager() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [shares, setShares] = useState<FractionalShare[]>([]);
 
-  const createFractional = async (
+  const createFractionalShares = async (
     tokenId: string,
     collectionAddress: string,
     totalShares: number,
@@ -34,11 +34,8 @@ export function useNFTFractionalShareManager() {
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (totalShares <= 0) {
-      throw new Error('Total shares must be greater than zero');
-    }
     
-    const message = `Create fractional: ${collectionAddress} #${tokenId} ${totalShares} shares`;
+    const message = `Create fractional shares: ${tokenId} in ${collectionAddress} ${totalShares} shares at ${sharePrice}`;
     await signMessageAsync({ message });
     
     const share: FractionalShare = {
@@ -47,8 +44,7 @@ export function useNFTFractionalShareManager() {
       collectionAddress,
       totalShares,
       sharePrice,
-      owner: address,
-      sharesOwned: totalShares,
+      managedBy: address,
       timestamp: Date.now(),
     };
     
@@ -56,5 +52,5 @@ export function useNFTFractionalShareManager() {
     return share;
   };
 
-  return { createFractional, shares, address };
+  return { createFractionalShares, shares, address };
 }
