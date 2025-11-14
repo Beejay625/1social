@@ -8,14 +8,13 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface ValidationResult {
+export interface MetadataValidation {
   validationId: string;
   tokenId: string;
   collectionAddress: string;
-  metadata: Record<string, any>;
-  isValid: boolean;
+  metadataURI: string;
+  valid: boolean;
   errors: string[];
-  warnings: string[];
   validatedBy: string;
   timestamp: number;
 }
@@ -23,33 +22,31 @@ export interface ValidationResult {
 export function useNFTMetadataValidatorV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [validations, setValidations] = useState<ValidationResult[]>([]);
+  const [validations, setValidations] = useState<MetadataValidation[]>([]);
 
-  const validate = async (
+  const validateMetadata = async (
     tokenId: string,
     collectionAddress: string,
-    metadata: Record<string, any>
-  ): Promise<ValidationResult> => {
+    metadataURI: string
+  ): Promise<MetadataValidation> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Validate metadata: ${collectionAddress} #${tokenId}`;
+    const message = `Validate metadata V2: ${tokenId} in ${collectionAddress}`;
     await signMessageAsync({ message });
     
-    const errors: string[] = [];
-    const warnings: string[] = [];
-    const isValid = errors.length === 0;
+    const valid = metadataURI.startsWith('http://') || metadataURI.startsWith('https://') || metadataURI.startsWith('ipfs://');
+    const errors = valid ? [] : ['Invalid URI format'];
     
-    const validation: ValidationResult = {
-      validationId: `validate-${Date.now()}`,
+    const validation: MetadataValidation = {
+      validationId: `validate-v2-${Date.now()}`,
       tokenId,
       collectionAddress,
-      metadata,
-      isValid,
+      metadataURI,
+      valid,
       errors,
-      warnings,
       validatedBy: address,
       timestamp: Date.now(),
     };
@@ -58,5 +55,5 @@ export function useNFTMetadataValidatorV2() {
     return validation;
   };
 
-  return { validate, validations, address };
+  return { validateMetadata, validations, address };
 }
