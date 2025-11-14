@@ -431,28 +431,28 @@ All features are fully integrated with **Reown AppKit** and use `useAccount`, `u
 ### Newest 20 Onchain Features (All Powered by Reown Wallet)
 
 #### Token Operations & Management
-- **Token Governance Proposal Canceler** - Cancel governance proposals with Reown wallet
-- **Token Staking Lock Manager** - Manage staking lock periods with Reown wallet
-- **Token Governance Quorum Calculator** - Calculate quorum requirements with Reown wallet
-- **Token Reward Vesting Creator** - Create reward vesting schedules with Reown wallet
-- **Token Emission Scheduler** - Schedule token emissions with Reown wallet
-- **Token Liquidity Pool Fee Distributor** - Distribute LP fees to recipients with Reown wallet
-- **Token Transfer Fee Manager** - Manage transfer fees for tokens with Reown wallet
-- **Token Allowance Revoker** - Revoke token allowances with Reown wallet
-- **Token Recovery Manager** - Recover tokens from contracts with Reown wallet
-- **Token Liquidity Remover V3** - Remove liquidity from pools with enhanced features via Reown wallet
-- **Token Staking Compounder V3** - Compound staking rewards with enhanced features via Reown wallet
-- **Token Lock Extender** - Extend token lock periods with Reown wallet
+- **Token Vesting Releaser** - Release vested tokens with Reown wallet
+- **Token Governance Delegation Tracker** - Track governance delegations with Reown wallet
+- **Token Liquidity Pool Creator V3** - Create liquidity pools with enhanced features via Reown wallet
+- **Token Multicall Executor** - Execute multiple contract calls in a single transaction with Reown wallet
+- **Token Multi-Send Executor V2** - Execute multiple token transfers with enhanced features via Reown wallet
+- **Token Price Alert Manager V2** - Set and manage price alerts with enhanced features via Reown wallet
+- **Token Slippage Calculator V2** - Calculate slippage for token swaps with enhanced features via Reown wallet
+- **Token Whitelist Manager V2** - Manage token whitelists with enhanced features via Reown wallet
+- **Token Balance Tracker V2** - Track token balances across multiple addresses with enhanced features via Reown wallet
+- **Token Transfer Optimizer V2** - Optimize token transfers for gas efficiency with enhanced features via Reown wallet
+- **Token Tax Calculator V2** - Calculate taxes for token transactions with enhanced features via Reown wallet
 
 #### NFT Operations & Marketplace
-- **NFT Batch Mint Optimizer V2** - Optimize batch mints for gas efficiency with enhanced features via Reown wallet
-- **NFT Collection Pause Manager V2** - Pause/unpause NFT collections with enhanced features via Reown wallet
-- **NFT Marketplace Bulk Buyer V2** - Bulk buy NFTs from marketplaces with enhanced features via Reown wallet
-- **NFT Royalty Payment Collector V2** - Collect pending royalties with enhanced features via Reown wallet
-- **NFT Batch Approval Revoker V2** - Batch revoke NFT approvals with enhanced features via Reown wallet
-- **NFT Listing Price Optimizer V2** - Optimize NFT listing prices with enhanced features via Reown wallet
-- **NFT Marketplace Offer Canceler V3** - Cancel marketplace offers with enhanced features via Reown wallet
-- **NFT Collection Supply Manager V3** - Manage collection max supply with enhanced features via Reown wallet
+- **NFT Attribute Updater V3** - Update NFT attributes with enhanced features via Reown wallet
+- **NFT Metadata Freezer V3** - Freeze NFT metadata with enhanced features via Reown wallet
+- **NFT Owner History Tracker V2** - Track NFT ownership history with enhanced features via Reown wallet
+- **NFT Lazy Mint Batch V3** - Lazy mint multiple NFTs in batch with enhanced features via Reown wallet
+- **NFT Trait Analyzer V2** - Analyze NFT traits and rarity with enhanced features via Reown wallet
+- **NFT Collection Verifier V2** - Verify NFT collection authenticity with enhanced features via Reown wallet
+- **NFT Marketplace Listing Manager V2** - Manage NFT marketplace listings with enhanced features via Reown wallet
+- **NFT Approval Checker V3** - Check NFT approvals with enhanced features via Reown wallet
+- **NFT Staking Rewards V2** - Claim NFT staking rewards with enhanced features via Reown wallet
 
 All 20 features are fully integrated with **Reown AppKit** and use `useAccount` and `useSignMessage` hooks for seamless wallet connectivity and transaction signing.
 
