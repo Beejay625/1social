@@ -3,44 +3,45 @@
 import { useAccount, useWriteContract, useReadContract, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export function useTokenStakingCompounderV2() {
+export function useTokenLockExtenderV2() {
   const { address, isConnected } = useAccount();
   const { writeContract } = useWriteContract();
   const { signMessageAsync } = useSignMessage();
-  const [compounding, setCompounding] = useState(false);
+  const [extending, setExtending] = useState(false);
 
-  const { data: rewards } = useReadContract({
+  const { data: lockData } = useReadContract({
     address: '0x' as `0x${string}`,
     abi: [],
-    functionName: 'pendingRewards',
+    functionName: 'getLock',
     args: address ? [address] : undefined,
     query: { enabled: !!address && isConnected },
   });
 
-  const compound = async (poolAddress: string) => {
+  const extend = async (lockAddress: string, additionalDays: number) => {
     if (!address || !isConnected) throw new Error('Wallet not connected');
-    setCompounding(true);
+    setExtending(true);
 
     try {
-      const message = `Compound staking rewards in pool: ${poolAddress}`;
+      const message = `Extend lock by ${additionalDays} days`;
       await signMessageAsync({ message });
 
       await writeContract({
-        address: poolAddress as `0x${string}`,
+        address: lockAddress as `0x${string}`,
         abi: [],
-        functionName: 'compound',
-        args: [address],
+        functionName: 'extendLock',
+        args: [address, additionalDays],
       });
     } finally {
-      setCompounding(false);
+      setExtending(false);
     }
   };
 
   return {
-    compound,
-    compounding,
+    extend,
+    extending,
     address,
     isConnected,
-    rewards,
+    lockData,
   };
 }
+
