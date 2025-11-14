@@ -8,50 +8,53 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface ListingManagement {
+export interface Listing {
   listingId: string;
   tokenId: string;
   collectionAddress: string;
-  action: 'list' | 'update' | 'cancel';
   price: string;
   currency: string;
-  txHash: string;
-  managedBy: string;
+  marketplace: string;
+  expiresAt?: number;
+  active: boolean;
+  listedBy: string;
   timestamp: number;
 }
 
 export function useNFTMarketplaceListingManagerV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [listings, setListings] = useState<ListingManagement[]>([]);
+  const [listings, setListings] = useState<Listing[]>([]);
 
-  const manage = async (
+  const createListing = async (
     tokenId: string,
     collectionAddress: string,
-    action: 'list' | 'update' | 'cancel',
     price: string,
-    currency: string
-  ): Promise<ListingManagement> => {
+    currency: string,
+    marketplace: string,
+    expiresAt?: number
+  ): Promise<Listing> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (action !== 'cancel' && parseFloat(price) <= 0) {
-      throw new Error('Price must be greater than zero');
+    if (expiresAt && expiresAt <= Date.now()) {
+      throw new Error('Expiration time must be in the future');
     }
     
-    const message = `${action} listing: ${collectionAddress} #${tokenId} ${price} ${currency}`;
+    const message = `Create listing: ${collectionAddress} #${tokenId} ${price} ${currency}`;
     await signMessageAsync({ message });
     
-    const listing: ListingManagement = {
-      listingId: `list-${Date.now()}`,
+    const listing: Listing = {
+      listingId: `listing-${Date.now()}`,
       tokenId,
       collectionAddress,
-      action,
       price,
       currency,
-      txHash: `0x${Date.now().toString(16)}`,
-      managedBy: address,
+      marketplace,
+      expiresAt,
+      active: true,
+      listedBy: address,
       timestamp: Date.now(),
     };
     
@@ -59,6 +62,16 @@ export function useNFTMarketplaceListingManagerV2() {
     return listing;
   };
 
-  return { manage, listings, address };
-}
+  const cancelListing = async (listingId: string): Promise<void> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    
+    const message = `Cancel listing: ${listingId}`;
+    await signMessageAsync({ message });
+    
+    setListings((prev) => prev.map(listing => 
+      listing.listingId === listingId ? { ...listing, active: false } : listing
+    ));
+  };
 
+  return { createListing, cancelListing, listings, address };
+}
