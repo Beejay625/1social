@@ -2,18 +2,20 @@
 
 /**
  * Token Staking Calculator
- * Calculates staking rewards based on APY and duration using Reown wallet
+ * Calculate staking rewards based on APY and duration with Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface StakingCalculation {
-  principal: string;
+  calculationId: string;
+  poolId: string;
+  stakedAmount: string;
   apy: number;
   duration: number;
-  rewards: string;
-  totalReturn: string;
+  estimatedReward: string;
+  calculatedBy: string;
   timestamp: number;
 }
 
@@ -22,30 +24,27 @@ export function useTokenStakingCalculator() {
   const { signMessageAsync } = useSignMessage();
   const [calculations, setCalculations] = useState<StakingCalculation[]>([]);
 
-  const calculate = async (
-    principal: string,
+  const calculateStaking = async (
+    poolId: string,
+    stakedAmount: string,
     apy: number,
-    durationDays: number
+    duration: number
   ): Promise<StakingCalculation> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (parseFloat(principal) <= 0 || apy < 0 || durationDays <= 0) {
-      throw new Error('Principal, APY, and duration must be positive values');
-    }
     
-    const message = `Calculate staking rewards: ${principal} at ${apy}% APY`;
+    const message = `Calculate staking: ${poolId} amount ${stakedAmount} APY ${apy}% duration ${duration} days`;
     await signMessageAsync({ message });
     
-    const principalNum = parseFloat(principal);
-    const years = durationDays / 365;
-    const rewards = principalNum * (apy / 100) * years;
-    const totalReturn = principalNum + rewards;
+    const estimatedReward = (parseFloat(stakedAmount) * (apy / 100) * (duration / 365)).toFixed(4);
     
     const calculation: StakingCalculation = {
-      principal,
+      calculationId: `staking-calc-${Date.now()}`,
+      poolId,
+      stakedAmount,
       apy,
-      duration: durationDays,
-      rewards: rewards.toString(),
-      totalReturn: totalReturn.toString(),
+      duration,
+      estimatedReward,
+      calculatedBy: address,
       timestamp: Date.now(),
     };
     
@@ -53,6 +52,5 @@ export function useTokenStakingCalculator() {
     return calculation;
   };
 
-  return { calculate, calculations, address };
+  return { calculateStaking, calculations, address };
 }
-
