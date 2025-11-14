@@ -10,12 +10,11 @@ import { useState } from 'react';
 
 export interface ListingOptimization {
   optimizationId: string;
-  listingId: string;
   tokenId: string;
   collectionAddress: string;
-  currentPrice: string;
   optimizedPrice: string;
-  recommendedMarketplace: string;
+  visibilityScore: number;
+  optimizedBy: string;
   timestamp: number;
 }
 
@@ -24,28 +23,28 @@ export function useNFTMarketplaceListingOptimizer() {
   const { signMessageAsync } = useSignMessage();
   const [optimizations, setOptimizations] = useState<ListingOptimization[]>([]);
 
-  const optimize = async (
-    listingId: string,
+  const optimizeListing = async (
     tokenId: string,
-    collectionAddress: string,
-    currentPrice: string
+    collectionAddress: string
   ): Promise<ListingOptimization> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Optimize listing: ${collectionAddress} #${tokenId}`;
+    const message = `Optimize listing: ${tokenId} in ${collectionAddress}`;
     await signMessageAsync({ message });
     
+    const optimizedPrice = (Math.random() * 10 + 0.1).toFixed(4);
+    const visibilityScore = Math.random() * 100;
+    
     const optimization: ListingOptimization = {
-      optimizationId: `opt-${Date.now()}`,
-      listingId,
+      optimizationId: `optimize-${Date.now()}`,
       tokenId,
       collectionAddress,
-      currentPrice,
-      optimizedPrice: (parseFloat(currentPrice) * 0.95).toString(),
-      recommendedMarketplace: 'OpenSea',
+      optimizedPrice,
+      visibilityScore,
+      optimizedBy: address,
       timestamp: Date.now(),
     };
     
@@ -53,6 +52,5 @@ export function useNFTMarketplaceListingOptimizer() {
     return optimization;
   };
 
-  return { optimize, optimizations, address };
+  return { optimizeListing, optimizations, address };
 }
-
