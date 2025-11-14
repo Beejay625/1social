@@ -902,13 +902,13 @@ Visit http://localhost:3000 in your browser to access the application.
 ## Supported Protocols & Platforms
 
 ### Decentralized Protocols
-- **Farcaster** - Decentralized social network with frames support
-- **Lens Protocol** - Composable web3 social graph
-- **Mirror** - Decentralized publishing and NFT minting
+- **Farcaster** - Decentralized social network with frames support and onchain identity
+- **Lens Protocol** - Composable web3 social graph with NFT-based profiles
+- **Mirror** - Decentralized publishing and NFT minting platform
 
 ### Traditional Platforms
-- **Instagram** - Photo and video sharing
-- **X (Twitter)** - Microblogging
+- **Instagram** - Photo and video sharing platform
+- **X (Twitter)** - Microblogging and social networking service
 
 ## Key Web3 Capabilities
 
