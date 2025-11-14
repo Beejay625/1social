@@ -5,7 +5,7 @@
  * Freeze NFT metadata with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface MetadataFreeze {
@@ -20,6 +20,7 @@ export interface MetadataFreeze {
 export function useNFTMetadataFreezerV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [freezes, setFreezes] = useState<MetadataFreeze[]>([]);
 
   const freezeMetadata = async (
@@ -31,11 +32,11 @@ export function useNFTMetadataFreezerV2() {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Freeze metadata: ${collectionAddress} #${tokenId}`;
+    const message = `Freeze metadata V2: ${tokenId} in ${collectionAddress}`;
     await signMessageAsync({ message });
     
     const freeze: MetadataFreeze = {
-      freezeId: `freeze-${Date.now()}`,
+      freezeId: `freeze-v2-${Date.now()}`,
       tokenId,
       collectionAddress,
       frozen: true,
