@@ -974,10 +974,10 @@ src/
 - Token-gated auto-responses with holder verification
 
 ### 💎 Web3 Commerce
-- NFT product sales
-- Crypto payment processing
-- Creator token integration
-- Revenue tracking (tokens, NFTs, tips)
+- NFT product sales with marketplace integration
+- Crypto payment processing with multiple token support
+- Creator token integration with custom tokenomics
+- Revenue tracking (tokens, NFTs, tips) with detailed analytics
 
 ### 🔐 Security & Compliance
 - Wallet-based authentication
