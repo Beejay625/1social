@@ -2,43 +2,49 @@
 
 /**
  * Token Approval Manager
- * Manages token approvals and revocations using Reown wallet
+ * Manage token approvals and revocations with Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface Approval {
+  approvalId: string;
   tokenAddress: string;
   spender: string;
   amount: string;
-  txHash: string;
+  approved: boolean;
+  managedBy: string;
   timestamp: number;
 }
 
 export function useTokenApprovalManager() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
   const [approvals, setApprovals] = useState<Approval[]>([]);
 
-  const approve = async (
+  const manageApproval = async (
     tokenAddress: string,
     spender: string,
-    amount: string
+    amount: string,
+    approved: boolean
   ): Promise<Approval> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!tokenAddress.startsWith('0x') || !spender.startsWith('0x')) {
       throw new Error('Invalid address format');
     }
     
-    const message = `Approve token: ${tokenAddress} to ${spender}`;
+    const message = `${approved ? 'Approve' : 'Revoke'} token: ${tokenAddress} to ${spender} amount ${amount}`;
     await signMessageAsync({ message });
     
     const approval: Approval = {
+      approvalId: `approval-${Date.now()}`,
       tokenAddress,
       spender,
       amount,
-      txHash: `0x${Date.now().toString(16)}`,
+      approved,
+      managedBy: address,
       timestamp: Date.now(),
     };
     
@@ -46,17 +52,5 @@ export function useTokenApprovalManager() {
     return approval;
   };
 
-  const revoke = async (tokenAddress: string, spender: string): Promise<void> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Revoke approval: ${tokenAddress} from ${spender}`;
-    await signMessageAsync({ message });
-    
-    setApprovals(approvals.filter(
-      (a) => !(a.tokenAddress === tokenAddress && a.spender === spender)
-    ));
-  };
-
-  return { approve, revoke, approvals, address };
+  return { manageApproval, approvals, address };
 }
-
