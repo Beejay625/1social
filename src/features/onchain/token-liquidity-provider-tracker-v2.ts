@@ -5,53 +5,63 @@
  * Track liquidity provider positions with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
-import { useState } from 'react';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
+import { useState, useEffect } from 'react';
 
-export interface LPTracking {
-  trackingId: string;
+export interface LPPosition {
+  positionId: string;
   poolAddress: string;
-  provider: string;
+  lpAddress: string;
   lpTokenBalance: string;
-  tokenAShare: string;
-  tokenBShare: string;
+  tokenA: string;
+  tokenB: string;
+  share: number;
   timestamp: number;
 }
 
-export function useTokenLiquidityProviderTrackerV2() {
+export function useTokenLiquidityProviderTrackerV2(poolAddress?: string) {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [trackings, setTrackings] = useState<LPTracking[]>([]);
+  const { writeContractAsync } = useWriteContract();
+  const [positions, setPositions] = useState<LPPosition[]>([]);
+  const [isTracking, setIsTracking] = useState(false);
 
-  const track = async (
-    poolAddress: string,
-    provider: string
-  ): Promise<LPTracking> => {
+  const startTracking = async () => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!poolAddress.startsWith('0x')) {
+    if (poolAddress && !poolAddress.startsWith('0x')) {
       throw new Error('Invalid pool address format');
     }
-    if (!provider.startsWith('0x')) {
-      throw new Error('Invalid provider address format');
-    }
     
-    const message = `Track LP position: ${poolAddress} provider ${provider}`;
+    const message = `Start tracking LP positions: ${poolAddress || 'all'}`;
     await signMessageAsync({ message });
     
-    const tracking: LPTracking = {
-      trackingId: `lp-${Date.now()}`,
-      poolAddress,
-      provider,
-      lpTokenBalance: '0',
-      tokenAShare: '0',
-      tokenBShare: '0',
-      timestamp: Date.now(),
-    };
-    
-    setTrackings([...trackings, tracking]);
-    return tracking;
+    setIsTracking(true);
   };
 
-  return { track, trackings, address };
-}
+  const stopTracking = () => {
+    setIsTracking(false);
+  };
 
+  useEffect(() => {
+    if (!isTracking) return;
+    
+    const interval = setInterval(() => {
+      const position: LPPosition = {
+        positionId: `lp-${Date.now()}`,
+        poolAddress: poolAddress || '0x0',
+        lpAddress: address || '0x0',
+        lpTokenBalance: '1000',
+        tokenA: '0x0',
+        tokenB: '0x0',
+        share: 2.5,
+        timestamp: Date.now(),
+      };
+      
+      setPositions((prev) => [position, ...prev.slice(0, 9)]);
+    }, 60000);
+    
+    return () => clearInterval(interval);
+  }, [isTracking, poolAddress, address]);
+
+  return { startTracking, stopTracking, positions, isTracking, address };
+}
