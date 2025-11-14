@@ -1,54 +1,53 @@
 'use client';
 
-/**
- * Token Liquidity Remover V3
- * Remove liquidity from pools with enhanced features via Reown wallet
- */
-
-import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface LiquidityRemoval {
-  removalId: string;
+export interface RemoveLiquidityConfig {
   poolAddress: string;
-  lpTokenAmount: string;
-  tokenAOut: string;
-  tokenBOut: string;
-  removedBy: string;
-  timestamp: number;
+  lpAmount: bigint;
+  minAmountA: bigint;
+  minAmountB: bigint;
 }
 
 export function useTokenLiquidityRemoverV3() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
+  const { writeContract } = useWriteContract();
   const { signMessageAsync } = useSignMessage();
-  const { writeContractAsync } = useWriteContract();
-  const [removals, setRemovals] = useState<LiquidityRemoval[]>([]);
+  const [removing, setRemoving] = useState(false);
 
-  const removeLiquidity = async (
-    poolAddress: string,
-    lpTokenAmount: string
-  ): Promise<LiquidityRemoval> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    if (!poolAddress.startsWith('0x')) {
-      throw new Error('Invalid pool address format');
+  const { data: lpBalance } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'balanceOf',
+    args: address ? [address] : undefined,
+    query: { enabled: !!address && isConnected },
+  });
+
+  const remove = async (config: RemoveLiquidityConfig) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    setRemoving(true);
+
+    try {
+      const message = `Remove liquidity from pool: ${config.poolAddress}`;
+      await signMessageAsync({ message });
+
+      await writeContract({
+        address: config.poolAddress as `0x${string}`,
+        abi: [],
+        functionName: 'removeLiquidity',
+        args: [config.lpAmount, config.minAmountA, config.minAmountB, address],
+      });
+    } finally {
+      setRemoving(false);
     }
-    
-    const message = `Remove liquidity: ${poolAddress} amount ${lpTokenAmount}`;
-    await signMessageAsync({ message });
-    
-    const removal: LiquidityRemoval = {
-      removalId: `remove-${Date.now()}`,
-      poolAddress,
-      lpTokenAmount,
-      tokenAOut: (parseFloat(lpTokenAmount) * 0.5).toFixed(6),
-      tokenBOut: (parseFloat(lpTokenAmount) * 0.5).toFixed(6),
-      removedBy: address,
-      timestamp: Date.now(),
-    };
-    
-    setRemovals([...removals, removal]);
-    return removal;
   };
 
-  return { removeLiquidity, removals, address };
+  return {
+    remove,
+    removing,
+    address,
+    isConnected,
+    lpBalance,
+  };
 }
