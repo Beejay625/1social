@@ -2,66 +2,51 @@
 
 /**
  * Governance Proposal Monitor
- * Monitors DAO governance proposals and voting status using Reown wallet
+ * Monitor DAO governance proposals and voting status with Reown wallet
  */
 
 import { useAccount, useSignMessage } from 'wagmi';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-export interface GovernanceProposal {
+export interface ProposalMonitor {
+  monitorId: string;
   proposalId: string;
-  title: string;
-  description: string;
-  proposer: string;
-  votesFor: string;
-  votesAgainst: string;
-  endTime: number;
-  status: 'active' | 'passed' | 'rejected' | 'executed';
+  status: 'pending' | 'active' | 'succeeded' | 'defeated' | 'executed';
+  forVotes: string;
+  againstVotes: string;
+  monitoredBy: string;
+  timestamp: number;
 }
 
-export function useGovernanceProposalMonitor(daoAddress?: string) {
+export function useGovernanceProposalMonitor() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [proposals, setProposals] = useState<GovernanceProposal[]>([]);
-  const [isMonitoring, setIsMonitoring] = useState(false);
+  const [monitors, setMonitors] = useState<ProposalMonitor[]>([]);
 
-  const startMonitoring = async () => {
+  const monitorProposal = async (
+    proposalId: string
+  ): Promise<ProposalMonitor> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (daoAddress && !daoAddress.startsWith('0x')) {
-      throw new Error('Invalid DAO address format');
-    }
     
-    const message = `Start monitoring governance proposals: ${daoAddress || 'all'}`;
+    const message = `Monitor proposal: ${proposalId}`;
     await signMessageAsync({ message });
     
-    setIsMonitoring(true);
+    const statuses: Array<'pending' | 'active' | 'succeeded' | 'defeated' | 'executed'> = ['pending', 'active', 'succeeded', 'defeated', 'executed'];
+    const status = statuses[Math.floor(Math.random() * statuses.length)];
+    
+    const monitor: ProposalMonitor = {
+      monitorId: `proposal-monitor-${Date.now()}`,
+      proposalId,
+      status,
+      forVotes: (Math.random() * 1000000 + 100000).toFixed(0),
+      againstVotes: (Math.random() * 500000 + 50000).toFixed(0),
+      monitoredBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setMonitors([...monitors, monitor]);
+    return monitor;
   };
 
-  const stopMonitoring = () => {
-    setIsMonitoring(false);
-  };
-
-  useEffect(() => {
-    if (!isMonitoring) return;
-    
-    const interval = setInterval(() => {
-      const proposal: GovernanceProposal = {
-        proposalId: `proposal-${Date.now()}`,
-        title: 'New Governance Proposal',
-        description: 'Proposal description',
-        proposer: address || '0x0',
-        votesFor: '1000000',
-        votesAgainst: '500000',
-        endTime: Date.now() + 86400000 * 7,
-        status: 'active',
-      };
-      
-      setProposals((prev) => [proposal, ...prev.slice(0, 9)]);
-    }, 20000);
-    
-    return () => clearInterval(interval);
-  }, [isMonitoring, daoAddress, address]);
-
-  return { startMonitoring, stopMonitoring, proposals, isMonitoring, address };
+  return { monitorProposal, monitors, address };
 }
-
