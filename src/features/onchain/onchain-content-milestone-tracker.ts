@@ -17,3 +17,44 @@ export function useOnchainContentMilestoneTracker() {
   const { signMessageAsync } = useSignMessage();
   const [tracking, setTracking] = useState(false);
 
+  const { data: milestoneData } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'getMilestones',
+    args: address ? [address] : undefined,
+    query: { enabled: !!address && isConnected },
+  });
+
+  const createMilestone = async (milestone: Milestone) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    setTracking(true);
+
+    try {
+      const message = `Create milestone onchain: ${milestone.milestoneType} for ${milestone.contentHash}`;
+      await signMessageAsync({ message });
+
+      await writeContract({
+        address: '0x' as `0x${string}`,
+        abi: [],
+        functionName: 'createMilestone',
+        args: [
+          milestone.contentHash,
+          milestone.milestoneType,
+          milestone.targetValue,
+          milestone.reward,
+        ],
+      });
+    } finally {
+      setTracking(false);
+    }
+  };
+
+  return {
+    createMilestone,
+    tracking,
+    address,
+    isConnected,
+    milestoneData,
+  };
+}
+
