@@ -11,9 +11,9 @@ import { useState } from 'react';
 export interface ProposalCancellation {
   cancellationId: string;
   proposalId: string;
-  reason?: string;
+  reason: string;
+  canceledBy: string;
   txHash: string;
-  cancelledBy: string;
   timestamp: number;
 }
 
@@ -22,24 +22,24 @@ export function useTokenGovernanceProposalCancelerV2() {
   const { signMessageAsync } = useSignMessage();
   const [cancellations, setCancellations] = useState<ProposalCancellation[]>([]);
 
-  const cancel = async (
+  const cancelProposal = async (
     proposalId: string,
-    reason?: string
+    reason: string
   ): Promise<ProposalCancellation> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!proposalId || proposalId.trim() === '') {
       throw new Error('Proposal ID is required');
     }
     
-    const message = `Cancel proposal: ${proposalId}${reason ? ` Reason: ${reason}` : ''}`;
+    const message = `Cancel proposal: ${proposalId} - ${reason}`;
     await signMessageAsync({ message });
     
     const cancellation: ProposalCancellation = {
       cancellationId: `cancel-${Date.now()}`,
       proposalId,
       reason,
+      canceledBy: address,
       txHash: `0x${Date.now().toString(16)}`,
-      cancelledBy: address,
       timestamp: Date.now(),
     };
     
@@ -47,6 +47,5 @@ export function useTokenGovernanceProposalCancelerV2() {
     return cancellation;
   };
 
-  return { cancel, cancellations, address };
+  return { cancelProposal, cancellations, address };
 }
-
