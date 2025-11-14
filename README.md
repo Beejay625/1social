@@ -174,6 +174,7 @@ Publish to **Farcaster**, **Lens Protocol**, **Mirror**, and traditional platfor
 - **Onchain Content Subscription Manager** - Create and manage content subscriptions onchain
 - **Onchain Content Auction Manager** - Create and manage content auctions onchain with bidding
 - **Onchain Content Milestone Tracker** - Track content milestones onchain with reward distribution
+- **Onchain Content Trend Analyzer** - Analyze content trends onchain across protocols
 
 ---
 
