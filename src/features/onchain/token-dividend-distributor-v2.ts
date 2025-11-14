@@ -11,8 +11,7 @@ import { useState } from 'react';
 export interface DividendDistribution {
   distributionId: string;
   tokenAddress: string;
-  dividendToken: string;
-  amount: string;
+  totalAmount: string;
   recipients: string[];
   distributedBy: string;
   timestamp: number;
@@ -24,28 +23,26 @@ export function useTokenDividendDistributorV2() {
   const { writeContractAsync } = useWriteContract();
   const [distributions, setDistributions] = useState<DividendDistribution[]>([]);
 
-  const distribute = async (
+  const distributeDividends = async (
     tokenAddress: string,
-    dividendToken: string,
-    amount: string,
+    totalAmount: string,
     recipients: string[]
   ): Promise<DividendDistribution> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x') || !dividendToken.startsWith('0x')) {
+    if (!tokenAddress.startsWith('0x')) {
       throw new Error('Invalid token address format');
     }
     if (recipients.length === 0) {
-      throw new Error('At least one recipient is required');
+      throw new Error('Recipients array cannot be empty');
     }
     
-    const message = `Distribute dividends: ${tokenAddress} ${amount} to ${recipients.length} recipients`;
+    const message = `Distribute dividends V2: ${tokenAddress} amount ${totalAmount} to ${recipients.length} recipients`;
     await signMessageAsync({ message });
     
     const distribution: DividendDistribution = {
-      distributionId: `dividend-${Date.now()}`,
+      distributionId: `dividend-v2-${Date.now()}`,
       tokenAddress,
-      dividendToken,
-      amount,
+      totalAmount,
       recipients,
       distributedBy: address,
       timestamp: Date.now(),
@@ -55,5 +52,5 @@ export function useTokenDividendDistributorV2() {
     return distribution;
   };
 
-  return { distribute, distributions, address };
+  return { distributeDividends, distributions, address };
 }
