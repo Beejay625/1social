@@ -17,7 +17,7 @@ export interface PriceOptimization {
   marketData: {
     floorPrice: string;
     averagePrice: string;
-    lastSalePrice: string;
+    volume24h: string;
   };
   timestamp: number;
 }
@@ -47,9 +47,9 @@ export function useNFTListingPriceOptimizerV2() {
       currentPrice,
       optimizedPrice: (parseFloat(currentPrice) * 0.95).toString(),
       marketData: {
-        floorPrice: '0.5',
-        averagePrice: '0.6',
-        lastSalePrice: '0.55',
+        floorPrice: '1.0',
+        averagePrice: '1.2',
+        volume24h: '50000',
       },
       timestamp: Date.now(),
     };
@@ -60,4 +60,3 @@ export function useNFTListingPriceOptimizerV2() {
 
   return { optimize, optimizations, address };
 }
-
