@@ -1,33 +1,56 @@
 'use client';
 
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+/**
+ * NFT Auction End Time Manager
+ * Manage auction end times with Reown wallet
+ */
+
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
+
+export interface EndTimeManagement {
+  managementId: string;
+  auctionId: string;
+  newEndTime: number;
+  action: 'extend' | 'reduce' | 'set';
+  managedBy: string;
+  timestamp: number;
+}
 
 export function useNFTAuctionEndTimeManager() {
   const { address } = useAccount();
-  const { writeContract } = useWriteContract();
-  const { data: endTime } = useReadContract({
-    address: '0x' as `0x${string}`,
-    abi: [],
-    functionName: 'endTime',
-    args: [BigInt(1)],
-  });
-  const [managing, setManaging] = useState(false);
+  const { signMessageAsync } = useSignMessage();
+  const { writeContractAsync } = useWriteContract();
+  const [managements, setManagements] = useState<EndTimeManagement[]>([]);
 
-  const extendEndTime = async (auctionId: string, additionalTime: number) => {
-    if (!address) return;
-    setManaging(true);
-    // Implementation for extending end time
-    setManaging(false);
+  const manageEndTime = async (
+    auctionId: string,
+    newEndTime: number,
+    action: 'extend' | 'reduce' | 'set'
+  ): Promise<EndTimeManagement> => {
+    if (!address) throw new Error('Reown wallet not connected');
+    if (!auctionId || auctionId.trim() === '') {
+      throw new Error('Auction ID is required');
+    }
+    if (newEndTime <= Date.now()) {
+      throw new Error('End time must be in the future');
+    }
+    
+    const message = `Manage end time: ${auctionId} ${action} to ${newEndTime}`;
+    await signMessageAsync({ message });
+    
+    const management: EndTimeManagement = {
+      managementId: `endtime-${Date.now()}`,
+      auctionId,
+      newEndTime,
+      action,
+      managedBy: address,
+      timestamp: Date.now(),
+    };
+    
+    setManagements([...managements, management]);
+    return management;
   };
 
-  const reduceEndTime = async (auctionId: string, reduceTime: number) => {
-    if (!address) return;
-    setManaging(true);
-    // Implementation for reducing end time
-    setManaging(false);
-  };
-
-  return { extendEndTime, reduceEndTime, managing, address, endTime };
+  return { manageEndTime, managements, address };
 }
-
