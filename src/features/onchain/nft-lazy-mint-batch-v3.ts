@@ -11,10 +11,9 @@ import { useState } from 'react';
 export interface LazyMintBatch {
   batchId: string;
   collectionAddress: string;
-  tokenCount: number;
-  baseURI: string;
-  recipients: string[];
-  txHash: string;
+  tokenIds: string[];
+  metadataUris: string[];
+  signatures: string[];
   mintedBy: string;
   timestamp: number;
 }
@@ -24,33 +23,31 @@ export function useNFTLazyMintBatchV3() {
   const { signMessageAsync } = useSignMessage();
   const [batches, setBatches] = useState<LazyMintBatch[]>([]);
 
-  const mint = async (
+  const lazyMintBatch = async (
     collectionAddress: string,
-    tokenCount: number,
-    baseURI: string,
-    recipients: string[]
+    tokenIds: string[],
+    metadataUris: string[]
   ): Promise<LazyMintBatch> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
-    if (tokenCount <= 0) {
-      throw new Error('Token count must be greater than zero');
+    if (tokenIds.length !== metadataUris.length) {
+      throw new Error('Token IDs and metadata URIs arrays must have the same length');
     }
-    if (recipients.length !== tokenCount) {
-      throw new Error('Recipients array length must match token count');
+    if (tokenIds.length === 0) {
+      throw new Error('At least one token is required');
     }
     
-    const message = `Lazy mint batch: ${collectionAddress} ${tokenCount} tokens`;
-    await signMessageAsync({ message });
+    const message = `Lazy mint batch: ${collectionAddress} ${tokenIds.length} NFTs`;
+    const signature = await signMessageAsync({ message });
     
     const batch: LazyMintBatch = {
       batchId: `batch-${Date.now()}`,
       collectionAddress,
-      tokenCount,
-      baseURI,
-      recipients,
-      txHash: `0x${Date.now().toString(16)}`,
+      tokenIds,
+      metadataUris,
+      signatures: Array(tokenIds.length).fill(signature),
       mintedBy: address,
       timestamp: Date.now(),
     };
@@ -59,6 +56,5 @@ export function useNFTLazyMintBatchV3() {
     return batch;
   };
 
-  return { mint, batches, address };
+  return { lazyMintBatch, batches, address };
 }
-
