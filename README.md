@@ -6,7 +6,9 @@
 
 ## 🚀 The Solution: 1Social - The Future of Social Media is Onchain
 
-**1Social is the future of social media—a completely onchain platform where every interaction, every piece of content, and every metric exists permanently on the blockchain.** This isn't just another social media tool; it's a fundamental shift toward true digital ownership, transparent analytics, and decentralized monetization.
+**1Social**
+
+A comprehensive onchain social media management platform that helps creators publish, manage, and monetize content across decentralized protocols like Farcaster, Lens Protocol, and Mirror. Users connect their wallet via Reown Wallet (formerly WalletConnect) and instantly gain access to a unified dashboard where they can compose content, schedule onchain posts, mint NFTs, track blockchain-verified analytics, and manage their entire social media presence across multiple protocols. The platform includes 60+ onchain transaction and query features, all powered by Reown Wallet for secure, decentralized access. Every content creation, publication, analytics query, and monetization action is executed directly onchain through smart contracts, with content stored on IPFS/Arweave and metadata recorded immutably on the blockchain. Users can publish to multiple protocols simultaneously with a single onchain transaction, track engagement metrics directly from smart contract events, mint posts as NFTs with wallet-signed metadata, distribute token rewards via onchain transactions, and participate in DAO governance with token-weighted voting—all while maintaining complete ownership and verifiability of their content and data. All operations, from content scheduling to analytics tracking, are performed onchain by interacting with smart contracts, reading blockchain events, and executing transactions that are permanently recorded and verifiable by anyone. Users can manage their onchain identity, track cross-chain performance, automate workflows through smart contracts, and monetize directly through tokens, NFTs, and tips—all without any centralized intermediaries or API dependencies. All content, analytics, monetization records, and governance decisions are stored onchain, ensuring complete transparency, immutability, and true ownership of every aspect of the social media experience.
 
 ### What 1Social Is All About
 
@@ -161,10 +163,6 @@ Publish to **Farcaster**, **Lens Protocol**, **Mirror**, and traditional platfor
 - **Governance Proposal Monitor** - Monitor DAO proposals and voting status
 - **Gas Price Monitor** - Real-time gas price tracking for optimal timing
 - **Contract Interaction Logger** - Log and track all contract interactions
-
-### 🎁 **Airdrop Finder**
-
-A comprehensive onchain dashboard that helps users check whether their wallet might be eligible for ongoing or upcoming airdrops. Users connect their wallet via Reown Wallet (formerly WalletConnect) and instantly see a summary of protocols they've interacted with, activity patterns, and how closely they match known airdrop eligibility criteria. The platform includes 40+ onchain transaction and query features, all powered by Reown Wallet for secure, decentralized access. Every eligibility check is performed onchain by analyzing smart contract interactions, token holdings, NFT ownership, and historical transaction patterns directly from the blockchain. Users can track their airdrop eligibility scores across multiple chains, receive onchain notifications when new airdrop opportunities match their wallet activity, and claim eligible airdrops directly through the platform with wallet-signed transactions. All airdrop data, eligibility calculations, and claim records are stored onchain, ensuring transparency and verifiability of every airdrop opportunity and claim.
 
 ---
 
