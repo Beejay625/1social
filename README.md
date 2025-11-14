@@ -867,6 +867,8 @@ All features are built with **Reown AppKit** and **Wagmi** for seamless wallet i
 
 ### 1. Install Dependencies
 
+Install all required packages and dependencies:
+
 ```bash
 npm install
 ```
