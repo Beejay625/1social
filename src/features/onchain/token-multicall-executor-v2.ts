@@ -8,9 +8,13 @@
 import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface MulticallOperation {
-  operationId: string;
-  calls: Array<{ target: string; data: string }>;
+export interface MulticallExecution {
+  executionId: string;
+  calls: Array<{
+    target: string;
+    calldata: string;
+    value?: string;
+  }>;
   executedBy: string;
   timestamp: number;
 }
@@ -19,30 +23,36 @@ export function useTokenMulticallExecutorV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
   const { writeContractAsync } = useWriteContract();
-  const [operations, setOperations] = useState<MulticallOperation[]>([]);
+  const [executions, setExecutions] = useState<MulticallExecution[]>([]);
 
-  const executeMulticall = async (
-    calls: Array<{ target: string; data: string }>
-  ): Promise<MulticallOperation> => {
+  const execute = async (
+    calls: Array<{
+      target: string;
+      calldata: string;
+      value?: string;
+    }>
+  ): Promise<MulticallExecution> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (calls.length === 0) {
-      throw new Error('Calls array cannot be empty');
+      throw new Error('At least one call is required');
+    }
+    if (calls.some(call => !call.target.startsWith('0x'))) {
+      throw new Error('All target addresses must be valid Ethereum addresses');
     }
     
-    const message = `Execute multicall V2: ${calls.length} operations`;
+    const message = `Execute multicall V2: ${calls.length} calls`;
     await signMessageAsync({ message });
     
-    const operation: MulticallOperation = {
-      operationId: `multicall-v2-${Date.now()}`,
+    const execution: MulticallExecution = {
+      executionId: `multicall-v2-${Date.now()}`,
       calls,
       executedBy: address,
       timestamp: Date.now(),
     };
     
-    setOperations([...operations, operation]);
-    return operation;
+    setExecutions([...executions, execution]);
+    return execution;
   };
 
-  return { executeMulticall, operations, address };
+  return { execute, executions, address };
 }
-
