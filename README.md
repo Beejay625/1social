@@ -567,6 +567,35 @@ All 20 features are fully integrated with **Reown AppKit** and use `useAccount`,
 
 All 20 features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
 
+### Additional Onchain Features (All Powered by Reown Wallet)
+
+#### Token Operations & Management
+- **Token Lock Period Extender** - Extend token lock periods with Reown wallet
+- **Token Staking Compounder V3** - Compound staking rewards with enhanced features via Reown wallet
+- **Token Liquidity Remover V3** - Remove liquidity from pools with enhanced features via Reown wallet
+- **Token Transfer Fee Manager** - Manage transfer fees for tokens with Reown wallet
+- **Token Allowance Revoker** - Revoke token allowances with Reown wallet
+- **Token Recovery Manager** - Recover tokens from contracts with Reown wallet
+- **Token Governance Proposal Canceler V2** - Cancel governance proposals with enhanced features via Reown wallet
+- **Token Staking Pool Creator V3** - Create staking pools with enhanced features via Reown wallet
+- **Token Bridge Executor** - Execute cross-chain token bridges with Reown wallet
+- **Token Liquidity Migrator V3** - Migrate liquidity between pools with enhanced features via Reown wallet
+- **Token Governance Timelock Manager** - Manage governance timelocks with Reown wallet
+- **Token Staking Reward Scheduler** - Schedule automatic reward claims with Reown wallet
+- **Token Multicall Executor V2** - Execute multiple token operations in one call with Reown wallet
+
+#### NFT Operations & Marketplace
+- **NFT Listing Price Optimizer V2** - Optimize NFT listing prices with enhanced features via Reown wallet
+- **NFT Marketplace Offer Canceler V3** - Cancel marketplace offers with enhanced features via Reown wallet
+- **NFT Collection Supply Manager V3** - Manage collection max supply with enhanced features via Reown wallet
+- **NFT Collection Base URI Manager V3** - Manage collection base URI with enhanced features via Reown wallet
+- **NFT Batch Approval Granter V3** - Grant batch approvals with enhanced features via Reown wallet
+- **NFT Marketplace Bulk Canceler V2** - Cancel multiple listings in bulk with enhanced features via Reown wallet
+- **NFT Royalty Payment Splitter V3** - Split royalty payments with enhanced features via Reown wallet
+- **NFT Collection Royalty Manager V3** - Manage collection royalties with enhanced features via Reown wallet
+
+All features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
+
 ### Contract Analysis & Development Tools (Reown Wallet Integrated)
 - **Transaction Speed Optimizer** - Optimize transaction speed with gas price analysis via Reown wallet
 - **Contract Import Resolver** - Resolve contract imports with Reown wallet signatures
