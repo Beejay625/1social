@@ -5,33 +5,34 @@
  * Automated auction bidding with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface SniperBid {
-  bidId: string;
+export interface SniperConfig {
+  configId: string;
   auctionId: string;
   tokenId: string;
   collectionAddress: string;
   maxBid: string;
-  currency: string;
+  snipeTime: number;
   active: boolean;
-  createdBy: string;
+  configuredBy: string;
   timestamp: number;
 }
 
 export function useNFTAuctionSniperBotV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [bids, setBids] = useState<SniperBid[]>([]);
+  const { writeContractAsync } = useWriteContract();
+  const [configs, setConfigs] = useState<SniperConfig[]>([]);
 
-  const createSniper = async (
+  const configureSnipe = async (
     auctionId: string,
     tokenId: string,
     collectionAddress: string,
     maxBid: string,
-    currency: string
-  ): Promise<SniperBid> => {
+    snipeTime: number
+  ): Promise<SniperConfig> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
@@ -40,25 +41,24 @@ export function useNFTAuctionSniperBotV2() {
       throw new Error('Max bid must be greater than zero');
     }
     
-    const message = `Create sniper bot: ${auctionId} max bid ${maxBid} ${currency}`;
+    const message = `Configure sniper bot V2: ${auctionId} max bid ${maxBid}`;
     await signMessageAsync({ message });
     
-    const bid: SniperBid = {
-      bidId: `sniper-${Date.now()}`,
+    const config: SniperConfig = {
+      configId: `sniper-v2-${Date.now()}`,
       auctionId,
       tokenId,
       collectionAddress,
       maxBid,
-      currency,
+      snipeTime,
       active: true,
-      createdBy: address,
+      configuredBy: address,
       timestamp: Date.now(),
     };
     
-    setBids([...bids, bid]);
-    return bid;
+    setConfigs([...configs, config]);
+    return config;
   };
 
-  return { createSniper, bids, address };
+  return { configureSnipe, configs, address };
 }
-
