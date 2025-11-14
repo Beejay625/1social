@@ -1,60 +1,47 @@
 'use client';
 
-/**
- * NFT Lazy Mint Batch V3
- * Lazy mint multiple NFTs in batch with enhanced features via Reown wallet
- */
-
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useWriteContract, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface LazyMintBatch {
-  batchId: string;
-  collectionAddress: string;
-  tokenIds: string[];
-  metadataUris: string[];
-  signatures: string[];
-  mintedBy: string;
-  timestamp: number;
+export interface LazyMintData {
+  tokenId: bigint;
+  uri: string;
+  signature: string;
 }
 
 export function useNFTLazyMintBatchV3() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
+  const { writeContract } = useWriteContract();
   const { signMessageAsync } = useSignMessage();
-  const [batches, setBatches] = useState<LazyMintBatch[]>([]);
+  const [minting, setMinting] = useState(false);
 
-  const lazyMintBatch = async (
-    collectionAddress: string,
-    tokenIds: string[],
-    metadataUris: string[]
-  ): Promise<LazyMintBatch> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x')) {
-      throw new Error('Invalid collection address format');
+  const mintBatch = async (collectionAddress: string, mints: LazyMintData[]) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    setMinting(true);
+
+    try {
+      const message = `Lazy mint batch of ${mints.length} NFTs`;
+      await signMessageAsync({ message });
+
+      const tokenIds = mints.map(m => m.tokenId);
+      const uris = mints.map(m => m.uri);
+      const signatures = mints.map(m => m.signature);
+
+      await writeContract({
+        address: collectionAddress as `0x${string}`,
+        abi: [],
+        functionName: 'lazyMintBatch',
+        args: [tokenIds, uris, signatures],
+      });
+    } finally {
+      setMinting(false);
     }
-    if (tokenIds.length !== metadataUris.length) {
-      throw new Error('Token IDs and metadata URIs arrays must have the same length');
-    }
-    if (tokenIds.length === 0) {
-      throw new Error('At least one token is required');
-    }
-    
-    const message = `Lazy mint batch: ${collectionAddress} ${tokenIds.length} NFTs`;
-    const signature = await signMessageAsync({ message });
-    
-    const batch: LazyMintBatch = {
-      batchId: `batch-${Date.now()}`,
-      collectionAddress,
-      tokenIds,
-      metadataUris,
-      signatures: Array(tokenIds.length).fill(signature),
-      mintedBy: address,
-      timestamp: Date.now(),
-    };
-    
-    setBatches([...batches, batch]);
-    return batch;
   };
 
-  return { lazyMintBatch, batches, address };
+  return {
+    mintBatch,
+    minting,
+    address,
+    isConnected,
+  };
 }
