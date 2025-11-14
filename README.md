@@ -1006,6 +1006,8 @@ Built for communities with token-gated access, multi-sig support, and onchain go
 
 Built for the decentralized web. Contributions welcome to help make web3 social media management more accessible.
 
+We welcome contributions from the community. Please ensure all features use Reown wallet integration for authentication.
+
 ## License
 
-MIT
+MIT License - see LICENSE file for details
