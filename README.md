@@ -172,6 +172,7 @@ Publish to **Farcaster**, **Lens Protocol**, **Mirror**, and traditional platfor
 - **Onchain Content Remix Tracker** - Track content remixes onchain with attribution
 - **Onchain Content Access Control** - Set token-gated and NFT-gated access controls onchain
 - **Onchain Content Subscription Manager** - Create and manage content subscriptions onchain
+- **Onchain Content Auction Manager** - Create and manage content auctions onchain with bidding
 
 ---
 
