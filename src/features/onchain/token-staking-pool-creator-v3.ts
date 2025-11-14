@@ -1,56 +1,49 @@
 'use client';
 
-/**
- * Token Staking Pool Creator V3
- * Create staking pools with enhanced features via Reown wallet
- */
-
-import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
+import { useAccount, useWriteContract, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface StakingPoolV3 {
-  poolId: string;
+export interface StakingPoolConfig {
   tokenAddress: string;
   rewardTokenAddress: string;
-  apy: number;
+  rewardRate: bigint;
   lockPeriod: number;
-  createdBy: string;
-  timestamp: number;
 }
 
 export function useTokenStakingPoolCreatorV3() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
+  const { writeContract } = useWriteContract();
   const { signMessageAsync } = useSignMessage();
-  const { writeContractAsync } = useWriteContract();
-  const [pools, setPools] = useState<StakingPoolV3[]>([]);
+  const [creating, setCreating] = useState(false);
 
-  const createPool = async (
-    tokenAddress: string,
-    rewardTokenAddress: string,
-    apy: number,
-    lockPeriod: number
-  ): Promise<StakingPoolV3> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x') || !rewardTokenAddress.startsWith('0x')) {
-      throw new Error('Invalid token address format');
+  const create = async (factoryAddress: string, config: StakingPoolConfig) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    setCreating(true);
+
+    try {
+      const message = `Create staking pool for token: ${config.tokenAddress}`;
+      await signMessageAsync({ message });
+
+      await writeContract({
+        address: factoryAddress as `0x${string}`,
+        abi: [],
+        functionName: 'createStakingPool',
+        args: [
+          config.tokenAddress,
+          config.rewardTokenAddress,
+          config.rewardRate,
+          config.lockPeriod,
+        ],
+      });
+    } finally {
+      setCreating(false);
     }
-    
-    const message = `Create staking pool V3: ${tokenAddress} reward ${rewardTokenAddress} APY ${apy}% lock ${lockPeriod} days`;
-    await signMessageAsync({ message });
-    
-    const pool: StakingPoolV3 = {
-      poolId: `pool-v3-${Date.now()}`,
-      tokenAddress,
-      rewardTokenAddress,
-      apy,
-      lockPeriod,
-      createdBy: address,
-      timestamp: Date.now(),
-    };
-    
-    setPools([...pools, pool]);
-    return pool;
   };
 
-  return { createPool, pools, address };
+  return {
+    create,
+    creating,
+    address,
+    isConnected,
+  };
 }
