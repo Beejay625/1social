@@ -8,12 +8,11 @@
 import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
-export interface WhitelistManagement {
-  managementId: string;
+export interface WhitelistEntry {
+  entryId: string;
   tokenAddress: string;
-  action: 'add' | 'remove' | 'batch-add' | 'batch-remove';
-  addresses: string[];
-  txHash: string;
+  address: string;
+  action: 'add' | 'remove';
   managedBy: string;
   timestamp: number;
 }
@@ -21,38 +20,33 @@ export interface WhitelistManagement {
 export function useTokenWhitelistManagerV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [managements, setManagements] = useState<WhitelistManagement[]>([]);
+  const [entries, setEntries] = useState<WhitelistEntry[]>([]);
 
-  const manage = async (
+  const manageWhitelist = async (
     tokenAddress: string,
-    action: 'add' | 'remove' | 'batch-add' | 'batch-remove',
-    addresses: string[]
-  ): Promise<WhitelistManagement> => {
+    addressToManage: string,
+    action: 'add' | 'remove'
+  ): Promise<WhitelistEntry> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x')) {
-      throw new Error('Invalid token address format');
-    }
-    if (addresses.length === 0) {
-      throw new Error('At least one address is required');
+    if (!tokenAddress.startsWith('0x') || !addressToManage.startsWith('0x')) {
+      throw new Error('Invalid address format');
     }
     
-    const message = `${action} whitelist: ${tokenAddress} ${addresses.length} addresses`;
+    const message = `Manage whitelist: ${tokenAddress} ${action} ${addressToManage}`;
     await signMessageAsync({ message });
     
-    const management: WhitelistManagement = {
-      managementId: `whitelist-${Date.now()}`,
+    const entry: WhitelistEntry = {
+      entryId: `whitelist-${Date.now()}`,
       tokenAddress,
+      address: addressToManage,
       action,
-      addresses,
-      txHash: `0x${Date.now().toString(16)}`,
       managedBy: address,
       timestamp: Date.now(),
     };
     
-    setManagements([...managements, management]);
-    return management;
+    setEntries([...entries, entry]);
+    return entry;
   };
 
-  return { manage, managements, address };
+  return { manageWhitelist, entries, address };
 }
-
