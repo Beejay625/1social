@@ -649,6 +649,34 @@ All features are fully integrated with **Reown AppKit** and use `useAccount`, `u
 
 All features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
 
+### Newest 20 Onchain Features (All Powered by Reown Wallet)
+
+#### Token Operations & Management
+- **Token Airdrop Manager V2** - Execute batch airdrops to multiple recipients with progress tracking via Reown wallet
+- **Token Governance Proposal Creator V3** - Create governance proposals with enhanced features via Reown wallet
+- **Token Liquidity Pool Position Tracker V3** - Track LP positions with detailed analytics via Reown wallet
+- **Token Vesting Schedule Creator V2** - Create vesting schedules with advanced options via Reown wallet
+- **Token Swap Aggregator V3** - Find best swap routes with price impact calculations via Reown wallet
+- **Token Reward Distributor V3** - Batch distribute rewards with progress tracking via Reown wallet
+- **Token Staking Pool Creator V2** - Create staking pools with configurable parameters via Reown wallet
+- **Token Burn Scheduler V5** - Schedule token burns with recurring options via Reown wallet
+- **Token Governance Delegate Manager V2** - Manage delegation with voting and proposition power via Reown wallet
+- **Token Reflection Tracker V3** - Track reflection rewards with real-time updates via Reown wallet
+
+#### NFT Operations & Marketplace
+- **NFT Collection Drop Manager** - Create and execute NFT drop campaigns with Reown wallet
+- **NFT Marketplace Bulk Seller** - Bulk list NFTs on marketplaces with Reown wallet
+- **NFT Rental Marketplace** - List and rent NFTs with duration-based pricing via Reown wallet
+- **NFT Collection Metadata Manager V2** - Update and freeze NFT metadata with Reown wallet
+- **NFT Auction Manager V2** - Create auctions and place bids with Reown wallet
+- **NFT Collection Whitelist Manager V3** - Manage whitelists with batch operations via Reown wallet
+- **NFT Metadata Validator V4** - Validate NFT metadata with scoring system via Reown wallet
+- **NFT Collection Reveal Manager V2** - Schedule and execute collection reveals via Reown wallet
+- **NFT Marketplace Listing Optimizer V2** - Optimize listing prices based on market data via Reown wallet
+- **NFT Collection Supply Manager V3** - Manage collection supply and reserves via Reown wallet
+
+All 20 features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
+
 ### Additional Onchain Features (All Powered by Reown Wallet)
 
 #### Token Operations & Management
