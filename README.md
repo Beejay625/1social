@@ -599,25 +599,27 @@ All features are fully integrated with **Reown AppKit** and use `useAccount`, `u
 ### More Onchain Features (All Powered by Reown Wallet)
 
 #### Token Operations & Management
-- **Token Liquidity Position Tracker** - Track liquidity positions with Reown wallet
-- **Token Governance Proposal Creator V3** - Create governance proposals with enhanced features via Reown wallet
-- **Token Staking Reward Claim Batch** - Batch claim staking rewards for gas efficiency with Reown wallet
-- **Token Governance Delegation Tracker** - Track governance delegations with Reown wallet
-- **Token Burn Tax Calculator** - Calculate burn taxes for token transactions with Reown wallet
-- **Token Staking APY Calculator** - Calculate staking APY with Reown wallet
+- **Token Governance Delegate Manager** - Manage governance delegation with Reown wallet
+- **Token Liquidity Pool Position Optimizer** - Optimize liquidity positions with Reown wallet
+- **Token Staking Reward Claim Scheduler** - Schedule automatic reward claims with Reown wallet
 - **Token Governance Proposal Status Tracker** - Track proposal status changes with Reown wallet
+- **Token Liquidity Pool Impermanent Loss Calculator** - Calculate impermanent loss for liquidity positions with Reown wallet
+- **Token Staking Pool Reward Rate Manager** - Manage staking pool reward rates with Reown wallet
+- **Token Governance Proposal Voting Power Calculator** - Calculate voting power for proposals with Reown wallet
+- **Token Liquidity Pool APR Calculator** - Calculate annual percentage rate for liquidity pools with Reown wallet
+- **Token Staking Pool Unstake Scheduler** - Schedule automatic unstaking with Reown wallet
+- **Token Governance Proposal Quorum Tracker** - Track quorum requirements for proposals with Reown wallet
 
 #### NFT Operations & Marketplace
-- **NFT Metadata Freezer V2** - Freeze NFT metadata with enhanced features via Reown wallet
-- **NFT Owner History Tracker** - Track NFT ownership history with Reown wallet
-- **NFT Lazy Mint Batch V2** - Lazy mint multiple NFTs in batch with enhanced features via Reown wallet
-- **NFT Marketplace Listing Optimizer** - Optimize marketplace listings for maximum visibility with Reown wallet
-- **NFT Collection Royalty Updater V2** - Update collection royalties with enhanced features via Reown wallet
-- **NFT Marketplace Offer Manager V2** - Manage marketplace offers with enhanced features via Reown wallet
-- **NFT Auction Time Manager V2** - Manage auction timing with enhanced features via Reown wallet
-- **NFT Collection Whitelist Validator V2** - Validate whitelist addresses with enhanced features via Reown wallet
-- **NFT Marketplace Fee Optimizer** - Optimize marketplace fees for maximum profit with Reown wallet
-- **NFT Collection Supply Monitor** - Monitor collection supply in real-time with Reown wallet
+- **NFT Collection Mint Scheduler** - Schedule NFT mints with Reown wallet
+- **NFT Marketplace Listing Price Tracker** - Track listing price changes with Reown wallet
+- **NFT Auction End Time Manager** - Manage auction end times with Reown wallet
+- **NFT Collection Attribute Updater V2** - Update collection attributes with enhanced features via Reown wallet
+- **NFT Marketplace Offer Expiry Manager** - Manage offer expiry times with Reown wallet
+- **NFT Collection Metadata Batch Updater** - Update multiple NFT metadata in batch with Reown wallet
+- **NFT Marketplace Listing Batch Updater** - Update multiple listings in batch with Reown wallet
+- **NFT Collection Owner History Tracker** - Track ownership history for NFTs with Reown wallet
+- **NFT Marketplace Listing Sniper Bot** - Automated listing monitoring and purchasing with Reown wallet
 
 All features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
 
