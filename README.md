@@ -885,7 +885,9 @@ Make sure to replace `your_reown_project_id_here` with your actual Reown Project
 
 ### 3. Add your Reown AppKit Project ID (required for wallet connection)
 
-**Note:** Without a valid Reown Project ID, the dApp will not be able to connect wallets. Get your Project ID from [reown.com](https://reown.com/).
+**Important:** Without a valid Reown Project ID, the dApp will not be able to connect wallets. 
+
+Get your Project ID from [reown.com](https://reown.com/). Sign up for free and create a new project to obtain your Project ID.
 
 ### 4. Start the dApp
 
