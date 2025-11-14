@@ -5,14 +5,14 @@
  * Pin NFT metadata to IPFS with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface IPFSPin {
   pinId: string;
-  collectionAddress: string;
   tokenId: string;
-  metadataUri: string;
+  collectionAddress: string;
+  metadataURI: string;
   ipfsHash: string;
   pinnedBy: string;
   timestamp: number;
@@ -21,29 +21,28 @@ export interface IPFSPin {
 export function useNFTMetadataIPFSPinnerV2() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const { writeContractAsync } = useWriteContract();
   const [pins, setPins] = useState<IPFSPin[]>([]);
 
   const pinMetadata = async (
-    collectionAddress: string,
     tokenId: string,
-    metadataUri: string
+    collectionAddress: string,
+    metadataURI: string
   ): Promise<IPFSPin> => {
     if (!address) throw new Error('Reown wallet not connected');
     if (!collectionAddress.startsWith('0x')) {
       throw new Error('Invalid collection address format');
     }
     
-    const message = `Pin metadata V2: ${collectionAddress} #${tokenId} to IPFS`;
+    const message = `Pin metadata to IPFS V2: ${tokenId} in ${collectionAddress}`;
     await signMessageAsync({ message });
     
-    const ipfsHash = `Qm${Date.now().toString(36)}`;
+    const ipfsHash = `Qm${Math.random().toString(16).substr(2, 44)}`;
     
     const pin: IPFSPin = {
       pinId: `pin-v2-${Date.now()}`,
-      collectionAddress,
       tokenId,
-      metadataUri,
+      collectionAddress,
+      metadataURI,
       ipfsHash,
       pinnedBy: address,
       timestamp: Date.now(),
