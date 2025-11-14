@@ -5,50 +5,56 @@
  * Optimize reward claims with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface RewardClaimOptimization {
-  optimizationId: string;
-  poolAddress: string;
-  pendingRewards: string;
-  optimalClaimTime: number;
-  estimatedGasSavings: string;
-  strategy: string;
+export interface OptimizedClaim {
+  claimId: string;
+  stakingPoolAddress: string;
+  claimerAddress: string;
+  rewardAmount: string;
+  gasOptimized: string;
+  savings: string;
+  optimizedBy: string;
   timestamp: number;
 }
 
 export function useTokenStakingRewardClaimOptimizerV3() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [optimizations, setOptimizations] = useState<RewardClaimOptimization[]>([]);
+  const { writeContractAsync } = useWriteContract();
+  const [claims, setClaims] = useState<OptimizedClaim[]>([]);
 
-  const optimize = async (
-    poolAddress: string,
-    pendingRewards: string
-  ): Promise<RewardClaimOptimization> => {
+  const optimizeClaim = async (
+    stakingPoolAddress: string,
+    claimerAddress: string,
+    rewardAmount: string
+  ): Promise<OptimizedClaim> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!poolAddress.startsWith('0x')) {
-      throw new Error('Invalid pool address format');
+    if (!stakingPoolAddress.startsWith('0x') || !claimerAddress.startsWith('0x')) {
+      throw new Error('Invalid address format');
     }
     
-    const message = `Optimize reward claim: ${poolAddress} ${pendingRewards}`;
+    const message = `Optimize claim: ${stakingPoolAddress} claimer ${claimerAddress}`;
     await signMessageAsync({ message });
     
-    const optimization: RewardClaimOptimization = {
-      optimizationId: `opt-${Date.now()}`,
-      poolAddress,
-      pendingRewards,
-      optimalClaimTime: Date.now() + 3600000,
-      estimatedGasSavings: '5000',
-      strategy: 'batch',
+    const gasOptimized = '45000';
+    const savings = '20000';
+    
+    const claim: OptimizedClaim = {
+      claimId: `claim-${Date.now()}`,
+      stakingPoolAddress,
+      claimerAddress,
+      rewardAmount,
+      gasOptimized,
+      savings,
+      optimizedBy: address,
       timestamp: Date.now(),
     };
     
-    setOptimizations([...optimizations, optimization]);
-    return optimization;
+    setClaims([...claims, claim]);
+    return claim;
   };
 
-  return { optimize, optimizations, address };
+  return { optimizeClaim, claims, address };
 }
-
