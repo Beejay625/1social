@@ -12,10 +12,12 @@ export interface LiquidityRemoval {
   removalId: string;
   poolAddress: string;
   lpTokenAmount: string;
-  tokenAOut: string;
-  tokenBOut: string;
-  txHash: string;
+  tokenA: string;
+  tokenB: string;
+  amountA: string;
+  amountB: string;
   removedBy: string;
+  txHash: string;
   timestamp: number;
 }
 
@@ -24,13 +26,15 @@ export function useTokenLiquidityRemoverV3() {
   const { signMessageAsync } = useSignMessage();
   const [removals, setRemovals] = useState<LiquidityRemoval[]>([]);
 
-  const remove = async (
+  const removeLiquidity = async (
     poolAddress: string,
-    lpTokenAmount: string
+    lpTokenAmount: string,
+    tokenA: string,
+    tokenB: string
   ): Promise<LiquidityRemoval> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!poolAddress.startsWith('0x')) {
-      throw new Error('Invalid pool address format');
+    if (!poolAddress.startsWith('0x') || !tokenA.startsWith('0x') || !tokenB.startsWith('0x')) {
+      throw new Error('Invalid address format');
     }
     if (parseFloat(lpTokenAmount) <= 0) {
       throw new Error('LP token amount must be greater than zero');
@@ -43,10 +47,12 @@ export function useTokenLiquidityRemoverV3() {
       removalId: `remove-${Date.now()}`,
       poolAddress,
       lpTokenAmount,
-      tokenAOut: '0',
-      tokenBOut: '0',
-      txHash: `0x${Date.now().toString(16)}`,
+      tokenA,
+      tokenB,
+      amountA: '0',
+      amountB: '0',
       removedBy: address,
+      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
@@ -54,6 +60,5 @@ export function useTokenLiquidityRemoverV3() {
     return removal;
   };
 
-  return { remove, removals, address };
+  return { removeLiquidity, removals, address };
 }
-
