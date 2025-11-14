@@ -5,51 +5,43 @@
  * Compound staking rewards with enhanced features via Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface CompoundOperation {
+export interface CompoundAction {
   compoundId: string;
-  stakingPool: string;
+  poolId: string;
+  tokenAddress: string;
   rewardAmount: string;
-  compoundedAmount: string;
-  apy: number;
   compoundedBy: string;
-  txHash: string;
   timestamp: number;
 }
 
 export function useTokenStakingCompounderV3() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [compounds, setCompounds] = useState<CompoundOperation[]>([]);
+  const { writeContractAsync } = useWriteContract();
+  const [compounds, setCompounds] = useState<CompoundAction[]>([]);
 
-  const compound = async (
-    stakingPool: string,
-    rewardAmount: string,
-    apy: number
-  ): Promise<CompoundOperation> => {
+  const compoundRewards = async (
+    poolId: string,
+    tokenAddress: string,
+    rewardAmount: string
+  ): Promise<CompoundAction> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!stakingPool.startsWith('0x')) {
-      throw new Error('Invalid staking pool address format');
-    }
-    if (apy < 0) {
-      throw new Error('APY cannot be negative');
+    if (!tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid token address format');
     }
     
-    const message = `Compound rewards: ${stakingPool} ${rewardAmount} at ${apy}% APY`;
+    const message = `Compound rewards: ${poolId} for ${tokenAddress} amount ${rewardAmount}`;
     await signMessageAsync({ message });
     
-    const compoundedAmount = (parseFloat(rewardAmount) * (1 + apy / 100)).toString();
-    
-    const compound: CompoundOperation = {
+    const compound: CompoundAction = {
       compoundId: `compound-${Date.now()}`,
-      stakingPool,
+      poolId,
+      tokenAddress,
       rewardAmount,
-      compoundedAmount,
-      apy,
       compoundedBy: address,
-      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
@@ -57,5 +49,5 @@ export function useTokenStakingCompounderV3() {
     return compound;
   };
 
-  return { compound, compounds, address };
+  return { compoundRewards, compounds, address };
 }
