@@ -5,60 +5,52 @@
  * Execute cross-chain token bridges with Reown wallet
  */
 
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import { useState } from 'react';
 
 export interface BridgeExecution {
-  executionId: string;
+  bridgeId: string;
   tokenAddress: string;
   amount: string;
   sourceChain: string;
-  destinationChain: string;
-  recipient: string;
+  targetChain: string;
   executedBy: string;
-  txHash: string;
   timestamp: number;
 }
 
 export function useTokenBridgeExecutor() {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [executions, setExecutions] = useState<BridgeExecution[]>([]);
+  const { writeContractAsync } = useWriteContract();
+  const [bridges, setBridges] = useState<BridgeExecution[]>([]);
 
   const executeBridge = async (
     tokenAddress: string,
     amount: string,
     sourceChain: string,
-    destinationChain: string,
-    recipient: string
+    targetChain: string
   ): Promise<BridgeExecution> => {
     if (!address) throw new Error('Reown wallet not connected');
-    if (!tokenAddress.startsWith('0x') || !recipient.startsWith('0x')) {
-      throw new Error('Invalid address format');
-    }
-    if (sourceChain === destinationChain) {
-      throw new Error('Source and destination chains must be different');
+    if (!tokenAddress.startsWith('0x')) {
+      throw new Error('Invalid token address format');
     }
     
-    const message = `Bridge tokens: ${tokenAddress} ${amount} from ${sourceChain} to ${destinationChain}`;
+    const message = `Bridge tokens: ${tokenAddress} amount ${amount} from ${sourceChain} to ${targetChain}`;
     await signMessageAsync({ message });
     
-    const execution: BridgeExecution = {
-      executionId: `bridge-${Date.now()}`,
+    const bridge: BridgeExecution = {
+      bridgeId: `bridge-${Date.now()}`,
       tokenAddress,
       amount,
       sourceChain,
-      destinationChain,
-      recipient,
+      targetChain,
       executedBy: address,
-      txHash: `0x${Date.now().toString(16)}`,
       timestamp: Date.now(),
     };
     
-    setExecutions([...executions, execution]);
-    return execution;
+    setBridges([...bridges, bridge]);
+    return bridge;
   };
 
-  return { executeBridge, executions, address };
+  return { executeBridge, bridges, address };
 }
-
