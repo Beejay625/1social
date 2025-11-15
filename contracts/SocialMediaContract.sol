@@ -185,5 +185,3 @@ contract SocialMediaContract {
         return reactionCount;
     }
 }
-
-

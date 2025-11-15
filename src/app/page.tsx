@@ -25,10 +25,7 @@ import {
 } from "@/data/dashboard";
 import { aiActivityLog, aiDraftIdeas, aiPersonas, aiSmartReplies, aiToneOptions } from "@/data/ai";
 import {
-  abTests,
   campaigns,
-  competitors,
-  contentTemplates,
   notifications,
   trendTopics,
   webhooks,
@@ -41,12 +38,9 @@ import {
 } from "@/data/intelligence";
 import { integrationsAvailable } from "@/data/integrations";
 import {
-  reportingAlertFeed,
-  reportingAlertFilters,
-  reportingBenchmarkMatrix,
-  reportingExecMetrics,
-  reportingGoalProgress,
-  reportingVarianceBreakdowns,
+  customReports,
+  reportTemplates,
+  reportingStats,
 } from "@/data/reporting";
 import { teamActivityLog, teamMembers } from "@/data/team";
 import {
@@ -199,7 +193,6 @@ import {
 } from "@/data/crisis-management";
 import {
   workflowStats,
-  workflowTemplates,
 } from "@/data/workflow-builder";
 import {
   notificationChannels,
@@ -263,10 +256,8 @@ import {
   recentMentions,
 } from "@/data/advanced-listening";
 import {
-  activeWorkflows,
   approvalTemplates,
   pendingApprovals,
-  workflowStats,
 } from "@/data/approval-workflows";
 import {
   analyticsDashboards,
@@ -287,9 +278,8 @@ import {
   engagementTools,
 } from "@/data/engagement-tools";
 import {
-  hashtagPerformance,
   hashtagResearch,
-  trendingHashtags,
+  hashtagTrends,
 } from "@/data/hashtag-research";
 import {
   comparisonStats,
@@ -309,11 +299,7 @@ import {
   teamMemberPerformance,
   teamPerformanceStats,
 } from "@/data/team-performance";
-import {
-  moderationQueue,
-  moderationRules,
-  moderationStats,
-} from "@/data/content-moderation";
+// moderationQueue, moderationRules, moderationStats already imported from @/data/moderation
 import {
   brandSafetyAlerts,
   brandSafetyScore,
@@ -346,11 +332,9 @@ import {
 import {
   competitorInsights,
   competitorStats,
-  competitors,
 } from "@/data/competitor-analysis";
 import {
   contentCategories,
-  contentLibrary,
   libraryStats,
 } from "@/data/content-library";
 import {
@@ -402,12 +386,10 @@ import {
   performanceInsights,
 } from "@/data/performance-insights";
 import {
-  performanceMetrics,
   topPerformingContent,
 } from "@/data/content-performance-tracking";
 import {
   audienceInsights,
-  audienceSegments,
 } from "@/data/audience-insights";
 import {
   competitorComparisons,
@@ -534,7 +516,6 @@ import {
 } from "@/data/audience-growth";
 import {
   accountHealth,
-  accountStats,
   socialAccounts,
 } from "@/data/multi-account";
 import {
@@ -20884,15 +20865,15 @@ export default function Home() {
                 Trending Hashtags
               </h3>
               <div className="space-y-3">
-                {trendingHashtags.map((tag) => (
+                {hashtagTrends.map((tag, index) => (
                   <div
-                    key={tag.id}
+                    key={`${tag.hashtag}-${index}`}
                     className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-sm font-semibold text-white">{tag.tag}</h4>
+                      <h4 className="text-sm font-semibold text-white">{tag.hashtag}</h4>
                       <span className="text-xs px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-300">
-                        +{tag.growth}%
+                        {tag.change > 0 ? '+' : ''}{tag.change}%
                       </span>
                     </div>
                     <div className="grid grid-cols-2 gap-2 text-xs">
