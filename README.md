@@ -175,6 +175,56 @@ Publish to **Farcaster**, **Lens Protocol**, **Mirror**, and traditional platfor
 - **Onchain Content Auction Manager** - Create and manage content auctions onchain with bidding
 - **Onchain Content Milestone Tracker** - Track content milestones onchain with reward distribution
 - **Onchain Content Trend Analyzer** - Analyze content trends onchain across protocols
+- **Onchain Content Mirror Tracker** - Track content mirrors onchain with attribution
+- **Onchain Content Collect Tracker** - Track content collects with onchain pricing
+- **Onchain Follow Relationship Manager** - Manage follow/unfollow relationships onchain
+- **Onchain Content Comment Manager** - Create and manage comments onchain
+- **Onchain Content Bookmark Manager** - Bookmark and organize content onchain
+- **Onchain Content Share Tracker** - Track content shares across protocols onchain
+- **Onchain Content Flag Manager** - Flag inappropriate content onchain
+- **Onchain Content Embed Tracker** - Track content embeds onchain
+- **Onchain Content Poll Manager** - Create and vote on polls onchain
+- **Onchain Content Tag Manager** - Tag and categorize content onchain
+- **Onchain Content Mention Tracker** - Track user mentions onchain
+- **Onchain Content Reaction Aggregator** - Aggregate reactions onchain
+- **Onchain Content View Tracker** - Track content views onchain
+- **Onchain Content Recommendation Engine** - Generate content recommendations onchain
+- **Onchain Content Feed Generator** - Generate personalized feeds onchain
+- **Onchain Content Search Indexer** - Index content for search onchain
+- **Onchain Content Notification Manager** - Manage notifications onchain
+- **Onchain Content Schedule Manager** - Schedule content publication onchain
+- **Onchain Content Draft Manager** - Manage content drafts onchain
+- **Onchain Content Archive Manager** - Archive and restore content onchain
+- **Onchain Content Pin Manager** - Pin content to profiles onchain
+- **Onchain Content Report Aggregator** - Aggregate content reports onchain
+- **Onchain Content Version Manager** - Manage content versions onchain
+- **Onchain Content Translation Tracker** - Track content translations onchain
+- **Onchain Content Alias Manager** - Manage content aliases onchain
+- **Onchain Content Reaction History** - Track reaction history onchain
+- **Onchain Content Topic Classifier** - Classify content topics onchain
+- **Onchain Content Sentiment Analyzer** - Analyze content sentiment onchain
+- **Onchain Content Filter** - Filter content based on criteria onchain
+- **Onchain Collaboration Invite** - Send collaboration invites onchain
+- **Onchain Content Queue** - Manage content publication queue onchain
+- **Onchain Content Backup** - Backup content to decentralized storage onchain
+- **Onchain Content Restore** - Restore content from backups onchain
+- **Onchain Content Sync** - Sync content across protocols onchain
+- **Onchain Content Export** - Export content in various formats onchain
+- **Onchain Content Import** - Import content from external sources onchain
+- **Onchain Analytics Dashboard** - Create custom analytics dashboards onchain
+- **Onchain Widget Manager** - Manage content widgets onchain
+- **Onchain Template Library** - Manage content templates onchain
+- **Onchain Automation Rule** - Create automation rules onchain
+- **Onchain Workflow Builder** - Build content workflows onchain
+- **Onchain Integration Manager** - Manage third-party integrations onchain
+- **Onchain API Key Manager** - Manage API keys onchain
+- **Onchain Webhook Manager** - Manage webhooks onchain
+- **Onchain Rate Limiter** - Set rate limits onchain
+- **Onchain Cache Manager** - Manage content caching onchain
+- **Onchain Permission Manager** - Manage content permissions onchain
+- **Onchain Audit Log** - Log all content actions onchain
+- **Onchain Compliance Checker** - Check content compliance onchain
+- **Onchain Encryption Manager** - Manage content encryption onchain
 
 ---
 
