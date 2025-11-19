@@ -13,15 +13,23 @@ export function useNFTCollectionBaseURIUpdaterV3() {
     address: '0x' as `0x${string}`,
     abi: [],
     functionName: 'baseURI',
-    query: { enabled: isConnected },
   });
 
-  const update = async (collectionAddress: string, newURI: string) => {
+  const { data: isOwner } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'owner',
+  });
+
+  const updateBaseURI = async (collectionAddress: string, newURI: string) => {
     if (!address || !isConnected) throw new Error('Wallet not connected');
+    if (address?.toLowerCase() !== (isOwner as string)?.toLowerCase()) {
+      throw new Error('Only owner can update base URI');
+    }
     setUpdating(true);
 
     try {
-      const message = `Update collection base URI: ${newURI}`;
+      const message = `Update collection base URI`;
       await signMessageAsync({ message });
 
       await writeContract({
@@ -36,11 +44,11 @@ export function useNFTCollectionBaseURIUpdaterV3() {
   };
 
   return {
-    update,
+    updateBaseURI,
     updating,
     address,
     isConnected,
     currentURI,
+    isOwner: address?.toLowerCase() === (isOwner as string)?.toLowerCase(),
   };
 }
-
