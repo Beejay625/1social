@@ -353,12 +353,48 @@ Built for communities with token-gated access, multi-sig support, and onchain go
 
 ## 📊 Feature Count
 
-- **60+ Onchain Features** - All powered by Reown AppKit
-- **Token Operations** - 30+ features
-- **NFT Operations** - 25+ features
+- **90+ Onchain Features** - All powered by Reown AppKit
+- **Token Operations** - 40+ features
+- **NFT Operations** - 35+ features
 - **Smart Contract Tools** - 15+ features
 - **Cross-Chain Features** - 10+ features
 - **Analytics & Monitoring** - 20+ features
+
+## 🔥 Latest 30 Onchain Features (All Powered by Reown Wallet)
+
+### Token Operations & Yield Management
+- **Token Yield Farming Optimizer** - Optimize yield farming strategies across protocols with Reown wallet
+- **Token Liquidity Lock Manager V3** - Lock liquidity with configurable duration and extensions via Reown wallet
+- **Token Liquidity Rebalancer V4** - Rebalance liquidity pools with target ratios and auto-rebalance via Reown wallet
+- **Token Staking Unstake Scheduler** - Schedule unstaking with cooldown periods using Reown wallet
+- **Token Staking Reward Tracker V2** - Track staking rewards with comprehensive analytics via Reown wallet
+- **Token Staking Pool Analyzer** - Analyze staking pools with APY and risk scoring via Reown wallet
+- **Token Swap Router V3** - Find optimal swap routes with multi-path support via Reown wallet
+- **Token Governance Proposal Scheduler** - Schedule governance proposals for future execution via Reown wallet
+- **Token Governance Voting Power Calculator** - Calculate voting power with delegation tracking via Reown wallet
+- **Token Governance Proposal Tracker V4** - Track proposal status with execution monitoring via Reown wallet
+- **Token Governance Delegation Tracker V2** - Track delegation with expiry management via Reown wallet
+- **Token Governance Execution Monitor** - Monitor proposal execution with real-time updates via Reown wallet
+- **Token Burn Tax Calculator V2** - Calculate burn taxes with total burned tracking via Reown wallet
+- **Token Liquidity Pool Impermanent Loss Calculator** - Calculate impermanent loss for LP positions via Reown wallet
+
+### NFT Operations & Marketplace
+- **NFT Collection Merger** - Merge multiple collections into one with transfer or burn options via Reown wallet
+- **NFT Batch Transfer Optimizer V4** - Optimize batch NFT transfers for gas efficiency via Reown wallet
+- **NFT Marketplace Listing Sniper** - Automated listing monitoring and purchasing via Reown wallet
+- **NFT Collection Attribute Builder** - Build attribute sets with rarity and weights via Reown wallet
+- **NFT Auction Time Manager** - Manage auction timing with extensions via Reown wallet
+- **NFT Collection Royalty Validator** - Validate royalty standards and percentages via Reown wallet
+- **NFT Marketplace Fee Calculator** - Calculate marketplace fees with breakdown via Reown wallet
+- **NFT Collection Stats Aggregator V3** - Aggregate collection statistics with real-time updates via Reown wallet
+- **NFT Lazy Mint Batch Optimizer** - Optimize lazy minting with batch processing via Reown wallet
+- **NFT Marketplace Offer Manager V3** - Manage marketplace offers with expiry handling via Reown wallet
+- **NFT Collection Verification Manager** - Request and manage collection verification via Reown wallet
+- **NFT Rental Payment Tracker V3** - Track rental payments with payment history via Reown wallet
+- **NFT Rental Dispute Resolver** - Create and resolve rental disputes via Reown wallet
+- **NFT Collection Allowlist Manager** - Manage allowlists with max mint limits via Reown wallet
+
+All 30 features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
 
 ---
 
