@@ -403,12 +403,12 @@ Built for communities with token-gated access, multi-sig support, and onchain go
 
 ## 📊 Feature Count
 
-- **90+ Onchain Features** - All powered by Reown AppKit
-- **Token Operations** - 40+ features
-- **NFT Operations** - 35+ features
+- **120+ Onchain Features** - All powered by Reown AppKit
+- **Token Operations** - 50+ features
+- **NFT Operations** - 45+ features
 - **Smart Contract Tools** - 15+ features
 - **Cross-Chain Features** - 10+ features
-- **Analytics & Monitoring** - 20+ features
+- **Analytics & Monitoring** - 25+ features
 
 ## 🔥 Latest 30 Onchain Features (All Powered by Reown Wallet)
 
@@ -443,6 +443,41 @@ Built for communities with token-gated access, multi-sig support, and onchain go
 - **NFT Rental Payment Tracker V3** - Track rental payments with payment history via Reown wallet
 - **NFT Rental Dispute Resolver** - Create and resolve rental disputes via Reown wallet
 - **NFT Collection Allowlist Manager** - Manage allowlists with max mint limits via Reown wallet
+
+All 30 features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
+
+### Additional 30 Onchain Features (All Powered by Reown Wallet)
+
+#### Token Operations & Management
+- **Token Vesting Batch Creator** - Create multiple vesting schedules in batch via Reown wallet
+- **Token Liquidity Pool Volume Analyzer** - Analyze trading volume with trend tracking via Reown wallet
+- **Token Governance Quorum Calculator V4** - Calculate quorum with real-time progress via Reown wallet
+- **Token Staking Pool Reward Distributor V2** - Distribute rewards to multiple recipients via Reown wallet
+- **Token Liquidity Pool TVL Tracker** - Track total value locked with historical data via Reown wallet
+- **Token Governance Proposal Validator** - Validate proposals before submission via Reown wallet
+- **Token Staking Emergency Withdraw Manager** - Emergency withdrawal from staking pools via Reown wallet
+- **Token Liquidity Pool Price Oracle** - Real-time price feeds for liquidity pools via Reown wallet
+- **Token Governance Timelock Manager** - Schedule and execute timelock operations via Reown wallet
+- **Token Liquidity Pool Slippage Calculator V2** - Calculate slippage with price impact via Reown wallet
+- **Token Staking Lock Extension Manager** - Extend staking lock periods via Reown wallet
+- **Token Governance Delegation Calculator** - Calculate delegation impact on governance via Reown wallet
+- **Token Liquidity Pool Fee Tracker** - Track fees earned with time-based analytics via Reown wallet
+- **Token Governance Proposal Status Monitor** - Monitor proposal status changes via Reown wallet
+
+#### NFT Operations & Marketplace
+- **NFT Collection Pauser V2** - Pause and unpause collections with Reown wallet integration
+- **NFT Marketplace Listing Manager V3** - Comprehensive listing management system via Reown wallet
+- **NFT Auction Reserve Price Manager V2** - Set and manage reserve prices via Reown wallet
+- **NFT Collection Base URI Updater V3** - Update collection base URI with owner controls via Reown wallet
+- **NFT Marketplace Bid Manager** - Place and withdraw bids on listings via Reown wallet
+- **NFT Collection Mint Price Manager V2** - Set mint prices with dynamic pricing via Reown wallet
+- **NFT Rental Extension Manager V2** - Extend rental periods via Reown wallet
+- **NFT Collection Burn Manager** - Burn NFTs with batch support via Reown wallet
+- **NFT Marketplace Sale Tracker** - Track sales with comprehensive analytics via Reown wallet
+- **NFT Collection Metadata Updater V3** - Update token metadata via Reown wallet
+- **NFT Auction Bid Increment Calculator** - Calculate minimum bid increments via Reown wallet
+- **NFT Collection Transfer Lock Manager V2** - Lock and unlock transfers via Reown wallet
+- **NFT Marketplace Automated Listing** - Setup automated listing with price multipliers via Reown wallet
 
 All 30 features are fully integrated with **Reown AppKit** and use `useAccount`, `useSignMessage`, and `useWriteContract` hooks for seamless wallet connectivity and transaction signing.
 
