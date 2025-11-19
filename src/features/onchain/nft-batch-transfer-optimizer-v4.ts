@@ -1,70 +1,55 @@
 'use client';
 
-/**
- * NFT Batch Transfer Optimizer V4
- * Next-generation batch transfer optimization with Reown wallet
- */
-
-import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
+import { useAccount, useWriteContract, useSignMessage } from 'wagmi';
 import { useState } from 'react';
 
 export interface BatchTransfer {
-  transferId: string;
-  collectionAddress: string;
-  recipients: string[];
-  tokenIds: string[];
-  optimized: boolean;
-  gasSaved: string;
-  executedBy: string;
-  timestamp: number;
+  nftAddress: string;
+  tokenIds: bigint[];
+  recipient: string;
 }
 
 export function useNFTBatchTransferOptimizerV4() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
+  const { writeContract } = useWriteContract();
   const { signMessageAsync } = useSignMessage();
-  const { writeContractAsync } = useWriteContract();
-  const [transfers, setTransfers] = useState<BatchTransfer[]>([]);
+  const [transferring, setTransferring] = useState(false);
+  const [gasEstimate, setGasEstimate] = useState<bigint | null>(null);
 
-  const optimizeBatchTransfer = async (
-    collectionAddress: string,
-    recipients: string[],
-    tokenIds: string[]
-  ): Promise<BatchTransfer> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    if (!collectionAddress.startsWith('0x')) {
-      throw new Error('Invalid collection address format');
+  const optimizeTransfer = async (transfer: BatchTransfer) => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    setTransferring(true);
+
+    try {
+      const message = `Transfer ${transfer.tokenIds.length} NFTs`;
+      await signMessageAsync({ message });
+
+      // Optimize batch size for gas efficiency
+      const optimalBatchSize = 50;
+      const batches = Math.ceil(transfer.tokenIds.length / optimalBatchSize);
+
+      for (let i = 0; i < batches; i++) {
+        const start = i * optimalBatchSize;
+        const end = Math.min(start + optimalBatchSize, transfer.tokenIds.length);
+        const batch = transfer.tokenIds.slice(start, end);
+
+        await writeContract({
+          address: transfer.nftAddress as `0x${string}`,
+          abi: [],
+          functionName: 'safeBatchTransferFrom',
+          args: [address, transfer.recipient, batch],
+        });
+      }
+    } finally {
+      setTransferring(false);
     }
-    if (recipients.length !== tokenIds.length) {
-      throw new Error('Recipients and tokenIds must have same length');
-    }
-    
-    const message = `Optimize batch transfer: ${collectionAddress} ${tokenIds.length} NFTs`;
-    await signMessageAsync({ message });
-    
-    const gasSaved = (tokenIds.length * 0.01).toFixed(4);
-    
-    const transfer: BatchTransfer = {
-      transferId: `batch-${Date.now()}`,
-      collectionAddress,
-      recipients,
-      tokenIds,
-      optimized: true,
-      gasSaved,
-      executedBy: address,
-      timestamp: Date.now(),
-    };
-    
-    setTransfers([...transfers, transfer]);
-    return transfer;
   };
 
-  const executeBatchTransfer = async (transferId: string): Promise<void> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    
-    const message = `Execute batch transfer ${transferId}`;
-    await signMessageAsync({ message });
+  return {
+    optimizeTransfer,
+    transferring,
+    gasEstimate,
+    address,
+    isConnected,
   };
-
-  return { optimizeBatchTransfer, executeBatchTransfer, transfers, address };
 }
-
