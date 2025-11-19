@@ -1,60 +1,50 @@
 'use client';
 
-/**
- * Token Liquidity Pool Impermanent Loss Calculator
- * Calculate impermanent loss for liquidity positions with Reown wallet
- */
-
-import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
+import { useAccount, useReadContract } from 'wagmi';
 import { useState } from 'react';
 
-export interface ImpermanentLossCalculation {
-  calculationId: string;
-  poolAddress: string;
-  initialPrice: string;
-  currentPrice: string;
-  impermanentLoss: string;
-  lossPercent: number;
-  timestamp: number;
+export interface ILCalculation {
+  initialPrice: bigint;
+  currentPrice: bigint;
+  initialLiquidity: bigint;
+  currentLiquidity: bigint;
+  impermanentLoss: bigint;
+  lossPercentage: number;
 }
 
 export function useTokenLiquidityPoolImpermanentLossCalculator() {
-  const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
-  const { writeContractAsync } = useWriteContract();
-  const [calculations, setCalculations] = useState<ImpermanentLossCalculation[]>([]);
+  const { address, isConnected } = useAccount();
+  const [calculation, setCalculation] = useState<ILCalculation | null>(null);
 
-  const calculate = async (
-    poolAddress: string,
-    initialPrice: string,
-    currentPrice: string
-  ): Promise<ImpermanentLossCalculation> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    if (!poolAddress.startsWith('0x')) {
-      throw new Error('Invalid pool address format');
-    }
+  const calculateIL = (initialPrice: bigint, currentPrice: bigint, initialLiquidity: bigint): ILCalculation => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+
+    // Impermanent Loss formula: 2 * sqrt(price_ratio) / (1 + price_ratio) - 1
+    const priceRatio = Number(currentPrice) / Number(initialPrice);
+    const sqrtPriceRatio = Math.sqrt(priceRatio);
+    const ilRatio = (2 * sqrtPriceRatio) / (1 + priceRatio) - 1;
+    const ilPercentage = Math.abs(ilRatio * 100);
     
-    const message = `Calculate impermanent loss: ${poolAddress} from ${initialPrice} to ${currentPrice}`;
-    await signMessageAsync({ message });
-    
-    const priceRatio = parseFloat(currentPrice) / parseFloat(initialPrice);
-    const impermanentLoss = Math.abs(2 * Math.sqrt(priceRatio) / (1 + priceRatio) - 1);
-    const lossPercent = impermanentLoss * 100;
-    
-    const calculation: ImpermanentLossCalculation = {
-      calculationId: `il-${Date.now()}`,
-      poolAddress,
+    const impermanentLoss = (initialLiquidity * BigInt(Math.floor(ilPercentage * 100))) / BigInt(10000);
+    const currentLiquidity = initialLiquidity - impermanentLoss;
+
+    const calc: ILCalculation = {
       initialPrice,
       currentPrice,
-      impermanentLoss: impermanentLoss.toString(),
-      lossPercent,
-      timestamp: Date.now(),
+      initialLiquidity,
+      currentLiquidity,
+      impermanentLoss,
+      lossPercentage: ilPercentage,
     };
-    
-    setCalculations([...calculations, calculation]);
-    return calculation;
+
+    setCalculation(calc);
+    return calc;
   };
 
-  return { calculate, calculations, address };
+  return {
+    calculateIL,
+    calculation,
+    address,
+    isConnected,
+  };
 }
-
