@@ -8,3 +8,5 @@ export const LICENSE_TYPES = {
 export type LicenseType = typeof LICENSE_TYPES[keyof typeof LICENSE_TYPES];
 
 
+
+
