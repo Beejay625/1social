@@ -1,52 +1,70 @@
 'use client';
 
-/**
- * Token Staking Pool Analyzer
- * Analyze staking pool performance with Reown wallet
- */
-
-import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
-import { useState } from 'react';
+import { useAccount, useReadContract } from 'wagmi';
+import { useState, useEffect } from 'react';
 
 export interface PoolAnalysis {
-  analysisId: string;
   poolAddress: string;
-  totalStaked: string;
-  totalRewards: string;
+  totalStaked: bigint;
+  totalRewards: bigint;
   apy: number;
   participants: number;
-  timestamp: number;
+  averageStake: bigint;
+  lockPeriod: number;
+  riskScore: number;
 }
 
 export function useTokenStakingPoolAnalyzer() {
-  const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
-  const { writeContractAsync } = useWriteContract();
-  const [analyses, setAnalyses] = useState<PoolAnalysis[]>([]);
+  const { address, isConnected } = useAccount();
+  const [analysis, setAnalysis] = useState<PoolAnalysis | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const analyze = async (poolAddress: string): Promise<PoolAnalysis> => {
-    if (!address) throw new Error('Reown wallet not connected');
-    if (!poolAddress.startsWith('0x')) {
-      throw new Error('Invalid pool address format');
+  const { data: totalStaked } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'totalStaked',
+  });
+
+  const { data: apy } = useReadContract({
+    address: '0x' as `0x${string}`,
+    abi: [],
+    functionName: 'getAPY',
+  });
+
+  const analyzePool = async (poolAddress: string): Promise<PoolAnalysis> => {
+    if (!address || !isConnected) throw new Error('Wallet not connected');
+    setLoading(true);
+
+    try {
+      const data: PoolAnalysis = {
+        poolAddress,
+        totalStaked: (totalStaked as bigint) || BigInt(0),
+        totalRewards: BigInt(0),
+        apy: Number(apy) || 0,
+        participants: 0,
+        averageStake: BigInt(0),
+        lockPeriod: 0,
+        riskScore: 0,
+      };
+
+      setAnalysis(data);
+      return data;
+    } finally {
+      setLoading(false);
     }
-    
-    const message = `Analyze staking pool: ${poolAddress}`;
-    await signMessageAsync({ message });
-    
-    const analysis: PoolAnalysis = {
-      analysisId: `analyze-${Date.now()}`,
-      poolAddress,
-      totalStaked: '0',
-      totalRewards: '0',
-      apy: 0,
-      participants: 0,
-      timestamp: Date.now(),
-    };
-    
-    setAnalyses([...analyses, analysis]);
-    return analysis;
   };
 
-  return { analyze, analyses, address };
-}
+  useEffect(() => {
+    if (address && isConnected && totalStaked) {
+      analyzePool('0x');
+    }
+  }, [address, isConnected, totalStaked, apy]);
 
+  return {
+    analyzePool,
+    analysis,
+    loading,
+    address,
+    isConnected,
+  };
+}
