@@ -277,6 +277,38 @@ Publish to **Farcaster**, **Lens Protocol**, **Mirror**, and traditional platfor
 - Staking reward compounding
 - Governance quorum tracking
 
+### New Onchain Feature Drops
+- **Community Impact Oracle** – Anchor grassroots impact attestations with wallet-signed proofs.
+- **Social Graph Reputation Weighting** – Dynamically tune influence weights across social graphs.
+- **Fairdrop Allocation Engine** – Design equitable airdrop matrices that stay auditable onchain.
+- **Content Moderation Lighthouse** – Escalate and resolve high-risk content signals with traceability.
+- **Governance Emergency Signal** – Broadcast urgent DAO-wide actions with enforced acknowledgment.
+- **Sybil Shield Workflow** – Record proofs against inorganic actors and let peers challenge them.
+- **Collaboration Grant Streamer** – Stream milestone-based funding between creators with escrowed safety.
+- **Creator Credit Scorer** – Maintain transparent, tamper-resistant credit streaks for builders.
+- **Sponsorship Escrow Manager** – Park sponsor funds in programmable vaults until deliverables clear.
+- **Community Reward Router** – Fan out treasury yields across squads with deterministic formulas.
+- **Event Ticket Guardian** – Safeguard token-gated events with revocable guard rails.
+- **Quest Proof Registry** – Store quest completions and validator endorsements for composable quests.
+- **Fandom Tier Manager** – Encode fandom tier logic that wallets can verify instantly.
+- **Collective Purchase Orchestrator** – Coordinate group buys with executable settlement plans.
+- **Livestream Access Gate** – Enforce live access rules tied to NFTs, badges, or stake weight.
+- **Civic Attestation Hub** – Capture civic proofs and endorsements directly from participating wallets.
+- **Ecosystem Health Dashboard** – Stream health metrics from contracts into verifiable snapshots.
+- **Donation Matching Pool** – Run quadratic-inspired matching pools with onchain settlement.
+- **Impact Badge Minter** – Approve and mint badges once impact reviewers sign off.
+- **Creator Alias Resolver** – Resolve alias disputes while keeping canonical identity maps public.
+- **UGC Plagiarism Detector** – Chronicle plagiarism reports and arbitrations for creator-generated media.
+- **Safe List Curator** – Maintain whitelisted creator registries with peer review.
+- **Trust Circle Manager** – Define micro-trust circles that downstream protocols can query.
+- **Decentralized Invite System** – Issue and redeem invite tokens without centralized servers.
+- **Reown Session Auditor** – Capture Reown session logs for compliance-sensitive workflows.
+- **Cross-Chain Relay Hub** – Register relay intents and confirm fulfillments across supported chains.
+- **Creator Royalty Watchdog** – Alert on missed royalty flows and enforce make-good actions.
+- **Community Pulse Sensor** – Stream morale metrics that governance can plug into incentives.
+- **Fraud Response Playbook** – Store pre-approved mitigation plans for rapid fraud response.
+- **Moderator Quorum Tracker** – Track mod participation to guarantee quorum-backed decisions.
+
 ---
 
 ## 🛠️ Tech Stack
